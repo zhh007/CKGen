@@ -180,18 +180,17 @@ namespace CKGen
 
             string dbConnStr = SystemConfig.DBLink.ConnectionString;
             string dbname = SystemConfig.DBName;
-            string tableName = SystemConfig.Instance.CurrentTableName;
-            string nsString = txtNamespace.Text;
-            string webNSString = txtWebProjNameSpace.Text;
-
             ServerInfo serverInfo = new ServerInfo(dbConnStr, "ceshi");
             IDatabaseInfo database = serverInfo.GetDatabase(dbname);
 
+            string tableName = SystemConfig.Instance.CurrentTableName;
+            string nsString = txtNamespace.Text;
+            string webNSString = txtWebProjNameSpace.Text;
             CKGen.Temp.AspnetMVC.CodeBuilder mvcBuilder = new CKGen.Temp.AspnetMVC.CodeBuilder(
-                dbConnStr, dbname, Path.Combine(Environment.CurrentDirectory, dbname), tableName
+                database, Path.Combine(Environment.CurrentDirectory, dbname), tableName
                 , nsString, webNSString);
 
-            folderPath = mvcBuilder.Build(database);
+            folderPath = mvcBuilder.Build();
         }
 
         private void FrmCodeBuild_Load(object sender, EventArgs e)

@@ -1,0 +1,186 @@
+﻿<#@ template language="C#" #>
+<#@ assembly name="System.Xml" #>
+<#@ assembly name="CKGen.DBSchema" #>
+<#@ import namespace="CKGen.DBSchema" #>
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML Transitional//EN">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+    <style type="text/css">
+        *
+        {
+            padding: 0;
+            margin: 0;
+        }
+        BODY
+        {
+            width: 100%;
+            color: #000000;
+            font-family: Verdana;
+            font-size: 14px;
+            font-style: normal;
+            font-weight: normal;
+            margin-top: 0px;
+            margin-right: 0px;
+            margin-bottom: 0px;
+            margin-left: 0px;
+            background-image: none;
+            background-attachment: scroll;
+            background-repeat: repeat;
+            background-position-x: 0%;
+            background-position-y: 0%;
+            background-color: rgb(255, 255, 255);
+        }
+        A:link
+        {
+            color: #0000ff;
+        }
+        
+        DIV#mainBody
+        {
+            font-size: 100%;
+            margin-top: 0px;
+            margin-left: 0px;
+        }
+        DIV.section
+        {
+            width: 100%;
+            padding-top: 0px;
+            padding-right: 0px;
+            padding-bottom: 0px;
+            padding-left: 0px;
+            margin-left: 0px;
+            text-align: center;
+        }
+        DIV#mainBody TABLE
+        {
+            width: 98.9%;
+            font-size: 100%;
+            border-top-width: 0px;
+            border-right-width: 0px;
+            border-bottom-width: 0px;
+            border-left-width: 0px;
+            border-top-style: none;
+            border-right-style: none;
+            border-bottom-style: none;
+            border-left-style: none;
+            margin: 5px auto;
+            border-collapse: collapse;
+        }
+        DIV#mainBody TABLE TR
+        {
+            vertical-align: top;
+            border: 1px solid #d5d5d3;
+        }
+        DIV#mainBody TABLE TH
+        {
+            text-align: left;
+            color: #000066;
+            padding-right: 5px;
+            padding-left: 5px;
+            padding: 5px;
+            border: 1px solid #d5d5d3;
+            border-bottom-color: #c8cdde;
+            border-left-color: #d5d5d3;
+            border-bottom-width: 1px;
+            border-left-width: 1px;
+            border-bottom-style: solid;
+            border-left-style: none;
+            background-color: rgb(239, 239, 247);
+        }
+        DIV#mainBody TABLE TD
+        {
+            padding-right: 5px;
+            padding-left: 5px;
+            border: 1px solid #d5d5d3;
+            border-bottom-color: #d5d5d3;
+            border-left-color: #d5d5d3;
+            border-bottom-width: 1px;
+            border-left-width: 1px;
+            border-bottom-style: solid;
+            border-left-style: none;
+            background-color: rgb(247, 247, 255);
+			text-align:left
+        }
+        
+        .header h3{margin-left:1em}
+    </style>
+</head>
+<body>
+    <div id="mainBody">
+        <div class="header">
+            <h3><#= this.TableName #></h3>
+        </div>
+        <div class="section">        
+            <table>
+				<colgroup>
+                    <col width="140px" />
+                    <col width="100px" />
+                    <col width="100px" />
+                    <col width="80px" />
+                    <col width="120px" />
+                    <col />
+                </colgroup>
+                <tbody>
+                    <tr>
+                        <th>
+                            列名
+                        </th>
+                        <th>
+                            数据类型
+                        </th>
+                        <th>
+                            长度
+                        </th>
+                        <th>
+                            是否为空
+                        </th>
+                        <th>
+                            默认值
+                        </th>
+                        <th>
+                            说明
+                        </th>
+                    </tr>
+<#
+	    foreach (var column in DBTable.Columns)
+	    {
+#>					
+                    <tr>
+                        <td>
+                            <#= column.RawName #>
+                        </td>
+                        <td>
+                            <#= column.DBType #>
+                        </td>
+                        <td>
+                            <# if(column.MaxLength.HasValue) {
+								this.Write(column.MaxLength.Value.ToString()); 							
+							}#>
+                        </td>
+                        <td>
+							<# if(column.Nullable) {
+								this.Write("是"); 							
+							}else{
+								this.Write("否"); 
+							}#>
+                        </td>
+                        <td>
+                            
+                        </td>
+                        <td>
+                            <#= column.Description #>
+                        </td>
+                    </tr>
+<# 
+		}
+#>					
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
+

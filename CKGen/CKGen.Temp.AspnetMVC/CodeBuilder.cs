@@ -12,30 +12,22 @@ namespace CKGen.Temp.AspnetMVC
 {
     public class CodeBuilder
     {
+        private IDatabaseInfo _database;
         private string _namespace;
         private string _webProjNameSpace;
-        private string _dbConnection;
         private string _targetFolder;
-        private string _databaseName;
         private string _tableName;
 
-        public CodeBuilder(string dbConnStr, string dbName, string targetFoler, string tableName, string ns, string webns)
+        public CodeBuilder(IDatabaseInfo database, string targetFoler, string tableName, string ns, string webns)
         {
-            if (string.IsNullOrEmpty(dbName))
-                throw new Exception("数据库名不能为空。");
-
-            if (string.IsNullOrEmpty(dbConnStr))
-                throw new Exception("数据库链接不能为空。");
-
             if (string.IsNullOrEmpty(targetFoler))
                 throw new Exception("目标文件夹不能为空。");
 
+            this._database = database;
+            this._targetFolder = Path.Combine(targetFoler, "");
+            this._tableName = tableName;
             this._namespace = ns;
             this._webProjNameSpace = webns;
-            this._dbConnection = dbConnStr;
-            this._targetFolder = Path.Combine(targetFoler, "");//AutoEntites
-            this._databaseName = dbName;
-            this._tableName = tableName;
 
             try
             {
@@ -55,15 +47,10 @@ namespace CKGen.Temp.AspnetMVC
             }
         }
 
-        public string Build(IDatabaseInfo database)
+        public string Build()
         {
-            //IServerInfo serverInfo = new ServerInfo(this._dbConnection, "ceshi");
-
             List<string> filePaths = new List<string>();
-
-            //IDatabaseInfo database = serverInfo.GetDatabase(_databaseName);
-
-            foreach (ITableInfo tInfo in database.Tables)
+            foreach (ITableInfo tInfo in _database.Tables)
             {
                 if (tInfo.LowerName != _tableName.ToLower())
                 {

@@ -1,0 +1,27 @@
+﻿<#@ template language="C#" #>
+<#@ assembly name="System.Xml" #>
+<#@ assembly name="CKGen.DBSchema" #>
+<#@ import namespace="CKGen.DBSchema" #>
+[OPTIONS]
+Title=index.html
+Compatibility=1.1 or later
+Compiled file=test.chm
+Contents file=test.hhc
+Index file=test.hhk
+Default topic=index.html
+Display compile progress=NO
+Language=0x804 中文(中国)
+Default Window=Main
+
+[WINDOWS]
+Main=index.html,"test.hhc","test.hhk",,,,,,,0x20,180,0x104E, [80,60,720,540],0x0,0x0,,,,,0
+
+[FILES]
+index.html
+<#
+	    foreach (var table in this.Tables)
+	    {
+#>Tables\\<#= table.RawName #>.html
+<# 
+		}
+#>

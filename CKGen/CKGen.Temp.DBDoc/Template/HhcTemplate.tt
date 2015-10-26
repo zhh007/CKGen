@@ -1,0 +1,37 @@
+﻿<#@ template language="C#" #>
+<#@ assembly name="System.Xml" #>
+<#@ assembly name="CKGen.DBSchema" #>
+<#@ import namespace="CKGen.DBSchema" #>
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<HTML>
+<HEAD>
+<meta name="GENERATOR" content="Microsoft&reg; HTML Help Workshop 4.1">
+<!-- Sitemap 1.0 -->
+</HEAD>
+<BODY>
+<OBJECT type="text/site properties">
+<param name="Window Styles" value="0x237">
+</OBJECT>
+<UL>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="表">
+</OBJECT>
+<UL>
+<#
+	    foreach (var table in this.Tables)
+	    {
+#><LI> <OBJECT type="text/sitemap">
+<# 
+this.Write("<param name=\"Name\" value=\"{0}\">\r\n", table.RawName);
+this.Write("<param name=\"Local\" value=\"Tables\\{0}.html\">\r\n", table.RawName); #>
+</OBJECT>
+</LI>
+<# 
+		}
+#>
+
+</UL>
+</LI>
+</UL>
+</BODY>
+</HTML>
