@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using DotNet.DBSchema;
 using RazorEngine;
 using RazorEngine.Configuration;
 using RazorEngine.Templating;
+using CKGen.DBSchema;
 
 namespace CKGen.Temp.AspnetMVC
 {
@@ -55,15 +55,15 @@ namespace CKGen.Temp.AspnetMVC
             }
         }
 
-        public string Build()
+        public string Build(IDatabaseInfo database)
         {
-            ServerInfo serverInfo = new ServerInfo(this._dbConnection, "ceshi");
+            //IServerInfo serverInfo = new ServerInfo(this._dbConnection, "ceshi");
 
             List<string> filePaths = new List<string>();
 
-            DatabaseInfo database = serverInfo.GetDatabase(_databaseName);
+            //IDatabaseInfo database = serverInfo.GetDatabase(_databaseName);
 
-            foreach (TableInfo tInfo in database.Tables)
+            foreach (ITableInfo tInfo in database.Tables)
             {
                 if (tInfo.LowerName != _tableName.ToLower())
                 {

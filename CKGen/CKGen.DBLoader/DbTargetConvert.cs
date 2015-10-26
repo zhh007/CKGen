@@ -7,7 +7,7 @@ using System.Reflection;
 using System.Xml.Linq;
 using System.Diagnostics;
 
-namespace DotNet.DBSchema
+namespace CKGen.DBLoader
 {
     public class DbTargetConvert
     {
@@ -23,7 +23,7 @@ namespace DotNet.DBSchema
 
             if (!innerDict.ContainsKey(key))
             {
-                Stream resourceStream = Assembly.GetAssembly(this.GetType()).GetManifestResourceStream("DotNet.DBSchema.Res.DbTargets.xml");
+                Stream resourceStream = Assembly.GetAssembly(this.GetType()).GetManifestResourceStream("CKGen.DBLoader.Res.DbTargets.xml");
 
                 if (resourceStream != null)
                 {

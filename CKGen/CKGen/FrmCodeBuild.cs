@@ -1,4 +1,6 @@
-﻿using ScintillaNET;
+﻿using CKGen.DBLoader;
+using CKGen.DBSchema;
+using ScintillaNET;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -182,11 +184,14 @@ namespace CKGen
             string nsString = txtNamespace.Text;
             string webNSString = txtWebProjNameSpace.Text;
 
+            ServerInfo serverInfo = new ServerInfo(dbConnStr, "ceshi");
+            IDatabaseInfo database = serverInfo.GetDatabase(dbname);
+
             CKGen.Temp.AspnetMVC.CodeBuilder mvcBuilder = new CKGen.Temp.AspnetMVC.CodeBuilder(
                 dbConnStr, dbname, Path.Combine(Environment.CurrentDirectory, dbname), tableName
                 , nsString, webNSString);
 
-            folderPath = mvcBuilder.Build();
+            folderPath = mvcBuilder.Build(database);
         }
 
         private void FrmCodeBuild_Load(object sender, EventArgs e)

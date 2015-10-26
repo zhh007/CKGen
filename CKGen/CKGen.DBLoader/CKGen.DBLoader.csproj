@@ -8,8 +8,8 @@
     <ProjectGuid>{838634ED-CA1D-4884-A026-15E9666EAC3B}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DotNet.DBSchema</RootNamespace>
-    <AssemblyName>DotNet.DBSchema</AssemblyName>
+    <RootNamespace>CKGen.DBLoader</RootNamespace>
+    <AssemblyName>CKGen.DBLoader</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -79,6 +79,10 @@
     <EmbeddedResource Include="Res\Languages.xml" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CKGen.DBSchema\CKGen.DBSchema.csproj">
+      <Project>{29fc4637-6d8b-4539-8592-fc25f5408d23}</Project>
+      <Name>CKGen.DBSchema</Name>
+    </ProjectReference>
     <ProjectReference Include="..\mymeta\MyMeta.csproj">
       <Project>{72beab1c-b55f-4f0e-89af-17f71e74a452}</Project>
       <Name>MyMeta</Name>

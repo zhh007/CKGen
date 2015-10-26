@@ -4,7 +4,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace DotNet.DBSchema
+namespace CKGen.DBLoader
 {
     using System;
     using System.Collections.Generic;
@@ -51,7 +51,7 @@ namespace DotNet.DBSchema
 
             if (!System.IO.File.Exists(this._DbTargetMappingFileName))
             {
-                using (Stream input = Assembly.GetAssembly(typeof(SchemaLoader)).GetManifestResourceStream("DotNet.DBSchema.Res.DbTargets.xml"))
+                using (Stream input = Assembly.GetAssembly(typeof(SchemaLoader)).GetManifestResourceStream("CKGen.DBLoader.Res.DbTargets.xml"))
                 using (Stream output = File.Create(this._DbTargetMappingFileName))
                 {
                     byte[] buffer = new byte[8192];
@@ -66,7 +66,7 @@ namespace DotNet.DBSchema
 
             if (!System.IO.File.Exists(this._LanguageMappingFileName))
             {
-                using (Stream input = Assembly.GetAssembly(typeof(SchemaLoader)).GetManifestResourceStream("DotNet.DBSchema.Res.Languages.xml"))
+                using (Stream input = Assembly.GetAssembly(typeof(SchemaLoader)).GetManifestResourceStream("CKGen.DBLoader.Res.Languages.xml"))
                 using (Stream output = File.Create(this._LanguageMappingFileName))
                 {
                     byte[] buffer = new byte[8192];

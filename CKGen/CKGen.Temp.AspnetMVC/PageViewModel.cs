@@ -1,4 +1,4 @@
-﻿using DotNet.DBSchema;
+﻿using CKGen.DBSchema;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +8,7 @@ namespace CKGen.Temp.AspnetMVC
 {
     public class PageViewModel
     {
-        public TableInfo DBTable { get; set; }
+        public ITableInfo DBTable { get; set; }
 
         public string NameSpacePR { get; set; }
 
@@ -29,7 +29,7 @@ namespace CKGen.Temp.AspnetMVC
             return sb.ToString();
         }
 
-        public string BuildPropertieStr(ColumnInfo column)
+        public string BuildPropertieStr(IColumnInfo column)
         {
             if (!column.HasStringLength && column.Nullable)
                 return string.Empty;
@@ -155,9 +155,9 @@ namespace CKGen.Temp.AspnetMVC
                 }
             }
 
-            List<ColumnInfo> list = new List<ColumnInfo>();
-            ColumnInfo createTimeCI = null;
-            ColumnInfo updateTimeCI = null;
+            List<IColumnInfo> list = new List<IColumnInfo>();
+            IColumnInfo createTimeCI = null;
+            IColumnInfo updateTimeCI = null;
             for (int i = 0; i < this.DBTable.Columns.Count; i++)
             {
                 var item = this.DBTable.Columns[i];

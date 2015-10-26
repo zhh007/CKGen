@@ -6,8 +6,9 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using DotNet.DBSchema;
 using System.Diagnostics;
+using CKGen.DBSchema;
+using CKGen.DBLoader;
 
 namespace CKGen
 {
@@ -39,7 +40,7 @@ namespace CKGen
 
         public DatabaseLink DBLink;
         private ServerInfo SrvInfo;
-        public TableInfo DBTable;
+        public ITableInfo DBTable;
 
         public FrmSelectTable()
         {
@@ -169,7 +170,7 @@ namespace CKGen
             {
                 string dbname = cbDatabases.SelectedValue.ToString();
                 this.DBLink.SetDatabaseName(dbname);
-                this.DBTable = lbTables.SelectedValue as TableInfo;
+                this.DBTable = lbTables.SelectedValue as ITableInfo;
                 this.DialogResult = DialogResult.OK;
             }
         }
@@ -204,7 +205,7 @@ namespace CKGen
 
         private void SetColumnWith(ListBox lb)
         {
-            List<TableInfo> ds = lb.DataSource as List<TableInfo>;
+            List<ITableInfo> ds = lb.DataSource as List<ITableInfo>;
             if (ds != null)
             {
                 string txt = (from p in ds
@@ -222,7 +223,7 @@ namespace CKGen
             {
                 string dbname = cbDatabases.SelectedValue.ToString();
                 this.DBLink.SetDatabaseName(dbname);
-                this.DBTable = lbTables.Items[index] as TableInfo;
+                this.DBTable = lbTables.Items[index] as ITableInfo;
             }
         }
 

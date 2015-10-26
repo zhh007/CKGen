@@ -4,8 +4,9 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace DotNet.DBSchema
+namespace CKGen.DBLoader
 {
+    using CKGen.DBSchema;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -14,11 +15,11 @@ namespace DotNet.DBSchema
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
-    public class ProcedureInfo
+    public class ProcedureInfo : IProcedureInfo
     {
         private string _name;
         private string _schema;
-        private DatabaseInfo _database;
+        private IDatabaseInfo _database;
 
         public string Name
         {
@@ -32,7 +33,7 @@ namespace DotNet.DBSchema
             set { _schema = value; }
         }
 
-        public DatabaseInfo Database
+        public IDatabaseInfo Database
         {
             get { return _database; }
         }

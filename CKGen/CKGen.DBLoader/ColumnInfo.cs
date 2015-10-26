@@ -4,8 +4,9 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace DotNet.DBSchema
+namespace CKGen.DBLoader
 {
+    using CKGen.DBSchema;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -14,7 +15,7 @@ namespace DotNet.DBSchema
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
-    public partial class ColumnInfo
+    public partial class ColumnInfo : IColumnInfo
     {
         private string _rawName;
         private string _name;

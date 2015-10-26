@@ -4,7 +4,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace DotNet.DBSchema
+namespace CKGen.DBLoader
 {
     using System;
     using System.Collections.Generic;

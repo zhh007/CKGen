@@ -4,8 +4,9 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace DotNet.DBSchema
+namespace CKGen.DBLoader
 {
+    using CKGen.DBSchema;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -14,19 +15,19 @@ namespace DotNet.DBSchema
     /// <summary>
     /// 数据库
     /// </summary>
-    public class DatabaseInfo
+    public class DatabaseInfo : IDatabaseInfo
     {
         private string name;
         private int dbid;
         private DateTime createtime;
         private SchemaLoader loader = null;
-        private List<TableInfo> tables = new List<TableInfo>();
-        private List<ViewInfo> views = new List<ViewInfo>();
-        private List<ProcedureInfo> procs = new List<ProcedureInfo>();
+        private List<ITableInfo> tables = new List<ITableInfo>();
+        private List<IViewInfo> views = new List<IViewInfo>();
+        private List<IProcedureInfo> procs = new List<IProcedureInfo>();
         private bool _tablesLoaded = false;
         private bool _viewsLoaded = false;
         private bool _procLoaded = false;
-        private ServerInfo _server = null;
+        private IServerInfo _server = null;
 
         /// <summary>
         /// 数据库名称
@@ -58,7 +59,7 @@ namespace DotNet.DBSchema
         /// <summary>
         /// 表
         /// </summary>
-        public List<TableInfo> Tables
+        public List<ITableInfo> Tables
         {
             get 
             {
@@ -70,7 +71,7 @@ namespace DotNet.DBSchema
         /// <summary>
         /// 视图
         /// </summary>
-        public List<ViewInfo> Views
+        public List<IViewInfo> Views
         {
             get 
             {
@@ -82,7 +83,7 @@ namespace DotNet.DBSchema
         /// <summary>
         /// 存储过程
         /// </summary>
-        public List<ProcedureInfo> Procedures
+        public List<IProcedureInfo> Procedures
         {
             get
             {
@@ -94,7 +95,7 @@ namespace DotNet.DBSchema
         /// <summary>
         /// 服务器
         /// </summary>
-        public ServerInfo Server
+        public IServerInfo Server
         {
             get { return _server; }
         }
@@ -112,7 +113,7 @@ namespace DotNet.DBSchema
         internal DatabaseInfo(ServerInfo server)
         {
             this._server = server;
-            this.loader = _server.Loader;
+            this.loader = server.Loader;
         }
 
         #region 私有方法
@@ -123,14 +124,14 @@ namespace DotNet.DBSchema
 
             loader.Connect();
 
-            this.tables = new List<TableInfo>();
+            this.tables = new List<ITableInfo>();
             foreach (MyMeta.Table table in loader.Root.Databases[this.Name].Tables)
             {
                 string tablename = table.Name;
                 //if (Array.IndexOf(this.ignoreDatabaseName, dbname) != -1)
                 //    continue;
 
-                TableInfo item = new TableInfo(this);
+                ITableInfo item = new TableInfo(this);
                 item.RawName = tablename;
                 item.Schema = table.Schema;
                 item.Description = table.Description;
@@ -148,14 +149,14 @@ namespace DotNet.DBSchema
 
             loader.Connect();
 
-            this.views = new List<ViewInfo>();
+            this.views = new List<IViewInfo>();
             foreach (MyMeta.View view in loader.Root.Databases[this.Name].Views)
             {
                 string tablename = view.Name;
                 //if (Array.IndexOf(this.ignoreDatabaseName, dbname) != -1)
                 //    continue;
 
-                ViewInfo item = new ViewInfo(this);
+                IViewInfo item = new ViewInfo(this);
                 item.Name = tablename;
                 item.Schema = view.Schema;
                 this.views.Add(item);
@@ -171,7 +172,7 @@ namespace DotNet.DBSchema
 
             loader.Connect();
 
-            this.procs = new List<ProcedureInfo>();
+            this.procs = new List<IProcedureInfo>();
             foreach (MyMeta.Procedure proc in loader.Root.Databases[this.Name].Procedures)
             {
                 if (proc.Schema == "sys")
@@ -181,7 +182,7 @@ namespace DotNet.DBSchema
                 if (Array.IndexOf(loader.ignoreProcName, pname) != -1)
                     continue;
 
-                ProcedureInfo item = new ProcedureInfo(this);
+                IProcedureInfo item = new ProcedureInfo(this);
                 item.Name = pname;
                 item.Schema = proc.Schema;
                 procs.Add(item);

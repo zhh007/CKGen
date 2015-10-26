@@ -1,14 +1,14 @@
-﻿using System;
+﻿using CKGen.DBSchema;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using DotNet.DBSchema;
 
 namespace CKGen
 {
     public class ModuleEntity
     {
-        public TableInfo DatabaseTable { get; private set; }
+        public ITableInfo DatabaseTable { get; private set; }
 
         public List<ModuleField> Fields { get; private set; }
 
@@ -16,7 +16,7 @@ namespace CKGen
 
         public string DisplayName { get; set; }
 
-        public ModuleEntity(TableInfo tbInfo)
+        public ModuleEntity(ITableInfo tbInfo)
         {
             this.DatabaseTable = tbInfo;
 

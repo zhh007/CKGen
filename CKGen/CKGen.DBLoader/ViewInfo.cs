@@ -4,8 +4,9 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace DotNet.DBSchema
+namespace CKGen.DBLoader
 {
+    using CKGen.DBSchema;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -14,12 +15,12 @@ namespace DotNet.DBSchema
     /// <summary>
     /// 视图
     /// </summary>
-    public class ViewInfo
+    public class ViewInfo : IViewInfo
     {
         private string name;
         private string schema;
-        private List<ColumnInfo> columns = new List<ColumnInfo>();
-        private DatabaseInfo _database;
+        private List<IColumnInfo> columns = new List<IColumnInfo>();
+        private IDatabaseInfo _database;
 
         public string Schema
         {
@@ -33,13 +34,13 @@ namespace DotNet.DBSchema
             set { name = value; }
         }        
 
-        public List<ColumnInfo> Columns
+        public List<IColumnInfo> Columns
         {
             get { return columns; }
             set { columns = value; }
         }
 
-        public DatabaseInfo Database
+        public IDatabaseInfo Database
         {
             get { return _database; }
         }

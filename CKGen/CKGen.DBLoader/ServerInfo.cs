@@ -4,7 +4,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace DotNet.DBSchema
+namespace CKGen.DBLoader
 {
     using System;
     using System.Collections.Generic;
@@ -12,15 +12,16 @@ namespace DotNet.DBSchema
     using System.Text;
     using System.Threading;
     using System.Collections.ObjectModel;
+    using CKGen.DBSchema;
 
     /// <summary>
     /// 服务器
     /// </summary>
-    public class ServerInfo
+    public class ServerInfo : IServerInfo
     {
         private string _name;
         private string _connection;
-        private List<DatabaseInfo> _databases = null;
+        private List<IDatabaseInfo> _databases = null;
         private SchemaLoader loader = null;
         private bool _databasesLoaded = false;
 
@@ -45,7 +46,7 @@ namespace DotNet.DBSchema
         /// <summary>
         /// 数据库
         /// </summary>
-        public List<DatabaseInfo> Databases
+        public List<IDatabaseInfo> Databases
         {
             get 
             {
@@ -63,11 +64,11 @@ namespace DotNet.DBSchema
         {
             this._connection = conn;
             this._name = name;
-            this._databases = new List<DatabaseInfo>();
+            this._databases = new List<IDatabaseInfo>();
 
             loader = new SchemaLoader(MyMeta.dbDriver.SQL, "SqlClient", "C#", this._connection);
         }
-        
+
         public void LoadDatabases()
         {
             if (_databasesLoaded)
@@ -75,13 +76,13 @@ namespace DotNet.DBSchema
 
             loader.Connect();
 
-            this._databases = new List<DatabaseInfo>();
+            this._databases = new List<IDatabaseInfo>();
             foreach (MyMeta.Database db in loader.Root.Databases)
             {
                 string dbname = db.Name;
                 if (Array.IndexOf(loader.ignoreDatabaseName, dbname) != -1)
                     continue;
-                DatabaseInfo item = new DatabaseInfo(this);
+                IDatabaseInfo item = new DatabaseInfo(this);
                 item.Name = dbname;
                 this._databases.Add(item);
             }
@@ -89,7 +90,7 @@ namespace DotNet.DBSchema
             _databasesLoaded = true;
         }
 
-        public DatabaseInfo GetDatabase(string dbname)
+        public IDatabaseInfo GetDatabase(string dbname)
         {
             foreach (var item in this.Databases)
             {

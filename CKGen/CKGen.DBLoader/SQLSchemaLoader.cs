@@ -4,7 +4,7 @@
 //// </copyright>
 //// -----------------------------------------------------------------------
 
-//namespace DevScaffold.Library.Database
+//namespace CKGen.DBLoader
 //{
 //    using System;
 //    using System.Collections.Generic;

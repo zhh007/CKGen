@@ -8,13 +8,13 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using DotNet.DBSchema;
+using CKGen.DBSchema;
 
 namespace CKGen
 {
     public partial class FrmMain : Form
     {
-        private DatabaseInfo DB = null;
+        private IDatabaseInfo DB = null;
 
         public FrmMain()
         {
@@ -33,11 +33,11 @@ namespace CKGen
                 }
             }
 
-            DatabaseInfo dbi = SystemConfig.SrvInfo.GetDatabase(SystemConfig.DBName);
+            IDatabaseInfo dbi = SystemConfig.SrvInfo.GetDatabase(SystemConfig.DBName);
             this.DB = DatabaseSchemaSetting.Compute(dbi);
 
             TreeNode tbNode = new TreeNode("表");
-            foreach (TableInfo item in this.DB.Tables)
+            foreach (ITableInfo item in this.DB.Tables)
             {
                 TreeNode node = new TreeNode(item.RawName);
                 node.Tag = item;
@@ -68,9 +68,9 @@ namespace CKGen
             txtTableDesc.Text = "";
             SystemConfig.Instance.CurrentTableName = "";
             dgvSchema.Rows.Clear();
-            if (e.Node.Tag is TableInfo)
+            if (e.Node.Tag is ITableInfo)
             {
-                TableInfo tbInfo = e.Node.Tag as TableInfo;
+                ITableInfo tbInfo = e.Node.Tag as ITableInfo;
                 lblTableName.Text = tbInfo.RawName;
                 txtTableDesc.Text = tbInfo.Description;
 
@@ -100,7 +100,7 @@ namespace CKGen
         {
             foreach (TreeNode node in this._EditNodes)
             {
-                TableInfo tbInfo = node.Tag as TableInfo;
+                ITableInfo tbInfo = node.Tag as ITableInfo;
                 tvSchema.SelectedNode.Text = tbInfo.RawName;
                 tvSchema.SelectedNode.ForeColor = Color.Black;
             }
@@ -129,10 +129,10 @@ namespace CKGen
             string rawName = dgvSchema.Rows[e.RowIndex].Cells[0].Value.ToString();
             string value = dgvSchema.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
 
-            if (tvSchema.SelectedNode != null && tvSchema.SelectedNode.Tag is TableInfo)
+            if (tvSchema.SelectedNode != null && tvSchema.SelectedNode.Tag is ITableInfo)
             {
                 this._EditNodes.Add(tvSchema.SelectedNode);
-                TableInfo tbInfo = tvSchema.SelectedNode.Tag as TableInfo;
+                ITableInfo tbInfo = tvSchema.SelectedNode.Tag as ITableInfo;
 
                 var col = (from c in tbInfo.Columns
                            where c.RawName == rawName

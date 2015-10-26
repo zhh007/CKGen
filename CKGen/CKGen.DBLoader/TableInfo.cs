@@ -4,8 +4,9 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace DotNet.DBSchema
+namespace CKGen.DBLoader
 {
+    using CKGen.DBSchema;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -14,7 +15,7 @@ namespace DotNet.DBSchema
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
-    public class TableInfo
+    public class TableInfo : ITableInfo
     {
         private string _rawName;
         private string _name;
@@ -23,8 +24,8 @@ namespace DotNet.DBSchema
         private string _lowerName;
         private string _schema;
         private string _desc;
-        private List<ColumnInfo> _columns = new List<ColumnInfo>();
-        private DatabaseInfo _database;
+        private List<IColumnInfo> _columns = new List<IColumnInfo>();
+        private IDatabaseInfo _database;
         private SchemaLoader loader = null;
         private bool _columnsLoaded = false;
 
@@ -103,7 +104,7 @@ namespace DotNet.DBSchema
         /// <summary>
         /// 字段集合
         /// </summary>
-        public List<ColumnInfo> Columns
+        public List<IColumnInfo> Columns
         {
             get 
             {
@@ -113,13 +114,13 @@ namespace DotNet.DBSchema
             set { _columns = value; }
         }
 
-        public List<ColumnInfo> Keys
+        public List<IColumnInfo> Keys
         {
             get
             {
                 LoadColumns();
-                List<ColumnInfo> tmp = new List<ColumnInfo>();
-                foreach (ColumnInfo col in this._columns)
+                List<IColumnInfo> tmp = new List<IColumnInfo>();
+                foreach (IColumnInfo col in this._columns)
                 {
                     if (col.IsPrimaryKey)
                     {
@@ -130,7 +131,7 @@ namespace DotNet.DBSchema
             }
         }
 
-        public DatabaseInfo Database
+        public IDatabaseInfo Database
         {
             get { return _database; }
         }
@@ -153,13 +154,13 @@ namespace DotNet.DBSchema
 
             loader.Connect();
 
-            this._columns = new List<ColumnInfo>();
+            this._columns = new List<IColumnInfo>();
             MyMeta.ITable table= loader.Root.Databases[this.Database.Name].Tables[this.RawName];
             foreach (MyMeta.Column item in table.Columns)
             {
                 string columnName = item.Name;
 
-                ColumnInfo cInfo = new ColumnInfo();
+                IColumnInfo cInfo = new ColumnInfo();
                 cInfo.RawName = columnName;
                 
                 //string dbtype = "";
