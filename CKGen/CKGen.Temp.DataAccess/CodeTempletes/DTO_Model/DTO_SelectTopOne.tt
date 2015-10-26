@@ -1,0 +1,114 @@
+﻿/// <summary>
+        /// 根据条件返回第一条记录
+        /// </summary>
+		/// <param name="strWhere">where条件</param>
+		/// <param name="paras">参数集合</param>
+		/// <param name="orderbys">排序字段，0表示ASC，1表示DESC</param>
+		public static <#= DBTable.Name #>Info SelectTopOne(string strWhere, SqlParameter[] paras, List<KeyValuePair<string, int>> orderbys)
+		{
+			string sql = @"<#= Util.BuildSQL_TopOneByWhere(DBTable) #>";
+			
+			string orderbyStr = "";
+			if(orderbys != null)
+			{
+	            int i = 0;
+	            foreach (KeyValuePair<string, int> item in orderbys)
+	            {
+	                if (i != 0)
+	                {
+	                    orderbyStr += ", ";
+	                }
+	                orderbyStr += item.Key + " ";
+	                if (item.Value == 0)
+	                {
+	                    orderbyStr += "ASC";
+	                }
+	                else
+	                {
+	                    orderbyStr += "DESC";
+	                }
+					i++;
+	            }
+			}
+			
+			string whereStr = (string.IsNullOrEmpty(strWhere)) ? "" : " WHERE " + strWhere;
+			orderbyStr = (string.IsNullOrEmpty(orderbyStr)) ? "" : " ORDERBY " + strWhere;
+			sql = sql + whereStr + orderbyStr;
+
+            <#= DBTable.Name #>Info info = null;
+            using (SqlConnection conn = new SqlConnection(<#= Var.DBConnectionName #>Link.Connection))
+            {
+				SqlCommand cmd = new SqlCommand(sql, conn);
+				if(!string.IsNullOrEmpty(strWhere) && paras != null && paras.Length > 0)
+                	cmd.Parameters.AddRange(paras);
+				try
+				{
+                	conn.Open();
+                	using (SqlDataReader sdr = cmd.ExecuteReader())
+                	{
+<#
+foreach(var column in DBTable.Columns)
+{
+#>
+						int <#= column.CamelName #>Ordinal = sdr.GetOrdinal("<#= column.RawName #>");
+<#
+}
+#>
+
+						if (sdr.Read())
+						{
+							info = new <#= DBTable.Name #>Info();
+<#
+foreach(var column in DBTable.Columns)
+{
+#>
+							if(sdr.IsDBNull(<#= column.CamelName #>Ordinal))
+							{
+								info._set<#= column.PascalName #>(<#= Util.BuildGetSqlReaderNullStr(column) #>);
+							}
+							else
+							{
+								<#= Util.BuildSetFieldValue(column) #>
+							}
+						
+<#
+}
+#>                  
+						}
+					}
+				}
+				catch (Exception ex)
+                {
+                    throw ex;
+                }
+                finally
+                {
+                    if (conn.State != ConnectionState.Closed)
+                        conn.Close();
+					if (conn != null)
+                        conn.Dispose();
+                }
+            }
+
+            return info;
+		}
+		
+		/// <summary>
+        /// 根据条件返回第一条记录
+        /// </summary>
+		/// <param name="strWhere">where条件</param>
+		/// <param name="paras">参数集合</param>
+		public static <#= DBTable.Name #>Info SelectTopOne(string strWhere, SqlParameter[] paras)
+		{
+			return SelectTopOne(strWhere, paras, null);
+		}
+		
+		/// <summary>
+        /// 根据条件返回第一条记录
+        /// </summary>
+		/// <param name="strWhere">where条件</param>
+		/// <param name="paras">参数集合</param>
+		public static <#= DBTable.Name #>Info SelectTopOne(string strWhere)
+		{
+			return SelectTopOne(strWhere, null, null);
+		}

@@ -1,0 +1,44 @@
+﻿<#@ template language="C#" #>
+<#@ assembly name="System.Xml" #>
+<#@ assembly name="CKGen.DBSchema" #>
+<#@ import namespace="CKGen.DBSchema" #>
+using System;
+using System.Text;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
+using zlab.ORM.Schema;
+using zlab.Utility;
+using <#= NameSpace #>.Model;
+using <#= NameSpace #>.Schema;
+using <#= NameSpace #>.Entities;
+
+namespace <#= NameSpace #>.DAO
+{
+	public sealed class <#= DBTable.Name #>DAO
+	{
+		<#@ include file="DTO_Model\DTO_Get.tt" #>
+		<#@ include file="DTO_Model\DTO_Insert.tt" #>
+		<#@ include file="DTO_Model\DTO_Update.tt" #>
+		<#@ include file="DTO_Model\DTO_Save.tt" #>
+		<#@ include file="DTO_Model\DTO_SelectList.tt" #>
+		<#@ include file="DTO_Model\DTO_SelectPagedList.tt" #>
+		<#@ include file="DTO_Model\DTO_SelectTopN.tt" #>
+		<#@ include file="DTO_Model\DTO_SelectTopOne.tt" #>
+
+		<#@ include file="DTO_Delete.tt" #>
+		<#@ include file="DTO_Exist.tt" #>
+		<#@ include file="DTO_PagedDataSet.tt" #>
+		<#@ include file="DTO_SelectDataSet.tt" #>
+
+		<#@ include file="DTO_Entity\DTO_GetEntity.tt" #>
+		<#@ include file="DTO_Entity\DTO_InitEntity.tt" #>
+		<#@ include file="DTO_Entity\DTO_InsertEntity.tt" #>
+		<#@ include file="DTO_Entity\DTO_ListEntities.tt" #>
+		<#@ include file="DTO_Entity\DTO_PagedListEntities.tt" #>
+		<#@ include file="DTO_Entity\DTO_SaveEntity.tt" #>
+		<#@ include file="DTO_Entity\DTO_TopNEntities.tt" #>
+		<#@ include file="DTO_Entity\DTO_TopOneEntity.tt" #>
+		<#@ include file="DTO_Entity\DTO_UpdateEntity.tt" #>
+	}
+}

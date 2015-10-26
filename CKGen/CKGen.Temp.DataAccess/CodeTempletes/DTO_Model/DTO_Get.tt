@@ -1,0 +1,152 @@
+﻿/// <summary>
+        /// 根据主键获取记录
+        /// </summary>
+		public static <#= DBTable.Name #>Info Get(<#= Util.GetPKDefine(DBTable) #>)
+        {
+			string sql = @"<#= Util.BuildGetByPKSql(DBTable) #>";
+
+            <#= DBTable.Name #>Info info = null;
+            using (SqlConnection conn = new SqlConnection(<#= Var.DBConnectionName #>Link.Connection))
+            {
+				SqlCommand cmd = new SqlCommand(sql, conn);
+<#
+foreach(var column in DBTable.Columns)
+{
+if (!column.IsPrimaryKey)
+	continue;
+#>
+				SqlParameter para_<#= column.PascalName #> = <#= DBTable.Name #>Schema.<#= column.PascalName #>.GetSqlParameter();
+                para_<#= column.PascalName #>.Value = <#= column.CamelName #>;
+                cmd.Parameters.Add(para_<#= column.PascalName #>);
+
+<#
+}
+#>
+				try
+				{
+                	conn.Open();
+                	using (SqlDataReader sdr = cmd.ExecuteReader())
+                	{
+<#
+foreach(var column in DBTable.Columns)
+{
+#>
+						int <#= column.CamelName #>Ordinal = sdr.GetOrdinal("<#= column.RawName #>");
+<#
+}
+#>
+
+						if (sdr.Read())
+						{
+							info = new <#= DBTable.Name #>Info();
+<#
+foreach(var column in DBTable.Columns)
+{
+#>
+							if(sdr.IsDBNull(<#= column.CamelName #>Ordinal))
+							{
+								info._set<#= column.PascalName #>(<#= Util.BuildGetSqlReaderNullStr(column) #>);
+							}
+							else
+							{
+								<#= Util.BuildSetFieldValue(column) #>
+							}
+						
+<#
+}
+#>                  
+						}
+					}
+				}
+				catch (Exception ex)
+                {
+                    throw ex;
+                }
+                finally
+                {
+                    if (conn.State != ConnectionState.Closed)
+                        conn.Close();
+					if (conn != null)
+                        conn.Dispose();
+                }
+            }
+
+            return info;
+        }
+		
+		/// <summary>
+        /// 根据主键获取记录
+        /// </summary>
+		internal static bool InitLoad(<#= DBTable.Name #>Info info)
+        {
+			string sql = @"<#= Util.BuildGetByPKSql(DBTable) #>";
+			bool result = false;
+
+            using (SqlConnection conn = new SqlConnection(<#= Var.DBConnectionName #>Link.Connection))
+            {
+				SqlCommand cmd = new SqlCommand(sql, conn);
+<#
+foreach(var column in DBTable.Columns)
+{
+if (!column.IsPrimaryKey)
+	continue;
+#>
+				SqlParameter para_<#= column.PascalName #> = <#= DBTable.Name #>Schema.<#= column.PascalName #>.GetSqlParameter();
+                para_<#= column.PascalName #>.Value = info.<#= column.PascalName #>;
+                cmd.Parameters.Add(para_<#= column.PascalName #>);
+
+<#
+}
+#>
+				try
+				{
+                	conn.Open();
+                	using (SqlDataReader sdr = cmd.ExecuteReader())
+                	{
+<#
+foreach(var column in DBTable.Columns)
+{
+#>
+						int <#= column.CamelName #>Ordinal = sdr.GetOrdinal("<#= column.RawName #>");
+<#
+}
+#>
+
+						if (sdr.Read())
+						{							
+<#
+foreach(var column in DBTable.Columns)
+{
+#>
+							if(sdr.IsDBNull(<#= column.CamelName #>Ordinal))
+							{
+								info._set<#= column.PascalName #>(<#= Util.BuildGetSqlReaderNullStr(column) #>);
+							}
+							else
+							{
+								<#= Util.BuildSetFieldValue(column) #>
+							}
+						
+<#
+}
+#>                  
+							result = true;
+						}
+					}
+				}
+				catch (Exception ex)
+                {
+					result = false;
+                    throw ex;
+                }
+                finally
+                {
+                    if (conn.State != ConnectionState.Closed)
+                        conn.Close();
+					if (conn != null)
+                        conn.Dispose();
+                }
+            }
+
+            return result;
+        }

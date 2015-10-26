@@ -1,0 +1,207 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{6243C3A1-29C0-4901-A46B-CFE8BE6D75F2}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CKGen.Temp.DataAccess</RootNamespace>
+    <AssemblyName>CKGen.Temp.DataAccess</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Cmd.cs" />
+    <Compile Include="CodeTempletes\AutoEntitiesTemplete1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AutoEntitiesTemplete.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CodeTempletes\DBLinkTemplete1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DBLinkTemplete.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CodeTempletes\TableDTOTemplete1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TableDTOTemplete.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CodeTempletes\TableModelTemplete1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TableModelTemplete.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CodeTempletes\TableSchemaTemplete1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TableSchemaTemplete.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CodeTempletes\Var.cs" />
+    <Compile Include="CodeTempletes\_AutoEntitiesTemplete.cs" />
+    <Compile Include="CodeTempletes\_DBLinkTemplete.cs" />
+    <Compile Include="CodeTempletes\_TableDTOTemplete.cs" />
+    <Compile Include="CodeTempletes\_TableModelTemplete.cs" />
+    <Compile Include="CodeTempletes\_TableSchemaTemplete.cs" />
+    <Compile Include="CopyDir.cs" />
+    <Compile Include="EntitiesBuilder.cs" />
+    <Compile Include="EntitiesProjectTemplate.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EntitiesProjectTemplate.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="slnTemplate.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>slnTemplate.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SolutionBuilder.cs" />
+    <Compile Include="TableCodeBuiler.cs" />
+    <Compile Include="TestProj\AppConfigTemplate1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AppConfigTemplate.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TestProj\AssemblyInfoTemplate1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AssemblyInfoTemplate.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TestProj\csprojTemplate1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>csprojTemplate.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TestProj\ProgramTemplete1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ProgramTemplete.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TestProj\_AppConfigTemplate.cs" />
+    <Compile Include="TestProj\_csprojTemplate.cs" />
+    <Compile Include="TestProj\_ProgramTemplete.cs" />
+    <Compile Include="Util.cs" />
+    <Compile Include="_EntitiesProjectTemplate.cs" />
+    <Compile Include="_slnTemplate.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CKGen.DBSchema\CKGen.DBSchema.csproj">
+      <Project>{29fc4637-6d8b-4539-8592-fc25f5408d23}</Project>
+      <Name>CKGen.DBSchema</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="build.bat" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="CodeTempletes\AutoEntitiesTemplete.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>AutoEntitiesTemplete1.cs</LastGenOutput>
+    </Content>
+    <Content Include="CodeTempletes\DBLinkTemplete.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>DBLinkTemplete1.cs</LastGenOutput>
+    </Content>
+    <Content Include="CodeTempletes\DTO_Delete.tt" />
+    <Content Include="CodeTempletes\DTO_Entity\DTO_GetEntity.tt" />
+    <Content Include="CodeTempletes\DTO_Entity\DTO_InitEntity.tt" />
+    <Content Include="CodeTempletes\DTO_Entity\DTO_InsertEntity.tt" />
+    <Content Include="CodeTempletes\DTO_Entity\DTO_ListEntities.tt" />
+    <Content Include="CodeTempletes\DTO_Entity\DTO_PagedListEntities.tt" />
+    <Content Include="CodeTempletes\DTO_Entity\DTO_SaveEntity.tt" />
+    <Content Include="CodeTempletes\DTO_Entity\DTO_TopNEntities.tt" />
+    <Content Include="CodeTempletes\DTO_Entity\DTO_TopOneEntity.tt" />
+    <Content Include="CodeTempletes\DTO_Entity\DTO_UpdateEntity.tt" />
+    <Content Include="CodeTempletes\DTO_Exist.tt" />
+    <Content Include="CodeTempletes\DTO_Model\DTO_Get.tt" />
+    <Content Include="CodeTempletes\DTO_Model\DTO_Insert.tt" />
+    <Content Include="CodeTempletes\DTO_Model\DTO_Save.tt" />
+    <Content Include="CodeTempletes\DTO_Model\DTO_SelectList.tt" />
+    <Content Include="CodeTempletes\DTO_Model\DTO_SelectPagedList.tt" />
+    <Content Include="CodeTempletes\DTO_Model\DTO_SelectTopN.tt" />
+    <Content Include="CodeTempletes\DTO_Model\DTO_SelectTopOne.tt" />
+    <Content Include="CodeTempletes\DTO_Model\DTO_Update.tt" />
+    <Content Include="CodeTempletes\DTO_Paged%28old%29.tt" />
+    <Content Include="CodeTempletes\DTO_PagedDataSet.tt" />
+    <Content Include="CodeTempletes\DTO_SelectDataSet.tt" />
+    <Content Include="CodeTempletes\TableDTOTemplete.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>TableDTOTemplete1.cs</LastGenOutput>
+    </Content>
+    <Content Include="CodeTempletes\TableModelTemplete.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>TableModelTemplete1.cs</LastGenOutput>
+    </Content>
+    <Content Include="CodeTempletes\TableSchemaTemplete.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>TableSchemaTemplete1.cs</LastGenOutput>
+    </Content>
+    <Content Include="CodeTempletes\TextFile1.txt" />
+    <Content Include="CodeTempletes\TextFile2.txt" />
+    <Content Include="EntitiesProjectTemplate.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>EntitiesProjectTemplate.cs</LastGenOutput>
+    </Content>
+    <Content Include="slnTemplate.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>slnTemplate.cs</LastGenOutput>
+    </Content>
+    <Content Include="TestProj\AppConfigTemplate.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>AppConfigTemplate1.cs</LastGenOutput>
+    </Content>
+    <Content Include="TestProj\AssemblyInfoTemplate.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>AssemblyInfoTemplate1.cs</LastGenOutput>
+    </Content>
+    <Content Include="TestProj\csprojTemplate.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>csprojTemplate1.cs</LastGenOutput>
+    </Content>
+    <Content Include="TestProj\ProgramTemplete.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>ProgramTemplete1.cs</LastGenOutput>
+    </Content>
+    <Content Include="TestProj\XMLFile1.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,43 @@
+﻿<#@ template language="C#" #>
+<#@ assembly name="System.Xml" #>
+<#@ assembly name="CKGen.DBSchema" #>
+<#@ import namespace="CKGen.DBSchema" #>
+using System;
+using System.Collections.Generic;
+using <#= NameSpace #>.Schema;
+
+namespace <#= NameSpace #>.Model
+{
+	[Serializable]
+	public partial class <#= DBTable.Name #>Info
+	{
+<#
+	    foreach (var column in DBTable.Columns)
+	    {
+#>
+		private <#= column.CSharpType #> <#= "_" + column.CamelName #>;
+		/// <summary>
+        /// <#= column.Description #>
+        /// </summary>
+		public virtual <#= column.CSharpType #> <#= column.PascalName #>
+		{
+			get 
+			{
+				return <#= "_" + column.CamelName #>; 
+			}
+			set 
+			{
+				<#= "_" + column.CamelName #> = value; 
+			}
+		}
+		
+		internal void _set<#= column.PascalName #>(<#= column.CSharpType #> value)
+		{
+			<#= "_" + column.CamelName #> = value;
+		}
+		
+<# 
+		}
+#>
+	}
+}

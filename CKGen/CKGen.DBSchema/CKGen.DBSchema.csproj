@@ -39,13 +39,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DbTargetConvert.cs" />
     <Compile Include="IColumnInfo.cs" />
     <Compile Include="IDatabaseInfo.cs" />
     <Compile Include="IProcedureInfo.cs" />
     <Compile Include="IServerInfo.cs" />
     <Compile Include="ITableInfo.cs" />
     <Compile Include="IViewInfo.cs" />
+    <Compile Include="LanguageConvert.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Res\DbTargets.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Res\Languages.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

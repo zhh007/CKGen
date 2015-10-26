@@ -1,0 +1,54 @@
+﻿public static DataSet Paged(int PageIndex, int PerPageRows, out int PageCount, out int TotalCount)
+        {
+            DataSet ds = new DataSet();
+
+            using (SqlConnection conn = new SqlConnection(<#= Var.DBConnectionName #>Link.Connection))
+            {
+                SqlCommand cmd = new SqlCommand("UserMailBlock_Paged", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                //@PerPageRows
+                SqlParameter paraPerPageRows = new SqlParameter("PerPageRows", SqlDbType.Int);
+                paraPerPageRows.Value = PerPageRows;
+                cmd.Parameters.Add(paraPerPageRows);
+
+                //@PageIndex
+                SqlParameter paraPageIndex = new SqlParameter("PageIndex", SqlDbType.Int);
+                paraPageIndex.Value = PageIndex;
+                cmd.Parameters.Add(paraPageIndex);
+
+                //@PageCount
+                SqlParameter paraPageCount = new SqlParameter("PageCount", SqlDbType.Int);
+                paraPageCount.Direction = ParameterDirection.Output;
+                cmd.Parameters.Add(paraPageCount);
+
+                //@TotalCount
+                SqlParameter paraTotalCount = new SqlParameter("TotalCount", SqlDbType.Int);
+                paraTotalCount.Direction = ParameterDirection.Output;
+                cmd.Parameters.Add(paraTotalCount);
+
+				try
+				{
+					conn.Open();
+	                SqlDataAdapter sdr = new SqlDataAdapter(cmd);
+	                sdr.Fill(ds);
+				}
+				catch (Exception ex)
+                {
+                    throw ex;
+                }
+                finally
+                {
+                    if (conn.State != ConnectionState.Closed)
+                        conn.Close();
+					if (conn != null)
+                        conn.Dispose();
+                }
+				
+                PageCount = Convert.ToInt32(paraPageCount.Value);
+                TotalCount = Convert.ToInt32(paraTotalCount.Value);
+
+            }
+
+            return ds;
+        }

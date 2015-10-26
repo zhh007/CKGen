@@ -1,0 +1,91 @@
+﻿/// <summary>
+        /// 根据条件返回所有记录
+        /// </summary>
+		/// <param name="strWhere">where条件</param>
+		/// <param name="paras">参数集合</param>
+		/// <param name="orderbys">排序字段，0表示ASC，1表示DESC</param>
+		public static DataSet SelectDataSet(string[] columns, string strWhere, SqlParameter[] paras, List<KeyValuePair<string, int>> orderbys)
+		{
+			DataSet ds = new DataSet();
+
+			string columnStr = @"<#= Util.GetColumnString(DBTable) #>";
+			if(columns != null && columns.Length > 0)
+			{
+				columnStr = string.Join(", ", columns);
+			}
+			
+			string orderbyStr = "";
+			if(orderbys != null)
+			{
+	            int i = 0;
+	            foreach (KeyValuePair<string, int> item in orderbys)
+	            {
+	                if (i != 0)
+	                {
+	                    orderbyStr += ", ";
+	                }
+	                orderbyStr += item.Key + " ";
+	                if (item.Value == 0)
+	                {
+	                    orderbyStr += "ASC";
+	                }
+	                else
+	                {
+	                    orderbyStr += "DESC";
+	                }
+					i++;
+	            }
+			}
+			
+			string whereStr = (string.IsNullOrEmpty(strWhere)) ? "" : " WHERE " + strWhere;
+			orderbyStr = (string.IsNullOrEmpty(orderbyStr)) ? "" : " ORDERBY " + strWhere;
+			
+			string sql = string.Format(@"SELECT {0} FROM [{1}].[{2}] {3} {4}"
+				, columnStr, "<#= DBTable.Schema #>", "<#= DBTable.RawName #>", whereStr, orderbyStr);
+			
+			using (SqlConnection conn = new SqlConnection(<#= Var.DBConnectionName #>Link.Connection))
+            {
+                SqlCommand cmd = new SqlCommand(sql, conn);
+				if(!string.IsNullOrEmpty(strWhere) && paras != null && paras.Length > 0)
+                	cmd.Parameters.AddRange(paras);
+
+				try
+				{
+                	SqlDataAdapter sdr = new SqlDataAdapter(cmd);
+                	sdr.Fill(ds);
+				}
+				catch (Exception ex)
+                {
+                    throw ex;
+                }
+                finally
+                {
+                    if (conn.State != ConnectionState.Closed)
+                        conn.Close();
+					if (conn != null)
+                        conn.Dispose();
+                }
+            }
+
+            return ds;
+		}
+		
+		/// <summary>
+        /// 根据条件返回所有记录
+        /// </summary>
+		/// <param name="strWhere">where条件</param>
+		/// <param name="paras">参数集合</param>
+		public static DataSet SelectDataSet(string strWhere, SqlParameter[] paras)
+		{
+			return SelectDataSet(null, strWhere, paras, null);
+		}
+		
+		/// <summary>
+        /// 根据条件返回所有记录
+        /// </summary>
+		/// <param name="strWhere">where条件</param>
+		/// <param name="paras">参数集合</param>
+		public static DataSet SelectDataSet(string strWhere)
+		{
+			return SelectDataSet(null, strWhere, null, null);
+		}

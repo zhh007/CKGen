@@ -1,0 +1,24 @@
+﻿<#@ template language="C#" #>
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{<#= this.SolutionID #>}") = "<#= TestProjName #>", "<#= TestProjName #>\\<#= TestProjName #>.csproj", "{<#= this.TestProjID #>}"
+EndProject
+Project("{<#= this.SolutionID #>}") = "<#= EntitiesProjName #>", "<#= EntitiesProjName #>\\<#= EntitiesProjName #>.csproj", "{<#= this.EntitiesProjID #>}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{<#= this.TestProjID #>}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{<#= this.TestProjID #>}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{<#= this.TestProjID #>}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{<#= this.EntitiesProjID #>}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{<#= this.EntitiesProjID #>}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{<#= this.EntitiesProjID #>}.Release|Any CPU.ActiveCfg = Release|Any CPU				
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

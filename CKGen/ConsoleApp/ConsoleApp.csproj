@@ -57,6 +57,10 @@
       <Project>{1f3c9cc8-a0f4-4de3-b257-b7d4cb7fc2fb}</Project>
       <Name>CKGen.Temp.AspnetMVC</Name>
     </ProjectReference>
+    <ProjectReference Include="..\CKGen.Temp.DataAccess\CKGen.Temp.DataAccess.csproj">
+      <Project>{6243c3a1-29c0-4901-a46b-cfe8be6d75f2}</Project>
+      <Name>CKGen.Temp.DataAccess</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CKGen.Temp.DBDoc\CKGen.Temp.DBDoc.csproj">
       <Project>{dc89b60f-c05a-4f7c-b332-c2804ad161c5}</Project>
       <Name>CKGen.Temp.DBDoc</Name>

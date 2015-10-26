@@ -1,0 +1,106 @@
+﻿/// <summary>
+        /// 根据主键判断记录是否存在
+        /// </summary>
+		public static bool Exist(<#= Util.GetPKDefine(DBTable) #>)
+		{
+			bool result = false;
+			using (SqlConnection conn = new SqlConnection(<#= Var.DBConnectionName #>Link.Connection))
+            {
+                string sql = @"<#= Util.GetExistByPKSql(DBTable) #>";
+
+                SqlCommand cmd = new SqlCommand(sql, conn);
+
+<#
+foreach(var column in DBTable.Columns)
+{
+if (!column.IsPrimaryKey)
+	continue;
+#>
+				SqlParameter para_<#= column.PascalName #> = <#= DBTable.Name #>Schema.<#= column.PascalName #>.GetSqlParameter();
+                para_<#= column.PascalName #>.Value = <#= column.CamelName #>;
+                cmd.Parameters.Add(para_<#= column.PascalName #>);
+
+<#
+}
+#>
+				try
+                {
+                    conn.Open();
+                    object r = cmd.ExecuteScalar();
+					if(r!= null)
+					{
+						int count = 0;
+						int.TryParse(r.ToString(), out count);
+						result = count > 0;
+					}
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+                finally
+                {
+                    if (conn.State != ConnectionState.Closed)
+                        conn.Close();
+					if (conn != null)
+                        conn.Dispose();
+                }
+            }
+			return result;
+		}
+		
+		/// <summary>
+        /// 根据条件判断记录是否存在
+        /// </summary>
+        /// <param name="strWhere">where条件</param>
+		/// <param name="paras">参数集合</param>
+		public static bool Exist(string strWhere, SqlParameter[] paras)
+		{
+			bool result = false;
+			if (string.IsNullOrEmpty(strWhere))
+            {
+                throw new Exception("where条件不能为空。");
+            }
+
+            if (paras.Length == 0)
+            {
+                throw new Exception("Parameters不能为空。");
+            }
+
+            using (SqlConnection conn = new SqlConnection(<#= Var.DBConnectionName #>Link.Connection))
+            {
+                StringBuilder sql = new StringBuilder();
+                sql.Append(@"SELECT COUNT(*) FROM [dbo].[<#= DBTable.Name #>] WHERE ");
+				sql.Append(strWhere);
+
+                SqlCommand cmd = new SqlCommand();
+                cmd.Parameters.AddRange(paras);
+
+                cmd.CommandText = sql.ToString();
+                cmd.Connection = conn;
+
+                try
+                {
+                    conn.Open();
+                    object r = cmd.ExecuteScalar();
+					if(r!= null)
+					{
+						int count = 0;
+						int.TryParse(r.ToString(), out count);
+						result = count > 0;
+					}
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+                finally
+                {
+                    if (conn.State != ConnectionState.Closed)
+                        conn.Close();
+					if (conn != null)
+                        conn.Dispose();
+                }
+            }
+			return result;
+		}

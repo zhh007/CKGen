@@ -1,0 +1,40 @@
+﻿public enum SqlDataType
+{
+    BigInt = 1,
+    Binary = 2,
+    Bit = 3,
+    Char = 4,
+    DateTime = 6,
+    Decimal = 7,
+    Float = 8,
+    Image = 9,
+    Int = 10,
+    Money = 11,
+    NChar = 12,
+    None = 0,
+    NText = 13,
+    Numeric = 0x23,
+    NVarChar = 14,
+    NVarCharMax = 15,
+    Real = 0x10,
+    SmallDateTime = 0x11,
+    SmallInt = 0x12,
+    SmallMoney = 0x13,
+    SysName = 0x22,
+    Text = 20,
+    Timestamp = 0x15,
+    TinyInt = 0x16,
+    UniqueIdentifier = 0x17,
+    UserDefinedDataType = 0x18,
+    UserDefinedType = 0x19,
+    VarBinary = 0x1c,
+    VarBinaryMax = 0x1d,
+    VarChar = 30,
+    VarCharMax = 0x1f,
+    Variant = 0x20,
+    Xml = 0x21
+}
+
+ 
+
+ 

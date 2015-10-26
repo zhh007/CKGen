@@ -1,0 +1,144 @@
+﻿/// <summary>
+        /// 获取分页数据
+        /// </summary>
+		/// <param name="strWhere">where条件</param>
+		/// <param name="paras">参数集合</param>
+        /// <param name="orderbys">排序字段，0表示ASC，1表示DESC</param>
+        /// <param name="pageIndex">第几页</param>
+        /// <param name="pageSize">页大小</param>
+        /// <param name="pageCount">分页数</param>
+        /// <param name="totalCount">总记录数</param>
+        /// <returns></returns>
+		public static List<<#= DBTable.Name #>Info> PagedList(string strWhere, SqlParameter[] paras, List<KeyValuePair<string, int>> orderbys, int pageIndex, int pageSize, out int pageCount, out int totalCount)
+        {
+            List<<#= DBTable.Name #>Info> result = new List<<#= DBTable.Name #>Info>();
+
+			string whereStr = (string.IsNullOrEmpty(strWhere)) ? "" : "WHERE " + strWhere;
+            string orderbyStr = "<#= Util.GetDefaultOrderby(DBTable) #>";
+			if(orderbys != null)
+			{
+	            int i = 0;
+	            foreach (KeyValuePair<string, int> item in orderbys)
+	            {
+	                if (i != 0)
+	                {
+	                    orderbyStr += ", ";
+	                }
+	                orderbyStr += item.Key + " ";
+	                if (item.Value == 0)
+	                {
+	                    orderbyStr += "ASC";
+	                }
+	                else
+	                {
+	                    orderbyStr += "DESC";
+	                }
+					i++;
+	            }
+			}
+
+            string sql = string.Format(@"
+SELECT * FROM (
+	SELECT *
+		, (ROW_NUMBER() OVER (ORDER BY {0})) AS RowNumber
+		, (((ROW_NUMBER() OVER (ORDER BY {0})) - 1)/@PageSize) + 1 AS PageNumber		
+	FROM {1} {2}
+) as t
+WHERE PageNumber = @PageIndex
+
+SELECT @TotalCount = COUNT(*) FROM (
+	SELECT *
+		, (ROW_NUMBER() OVER (ORDER BY {0})) AS RowNumber
+		, (((ROW_NUMBER() OVER (ORDER BY {0})) - 1)/@PageSize) + 1 AS PageNumber		
+	FROM {1} {2}
+) as t", orderbyStr, "<#= DBTable.Name #>", whereStr);
+
+            using (SqlConnection conn = new SqlConnection(<#= Var.DBConnectionName #>Link.Connection))
+            {
+                SqlCommand cmd = new SqlCommand(sql, conn);
+				if(!string.IsNullOrEmpty(strWhere) && paras != null && paras.Length > 0)
+                	cmd.Parameters.AddRange(paras);
+
+                SqlParameter paraPerPageRows = new SqlParameter("PageSize", SqlDbType.Int);
+                paraPerPageRows.Value = pageSize;
+                cmd.Parameters.Add(paraPerPageRows);
+
+                SqlParameter paraPageIndex = new SqlParameter("PageIndex", SqlDbType.Int);
+                paraPageIndex.Value = pageIndex;
+                cmd.Parameters.Add(paraPageIndex);
+
+                SqlParameter paraTotalCount = new SqlParameter("TotalCount", SqlDbType.Int);
+                paraTotalCount.Direction = ParameterDirection.Output;
+                cmd.Parameters.Add(paraTotalCount);
+
+				try
+				{
+					conn.Open();
+                	using (SqlDataReader sdr = cmd.ExecuteReader())
+                	{
+<#
+foreach(var column in DBTable.Columns)
+{
+#>
+						int <#= column.CamelName #>Ordinal = sdr.GetOrdinal("<#= column.RawName #>");
+<#
+}
+#>
+                    	while (sdr.Read())
+                    	{
+                        	<#= DBTable.Name #>Info info = new <#= DBTable.Name #>Info();
+						
+<#
+foreach(var column in DBTable.Columns)
+{
+#>
+							if(sdr.IsDBNull(<#= column.CamelName #>Ordinal))
+							{
+								info._set<#= column.PascalName #>(<#= Util.BuildGetSqlReaderNullStr(column) #>);
+							}
+							else
+							{
+								<#= Util.BuildSetFieldValue(column) #>
+							}
+						
+<#
+}
+#>
+                        	result.Add(info);
+                    	}
+                	}
+
+                	totalCount = Convert.ToInt32(paraTotalCount.Value);
+                	pageCount = (totalCount + pageSize - 1) / pageSize;
+				}
+				catch (Exception ex)
+                {
+                    throw ex;
+                }
+                finally
+                {
+                    if (conn.State != ConnectionState.Closed)
+                        conn.Close();
+					if (conn != null)
+                        conn.Dispose();
+                }
+            }
+
+            return result;
+        }
+		
+		/// <summary>
+        /// 获取分页数据,包括所有列
+        /// </summary>
+        /// <param name="orderbys">排序字段，0表示ASC，1表示DESC</param>
+        /// <param name="pageIndex">第几页</param>
+        /// <param name="pageSize">页大小</param>
+        /// <param name="pageCount">分页数</param>
+        /// <param name="totalCount">总记录数</param>
+        /// <returns></returns>
+		public static List<<#= DBTable.Name #>Info> PagedList(List<KeyValuePair<string, int>> orderbys, int pageIndex, int pageSize, out int pageCount, out int totalCount)
+		{
+			return PagedList("", null, orderbys, pageIndex, pageSize, out pageCount, out totalCount);
+		}
+		
+		

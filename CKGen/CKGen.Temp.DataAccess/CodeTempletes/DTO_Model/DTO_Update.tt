@@ -1,0 +1,43 @@
+﻿/// <summary>
+        /// 根据主键更记录
+        /// </summary>
+        /// <param name="info"></param>
+		public static void Update(<#= DBTable.Name #>Info info)
+        {
+			if(info == null)
+				throw new Exception("UpdateByPK方法的参数为空。");
+<#
+foreach(var column in DBTable.Columns)
+{
+if (column.IsPrimaryKey && !LanguageConvert.IsValueType(column.CSharpType))
+{
+#>			
+			if(info.<#= column.PascalName #> == null)
+				throw new Exception("主键不能为空值。");
+<#
+}	
+}
+#>		
+            using (SqlConnection conn = new SqlConnection(<#= Var.DBConnectionName #>Link.Connection))
+            {
+                string sql = @"<#= Util.GetUpdateByPKSql(DBTable) #>";
+
+                SqlCommand cmd = new SqlCommand(sql, conn);
+
+<#
+foreach(var column in DBTable.Columns)
+{
+if (column.Computed)//column.Identity || 
+	continue;
+string ColName = Util.SetPascalCase(column.Name);
+#>
+				SqlParameter para_<#= ColName #> = <#= DBTable.Name #>Schema.<#= column.PascalName #>.GetSqlParameter();
+                para_<#= ColName #>.Value = info.<#= column.PascalName #>;
+                cmd.Parameters.Add(para_<#= ColName #>);
+
+<#
+}
+#>				conn.Open();
+                cmd.ExecuteNonQuery();
+            }
+        }

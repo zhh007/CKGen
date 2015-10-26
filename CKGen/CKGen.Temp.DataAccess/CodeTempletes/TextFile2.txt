@@ -1,0 +1,15 @@
+﻿分页
+SELECT * FROM (
+	SELECT *
+		,(ROW_NUMBER() OVER (ORDER BY job_id, hire_date)) as RowNumber
+		, (((ROW_NUMBER() OVER (ORDER BY job_id, hire_date)) - 1)/4) + 1 AS PageNumber		
+	FROM employee
+) as t
+WHERE RowNumber between 20 and 29;
+
+SELECT @TotalCount = COUNT(*) FROM (
+	SELECT *
+		,(ROW_NUMBER() OVER (ORDER BY job_id, hire_date)) as RowNumber
+		, (((ROW_NUMBER() OVER (ORDER BY job_id, hire_date)) - 1)/4) + 1 AS PageNumber		
+	FROM employee
+) as t

@@ -1,0 +1,2 @@
+C:\Windows\Microsoft.NET\Framework64\v3.5\MSBuild.exe pubs.sln /t:Rebuild /p:Configuration=Debug /p:Platform="Any CPU" /l:FileLogger,Microsoft.Build.Engine;logfile=MyLog.log;append=true;verbosity=diagnostic;encoding=utf-8
+pause

@@ -1,0 +1,506 @@
+﻿<#@ template language="C#" #>
+<#@ assembly name="System.Xml" #>
+<#@ assembly name="CKGen.DBSchema" #>
+<#@ import namespace="CKGen.DBSchema" #>
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
+using <#= NameSpace #>.Model;
+using <#= NameSpace #>.Schema;
+using <#= NameSpace #>.DAO;
+
+namespace <#= NameSpace #>.Entities
+{
+	[Serializable]
+	public partial class <#= DBTable.Name #>Entity : <#= DBTable.Name #>Info
+	{
+		public static <#= DBTable.Name #>Schema Schema = new <#= DBTable.Name #>Schema();
+		public static <#= DBTable.Name #>DAO DBAccessObject = new <#= DBTable.Name #>DAO();
+		internal Dictionary<string, object> ValueDict = new Dictionary<string, object>();
+		bool isInitLoad = false;
+        bool isDirty = true;
+		
+		public bool IsInitLoad
+        {
+            get { return isInitLoad; }
+            internal set { isInitLoad = value; }
+        }        
+
+        public bool IsDirty
+        {
+            get { return isDirty; }
+            internal set { isDirty = value; }
+        }
+		
+<#
+	    foreach (var column in DBTable.Columns)
+	    {
+#>		
+		/// <summary>
+        /// <#= column.Description #>
+        /// </summary>
+		public override <#= column.CSharpType #> <#= column.PascalName #>
+		{
+			get 
+			{
+				return base.<#= column.PascalName #>; 
+			}
+			set 
+			{
+				ValueDict["<#= column.RawName #>"] =  value;
+				base.<#= column.PascalName #> = value; 
+				isDirty = true;
+			}
+		}
+<# 
+		}
+#>
+	
+		/// <summary>
+        /// 插入记录
+        /// </summary>
+		public void Insert()
+		{
+<#
+foreach(var column in DBTable.Columns)
+{
+if (column.IsPrimaryKey && !LanguageConvert.IsValueType(column.CSharpType))
+{
+#>			
+			if(this.<#= column.PascalName #> == null)
+				throw new Exception("主键不能为空值。");
+<#
+}	
+}
+#>		
+			if(this.IsInitLoad == true)
+				return;
+			<#= DBTable.Name #>DAO.InsertEntity(this);
+			this.IsInitLoad = true;
+            this.IsDirty = false;
+		}
+		
+		/// <summary>
+        /// 更新记录
+        /// </summary>
+		public void Update()
+		{
+<#
+foreach(var column in DBTable.Columns)
+{
+if (column.IsPrimaryKey && !LanguageConvert.IsValueType(column.CSharpType))
+{
+#>			
+			if(this.<#= column.PascalName #> == null)
+				throw new Exception("主键不能为空值。");
+<#
+}	
+}
+#>		
+			if(this.IsDirty == false)
+				return;
+			if (this.ValueDict.Count == 0)
+                return;
+			<#= DBTable.Name #>DAO.UpdateEntity(this);
+			this.IsInitLoad = true;
+            this.IsDirty = false;
+		}
+		
+		/// <summary>
+        /// 保存记录，如果不存在则插入记录，如果存在则更新记录
+        /// </summary>
+		public void Save()
+		{
+<#
+foreach(var column in DBTable.Columns)
+{
+if (column.IsPrimaryKey && !LanguageConvert.IsValueType(column.CSharpType))
+{
+#>			
+			if(this.<#= column.PascalName #> == null)
+				throw new Exception("主键不能为空值。");
+<#
+}	
+}
+#>		
+			if(this.IsDirty == false)
+				return;
+			if (this.ValueDict.Count == 0)
+            	return;			
+			<#= DBTable.Name #>DAO.SaveEntity(this);
+			this.IsInitLoad = true;
+            this.IsDirty = false;
+		}
+		
+		/// <summary>
+        /// 删除记录
+        /// </summary>
+		public void Delete()
+		{
+<#
+foreach(var column in DBTable.Columns)
+{
+if (column.IsPrimaryKey && !LanguageConvert.IsValueType(column.CSharpType))
+{
+#>			
+			if(this.<#= column.PascalName #> == null)
+				throw new Exception("主键不能为空值。");
+<#
+}	
+}
+#>		
+			<#= DBTable.Name #>DAO.Delete(<#= Util.GetPKValueString(DBTable) #>);
+			this.IsDirty = true;
+		}
+		
+		/// <summary>
+        /// 初始化数据
+        /// </summary>
+		public bool InitEntity()
+        {
+<#
+foreach(var column in DBTable.Columns)
+{
+if (column.IsPrimaryKey && !LanguageConvert.IsValueType(column.CSharpType))
+{
+#>			
+			if(this.<#= column.PascalName #> == null)
+				throw new Exception("主键不能为空值。");
+<#
+}	
+}
+#>		
+            bool result = <#= DBTable.Name #>DAO.InitEntity(this);			
+			if (result)
+            {
+                this.IsInitLoad = true;
+                this.IsDirty = false;
+            }
+            return result;
+        }
+		
+<# if(DBTable.Keys.Count > 0){ #>		
+		/// <summary>
+        /// 根据主键判断记录是否存在
+        /// </summary>
+		public bool Exist()
+		{
+<#
+string paraString = "";
+foreach(var column in DBTable.Columns)
+{
+	if (!column.IsPrimaryKey)
+		continue;
+
+    paraString += "this." + column.PascalName + ",";
+}
+paraString = paraString.TrimEnd(new char[]{','});
+#>			return <#= DBTable.Name #>DAO.Exist(<#= paraString #>);
+		}
+<# } #>
+
+<# if(DBTable.Keys.Count > 0){ #>
+		/// <summary>
+        /// 设置主键值
+        /// </summary>
+		public void SetKeyValue(<#= Util.GetPKDefine(DBTable) #>)
+		{
+<#
+foreach(var column in DBTable.Columns)
+{
+if (!column.IsPrimaryKey)
+	continue;
+#>
+            this.<#= column.PascalName #> = <#= column.CamelName #>;
+<#
+}
+#>
+		}
+<# } #>		
+		
+<# if(DBTable.Keys.Count > 0){ #>
+		/// <summary>
+        /// 根据主键判断记录是否存在
+        /// </summary>
+		public static bool Exist(<#= Util.GetPKDefine(DBTable) #>)
+		{
+<#
+string paraString = "";
+foreach(var column in DBTable.Columns)
+{
+	if (!column.IsPrimaryKey)
+		continue;
+
+    paraString += column.CamelName + ",";
+}
+paraString = paraString.TrimEnd(new char[]{','});
+#>			return <#= DBTable.Name #>DAO.Exist(<#= paraString #>);
+		}
+<# } #>		
+		
+		/// <summary>
+        /// 根据条件判断记录是否存在
+        /// </summary>
+        /// <param name="strWhere">where条件</param>
+		/// <param name="paras">参数集合</param>
+		public static bool Exist(string strWhere, SqlParameter[] paras)
+		{
+			return <#= DBTable.Name #>DAO.Exist(strWhere, paras);
+		}
+		
+<# if(DBTable.Keys.Count > 0){ #>
+		/// <summary>
+        /// 根据主键删除记录
+        /// </summary>
+		public static void Delete(<#= Util.GetPKDefine(DBTable) #>)
+		{
+<#
+string paraString = "";
+foreach(var column in DBTable.Columns)
+{
+	if (!column.IsPrimaryKey)
+		continue;
+
+    paraString += column.CamelName + ",";
+}
+paraString = paraString.TrimEnd(new char[]{','});
+#>			<#= DBTable.Name #>DAO.Delete(<#= paraString #>);
+		}
+<# } #>				
+		
+		/// <summary>
+        /// 按条件删除记录
+        /// </summary>
+        /// <param name="strWhere">where条件</param>
+		/// <param name="paras">参数集合</param>
+		public static void Delete(string strWhere, SqlParameter[] paras)
+        {
+			<#= DBTable.Name #>DAO.Delete(strWhere, paras);
+		}
+
+<# if(DBTable.Keys.Count > 0){ #>
+		/// <summary>
+        /// 根据主键获取记录
+        /// </summary>
+		public static <#= DBTable.Name #>Entity Get(<#= Util.GetPKDefine(DBTable) #>)
+        {
+<#
+string paraString = "";
+foreach(var column in DBTable.Columns)
+{
+	if (!column.IsPrimaryKey)
+		continue;
+
+    paraString += column.CamelName + ",";
+}
+paraString = paraString.TrimEnd(new char[]{','});
+#>			return <#= DBTable.Name #>DAO.GetEntity(<#= paraString #>);			
+		}
+<# } #>		
+		
+		/// <summary>
+        /// 根据条件返回所有记录
+        /// </summary>
+		/// <param name="strWhere">where条件</param>
+		/// <param name="paras">参数集合</param>
+		/// <param name="orderbys">排序字段，0表示ASC，1表示DESC</param>
+		public static DataSet Select(string[] columns, string strWhere, SqlParameter[] paras, List<KeyValuePair<string, int>> orderbys)
+		{
+			return <#= DBTable.Name #>DAO.SelectDataSet(columns, strWhere, paras, orderbys);
+		}
+		
+		/// <summary>
+        /// 根据条件返回所有记录
+        /// </summary>
+		/// <param name="strWhere">where条件</param>
+		/// <param name="paras">参数集合</param>
+		public static DataSet Select(string strWhere, SqlParameter[] paras)
+		{
+			return <#= DBTable.Name #>DAO.SelectDataSet(strWhere, paras);
+		}
+		
+		/// <summary>
+        /// 根据条件返回所有记录
+        /// </summary>
+		/// <param name="strWhere">where条件</param>
+		/// <param name="paras">参数集合</param>
+		public static DataSet Select(string strWhere)
+		{
+			return <#= DBTable.Name #>DAO.SelectDataSet(strWhere);
+		}
+		
+		/// <summary>
+        /// 根据条件返回第一条记录
+        /// </summary>
+		/// <param name="strWhere">where条件</param>
+		/// <param name="paras">参数集合</param>
+		/// <param name="orderbys">排序字段，0表示ASC，1表示DESC</param>
+		public static <#= DBTable.Name #>Entity TopOne(string strWhere, SqlParameter[] paras, List<KeyValuePair<string, int>> orderbys)
+		{
+			return <#= DBTable.Name #>DAO.TopOneEntity(strWhere, paras, orderbys);
+		}
+		
+		/// <summary>
+        /// 根据条件返回第一条记录
+        /// </summary>
+		/// <param name="strWhere">where条件</param>
+		/// <param name="paras">参数集合</param>
+		public static <#= DBTable.Name #>Entity TopOne(string strWhere, SqlParameter[] paras)
+		{
+			return <#= DBTable.Name #>DAO.TopOneEntity(strWhere, paras);
+		}
+		
+		/// <summary>
+        /// 根据条件返回第一条记录
+        /// </summary>
+		/// <param name="strWhere">where条件</param>
+		/// <param name="paras">参数集合</param>
+		public static <#= DBTable.Name #>Entity TopOne(string strWhere)
+		{
+			return <#= DBTable.Name #>DAO.TopOneEntity(strWhere);
+		}
+		
+		/// <summary>
+        /// 根据条件返回所有记录
+        /// </summary>
+		/// <param name="strWhere">where条件</param>
+		/// <param name="paras">参数集合</param>
+		/// <param name="orderbys">排序字段，0表示ASC，1表示DESC</param>
+		public static List<<#= DBTable.Name #>Entity> List(string strWhere, SqlParameter[] paras, List<KeyValuePair<string, int>> orderbys)
+		{
+			return <#= DBTable.Name #>DAO.ListEntities(strWhere, paras, orderbys);
+		}
+		
+		/// <summary>
+        /// 根据条件返回所有记录
+        /// </summary>
+		/// <param name="strWhere">where条件</param>
+		/// <param name="paras">参数集合</param>
+		public static List<<#= DBTable.Name #>Entity> List(string strWhere, SqlParameter[] paras)
+		{
+			return <#= DBTable.Name #>DAO.ListEntities(strWhere, paras);
+		}
+		
+		/// <summary>
+        /// 根据条件返回所有记录
+        /// </summary>
+		/// <param name="strWhere">where条件</param>
+		/// <param name="paras">参数集合</param>
+		public static List<<#= DBTable.Name #>Entity> List(string strWhere)
+		{
+			return <#= DBTable.Name #>DAO.ListEntities(strWhere);
+		}
+		
+		/// <summary>
+        /// 获取分页后的记录
+        /// </summary>
+        /// <param name="columns">列名称</param>
+		/// <param name="strWhere">where条件</param>
+		/// <param name="paras">参数集合</param>
+        /// <param name="orderbys">排序字段，0表示ASC，1表示DESC</param>
+        /// <param name="pageIndex">第几页</param>
+        /// <param name="pageSize">页大小</param>
+        /// <param name="pageCount">分页数</param>
+        /// <param name="totalCount">总记录数</param>
+        /// <returns></returns>
+		public static DataSet Paged(string[] columns, string strWhere, SqlParameter[] paras, List<KeyValuePair<string, int>> orderbys, int pageIndex, int pageSize, out int pageCount, out int totalCount)
+        {
+			return <#= DBTable.Name #>DAO.PagedDataSet(columns, strWhere, paras, orderbys, pageIndex, pageSize, out pageCount, out totalCount);
+		}
+		
+		/// <summary>
+        /// 获取分页后的记录,包括所有列
+        /// </summary>
+		/// <param name="strWhere">where条件</param>
+		/// <param name="paras">参数集合</param>
+        /// <param name="orderbys">排序字段，0表示ASC，1表示DESC</param>
+        /// <param name="pageIndex">第几页</param>
+        /// <param name="pageSize">页大小</param>
+        /// <param name="pageCount">分页数</param>
+        /// <param name="totalCount">总记录数</param>
+        /// <returns></returns>
+		public static DataSet Paged(string strWhere, SqlParameter[] paras, List<KeyValuePair<string, int>> orderbys, int pageIndex, int pageSize, out int pageCount, out int totalCount)
+		{
+			return <#= DBTable.Name #>DAO.PagedDataSet(strWhere, paras, orderbys, pageIndex, pageSize, out pageCount, out totalCount);
+		}
+		
+		/// <summary>
+        /// 获取分页后的记录,包括所有列
+        /// </summary>
+        /// <param name="orderbys">排序字段，0表示ASC，1表示DESC</param>
+        /// <param name="pageIndex">第几页</param>
+        /// <param name="pageSize">页大小</param>
+        /// <param name="pageCount">分页数</param>
+        /// <param name="totalCount">总记录数</param>
+        /// <returns></returns>
+		public static DataSet Paged(List<KeyValuePair<string, int>> orderbys, int pageIndex, int pageSize, out int pageCount, out int totalCount)
+		{
+			return <#= DBTable.Name #>DAO.PagedDataSet(orderbys, pageIndex, pageSize, out pageCount, out totalCount);
+		}
+		
+		/// <summary>
+        /// 获取分页数据
+        /// </summary>
+		/// <param name="strWhere">where条件</param>
+		/// <param name="paras">参数集合</param>
+        /// <param name="orderbys">排序字段，0表示ASC，1表示DESC</param>
+        /// <param name="pageIndex">第几页</param>
+        /// <param name="pageSize">页大小</param>
+        /// <param name="pageCount">分页数</param>
+        /// <param name="totalCount">总记录数</param>
+        /// <returns></returns>
+		public static List<<#= DBTable.Name #>Entity> PagedList(string strWhere, SqlParameter[] paras, List<KeyValuePair<string, int>> orderbys, int pageIndex, int pageSize, out int pageCount, out int totalCount)
+        {
+			return <#= DBTable.Name #>DAO.PagedListEntities(strWhere, paras, orderbys, pageIndex, pageSize, out pageCount, out totalCount);
+		}
+		
+		/// <summary>
+        /// 获取分页数据,包括所有列
+        /// </summary>
+        /// <param name="orderbys">排序字段，0表示ASC，1表示DESC</param>
+        /// <param name="pageIndex">第几页</param>
+        /// <param name="pageSize">页大小</param>
+        /// <param name="pageCount">分页数</param>
+        /// <param name="totalCount">总记录数</param>
+        /// <returns></returns>
+		public static List<<#= DBTable.Name #>Entity> PagedList(List<KeyValuePair<string, int>> orderbys, int pageIndex, int pageSize, out int pageCount, out int totalCount)
+		{
+			return <#= DBTable.Name #>DAO.PagedListEntities(orderbys, pageIndex, pageSize, out pageCount, out totalCount);
+		}
+		
+		/// <summary>
+        /// 根据条件返回前N条记录
+        /// </summary>
+		/// <param name="topN">返回几条记录</param>
+		/// <param name="strWhere">where条件</param>
+		/// <param name="paras">参数集合</param>
+		/// <param name="orderbys">排序字段，0表示ASC，1表示DESC</param>
+		public static List<<#= DBTable.Name #>Entity> TopN(int topN, string strWhere, SqlParameter[] paras, List<KeyValuePair<string, int>> orderbys)
+		{
+			return <#= DBTable.Name #>DAO.TopNEntities(topN, strWhere, paras, orderbys);
+		}
+		
+		/// <summary>
+        /// 根据条件返回前N条记录
+        /// </summary>
+		/// <param name="topN">返回几条记录</param>
+		/// <param name="strWhere">where条件</param>
+		/// <param name="paras">参数集合</param>
+		public static List<<#= DBTable.Name #>Entity> TopN(int topN, string strWhere, SqlParameter[] paras)
+		{
+			return <#= DBTable.Name #>DAO.TopNEntities(topN, strWhere, paras);
+		}
+		
+		/// <summary>
+        /// 根据条件返回前N条记录
+        /// </summary>
+		/// <param name="topN">返回几条记录</param>
+		/// <param name="strWhere">where条件</param>
+		/// <param name="paras">参数集合</param>
+		public static List<<#= DBTable.Name #>Entity> TopN(int topN, string strWhere)
+		{
+			return <#= DBTable.Name #>DAO.TopNEntities(topN, strWhere);
+		}
+	}
+}

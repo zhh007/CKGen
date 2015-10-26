@@ -61,8 +61,6 @@
   <ItemGroup>
     <Compile Include="ColumnInfo.cs" />
     <Compile Include="DatabaseInfo.cs" />
-    <Compile Include="DbTargetConvert.cs" />
-    <Compile Include="LanguageConvert.cs" />
     <Compile Include="ProcedureInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SchemaLoader.cs" />
@@ -71,12 +69,6 @@
     <Compile Include="StringHelper.cs" />
     <Compile Include="TableInfo.cs" />
     <Compile Include="ViewInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Res\DbTargets.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Res\Languages.xml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CKGen.DBSchema\CKGen.DBSchema.csproj">

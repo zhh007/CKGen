@@ -1,0 +1,12 @@
+﻿<#@ template language="C#" #>
+using System;
+using System.Configuration;
+
+namespace <#= NameSpace #>
+{
+	public static class <#= Var.DBConnectionName #>Link
+	{
+		public static string Name = "<#= Var.DBConnectionName #>";
+		public static string Connection = ConfigurationManager.ConnectionStrings[Name].ConnectionString;
+	}
+}

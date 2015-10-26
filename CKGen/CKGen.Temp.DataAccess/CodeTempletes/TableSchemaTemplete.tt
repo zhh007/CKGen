@@ -1,0 +1,83 @@
+﻿<#@ template language="C#" #>
+<#@ assembly name="System.Xml" #>
+<#@ assembly name="CKGen.DBSchema" #>
+<#@ import namespace="CKGen.DBSchema" #>
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
+using zlab.ORM.Schema;
+
+namespace <#= NameSpace #>.Schema
+{
+	[Serializable]
+	public sealed class <#= DBTable.Name #>Schema
+	{
+		public static List<ColumnSchema> Columns = new List<ColumnSchema>();
+		
+		public static SqlParameter GetSqlParameter(string colName)
+		{
+			ColumnSchema cSchema = null;
+			foreach(ColumnSchema item in Columns)
+			{
+				if(item.Name == colName || item.RawName == colName)
+				{
+					cSchema = item;
+					break;
+				}
+			}
+			if(cSchema != null)
+				return cSchema.GetSqlParameter();
+			return null;
+		}
+		
+<#
+	    foreach (var column in DBTable.Columns)
+	    {
+			string colName = "_" + column.CamelName;
+			string ColName = column.PascalName;
+			string sqlType = column.DBType;
+			string csharpType = column.CSharpType;
+			string desc = column.Description;
+#>
+		/// <summary>
+        /// <#= column.Description #>
+        /// </summary>
+		public static ColumnSchema <#= column.PascalName #>;
+		
+<# 
+		}
+#>
+
+		static <#= DBTable.Name #>Schema()
+		{
+<#
+	    foreach (var column in DBTable.Columns)
+	    {
+			string ColName = column.PascalName;
+			string nullable = column.Nullable ? "true" : "false";
+			string isPrimaryKey = column.IsPrimaryKey ? "true" : "false";
+#>
+			<#= ColName #> = new ColumnSchema();
+			<#= ColName #>.Name = "<#= column.Name #>";
+			<#= ColName #>.RawName = "<#= column.RawName #>";
+			<#= ColName #>.DBType = "<#= column.DBType #>";
+			<#= ColName #>.SqlDataType = "<#= column.SqlDataType #>";
+			<#= ColName #>.Nullable = <#= nullable #>;
+			<#= ColName #>.MaxLength = <#= column.MaxLength #>;
+<# if(LanguageConvert.IsNumericType(column.DBType)) { #>
+			<#= ColName #>.Precision = <#= column.Precision #>;
+			<#= ColName #>.Scale = <#= column.Scale #>;
+<# } #>			
+			<#= ColName #>.IsPrimaryKey = <#= isPrimaryKey #>;
+			<#= ColName #>.Description = "<#= column.Description #>";
+			
+			Columns.Add(<#= ColName #>);
+			
+			
+<# 
+		}
+#>
+		}
+	}
+}

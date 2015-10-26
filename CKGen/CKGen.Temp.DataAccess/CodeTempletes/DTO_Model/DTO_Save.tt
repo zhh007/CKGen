@@ -1,0 +1,55 @@
+﻿/// <summary>
+        /// 保存记录，如果不存在insert，如果存在update
+        /// </summary>
+        /// <param name="info"></param>		
+		public static void Save(<#= DBTable.Name #>Info info)
+		{
+			if(info == null)
+				throw new Exception("Insert方法的参数为空。");
+<#
+foreach(var column in DBTable.Columns)
+{
+if (column.IsPrimaryKey && !column.Identity && !LanguageConvert.IsValueType(column.CSharpType))
+{
+#>			
+			if(info.<#= column.PascalName #> == null)
+				throw new Exception("主键不能为空值。");
+<#
+}
+}
+#>		
+			using (SqlConnection conn = new SqlConnection(<#= Var.DBConnectionName #>Link.Connection))
+            {
+                string sql = @"<#= Util.GetSaveSqlForInfo(DBTable) #>";
+				
+                SqlCommand cmd = new SqlCommand(sql, conn);
+<#
+foreach(var column in DBTable.Columns)
+{
+if (column.Computed)//column.Identity || 
+	continue;
+#>
+				SqlParameter para_<#= column.PascalName #> = <#= DBTable.Name #>Schema.<#= column.PascalName #>.GetSqlParameter();
+                para_<#= column.PascalName #>.Value = <#= Util.SetParameterValueStr(column, "info") #>;
+                cmd.Parameters.Add(para_<#= column.PascalName #>);
+
+<#
+}
+#>				try
+                {
+                    conn.Open();
+                    cmd.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+                finally
+                {
+                    if (conn.State != ConnectionState.Closed)
+                        conn.Close();
+					if (conn != null)
+                        conn.Dispose();
+                }
+			}
+		}

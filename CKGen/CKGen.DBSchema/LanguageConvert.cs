@@ -7,7 +7,7 @@ using System.Reflection;
 using System.Xml.Linq;
 using System.Diagnostics;
 
-namespace CKGen.DBLoader
+namespace CKGen.DBSchema
 {
     public class LanguageConvert
     {
@@ -23,7 +23,7 @@ namespace CKGen.DBLoader
 
             if (!innerDict.ContainsKey(key))
             {
-                Stream resourceStream = Assembly.GetAssembly(this.GetType()).GetManifestResourceStream("CKGen.DBLoader.Res.Languages.xml");
+                Stream resourceStream = Assembly.GetAssembly(this.GetType()).GetManifestResourceStream("CKGen.DBSchema.Res.Languages.xml");
 
                 if (resourceStream != null)
                 {
