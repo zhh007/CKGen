@@ -16,6 +16,7 @@ namespace CKGen
     {
         private IDatabaseInfo DB = null;
         private UCDetail DetailPage = null;
+        private ContextMenuStrip TableMenu = null;
 
         public FrmMain()
         {
@@ -56,6 +57,13 @@ namespace CKGen
             frm.Show();
 
             //
+            InitTree();
+
+            this.WindowState = FormWindowState.Maximized;
+        }
+
+        private void InitTree()
+        {
             TreeNode tbNode = new TreeNode("表");
             foreach (ITableInfo item in this.DB.Tables)
             {
@@ -70,7 +78,62 @@ namespace CKGen
                 this.tvSchema.SelectedNode = tbNode.Nodes[0];
             }
 
-            this.WindowState = FormWindowState.Maximized;
+            //菜单
+            this.TableMenu = new ContextMenuStrip();
+            this.TableMenu.Items.Add("查看前 100 行", null, (s, e) =>
+            {
+                if (this.tvSchema.SelectedNode.Tag is ITableInfo)
+                {
+                    ITableInfo tbInfo = this.tvSchema.SelectedNode.Tag as ITableInfo;
+                    string sql = string.Format("select top 100 * from {0}", tbInfo.RawName);
+
+                    var query = new UCQuery();
+                    query.Dock = DockStyle.Fill;
+                    TabPage tab1 = new TabPage("查询");
+                    tab1.Controls.Add(query);
+                    this.tabControl1.TabPages.Add(tab1);
+                    this.tabControl1.SelectTab(tab1);
+                    query.Query(sql);
+                }
+            });
+            ToolStripSeparator spliter = new ToolStripSeparator();
+            this.TableMenu.Items.Add(spliter);
+            this.TableMenu.Items.Add("生成代码 - Insert", null, (s, e) =>
+            {
+
+            });
+            this.TableMenu.Items.Add("生成代码 - Update", null, (s, e) =>
+            {
+
+            });
+            this.TableMenu.Items.Add("生成代码 - Delete", null, (s, e) =>
+            {
+
+            });
+            this.TableMenu.Items.Add("生成代码 - Save", null, (s, e) =>
+            {
+
+            });
+            this.TableMenu.Items.Add("生成代码 - Exist", null, (s, e) =>
+            {
+
+            });
+            this.TableMenu.Items.Add("生成代码 - Get", null, (s, e) =>
+            {
+
+            });
+            this.TableMenu.Items.Add("生成代码 - Top", null, (s, e) =>
+            {
+
+            });
+            this.TableMenu.Items.Add("生成代码 - Select", null, (s, e) =>
+            {
+
+            });
+            this.TableMenu.Items.Add("生成代码 - Paged", null, (s, e) =>
+            {
+
+            });
         }
 
         private void tvSchema_AfterSelect(object sender, TreeViewEventArgs e)
@@ -82,7 +145,7 @@ namespace CKGen
                 SystemConfig.Instance.CurrentTableName = tbInfo.RawName;
             }
         }
-        
+
         /// <summary>
         /// 保存说明
         /// </summary>
@@ -101,6 +164,15 @@ namespace CKGen
         private void tsBtnReloadSchema_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void tvSchema_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right && e.Node.Tag is ITableInfo)
+            {
+                this.tvSchema.SelectedNode = e.Node;
+                this.TableMenu.Show(this.tvSchema, e.Location);
+            }
         }
     }
 }

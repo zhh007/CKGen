@@ -129,6 +129,7 @@
             this.tvSchema.Size = new System.Drawing.Size(183, 451);
             this.tvSchema.TabIndex = 0;
             this.tvSchema.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.tvSchema_AfterSelect);
+            this.tvSchema.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.tvSchema_NodeMouseClick);
             // 
             // tabPage2
             // 
@@ -148,7 +149,7 @@
             this.tabControl1.Location = new System.Drawing.Point(0, 5);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(838, 476);
+            this.tabControl1.Size = new System.Drawing.Size(840, 476);
             this.tabControl1.TabIndex = 0;
             // 
             // FrmMain

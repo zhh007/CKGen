@@ -101,11 +101,23 @@
     <Compile Include="Setting\DatabaseSchemaSetting.cs" />
     <Compile Include="SQLHelper.cs" />
     <Compile Include="SystemConfig.cs" />
+    <Compile Include="UCCodeShow.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UCCodeShow.Designer.cs">
+      <DependentUpon>UCCodeShow.cs</DependentUpon>
+    </Compile>
     <Compile Include="UCDetail.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="UCDetail.Designer.cs">
       <DependentUpon>UCDetail.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UCQuery.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UCQuery.Designer.cs">
+      <DependentUpon>UCQuery.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
@@ -137,6 +149,9 @@
     <EmbeddedResource Include="UCDetail.resx">
       <DependentUpon>UCDetail.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="UCQuery.resx">
+      <DependentUpon>UCQuery.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="app.config" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -162,6 +177,9 @@
       <Project>{1f3c9cc8-a0f4-4de3-b257-b7d4cb7fc2fb}</Project>
       <Name>CKGen.Temp.AspnetMVC</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="readme.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

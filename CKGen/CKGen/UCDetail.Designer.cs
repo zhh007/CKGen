@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.lblTableName = new System.Windows.Forms.Label();
@@ -121,7 +121,6 @@
             this.dgvSchema.Location = new System.Drawing.Point(0, 74);
             this.dgvSchema.MultiSelect = false;
             this.dgvSchema.Name = "dgvSchema";
-            this.dgvSchema.RowHeadersVisible = false;
             this.dgvSchema.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
             this.dgvSchema.RowTemplate.Height = 23;
             this.dgvSchema.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
@@ -147,8 +146,8 @@
             // ColNull
             // 
             this.ColNull.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.ColNull.DefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.ColNull.DefaultCellStyle = dataGridViewCellStyle1;
             this.ColNull.HeaderText = "允许Null值";
             this.ColNull.Name = "ColNull";
             this.ColNull.ReadOnly = true;
@@ -183,16 +182,16 @@
             // ColBlank
             // 
             this.ColBlank.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.Color.White;
-            this.ColBlank.DefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.White;
+            this.ColBlank.DefaultCellStyle = dataGridViewCellStyle2;
             this.ColBlank.HeaderText = "";
             this.ColBlank.Name = "ColBlank";
             this.ColBlank.ReadOnly = true;
             this.ColBlank.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.ColBlank.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
-            // UCSchema
+            // UCDetail
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -203,7 +202,7 @@
             this.Controls.Add(this.txtTableDesc);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.dgvSchema);
-            this.Name = "UCSchema";
+            this.Name = "UCDetail";
             this.Size = new System.Drawing.Size(834, 493);
             this.Load += new System.EventHandler(this.UCSchema_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvSchema)).EndInit();
