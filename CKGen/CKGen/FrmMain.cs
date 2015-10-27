@@ -15,6 +15,7 @@ namespace CKGen
     public partial class FrmMain : Form
     {
         private IDatabaseInfo DB = null;
+        private UCDetail DetailPage = null;
 
         public FrmMain()
         {
@@ -35,7 +36,26 @@ namespace CKGen
 
             IDatabaseInfo dbi = SystemConfig.SrvInfo.GetDatabase(SystemConfig.DBName);
             this.DB = DatabaseSchemaSetting.Compute(dbi);
+            SystemConfig.Instance.Database = this.DB;
 
+            //详细信息
+            this.DetailPage = new UCDetail();
+            this.DetailPage.Dock = DockStyle.Fill;
+            TabPage tab1 = new TabPage("详细信息");
+            tab1.Controls.Add(this.DetailPage);
+            this.tabControl1.TabPages.Add(tab1);
+
+            //
+            FrmCodeBuild frm = new FrmCodeBuild();
+            frm.TopLevel = false;
+            frm.Dock = DockStyle.Fill;
+            frm.FormBorderStyle = FormBorderStyle.None;
+            TabPage tab = new TabPage(frm.Text);
+            tab.Controls.Add(frm);
+            this.tabControl1.TabPages.Add(tab);
+            frm.Show();
+
+            //
             TreeNode tbNode = new TreeNode("表");
             foreach (ITableInfo item in this.DB.Tables)
             {
@@ -51,43 +71,15 @@ namespace CKGen
             }
 
             this.WindowState = FormWindowState.Maximized;
-
-            FrmCodeBuild frm = new FrmCodeBuild();
-            frm.TopLevel = false;
-            frm.Dock = DockStyle.Fill;
-            frm.FormBorderStyle = FormBorderStyle.None;
-            TabPage tab = new TabPage(frm.Text);
-            tab.Controls.Add(frm);
-            this.tabControl1.TabPages.Add(tab);
-            frm.Show();
         }
 
         private void tvSchema_AfterSelect(object sender, TreeViewEventArgs e)
         {
-            lblTableName.Text = "";
-            txtTableDesc.Text = "";
-            SystemConfig.Instance.CurrentTableName = "";
-            dgvSchema.Rows.Clear();
             if (e.Node.Tag is ITableInfo)
             {
                 ITableInfo tbInfo = e.Node.Tag as ITableInfo;
-                lblTableName.Text = tbInfo.RawName;
-                txtTableDesc.Text = tbInfo.Description;
-
+                SystemConfig.Instance.SelectedNode = e.Node;
                 SystemConfig.Instance.CurrentTableName = tbInfo.RawName;
-                foreach (var item in tbInfo.Columns)
-                {
-                    string[] row = new string[] {
-                        item.RawName,
-                        item.DBType,
-                        item.Nullable ? "Yes" : "No",
-                        item.Description,
-                        item.Attributes.ContainsKey("local_desc") ? item.Attributes["local_desc"] : "",
-                        item.Attributes.ContainsKey("new_desc") ? item.Attributes["new_desc"] : ""
-                    };
-
-                    dgvSchema.Rows.Add(row);
-                }
             }
         }
         
@@ -98,52 +90,7 @@ namespace CKGen
         /// <param name="e"></param>
         private void tsbtnSaveSchema_Click(object sender, EventArgs e)
         {
-            foreach (TreeNode node in this._EditNodes)
-            {
-                ITableInfo tbInfo = node.Tag as ITableInfo;
-                tvSchema.SelectedNode.Text = tbInfo.RawName;
-                tvSchema.SelectedNode.ForeColor = Color.Black;
-            }
-            this._EditNodes.Clear();
-
-            foreach (DataGridViewRow row in dgvSchema.Rows)
-            {
-                string desc = row.Cells[row.Cells.Count - 2].Value as string;
-                if (!string.IsNullOrEmpty(desc))
-                {
-                    row.Cells[row.Cells.Count - 2].Value = "";
-                    row.Cells[row.Cells.Count - 3].Value = desc;
-                    row.Cells[row.Cells.Count - 4].Value = desc;
-                }
-            }
-
-            DatabaseSchemaSetting.Save(this.DB);
-
-            MessageBox.Show("保存成功。");
-        }
-
-        private List<TreeNode> _EditNodes = new List<TreeNode>();
-
-        private void dgvSchema_CellEndEdit(object sender, DataGridViewCellEventArgs e)
-        {
-            string rawName = dgvSchema.Rows[e.RowIndex].Cells[0].Value.ToString();
-            string value = dgvSchema.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
-
-            if (tvSchema.SelectedNode != null && tvSchema.SelectedNode.Tag is ITableInfo)
-            {
-                this._EditNodes.Add(tvSchema.SelectedNode);
-                ITableInfo tbInfo = tvSchema.SelectedNode.Tag as ITableInfo;
-
-                var col = (from c in tbInfo.Columns
-                           where c.RawName == rawName
-                           select c).FirstOrDefault();
-                if (col != null)
-                {
-                    col.Attributes["new_desc"] = value;
-                }
-                tvSchema.SelectedNode.Text = tbInfo.RawName + "(*)";
-                tvSchema.SelectedNode.ForeColor = Color.Red;
-            }
+            this.DetailPage.Save();
         }
 
         /// <summary>

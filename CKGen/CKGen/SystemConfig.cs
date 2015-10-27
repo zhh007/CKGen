@@ -4,6 +4,8 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using CKGen.DBLoader;
+using System.Windows.Forms;
+using CKGen.DBSchema;
 
 namespace CKGen
 {
@@ -27,6 +29,8 @@ namespace CKGen
         public static ServerInfo SrvInfo = null;
         public static string DBName = "";
         private string _currentTableName = "";
+        public TreeNode SelectedNode { get; set; }
+        public IDatabaseInfo Database { get; set; }
 
         public string CurrentTableName
         {

@@ -101,6 +101,12 @@
     <Compile Include="Setting\DatabaseSchemaSetting.cs" />
     <Compile Include="SQLHelper.cs" />
     <Compile Include="SystemConfig.cs" />
+    <Compile Include="UCDetail.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UCDetail.Designer.cs">
+      <DependentUpon>UCDetail.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
@@ -128,6 +134,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="UCDetail.resx">
+      <DependentUpon>UCDetail.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="app.config" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
