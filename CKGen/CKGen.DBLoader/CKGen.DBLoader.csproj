@@ -51,8 +51,12 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="MyMeta">
+      <HintPath>..\libs\mymeta\MyMeta.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.EnterpriseServices" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
@@ -74,10 +78,6 @@
     <ProjectReference Include="..\CKGen.DBSchema\CKGen.DBSchema.csproj">
       <Project>{29fc4637-6d8b-4539-8592-fc25f5408d23}</Project>
       <Name>CKGen.DBSchema</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\mymeta\MyMeta.csproj">
-      <Project>{72beab1c-b55f-4f0e-89af-17f71e74a452}</Project>
-      <Name>MyMeta</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
