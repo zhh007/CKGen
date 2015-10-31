@@ -181,6 +181,20 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="readme.txt" />
+    <None Include="Resources\New.ico" />
+    <None Include="Resources\PrimaryKeyHS.png" />
+    <Content Include="Resources\server_link_ico.ico" />
+    <None Include="Resources\fresh.png" />
+    <None Include="Resources\folder.png" />
+    <None Include="Resources\database_link.png" />
+    <None Include="Resources\database.png" />
+    <None Include="Resources\close.png" />
+    <None Include="Resources\view.png" />
+    <None Include="Resources\table.png" />
+    <None Include="Resources\server_link.png" />
+    <None Include="Resources\proc.png" />
+    <None Include="Resources\link.png" />
+    <None Include="Resources\home.png" />
     <None Include="Resources\success.png" />
     <None Include="Resources\error.png" />
     <None Include="Resources\PageNumber.png" />

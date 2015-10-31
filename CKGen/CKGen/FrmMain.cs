@@ -65,9 +65,13 @@ namespace CKGen
         private void InitTree()
         {
             TreeNode tbNode = new TreeNode("表");
+            tbNode.ImageIndex = 1;
+            tbNode.SelectedImageIndex = 1;
             foreach (ITableInfo item in this.DB.Tables)
             {
                 TreeNode node = new TreeNode(item.RawName);
+                node.ImageIndex = 2;
+                node.SelectedImageIndex = 2;
                 node.Tag = item;
                 tbNode.Nodes.Add(node);
             }
@@ -168,11 +172,12 @@ namespace CKGen
 
         private void tvSchema_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
         {
+            this.tvSchema.SelectedNode = e.Node;
             if (e.Button == MouseButtons.Right && e.Node.Tag is ITableInfo)
             {
-                this.tvSchema.SelectedNode = e.Node;
                 this.TableMenu.Show(this.tvSchema, e.Location);
             }
         }
+        
     }
 }
