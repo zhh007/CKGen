@@ -59,7 +59,7 @@ namespace CKGen
             //
             InitTree();
 
-            this.WindowState = FormWindowState.Maximized;
+            //this.WindowState = FormWindowState.Maximized;
         }
 
         private void InitTree()

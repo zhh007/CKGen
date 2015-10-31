@@ -145,6 +145,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <EmbeddedResource Include="UCDetail.resx">
       <DependentUpon>UCDetail.cs</DependentUpon>
@@ -180,6 +181,14 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="readme.txt" />
+    <None Include="Resources\success.png" />
+    <None Include="Resources\error.png" />
+    <None Include="Resources\PageNumber.png" />
+    <None Include="Resources\EditCodeHS.png" />
+    <None Include="Resources\TableHS.png" />
+    <None Include="Resources\Alerts.png" />
+    <None Include="Resources\PlayHS.png" />
+    <None Include="Resources\StopHS.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
