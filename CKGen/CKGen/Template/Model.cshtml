@@ -1,0 +1,22 @@
+﻿@using RazorEngine.Templating
+@using CKGen.DBSchema;
+@using CKGen;
+@inherits TemplateBase<ITableInfo>
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+public partial class @(Model.PascalName)
+{
+    @foreach (var column in Model.Columns)
+    {
+    <text>/// @("<summary>")</text>
+    <text>/// @(column.Description)</text>
+    <text>/// @("</summary>")</text>
+    <text>public @(column.CSharpType) @(column.PascalName) { get; set; }</text>
+    @("\r\n")
+    }
+}
+

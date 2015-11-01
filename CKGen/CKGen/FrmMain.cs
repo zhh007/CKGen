@@ -102,42 +102,62 @@ namespace CKGen
             });
             ToolStripSeparator spliter = new ToolStripSeparator();
             this.TableMenu.Items.Add(spliter);
+            this.TableMenu.Items.Add("生成代码 - Model", null, (s, e) =>
+            {
+                GenCode("Model.cshtml");
+            });
             this.TableMenu.Items.Add("生成代码 - Insert", null, (s, e) =>
             {
-
+                GenCode("Insert.cshtml");
             });
             this.TableMenu.Items.Add("生成代码 - Update", null, (s, e) =>
             {
-
+                GenCode("Update.cshtml");
             });
             this.TableMenu.Items.Add("生成代码 - Delete", null, (s, e) =>
             {
-
+                GenCode("Delete.cshtml");
             });
             this.TableMenu.Items.Add("生成代码 - Save", null, (s, e) =>
             {
-
+                GenCode("Save.cshtml");
             });
             this.TableMenu.Items.Add("生成代码 - Exist", null, (s, e) =>
             {
-
+                GenCode("Exist.cshtml");
             });
             this.TableMenu.Items.Add("生成代码 - Get", null, (s, e) =>
             {
-
+                GenCode("Get.cshtml");
             });
             this.TableMenu.Items.Add("生成代码 - Top", null, (s, e) =>
             {
-
+                GenCode("Top.cshtml");
             });
             this.TableMenu.Items.Add("生成代码 - Select", null, (s, e) =>
             {
-
+                GenCode("Select.cshtml");
             });
             this.TableMenu.Items.Add("生成代码 - Paged", null, (s, e) =>
             {
-
+                GenCode("Paged.cshtml");
             });
+        }
+
+        private void GenCode(string viewName)
+        {
+            if (this.tvSchema.SelectedNode.Tag is ITableInfo)
+            {
+                ITableInfo tbInfo = this.tvSchema.SelectedNode.Tag as ITableInfo;
+                string code = CodeGen.GenForTable(viewName, tbInfo);
+                UCCodeShow codeShow = new UCCodeShow();
+                codeShow.Dock = DockStyle.Fill;
+                TabPage tab1 = new TabPage("Model For " + tbInfo.Name);
+                tab1.Controls.Add(codeShow);
+                this.tabControl1.TabPages.Add(tab1);
+                this.tabControl1.SelectTab(tab1);
+                codeShow.Show(code);
+            }
         }
 
         private void tvSchema_AfterSelect(object sender, TreeViewEventArgs e)
@@ -178,6 +198,6 @@ namespace CKGen
                 this.TableMenu.Show(this.tvSchema, e.Location);
             }
         }
-        
+
     }
 }

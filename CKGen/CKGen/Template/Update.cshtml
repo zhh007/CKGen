@@ -1,0 +1,72 @@
+﻿@using RazorEngine.Templating
+@using CKGen.DBSchema;
+@using CKGen;
+@inherits TemplateBase<ITableInfo>
+
+/// <summary>
+/// 根据主键更记录
+/// </summary>
+/// <param name="info"></param>
+internal static void UpdateEntity(<#= DBTable.Name #> entity)
+{
+    if(entity == null)
+        throw new Exception("Update方法的参数为空。");
+
+@foreach(var column in DBTable.Columns)
+{
+    if (column.IsPrimaryKey && !LanguageConvert.IsValueType(column.CSharpType))
+    {
+<text>
+    if(entity.<#= column.PascalName #> == null)
+        throw new Exception("主键不能为空值。");</text>
+    }
+}
+
+    using (SqlConnection conn = new SqlConnection('conn_name'))
+    {
+        SqlCommand cmd = new SqlCommand();
+        string sql = @@"@(Util.GetUpdateByPKSql_2(DBTable))";
+        string tmpStr = "";
+        foreach(KeyValuePair<string, object> item in entity.ValueDict)
+        {
+            <#= Util.BuildGetKeyEqContinue(DBTable) #>
+            tmpStr += "[" + item.Key + "] = @" + StringHelper.SetValidName(item.Key) + ",";
+            SqlParameter para = <#= DBTable.Name #>Schema.GetSqlParameter(item.Key);
+            para.Value = item.Value;
+            cmd.Parameters.Add(para);
+        }
+        tmpStr = tmpStr.TrimEnd(',');
+                
+        sql = string.Format(sql, tmpStr);
+        cmd.CommandText = sql;
+        cmd.Connection = conn;
+<#
+foreach(var column in DBTable.Columns)
+{
+if (column.Computed)//column.Identity || 
+    continue;
+#>            
+                SqlParameter para<#= column.PascalName #> = <#= DBTable.Name #>Schema.<#= column.PascalName #>.GetSqlParameter();
+                para<#= column.PascalName #>.Value = entity.<#= column.PascalName #>;
+                cmd.Parameters.Add(para<#= column.PascalName #>);
+<#
+}
+#>
+        try
+        {
+            conn.Open();
+            cmd.ExecuteNonQuery();
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+        finally
+        {
+            if (conn.State != ConnectionState.Closed)
+                conn.Close();
+            if (conn != null)
+                conn.Dispose();
+        }
+    }
+}

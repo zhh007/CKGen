@@ -1,0 +1,101 @@
+﻿@using RazorEngine.Templating
+@using CKGen.DBSchema;
+@using CKGen;
+@inherits TemplateBase<ITableInfo>
+
+/// <summary>
+        /// 根据条件返回所有记录
+        /// </summary>
+        /// <param name="strWhere">where条件</param>
+        /// <param name="paras">参数集合</param>
+        /// <param name="orderbys">排序字段，0表示ASC，1表示DESC</param>
+        internal static List<<#= DBTable.Name #>Entity> ListEntities(string strWhere, SqlParameter[] paras, List<KeyValuePair<string, int>> orderbys)
+        {
+            List<<#= DBTable.Name #>Entity> result = new List<<#= DBTable.Name #>Entity>();
+            
+            string sql = @"<#= Util.BuildGetByWhere(DBTable) #>";            
+            string orderbyStr = "";
+            if(orderbys != null)
+            {
+                int i = 0;
+                foreach (KeyValuePair<string, int> item in orderbys)
+                {
+                    if (i != 0)
+                    {
+                        orderbyStr += ", ";
+                    }
+                    orderbyStr += item.Key + " ";
+                    if (item.Value == 0)
+                    {
+                        orderbyStr += "ASC";
+                    }
+                    else
+                    {
+                        orderbyStr += "DESC";
+                    }
+                    i++;
+                }
+            }
+            
+            string whereStr = (string.IsNullOrEmpty(strWhere)) ? "" : " WHERE " + strWhere;
+            orderbyStr = (string.IsNullOrEmpty(orderbyStr)) ? "" : " ORDERBY " + strWhere;
+            sql = sql + whereStr + orderbyStr;
+            
+            using (SqlConnection conn = new SqlConnection(<#= Var.DBConnectionName #>Link.Connection))
+            {
+                SqlCommand cmd = new SqlCommand(sql, conn);
+                if(!string.IsNullOrEmpty(strWhere) && paras != null && paras.Length > 0)
+                    cmd.Parameters.AddRange(paras);
+
+                try
+                {
+                    conn.Open();
+                    using (SqlDataReader sdr = cmd.ExecuteReader())
+                    {
+<#
+foreach(var column in DBTable.Columns)
+{
+#>
+                        int <#= column.CamelName #>Ordinal = sdr.GetOrdinal("<#= column.RawName #>");
+<#
+}
+#>
+                        while (sdr.Read())
+                        {
+                            <#= DBTable.Name #>Entity info = new <#= DBTable.Name #>Entity();
+                        
+<#
+foreach(var column in DBTable.Columns)
+{
+#>
+                            if(sdr.IsDBNull(<#= column.CamelName #>Ordinal))
+                            {
+                                info._set<#= column.PascalName #>(<#= Util.BuildGetSqlReaderNullStr(column) #>);
+                            }
+                            else
+                            {
+                                <#= Util.BuildSetFieldValue(column) #>
+                            }
+                        
+<#
+}
+#>
+                            result.Add(info);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+                finally
+                {
+                    if (conn.State != ConnectionState.Closed)
+                        conn.Close();
+                    if (conn != null)
+                        conn.Dispose();
+                }
+            }
+
+            return result;
+        }

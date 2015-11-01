@@ -28,8 +28,17 @@
         /// </summary>
         private void InitializeComponent()
         {
-            components = new System.ComponentModel.Container();
+            this.SuspendLayout();
+            // 
+            // UCCodeShow
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Name = "UCCodeShow";
+            this.Size = new System.Drawing.Size(876, 545);
+            this.Load += new System.EventHandler(this.UCCodeShow_Load);
+            this.ResumeLayout(false);
+
         }
 
         #endregion

@@ -1,0 +1,71 @@
+﻿@using RazorEngine.Templating
+@using CKGen.DBSchema;
+@using CKGen;
+@inherits TemplateBase<ITableInfo>
+
+/// <summary>
+/// 保存记录，如果不存在insert，如果存在update
+/// </summary>
+/// <param name="entity"></param>
+public static void Save(@(Model.Name) entity)
+{
+    if(entity == null)
+        throw new Exception("Insert方法的参数为空。");
+
+@foreach(var column in Model.Columns)
+{
+    if (column.IsPrimaryKey && !column.Identity && !LanguageConvert.IsValueType(column.CSharpType))
+    {
+<text>
+    if(entity.@(column.PascalName) == null)
+        throw new Exception("主键不能为空值。");</text>
+    }
+}
+    using (SqlConnection conn = new SqlConnection('conn_name'))
+    {
+        SqlCommand cmd = new SqlCommand();
+        string sql = @@"@(Util.GetSaveSql(Model))";
+        string tmpStr = "";
+        foreach(KeyValuePair<string, object> item in entity.ValueDict)
+        {
+            @(Util.BuildGetKeyEqContinue(Model))
+            tmpStr += "[" + item.Key + "] = @@" + item.Key + ",";
+            SqlParameter para = @(Model.Name)Schema.GetSqlParameter(item.Key);
+            para.Value = item.Value;
+            cmd.Parameters.Add(para);
+        }
+        tmpStr = tmpStr.TrimEnd(',');
+                
+        sql = string.Format(sql, tmpStr);
+        cmd.CommandText = sql;
+        cmd.Connection = conn;
+@foreach(var column in Model.Columns)
+{
+    if (column.Identity || column.Computed)
+    {
+        continue;
+    }
+<text>
+        SqlParameter para_@(column.PascalName) = @(Util.GetSqlParameter(column));
+        para_@(column.PascalName).Value = @(Util.SetParameterValueStr(column, "entity"));
+        cmd.Parameters.Add(para_@(column.PascalName));</text>
+}
+
+        try
+        {
+            conn.Open();
+            cmd.ExecuteNonQuery();
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+        finally
+        {
+            if (conn.State != ConnectionState.Closed)
+                conn.Close();
+            if (conn != null)
+                conn.Dispose();
+        }
+    }
+}
