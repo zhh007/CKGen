@@ -31,21 +31,56 @@ namespace CKGen.Temp.AspnetMVC
 
         public string BuildPropertieStr(IColumnInfo column)
         {
-            if (!column.HasStringLength && column.Nullable)
-                return string.Empty;
-
             StringBuilder sb = new StringBuilder();
+            bool hasvalue = false;
             sb.AppendFormat("this.Property(t => t.{0})", column.PascalName);
+
+            if (column.Identity)
+            {
+                hasvalue = true;
+                sb.Append("\r\n                ");
+                sb.Append("HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity)");
+            }
+
+            if (column.Computed)
+            {
+                hasvalue = true;
+                sb.Append("\r\n                ");
+                sb.Append("HasDatabaseGeneratedOption(DatabaseGeneratedOption.Computed)");
+            }
+
+            if (column.IsPrimaryKey)
+            {
+                if (!column.Identity)
+                {
+                    hasvalue = true;
+                    sb.Append("\r\n                ");
+                    sb.Append(".HasDatabaseGeneratedOption(DatabaseGeneratedOption.None)");
+                }
+            }
+
+            //if (!column.HasStringLength && column.Nullable)
+            //    return string.Empty;
+
             if (column.HasStringLength)
             {
+                hasvalue = true;
                 sb.Append("\r\n                ");
                 sb.AppendFormat(".HasMaxLength({0})", column.MaxLength);
             }
-            if (!column.Nullable)
+
+            if (!column.Nullable && !column.IsPrimaryKey && !column.Identity && !column.Computed)
             {
+                hasvalue = true;
                 sb.Append("\r\n                ");
                 sb.Append(".IsRequired()");
             }
+
+            if(!hasvalue)
+            {
+                return string.Empty;
+            }
+
             sb.Append(";");
             return sb.ToString();
         }

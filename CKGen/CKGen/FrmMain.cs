@@ -35,9 +35,7 @@ namespace CKGen
                 }
             }
 
-            IDatabaseInfo dbi = SystemConfig.SrvInfo.GetDatabase(SystemConfig.DBName);
-            this.DB = DatabaseSchemaSetting.Compute(dbi);
-            SystemConfig.Instance.Database = this.DB;
+            this.DB = SystemConfig.Instance.Database;
 
             //详细信息
             this.DetailPage = new UCDetail();

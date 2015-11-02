@@ -1,4 +1,5 @@
 ﻿using CKGen.DBLoader;
+using CKGen.DBSchema;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -36,6 +37,8 @@ namespace CKGen
             }
         }
 
+        private string curDatabaseName = "";
+
         private void ShowServer(string srvName)
         {
             DatabaseLink link = ConnectionSetting.GetByServerName(cbServerName.Text);
@@ -61,6 +64,7 @@ namespace CKGen
                 cbDatabases.DataSource = new string[] { link.DatabaseName };
                 cbDatabases.Enabled = false;
                 this.DBLink = link;
+                this.curDatabaseName = link.DatabaseName;
             }
 
             btnOK.Enabled = false;
@@ -149,9 +153,9 @@ namespace CKGen
                 cbDatabases.DataSource = this.SrvInfo.Databases;
                 cbDatabases.DisplayMember = "Name";
                 cbDatabases.ValueMember = "Name";
-                if (!string.IsNullOrEmpty(this.DBLink.DatabaseName))
+                if (!string.IsNullOrEmpty(this.curDatabaseName))
                 {
-                    cbDatabases.SelectedValue = this.DBLink.DatabaseName;
+                    cbDatabases.SelectedValue = this.curDatabaseName;
                 }
             }
         }
@@ -180,9 +184,46 @@ namespace CKGen
             SystemConfig.SrvInfo = this.SrvInfo;
             SystemConfig.DBName = cbDatabases.Text;
 
+            //IDatabaseInfo dbi = SystemConfig.SrvInfo.GetDatabase(SystemConfig.DBName);
+            //SystemConfig.Instance.Database = DatabaseSchemaSetting.Compute(dbi);
+
+            //this.DialogResult = DialogResult.OK;
+            //this.Close();
+
+            cbServerType.Enabled = false;
+            cbServerName.Enabled = false;
+            rbWindows.Enabled = false;
+            rbSQLServer.Enabled = false;
+            txtLoginName.Enabled = false;
+            txtPassword.Enabled = false;
+            btnLogin.Enabled = false;
+            cbDatabases.Enabled = false;
+            btnOK.Enabled = false;
+            btnCancel.Enabled = false;
+
+            BackgroundWorker worker = new BackgroundWorker();
+            worker.DoWork += new DoWorkEventHandler(worker_DoWork2);
+            worker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(worker_RunWorkerCompleted2);
+            worker.RunWorkerAsync();
+        }
+
+        void worker_RunWorkerCompleted2(object sender, RunWorkerCompletedEventArgs e)
+        {
             this.DialogResult = DialogResult.OK;
             this.Close();
-            
+        }
+
+        void worker_DoWork2(object sender, DoWorkEventArgs e)
+        {
+            try
+            {
+                IDatabaseInfo dbi = SystemConfig.SrvInfo.GetDatabase(SystemConfig.DBName);
+                SystemConfig.Instance.Database = DatabaseSchemaSetting.Compute(dbi);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "异常", MessageBoxButtons.OK);
+            }
         }
 
         private void cbServerName_SelectedIndexChanged(object sender, EventArgs e)
@@ -207,5 +248,7 @@ namespace CKGen
         {
             DisabledOKBtn();
         }
+
+
     }
 }
