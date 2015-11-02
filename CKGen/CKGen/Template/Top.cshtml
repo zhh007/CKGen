@@ -4,120 +4,92 @@
 @inherits TemplateBase<ITableInfo>
 
 /// <summary>
-        /// 根据条件返回前N条记录
-        /// </summary>
-        /// <param name="topN">返回几条记录</param>
-        /// <param name="strWhere">where条件</param>
-        /// <param name="paras">参数集合</param>
-        /// <param name="orderbys">排序字段，0表示ASC，1表示DESC</param>
-        internal static List<<#= DBTable.Name #>Entity> TopNEntities(int topN, string strWhere, SqlParameter[] paras, List<KeyValuePair<string, int>> orderbys)
+/// 根据条件返回前N条记录
+/// </summary>
+/// <param name="topN">返回几条记录</param>
+/// <param name="strWhere">where条件</param>
+/// <param name="paras">参数集合</param>
+/// <param name="orderbys">排序字段，0表示ASC，1表示DESC</param>
+public static List<@(Model.Name)>Top(int topN, string strWhere, SqlParameter[] paras, List<KeyValuePair<string, int>> orderbys)
+{
+    List<@(Model.Name)> result = new List<@(Model.Name)>();
+    string sql = @@"@(Util.BuildSQL_TopNByWhere(Model))";
+
+    string orderbyStr = "";
+    if(orderbys != null)
+    {
+        int i = 0;
+        foreach (KeyValuePair<string, int> item in orderbys)
         {
-            List<<#= DBTable.Name #>Entity> result = new List<<#= DBTable.Name #>Entity>();
-            string sql = @"<#= Util.BuildSQL_TopNByWhere(DBTable) #>";
-            
-            string orderbyStr = "";
-            if(orderbys != null)
+            if (i != 0)
             {
-                int i = 0;
-                foreach (KeyValuePair<string, int> item in orderbys)
+                orderbyStr += ", ";
+            }
+            orderbyStr += item.Key + " ";
+            if (item.Value == 0)
+            {
+                orderbyStr += "ASC";
+            }
+            else
+            {
+                orderbyStr += "DESC";
+            }
+            i++;
+        }
+    }
+
+    string whereStr = (string.IsNullOrEmpty(strWhere)) ? "" : " WHERE " + strWhere;
+    orderbyStr = (string.IsNullOrEmpty(orderbyStr)) ? "" : " ORDERBY " + strWhere;
+    sql = sql + whereStr + orderbyStr;
+    sql = string.Format(sql, topN);
+
+    using (SqlConnection conn = new SqlConnection('conn_name'))
+    {
+        SqlCommand cmd = new SqlCommand(sql, conn);
+        if(!string.IsNullOrEmpty(strWhere) && paras != null && paras.Length > 0)
+            cmd.Parameters.AddRange(paras);
+        try
+        {
+            conn.Open();
+            using (SqlDataReader sdr = cmd.ExecuteReader())
+            {
+@foreach (var column in Model.Columns)
+{
+<text>                int @(column.CamelName)Ordinal = sdr.GetOrdinal("@(column.RawName)");</text>
+}
+
+                while (sdr.Read())
                 {
-                    if (i != 0)
+                    @(Model.Name) info = new @(Model.Name)();
+@foreach(var column in Model.Columns)
+{
+<text>
+                    if(sdr.IsDBNull(@(column.CamelName)Ordinal))
                     {
-                        orderbyStr += ", ";
-                    }
-                    orderbyStr += item.Key + " ";
-                    if (item.Value == 0)
-                    {
-                        orderbyStr += "ASC";
+                        info.@(column.PascalName) = @(Util.BuildGetSqlReaderNullStr(column));
                     }
                     else
                     {
-                        orderbyStr += "DESC";
-                    }
-                    i++;
+                        @(Util.BuildSetFieldValue(column))
+                    }</text>
+}
+
+                    result.Add(info);
                 }
             }
-            
-            string whereStr = (string.IsNullOrEmpty(strWhere)) ? "" : " WHERE " + strWhere;
-            orderbyStr = (string.IsNullOrEmpty(orderbyStr)) ? "" : " ORDERBY " + strWhere;
-            sql = sql + whereStr + orderbyStr;
-            sql = string.Format(sql, topN);
-
-            using (SqlConnection conn = new SqlConnection(<#= Var.DBConnectionName #>Link.Connection))
-            {
-                SqlCommand cmd = new SqlCommand(sql, conn);
-                if(!string.IsNullOrEmpty(strWhere) && paras != null && paras.Length > 0)
-                    cmd.Parameters.AddRange(paras);
-                try
-                {
-                    conn.Open();
-                    using (SqlDataReader sdr = cmd.ExecuteReader())
-                    {
-<#
-foreach(var column in DBTable.Columns)
-{
-#>
-                        int <#= column.CamelName #>Ordinal = sdr.GetOrdinal("<#= column.RawName #>");
-<#
-}
-#>
-
-                        while (sdr.Read())
-                        {
-                            <#= DBTable.Name #>Entity info = new <#= DBTable.Name #>Entity();
-<#
-foreach(var column in DBTable.Columns)
-{
-#>
-                            if(sdr.IsDBNull(<#= column.CamelName #>Ordinal))
-                            {
-                                info._set<#= column.PascalName #>(<#= Util.BuildGetSqlReaderNullStr(column) #>);
-                            }
-                            else
-                            {
-                                <#= Util.BuildSetFieldValue(column) #>
-                            }
-                        
-<#
-}
-#>                          result.Add(info);
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    throw ex;
-                }
-                finally
-                {
-                    if (conn.State != ConnectionState.Closed)
-                        conn.Close();
-                    if (conn != null)
-                        conn.Dispose();
-                }
-            }
-
-            return result;
         }
-        
-        /// <summary>
-        /// 根据条件返回前N条记录
-        /// </summary>
-        /// <param name="topN">返回几条记录</param>
-        /// <param name="strWhere">where条件</param>
-        /// <param name="paras">参数集合</param>
-        internal static List<<#= DBTable.Name #>Entity> TopNEntities(int topN, string strWhere, SqlParameter[] paras)
+        catch (Exception ex)
         {
-            return TopNEntities(topN, strWhere, paras, null);
+            throw ex;
         }
-        
-        /// <summary>
-        /// 根据条件返回前N条记录
-        /// </summary>
-        /// <param name="topN">返回几条记录</param>
-        /// <param name="strWhere">where条件</param>
-        /// <param name="paras">参数集合</param>
-        internal static List<<#= DBTable.Name #>Entity> TopNEntities(int topN, string strWhere)
+        finally
         {
-            return TopNEntities(topN, strWhere, null, null);
+            if (conn.State != ConnectionState.Closed)
+                conn.Close();
+            if (conn != null)
+                conn.Dispose();
         }
+    }
+
+    return result;
+}

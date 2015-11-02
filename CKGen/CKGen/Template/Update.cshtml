@@ -7,17 +7,17 @@
 /// 根据主键更记录
 /// </summary>
 /// <param name="info"></param>
-internal static void UpdateEntity(<#= DBTable.Name #> entity)
+public static void Update(<#= Model.Name #> entity)
 {
     if(entity == null)
         throw new Exception("Update方法的参数为空。");
 
-@foreach(var column in DBTable.Columns)
+@foreach(var column in Model.Columns)
 {
     if (column.IsPrimaryKey && !LanguageConvert.IsValueType(column.CSharpType))
     {
 <text>
-    if(entity.<#= column.PascalName #> == null)
+    if(entity.@(column.PascalName) == null)
         throw new Exception("主键不能为空值。");</text>
     }
 }
@@ -25,33 +25,34 @@ internal static void UpdateEntity(<#= DBTable.Name #> entity)
     using (SqlConnection conn = new SqlConnection('conn_name'))
     {
         SqlCommand cmd = new SqlCommand();
-        string sql = @@"@(Util.GetUpdateByPKSql_2(DBTable))";
+        string sql = @@"@(Util.GetUpdateByPKSql_2(Model))";
         string tmpStr = "";
         foreach(KeyValuePair<string, object> item in entity.ValueDict)
         {
-            <#= Util.BuildGetKeyEqContinue(DBTable) #>
-            tmpStr += "[" + item.Key + "] = @" + StringHelper.SetValidName(item.Key) + ",";
-            SqlParameter para = <#= DBTable.Name #>Schema.GetSqlParameter(item.Key);
+            @(Util.BuildGetKeyEqContinue(Model))
+            tmpStr += "[" + item.Key + "] = @@" + StringHelper.SetValidName(item.Key) + ",";
+            SqlParameter para = @(Model.Name)Schema.GetSqlParameter(item.Key);
             para.Value = item.Value;
             cmd.Parameters.Add(para);
         }
         tmpStr = tmpStr.TrimEnd(',');
-                
+
         sql = string.Format(sql, tmpStr);
         cmd.CommandText = sql;
         cmd.Connection = conn;
-<#
-foreach(var column in DBTable.Columns)
+
+@foreach(varcolumninDBTable.Columns)
 {
-if (column.Computed)//column.Identity || 
-    continue;
-#>            
-                SqlParameter para<#= column.PascalName #> = <#= DBTable.Name #>Schema.<#= column.PascalName #>.GetSqlParameter();
-                para<#= column.PascalName #>.Value = entity.<#= column.PascalName #>;
-                cmd.Parameters.Add(para<#= column.PascalName #>);
-<#
+    if (column.Identity || column.Computed)
+    {
+        continue;
+    }
+<text>
+        SqlParameter para_@(column.PascalName) = @(Util.GetSqlParameter(column));
+        para_@(column.PascalName).Value = @(Util.SetParameterValueStr(column, "entity"));
+        cmd.Parameters.Add(para_@(column.PascalName));</text>
 }
-#>
+
         try
         {
             conn.Open();
