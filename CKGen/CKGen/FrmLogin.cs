@@ -4,15 +4,19 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace CKGen
 {
     public partial class FrmLogin : Form
     {
+        private System.Windows.Forms.ProgressBar bar;
         public FrmLogin()
         {
             InitializeComponent();
@@ -20,6 +24,13 @@ namespace CKGen
 
         private void FrmLogin_Load(object sender, EventArgs e)
         {
+            this.bar = new ProgressBar();
+            this.bar.Location = new System.Drawing.Point(18, 0);
+            this.bar.Size = new System.Drawing.Size(367, 10);
+            this.bar.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
+            this.bar.Visible = false;
+            this.Controls.Add(bar);
+
             this.cbServerType.DataSource = typeof(DatabaseType).ToList();
             this.cbServerType.DisplayMember = "Value";
             this.cbServerType.ValueMember = "Key";
@@ -85,7 +96,7 @@ namespace CKGen
             txtPassword.Text = "";
             txtLoginName.Enabled = false;
             txtPassword.Enabled = false;
-            
+
             if (this.DBLink != null)
             {
                 cbDatabases.DataSource = new string[] { this.DBLink.DatabaseName };
@@ -184,12 +195,6 @@ namespace CKGen
             SystemConfig.SrvInfo = this.SrvInfo;
             SystemConfig.DBName = cbDatabases.Text;
 
-            //IDatabaseInfo dbi = SystemConfig.SrvInfo.GetDatabase(SystemConfig.DBName);
-            //SystemConfig.Instance.Database = DatabaseSchemaSetting.Compute(dbi);
-
-            //this.DialogResult = DialogResult.OK;
-            //this.Close();
-
             cbServerType.Enabled = false;
             cbServerName.Enabled = false;
             rbWindows.Enabled = false;
@@ -200,6 +205,12 @@ namespace CKGen
             cbDatabases.Enabled = false;
             btnOK.Enabled = false;
             btnCancel.Enabled = false;
+            bar.Visible = true;
+            bar.Location = new Point(0, (this.ClientSize.Height - bar.Height));
+            bar.Width = this.Width;
+
+            IDatabaseInfo dbi = SystemConfig.SrvInfo.GetDatabase(SystemConfig.DBName);
+            SystemConfig.Instance.Database = dbi;
 
             BackgroundWorker worker = new BackgroundWorker();
             worker.DoWork += new DoWorkEventHandler(worker_DoWork2);
@@ -217,8 +228,18 @@ namespace CKGen
         {
             try
             {
-                IDatabaseInfo dbi = SystemConfig.SrvInfo.GetDatabase(SystemConfig.DBName);
-                SystemConfig.Instance.Database = DatabaseSchemaSetting.Compute(dbi);
+                Stopwatch _stopWatch = new Stopwatch();
+                _stopWatch.Start();
+                LoadData();
+                _stopWatch.Stop();
+                Debug.WriteLine("执行时间:" + (_stopWatch.Elapsed.TotalMilliseconds * 1.0 / 1000).ToString(CultureInfo.InvariantCulture) + "秒");
+
+                _stopWatch = new Stopwatch();
+                _stopWatch.Start();
+                DatabaseSchemaSetting.Compute(SystemConfig.Instance.Database);
+                _stopWatch.Stop();
+                Debug.WriteLine("执行时间:" + (_stopWatch.Elapsed.TotalMilliseconds * 1.0 / 1000).ToString(CultureInfo.InvariantCulture) + "秒");
+
             }
             catch (Exception ex)
             {
@@ -249,6 +270,57 @@ namespace CKGen
             DisabledOKBtn();
         }
 
+        private void LoadData()
+        {
+            int size = SystemConfig.Instance.Database.Tables.Count;
+            int N = size;
+            int P = Environment.ProcessorCount; // assume twice the procs for 
+                                                // good work distribution
+            int Chunk = (int)Math.Round((double)N / (double)P, 0);// size of a work chunk
+            AutoResetEvent signal = new AutoResetEvent(false);
+            int counter = P;                        // use a counter to reduce 
+                                                    // kernel transitions    
 
+            Debug.WriteLine("size:{0}", size);
+            Debug.WriteLine("P:{0}", P);
+            Debug.WriteLine("Chunk:{0}", Chunk);
+
+            List<Thread> list = new List<Thread>();
+            List<int> args = new List<int>();
+
+            for (int c = 0; c < P; c++)
+            {           // for each chunk
+                Thread th = new Thread(new ParameterizedThreadStart((o) =>
+                {
+                    int lc = (int)o;
+                    int start = lc * Chunk;// iterate through a work chunk
+                    int end = (lc + 1 == P ? N : (lc + 1) * Chunk);// respect upper bound
+                    Debug.WriteLine("{0} : {1} ~ {2}", lc, start, end);
+
+                    for (int i = start; i < end; i++)
+                    {
+                        ITableInfo tb = SystemConfig.Instance.Database.Tables[i];
+                        tb.LoadColumns();
+                    }
+                    if (Interlocked.Decrement(ref counter) == 0)
+                    { // use efficient 
+                      // interlocked 
+                      // instructions      
+                        signal.Set();  // and kernel transition only when done
+                    }
+                }));
+                th.IsBackground = true;
+                list.Add(th);
+                args.Add(c);
+            }
+
+            for (int i = 0; i < list.Count; i++)
+            {
+                list[i].Start(args[i]);
+            }
+            
+            signal.WaitOne();
+        }
+        
     }
 }

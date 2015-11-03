@@ -13,17 +13,18 @@ namespace CKGen.DBSchema
     {
         private static Dictionary<KeyValuePair<string, string>, Dictionary<string, string>> innerDict = new Dictionary<KeyValuePair<string, string>, Dictionary<string, string>>();
 
-        private LanguageConvert()
+        static LanguageConvert()
         {
+            GetTargetType("SQL", "C#", "datetime");
         }
 
-        private string GetTargetType(string f, string t, string sourceType)
+        private static string GetTargetType(string f, string t, string sourceType)
         {
             KeyValuePair<string, string> key = new KeyValuePair<string, string>(f, t);
 
             if (!innerDict.ContainsKey(key))
             {
-                Stream resourceStream = Assembly.GetAssembly(this.GetType()).GetManifestResourceStream("CKGen.DBSchema.Res.Languages.xml");
+                Stream resourceStream = Assembly.GetAssembly(typeof(LanguageConvert)).GetManifestResourceStream("CKGen.DBSchema.Res.Languages.xml");
 
                 if (resourceStream != null)
                 {
@@ -43,7 +44,10 @@ namespace CKGen.DBSchema
                         //Console.WriteLine((string)el.Attribute("TestId"));
                     }
 
-                    innerDict.Add(new KeyValuePair<string, string>(f, t), tmp);
+                    if (!innerDict.ContainsKey(key))
+                    {
+                        innerDict.Add(key, tmp);
+                    }
                     //XElement gobalConfig = root.Element("global");
 
                     //foreach (XElement x in gobalConfig.Elements())
@@ -73,8 +77,17 @@ namespace CKGen.DBSchema
         /// <returns></returns>
         public static string GetCSharpTypeFromMSSQL(string sourceType)
         {
-            LanguageConvert convert = new LanguageConvert();
-            return convert.GetTargetType("SQL", "C#", sourceType);
+            KeyValuePair<string, string> key = new KeyValuePair<string, string>("SQL", "C#");
+
+            Dictionary<string, string> dict = innerDict[key];
+
+            if (dict != null && dict.ContainsKey(sourceType))
+                return dict[sourceType];
+
+            return "未知(" + sourceType + ")";
+
+            //LanguageConvert convert = new LanguageConvert();
+            //return GetTargetType("SQL", "C#", sourceType);
         }
 
         /// <summary>

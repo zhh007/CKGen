@@ -147,7 +147,7 @@ namespace CKGen.DBLoader
             this.loader = database.Loader;
         }
                 
-        private void LoadColumns()
+        public void LoadColumns()
         {
             if (_columnsLoaded)
                 return;

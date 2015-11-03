@@ -13,17 +13,18 @@ namespace CKGen.DBSchema
     {
         private static Dictionary<KeyValuePair<string, string>, Dictionary<string, string>> innerDict = new Dictionary<KeyValuePair<string, string>, Dictionary<string, string>>();
 
-        private DbTargetConvert()
+        static DbTargetConvert()
         {
+            GetTargetType("SQL", "SqlClient", "int");
         }
 
-        private string GetTargetType(string f, string t, string sourceType)
+        private static string GetTargetType(string f, string t, string sourceType)
         {
             KeyValuePair<string, string> key = new KeyValuePair<string, string>(f, t);
 
             if (!innerDict.ContainsKey(key))
             {
-                Stream resourceStream = Assembly.GetAssembly(this.GetType()).GetManifestResourceStream("CKGen.DBSchema.Res.DbTargets.xml");
+                Stream resourceStream = Assembly.GetAssembly(typeof(DbTargetConvert)).GetManifestResourceStream("CKGen.DBSchema.Res.DbTargets.xml");
 
                 if (resourceStream != null)
                 {
@@ -43,7 +44,10 @@ namespace CKGen.DBSchema
                         //Console.WriteLine((string)el.Attribute("TestId"));
                     }
 
-                    innerDict.Add(new KeyValuePair<string, string>(f, t), tmp);
+                    if (!innerDict.ContainsKey(key))
+                    {
+                        innerDict.Add(key, tmp);
+                    }
                     //XElement gobalConfig = root.Element("global");
 
                     //foreach (XElement x in gobalConfig.Elements())
@@ -68,8 +72,17 @@ namespace CKGen.DBSchema
 
         public static string GetSqlDbType(string sqltype)
         {
-            DbTargetConvert convert = new DbTargetConvert();
-            return convert.GetTargetType("SQL", "SqlClient", sqltype);
+            KeyValuePair<string, string> key = new KeyValuePair<string, string>("SQL", "SqlClient");
+
+            Dictionary<string, string> dict = innerDict[key];
+
+            if (dict != null && dict.ContainsKey(sqltype))
+                return dict[sqltype];
+
+            return "未知(" + sqltype + ")";
+
+            //DbTargetConvert convert = new DbTargetConvert();
+            //return GetTargetType("SQL", "SqlClient", sqltype);
         }
     }
 }

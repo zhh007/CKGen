@@ -9,6 +9,8 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using CKGen.DBSchema;
+using System.Globalization;
+using System.Threading;
 
 namespace CKGen
 {

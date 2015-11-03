@@ -52,5 +52,6 @@ namespace CKGen.DBSchema
 
         IDatabaseInfo Database { get; }
 
+        void LoadColumns();
     }
 }

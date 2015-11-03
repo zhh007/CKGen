@@ -181,7 +181,7 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("宋体", 12F);
-            this.label5.Location = new System.Drawing.Point(15, 297);
+            this.label5.Location = new System.Drawing.Point(15, 294);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(128, 16);
             this.label5.TabIndex = 5;
@@ -192,7 +192,7 @@
             this.cbDatabases.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbDatabases.Font = new System.Drawing.Font("宋体", 12F);
             this.cbDatabases.FormattingEnabled = true;
-            this.cbDatabases.Location = new System.Drawing.Point(150, 293);
+            this.cbDatabases.Location = new System.Drawing.Point(150, 290);
             this.cbDatabases.Name = "cbDatabases";
             this.cbDatabases.Size = new System.Drawing.Size(235, 24);
             this.cbDatabases.TabIndex = 6;
@@ -202,7 +202,7 @@
             this.pictureBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pictureBox2.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.pictureBox2.Location = new System.Drawing.Point(18, 332);
+            this.pictureBox2.Location = new System.Drawing.Point(18, 331);
             this.pictureBox2.Name = "pictureBox2";
             this.pictureBox2.Size = new System.Drawing.Size(367, 1);
             this.pictureBox2.TabIndex = 7;
@@ -211,7 +211,7 @@
             // btnCancel
             // 
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Location = new System.Drawing.Point(277, 349);
+            this.btnCancel.Location = new System.Drawing.Point(277, 345);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(108, 30);
             this.btnCancel.TabIndex = 8;
@@ -221,7 +221,7 @@
             // 
             // btnOK
             // 
-            this.btnOK.Location = new System.Drawing.Point(150, 349);
+            this.btnOK.Location = new System.Drawing.Point(150, 345);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(108, 30);
             this.btnOK.TabIndex = 9;
@@ -235,7 +235,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
-            this.ClientSize = new System.Drawing.Size(397, 391);
+            this.ClientSize = new System.Drawing.Size(397, 385);
             this.Controls.Add(this.btnOK);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.pictureBox2);
