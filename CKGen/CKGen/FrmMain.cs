@@ -11,6 +11,8 @@ using System.Windows.Forms;
 using CKGen.DBSchema;
 using System.Globalization;
 using System.Threading;
+using System.ComponentModel.Composition;
+using System.ComponentModel.Composition.Hosting;
 
 namespace CKGen
 {
@@ -24,6 +26,9 @@ namespace CKGen
         {
             InitializeComponent();
         }
+
+        [ImportMany("UserControl")]
+        IEnumerable<UserControl> UIs { get; set; }
 
         private void FrmMain_Load(object sender, EventArgs e)
         {
@@ -60,6 +65,21 @@ namespace CKGen
             InitTree();
 
             //this.WindowState = FormWindowState.Maximized;
+
+            //组合部件
+            var catalog = new AggregateCatalog();
+            catalog.Catalogs.Add(new AssemblyCatalog(System.Reflection.Assembly.GetExecutingAssembly()));
+            catalog.Catalogs.Add(new DirectoryCatalog(Environment.CurrentDirectory));
+            var container = new CompositionContainer(catalog);
+            container.ComposeExportedValue("ModuleName", SystemConfig.Instance.Database);
+            container.ComposeParts(this);
+
+            foreach (var item in UIs)
+            {
+                TabPage tp = new TabPage("ui");
+                tp.Controls.Add(item);
+                this.tabControl1.TabPages.Add(tp);
+            }
         }
 
         private void InitTree()

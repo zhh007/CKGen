@@ -299,8 +299,11 @@ namespace CKGen
 
                     for (int i = start; i < end; i++)
                     {
-                        ITableInfo tb = SystemConfig.Instance.Database.Tables[i];
-                        tb.LoadColumns();
+                        if (i < SystemConfig.Instance.Database.Tables.Count)
+                        {
+                            ITableInfo tb = SystemConfig.Instance.Database.Tables[i];
+                            tb.LoadColumns();
+                        }
                     }
                     if (Interlocked.Decrement(ref counter) == 0)
                     { // use efficient 

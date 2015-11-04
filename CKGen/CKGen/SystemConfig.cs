@@ -6,6 +6,7 @@ using System.Text;
 using CKGen.DBLoader;
 using System.Windows.Forms;
 using CKGen.DBSchema;
+using System.ComponentModel.Composition;
 
 namespace CKGen
 {
@@ -30,6 +31,8 @@ namespace CKGen
         public static string DBName = "";
         private string _currentTableName = "";
         public TreeNode SelectedNode { get; set; }
+
+        [Export("ModuleName")]
         public IDatabaseInfo Database { get; set; }
 
         public string CurrentTableName

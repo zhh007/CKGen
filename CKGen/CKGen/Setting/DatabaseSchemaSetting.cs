@@ -158,8 +158,11 @@ namespace CKGen
 
                     for (int i = start; i < end; i++)
                     {
-                        ITableInfo tb = db.Tables[i];
-                        NewMethod(root, tb);
+                        if (i < db.Tables.Count)
+                        {
+                            ITableInfo tb = db.Tables[i];
+                            NewMethod(root, tb);
+                        }
                     }
                     if (Interlocked.Decrement(ref counter) == 0)
                     { // use efficient 
