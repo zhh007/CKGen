@@ -18,13 +18,13 @@ namespace CKGen.Temp.AspnetMVC
         private string _targetFolder;
         private string _tableName;
 
-        public CodeBuilder(IDatabaseInfo database, string targetFoler, string tableName, string ns, string webns)
+        public CodeBuilder(IDatabaseInfo database, string tableName, string ns, string webns)
         {
-            if (string.IsNullOrEmpty(targetFoler))
-                throw new Exception("目标文件夹不能为空。");
+            //if (string.IsNullOrEmpty(targetFoler))
+            //    throw new Exception("目标文件夹不能为空。");
 
             this._database = database;
-            this._targetFolder = Path.Combine(targetFoler, "");
+            this._targetFolder = Path.Combine(Environment.CurrentDirectory, database.Name);
             this._tableName = tableName;
             this._namespace = ns;
             this._webProjNameSpace = webns;
