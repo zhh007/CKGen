@@ -3,9 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using RazorEngine;
-using RazorEngine.Configuration;
-using RazorEngine.Templating;
 using CKGen.DBSchema;
 using CKGen.Base;
 
@@ -23,9 +20,6 @@ namespace CKGen.Temp.AspnetMVC
 
         public CodeBuilder(IDatabaseInfo database, string tableName, string ns, string webns)
         {
-            //if (string.IsNullOrEmpty(targetFoler))
-            //    throw new Exception("目标文件夹不能为空。");
-
             this._database = database;
             this._targetFolder = Path.Combine(Environment.CurrentDirectory, database.Name);
             this._tableName = tableName;
@@ -84,34 +78,8 @@ namespace CKGen.Temp.AspnetMVC
         private void _build(string viewname, Type viewModelType, object viewmodel, string targetFileName)
         {
             string viewPath = System.IO.Path.Combine(Environment.CurrentDirectory, "AspnetMVC\\" + viewname);
-            //string tmp = System.IO.File.ReadAllText(viewPath);
             string filePath = Path.Combine(_targetFolder, targetFileName);
             codeGen.GenSave(viewPath, viewmodel, filePath);
-
-            //string result = GetRazor().RunCompile(tmp, viewname, viewModelType, viewmodel);
-
-            //string filePath = Path.Combine(_targetFolder, targetFileName);
-            //if (!Directory.Exists(this._targetFolder))
-            //{
-            //    Directory.CreateDirectory(this._targetFolder);
-            //}
-            //using (var sw = new StreamWriter(File.Open(filePath, FileMode.CreateNew), System.Text.Encoding.UTF8))
-            //{
-            //    sw.Write(result);
-            //}
-        }
-
-        private static IRazorEngineService GetRazor()
-        {
-            TemplateServiceConfiguration config = new TemplateServiceConfiguration();
-            config.DisableTempFileLocking = true; // loads the files in-memory (gives the templates full-trust permissions)
-            config.CachingProvider = new DefaultCachingProvider(t => { }); //disables the warnings
-            config.EncodedStringFactory = new RazorEngine.Text.RawStringFactory(); // Raw string encoding.
-
-            // Use the config
-            Engine.Razor = RazorEngineService.Create(config); // new API
-
-            return Engine.Razor;
         }
     }
 }
