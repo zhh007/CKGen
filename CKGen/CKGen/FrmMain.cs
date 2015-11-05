@@ -52,16 +52,6 @@ namespace CKGen
             this.tabControl1.TabPages.Add(tab1);
 
             //
-            FrmCodeBuild frm = new FrmCodeBuild();
-            frm.TopLevel = false;
-            frm.Dock = DockStyle.Fill;
-            frm.FormBorderStyle = FormBorderStyle.None;
-            TabPage tab = new TabPage(frm.Text);
-            tab.Controls.Add(frm);
-            this.tabControl1.TabPages.Add(tab);
-            frm.Show();
-
-            //
             InitTree();
 
             //this.WindowState = FormWindowState.Maximized;
@@ -74,12 +64,23 @@ namespace CKGen
             container.ComposeExportedValue("ModuleName", SystemConfig.Instance.Database);
             container.ComposeParts(this);
 
+            LoadTemplates();
+        }
+
+        private void LoadTemplates()
+        {
+            TreeNode tbNode = new TreeNode("模板");
+            int i = 0;
             foreach (var item in UIs)
             {
-                TabPage tp = new TabPage("ui");
-                tp.Controls.Add(item);
-                this.tabControl1.TabPages.Add(tp);
+                item.Name = string.Format("TempUI_{0}", i);
+                TreeNode node = new TreeNode(item.ToString());
+                node.Tag = item;
+                tbNode.Nodes.Add(node);
+                i++;
             }
+            this.tbTemp.Nodes.Add(tbNode);
+            tbNode.Expand();
         }
 
         private void InitTree()
@@ -219,5 +220,34 @@ namespace CKGen
             }
         }
 
+        private void tbTemp_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
+        {
+            if (e.Node.Tag is UserControl)
+            {
+                UserControl item = e.Node.Tag as UserControl;
+                TabPage tab = HasShowControl(item.Name);
+                if (tab == null)
+                {
+                    tab = new TabPage(item.ToString());
+                    item.Dock = DockStyle.Fill;
+                    tab.Controls.Add(item);
+                    this.tabControl1.TabPages.Add(tab);
+                }
+                this.tabControl1.SelectedTab = tab;
+            }
+        }
+
+        private TabPage HasShowControl(string ctrlName)
+        {
+            foreach (TabPage tab in this.tabControl1.TabPages)
+            {
+                var all = tab.Controls.Find(ctrlName, false);
+                if (all != null && all.Length > 0)
+                {
+                    return tab;
+                }
+            }
+            return null;
+        }
     }
 }

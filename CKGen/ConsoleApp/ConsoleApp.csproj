@@ -45,13 +45,13 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CKGen.Base\CKGen.Base.csproj">
+      <Project>{727d5837-1dc0-40ed-9aa3-d37c40d3fdb6}</Project>
+      <Name>CKGen.Base</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CKGen.DBLoader\CKGen.DBLoader.csproj">
       <Project>{838634ed-ca1d-4884-a026-15e9666eac3b}</Project>
       <Name>CKGen.DBLoader</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\CKGen.DBSchema\CKGen.DBSchema.csproj">
-      <Project>{29fc4637-6d8b-4539-8592-fc25f5408d23}</Project>
-      <Name>CKGen.DBSchema</Name>
     </ProjectReference>
     <ProjectReference Include="..\CKGen.Temp.AspnetMVC\CKGen.Temp.AspnetMVC.csproj">
       <Project>{1f3c9cc8-a0f4-4de3-b257-b7d4cb7fc2fb}</Project>

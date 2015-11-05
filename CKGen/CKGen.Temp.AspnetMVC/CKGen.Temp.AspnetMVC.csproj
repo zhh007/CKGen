@@ -50,15 +50,28 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BuildUI.cs">
+    <Compile Include="AspnetMVCSetting.cs" />
+    <Compile Include="MainUI.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="BuildUI.Designer.cs">
-      <DependentUpon>BuildUI.cs</DependentUpon>
+    <Compile Include="MainUI.Designer.cs">
+      <DependentUpon>MainUI.cs</DependentUpon>
     </Compile>
     <Compile Include="CodeBuilder.cs" />
     <Compile Include="PageViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewResult.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ViewResult.Designer.cs">
+      <DependentUpon>ViewResult.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ViewSetting.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ViewSetting.Designer.cs">
+      <DependentUpon>ViewSetting.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="AspnetMVC\Controller.cshtml">
@@ -97,14 +110,20 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CKGen.DBSchema\CKGen.DBSchema.csproj">
-      <Project>{29fc4637-6d8b-4539-8592-fc25f5408d23}</Project>
-      <Name>CKGen.DBSchema</Name>
+    <ProjectReference Include="..\CKGen.Base\CKGen.Base.csproj">
+      <Project>{727d5837-1dc0-40ed-9aa3-d37c40d3fdb6}</Project>
+      <Name>CKGen.Base</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="BuildUI.resx">
-      <DependentUpon>BuildUI.cs</DependentUpon>
+    <EmbeddedResource Include="MainUI.resx">
+      <DependentUpon>MainUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ViewResult.resx">
+      <DependentUpon>ViewResult.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ViewSetting.resx">
+      <DependentUpon>ViewSetting.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

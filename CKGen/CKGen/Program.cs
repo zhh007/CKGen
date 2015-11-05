@@ -1,4 +1,6 @@
-﻿using CKGen.DBSchema;
+﻿using CKGen.Base;
+using CKGen.DBSchema;
+using CKGen.Services;
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
@@ -19,12 +21,9 @@ namespace CKGen
             DbTargetConvert.GetSqlDbType("int");
             LanguageConvert.GetCSharpTypeFromMSSQL("datetime");
 
+            ServiceLocator.Instance.AddService<ICodeGenService>(new CodeGenService());
+
             Application.Run(new FrmMain());
-            //Application.Run(new Form2());
-
-            
         }
-
-        
     }
 }

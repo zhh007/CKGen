@@ -75,9 +75,9 @@
     <Compile Include="ViewInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CKGen.DBSchema\CKGen.DBSchema.csproj">
-      <Project>{29fc4637-6d8b-4539-8592-fc25f5408d23}</Project>
-      <Name>CKGen.DBSchema</Name>
+    <ProjectReference Include="..\CKGen.Base\CKGen.Base.csproj">
+      <Project>{727d5837-1dc0-40ed-9aa3-d37c40d3fdb6}</Project>
+      <Name>CKGen.Base</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

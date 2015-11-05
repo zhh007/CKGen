@@ -114,12 +114,6 @@
     <Compile Include="_slnTemplate.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CKGen.DBSchema\CKGen.DBSchema.csproj">
-      <Project>{29fc4637-6d8b-4539-8592-fc25f5408d23}</Project>
-      <Name>CKGen.DBSchema</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="build.bat" />
   </ItemGroup>
   <ItemGroup>
@@ -195,6 +189,12 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CKGen.Base\CKGen.Base.csproj">
+      <Project>{727d5837-1dc0-40ed-9aa3-d37c40d3fdb6}</Project>
+      <Name>CKGen.Base</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

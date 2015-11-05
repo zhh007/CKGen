@@ -175,7 +175,7 @@ namespace CKGen
 
         private void _bgWorker_DoWork(object sender, DoWorkEventArgs e)
         {
-            AspnetMVCSetting.Save(txtNamespace.Text, txtWebProjNameSpace.Text);
+            //AspnetMVCSetting.Save(txtNamespace.Text, txtWebProjNameSpace.Text);
 
             IDatabaseInfo database = SystemConfig.Instance.Database;
             string tableName = SystemConfig.Instance.CurrentTableName;
@@ -241,8 +241,8 @@ namespace CKGen
             step2Panel.Hide();
             step1Panel.Show();
 
-            txtNamespace.Text = AspnetMVCSetting.NameSpace;
-            txtWebProjNameSpace.Text = AspnetMVCSetting.WebProjNameSpace;
+            //txtNamespace.Text = AspnetMVCSetting.NameSpace;
+            //txtWebProjNameSpace.Text = AspnetMVCSetting.WebProjNameSpace;
             _tableNameBinding = lblTable.DataBindings.Add("Text", SystemConfig.Instance, "CurrentTableName");
         }
 

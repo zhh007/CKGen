@@ -7,6 +7,7 @@ using RazorEngine;
 using RazorEngine.Configuration;
 using RazorEngine.Templating;
 using CKGen.DBSchema;
+using CKGen.Base;
 
 namespace CKGen.Temp.AspnetMVC
 {
@@ -17,6 +18,8 @@ namespace CKGen.Temp.AspnetMVC
         private string _webProjNameSpace;
         private string _targetFolder;
         private string _tableName;
+
+        private readonly ICodeGenService codeGen = ServiceLocator.Instance.GetService<ICodeGenService>();
 
         public CodeBuilder(IDatabaseInfo database, string tableName, string ns, string webns)
         {
@@ -80,18 +83,22 @@ namespace CKGen.Temp.AspnetMVC
 
         private void _build(string viewname, Type viewModelType, object viewmodel, string targetFileName)
         {
-            string tmp = System.IO.File.ReadAllText(System.IO.Path.Combine(Environment.CurrentDirectory, "AspnetMVC\\" + viewname));
-            string result = GetRazor().RunCompile(tmp, viewname, viewModelType, viewmodel);
-
+            string viewPath = System.IO.Path.Combine(Environment.CurrentDirectory, "AspnetMVC\\" + viewname);
+            //string tmp = System.IO.File.ReadAllText(viewPath);
             string filePath = Path.Combine(_targetFolder, targetFileName);
-            if (!Directory.Exists(this._targetFolder))
-            {
-                Directory.CreateDirectory(this._targetFolder);
-            }
-            using (var sw = new StreamWriter(File.Open(filePath, FileMode.CreateNew), System.Text.Encoding.UTF8))
-            {
-                sw.Write(result);
-            }
+            codeGen.GenSave(viewPath, viewmodel, filePath);
+
+            //string result = GetRazor().RunCompile(tmp, viewname, viewModelType, viewmodel);
+
+            //string filePath = Path.Combine(_targetFolder, targetFileName);
+            //if (!Directory.Exists(this._targetFolder))
+            //{
+            //    Directory.CreateDirectory(this._targetFolder);
+            //}
+            //using (var sw = new StreamWriter(File.Open(filePath, FileMode.CreateNew), System.Text.Encoding.UTF8))
+            //{
+            //    sw.Write(result);
+            //}
         }
 
         private static IRazorEngineService GetRazor()
