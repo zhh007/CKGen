@@ -111,6 +111,7 @@
             this.txtCode.Location = new System.Drawing.Point(0, 0);
             this.txtCode.Multiline = true;
             this.txtCode.Name = "txtCode";
+            this.txtCode.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             this.txtCode.Size = new System.Drawing.Size(810, 453);
             this.txtCode.TabIndex = 0;
             // 
