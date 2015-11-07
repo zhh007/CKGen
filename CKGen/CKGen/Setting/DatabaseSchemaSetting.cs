@@ -19,6 +19,11 @@ namespace CKGen
 {
     public class DatabaseSchemaSetting
     {
+        private static string GetStorePath(IDatabaseInfo db)
+        {
+            return Path.Combine(Environment.CurrentDirectory, "Settings\\" + "db_" + SystemConfig.DBName + ".xml");
+        }
+
         #region 将新数据结构同步到本地
 
         /// <summary>
@@ -26,7 +31,7 @@ namespace CKGen
         /// </summary>
         public static IDatabaseInfo SyncToLocal(IDatabaseInfo db)
         {
-            string filePath = Path.Combine(Environment.CurrentDirectory, "Settings\\" + "db_" + SystemConfig.DBName + ".xml");
+            string filePath = GetStorePath(db);
             if (File.Exists(filePath))
             {
                 Update(filePath, db);
@@ -173,110 +178,12 @@ namespace CKGen
 
         #endregion
 
-        private static void forUpdate2(string filePath, IDatabaseInfo db)
+        /// <summary>
+        /// 保存说明
+        /// </summary>
+        public static void SaveDesc(IDatabaseInfo db)
         {
-            string txt = File.ReadAllText(filePath);
-            XElement root = XElement.Parse(txt);
-
-            int size = db.Tables.Count;
-            int N = size;
-            int P = Environment.ProcessorCount; // assume twice the procs for 
-                                                // good work distribution
-            int Chunk = (int)Math.Round((double)N / (double)P, 0);// size of a work chunk
-            AutoResetEvent signal = new AutoResetEvent(false);
-            int counter = P;                        // use a counter to reduce 
-                                                    // kernel transitions    
-
-            Debug.WriteLine("size:{0}", size);
-            Debug.WriteLine("P:{0}", P);
-            Debug.WriteLine("Chunk:{0}", Chunk);
-
-            for (int c = 0; c < P; c++)
-            {           // for each chunk
-                //Thread th = new Thread(new ParameterizedThreadStart((o) =>
-                //{
-                //    int lc = (int)o;
-                //    int start = lc * Chunk;// iterate through a work chunk
-                //    int end = (lc + 1 == P ? N : (lc + 1) * Chunk);// respect upper bound
-                //    Debug.WriteLine("{0} : {1} ~ {2}", lc, start, end);
-
-                //    for (int i = start; i < end; i++)
-                //    {
-                //        ITableInfo tb = db.Tables[i];
-                //        NewMethod(root, tb);
-                //    }
-                //    if (Interlocked.Decrement(ref counter) == 0)
-                //    { // use efficient 
-                //      // interlocked 
-                //      // instructions      
-                //        signal.Set();  // and kernel transition only when done
-                //    }
-                //}));
-                //th.IsBackground = true;
-                //th.Start(c);
-                ThreadPool.QueueUserWorkItem(delegate (Object o)
-                {
-                    int lc = (int)o;
-                    int start = lc * Chunk;// iterate through a work chunk
-                    int end = (lc + 1 == P ? N : (lc + 1) * Chunk);// respect upper bound
-                    Debug.WriteLine("{0} : {1} ~ {2}", lc, start, end);
-
-                    for (int i = start; i < end; i++)
-                    {
-                        if (i < db.Tables.Count)
-                        {
-                            ITableInfo tb = db.Tables[i];
-                            NewMethod(root, tb);
-                        }
-                    }
-                    if (Interlocked.Decrement(ref counter) == 0)
-                    { // use efficient 
-                      // interlocked 
-                      // instructions      
-                        signal.Set();  // and kernel transition only when done
-                    }
-                }, c);
-            }
-            signal.WaitOne();
-        }
-
-        private static void NewMethod(XElement root, ITableInfo tb)
-        {
-            foreach (IColumnInfo col in tb.Columns)
-            {
-            }
-
-            //var el = (from p in root.Elements()
-            //          where p.Attribute("rawname").Value == tb.RawName
-            //          select p).FirstOrDefault();
-            //if (el != null)
-            //{
-            //    foreach (IColumnInfo col in tb.Columns)
-            //    {
-            //        string local_desc = "";
-            //        var colEl = (from c in el.Elements()
-            //                     where c.Attribute("rawname").Value == col.RawName
-            //                     select c).FirstOrDefault();
-            //        if (colEl != null)
-            //        {
-            //            local_desc = colEl.Attribute("desc").Value;
-            //        }
-            //        col.Attributes["local_desc"] = local_desc;
-            //        if (string.IsNullOrEmpty(col.Description) && !string.IsNullOrEmpty(local_desc))
-            //        {
-            //            col.Attributes["new_desc"] = local_desc;
-            //        }
-            //        else
-            //        {
-            //            col.Attributes["new_desc"] = "";
-            //        }
-            //    }
-            //}
-        }
-
-        public static void Save(IDatabaseInfo db)
-        {
-            string filePath = Path.Combine(Environment.CurrentDirectory, "Settings\\" + "db_" + SystemConfig.DBName + ".xml");
+            string filePath = GetStorePath(db);
 
             //save
             XElement root = new XElement("database");
@@ -319,7 +226,6 @@ namespace CKGen
             }
             XDocument xdoc = new XDocument(new XDeclaration("1.0", "utf-8", "yes"), root);
             xdoc.Save(filePath);
-
         }
     }
 }

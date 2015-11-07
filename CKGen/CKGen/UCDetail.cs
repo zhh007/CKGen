@@ -92,28 +92,31 @@ namespace CKGen
 
         public void Save()
         {
-            foreach (TreeNode node in this._EditNodes)
+            if (DialogResult.OK == MessageBox.Show("是否将新的说明同时保存到本地和数据库？", "保存提示", MessageBoxButtons.OKCancel))
             {
-                ITableInfo tbInfo = node.Tag as ITableInfo;
-                node.Text = tbInfo.RawName;
-                node.ForeColor = Color.Black;
-            }
-            this._EditNodes.Clear();
-
-            foreach (DataGridViewRow row in dgvSchema.Rows)
-            {
-                string desc = row.Cells[row.Cells.Count - 2].Value as string;
-                if (!string.IsNullOrEmpty(desc))
+                foreach (TreeNode node in this._EditNodes)
                 {
-                    row.Cells[row.Cells.Count - 2].Value = "";
-                    row.Cells[row.Cells.Count - 3].Value = desc;
-                    row.Cells[row.Cells.Count - 4].Value = desc;
+                    ITableInfo tbInfo = node.Tag as ITableInfo;
+                    node.Text = tbInfo.RawName;
+                    node.ForeColor = Color.Black;
                 }
+                this._EditNodes.Clear();
+
+                foreach (DataGridViewRow row in dgvSchema.Rows)
+                {
+                    string desc = row.Cells[row.Cells.Count - 2].Value as string;
+                    if (!string.IsNullOrEmpty(desc))
+                    {
+                        row.Cells[row.Cells.Count - 2].Value = "";//new_desc
+                        row.Cells[row.Cells.Count - 3].Value = desc;//local_desc
+                        row.Cells[row.Cells.Count - 4].Value = desc;//db_desc
+                    }
+                }
+
+                DatabaseSchemaSetting.SaveDesc(SystemConfig.Instance.Database);
+
+                MessageBox.Show("保存成功。");
             }
-
-            DatabaseSchemaSetting.Save(SystemConfig.Instance.Database);
-
-            MessageBox.Show("保存成功。");
         }
     }
 }
