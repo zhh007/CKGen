@@ -50,6 +50,8 @@ namespace CKGen.DBSchema
 
         List<IColumnInfo> Keys { get; }
 
+        Dictionary<string, string> Attributes { get; set; }
+
         IDatabaseInfo Database { get; }
 
         void LoadColumns();

@@ -15,8 +15,8 @@ namespace CKGen
             {
                 string sql = @"
 IF NOT EXISTS (SELECT NULL FROM SYS.EXTENDED_PROPERTIES 
-	WHERE [major_id] = OBJECT_ID(@TableName) AND [name] = N'MS_Description' 
-		AND [minor_id] = (SELECT [column_id] FROM SYS.COLUMNS WHERE [name] = @ColumnName AND [object_id] = OBJECT_ID(@TableName)))
+    WHERE [major_id] = OBJECT_ID(@TableName) AND [name] = N'MS_Description' 
+        AND [minor_id] = (SELECT [column_id] FROM SYS.COLUMNS WHERE [name] = @ColumnName AND [object_id] = OBJECT_ID(@TableName)))
 EXECUTE sp_addextendedproperty N'MS_Description', @Desc, N'SCHEMA', @Schema, N'TABLE', @TableName, N'COLUMN', @ColumnName;
 ELSE
 EXECUTE sp_updateextendedproperty N'MS_Description', @Desc, N'SCHEMA', @Schema, N'TABLE', @TableName, N'COLUMN', @ColumnName;
@@ -51,7 +51,7 @@ EXECUTE sp_updateextendedproperty N'MS_Description', @Desc, N'SCHEMA', @Schema, 
             {
                 string sql = @"
 IF NOT EXISTS (SELECT NULL FROM SYS.EXTENDED_PROPERTIES 
-	WHERE [major_id] = OBJECT_ID(@TableName) AND [name] = N'MS_Description' AND [minor_id] = 0)
+    WHERE [major_id] = OBJECT_ID(@TableName) AND [name] = N'MS_Description' AND [minor_id] = 0)
 EXECUTE sp_addextendedproperty N'MS_Description', @Desc, N'SCHEMA', @Schema, N'TABLE', @TableName;
 ELSE
 EXECUTE sp_updateextendedproperty N'MS_Description', @Desc, N'SCHEMA', @Schema, N'TABLE', @TableName;
@@ -65,7 +65,7 @@ EXECUTE sp_updateextendedproperty N'MS_Description', @Desc, N'SCHEMA', @Schema, 
                 SqlParameter para_TableName = new SqlParameter("TableName", SqlDbType.NVarChar);
                 para_TableName.Value = tableName;
                 cmd.Parameters.Add(para_TableName);
-                
+
                 SqlParameter para_Desc = new SqlParameter("Desc", SqlDbType.NVarChar);
                 para_Desc.Value = desc;
                 cmd.Parameters.Add(para_Desc);

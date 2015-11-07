@@ -28,6 +28,7 @@ namespace CKGen.DBLoader
         private IDatabaseInfo _database;
         private SchemaLoader loader = null;
         private bool _columnsLoaded = false;
+        private Dictionary<string, string> _attr = new Dictionary<string, string>();
 
         /// <summary>
         /// 原始名称
@@ -128,6 +129,19 @@ namespace CKGen.DBLoader
                     }
                 }
                 return tmp;
+            }
+        }
+
+        public Dictionary<string, string> Attributes
+        {
+            get
+            {
+                return _attr;
+            }
+
+            set
+            {
+                _attr = value;
             }
         }
 

@@ -25,14 +25,18 @@ namespace CKGen
         private void Instance_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             lblTableName.Text = "";
-            txtTableDesc.Text = "";
+            lblTableDBDesc.Text = "";//db_desc
+            lblTableLocalDesc.Text = "";//local_desc
+            txtTableNewDesc.Text = "";//new_desc
             dgvSchema.Rows.Clear();
 
             if(SystemConfig.Instance.SelectedNode != null && SystemConfig.Instance.SelectedNode.Tag is ITableInfo)
             {
                 ITableInfo tbInfo = SystemConfig.Instance.SelectedNode.Tag as ITableInfo;
                 lblTableName.Text = tbInfo.RawName;
-                txtTableDesc.Text = tbInfo.Description;
+                lblTableDBDesc.Text = tbInfo.Description;//db_desc
+                lblTableLocalDesc.Text = tbInfo.Attributes.ContainsKey("local_desc") ? tbInfo.Attributes["local_desc"] : "";//local_desc
+                txtTableNewDesc.Text = tbInfo.Attributes.ContainsKey("new_desc") ? tbInfo.Attributes["new_desc"] : "";//new_desc
 
                 foreach (var item in tbInfo.Columns)
                 {
@@ -77,7 +81,7 @@ namespace CKGen
                 var colHasNewDesc = (from p in tbInfo.Columns
                                      where !string.IsNullOrEmpty(p.Attributes["new_desc"])
                                      select p).Count() > 0;
-                if (colHasNewDesc)
+                if (colHasNewDesc || !string.IsNullOrEmpty(tbInfo.Attributes["new_desc"]))
                 {
                     SystemConfig.Instance.SelectedNode.Text = tbInfo.RawName + "(*)";
                     SystemConfig.Instance.SelectedNode.ForeColor = Color.Red;
@@ -94,13 +98,16 @@ namespace CKGen
         {
             if (DialogResult.OK == MessageBox.Show("是否将新的说明同时保存到本地和数据库？", "保存提示", MessageBoxButtons.OKCancel))
             {
-                foreach (TreeNode node in this._EditNodes)
-                {
-                    ITableInfo tbInfo = node.Tag as ITableInfo;
-                    node.Text = tbInfo.RawName;
-                    node.ForeColor = Color.Black;
-                }
-                this._EditNodes.Clear();
+                //foreach (TreeNode node in this._EditNodes)
+                //{
+                //    ITableInfo tbInfo = node.Tag as ITableInfo;
+                //    node.Text = tbInfo.RawName;
+                //    node.ForeColor = Color.Black;
+                //}
+                //this._EditNodes.Clear();
+
+                this.lblTableLocalDesc.Text = this.txtTableNewDesc.Text;
+                this.txtTableNewDesc.Text = "";
 
                 foreach (DataGridViewRow row in dgvSchema.Rows)
                 {

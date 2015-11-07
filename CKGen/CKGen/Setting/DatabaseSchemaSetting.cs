@@ -10,7 +10,7 @@ using System.Xml.Linq;
 
 /*
 <database name="">
-    <table rawname="" schema="">
+    <table rawname="" schema="" desc="">
         <column rawname="" dbtype="" sqldatatype="" csharptype="" desc="" nullable="" iskey="" maxlength="" precision="" scale="" identity="" computed="" />
     </table>
 </database>
@@ -50,40 +50,29 @@ namespace CKGen
             XElement root = XElement.Parse(txt);
 
             List<XElement> allXmlTable = new List<XElement>();
-            foreach (ITableInfo tb in db.Tables)
+            foreach (ITableInfo tableInfo in db.Tables)
             {
                 var xmlTable = (from p in root.Elements()
-                                where p.Attribute("rawname").Value == tb.RawName
+                                where p.Attribute("rawname").Value == tableInfo.RawName
                                 select p).FirstOrDefault();
                 if (xmlTable != null)
                 {
-                    List<XElement> allXMLColumns = new List<XElement>();
-                    foreach (IColumnInfo col in tb.Columns)
+                    string db_desc = tableInfo.Description;
+                    string local_desc = xmlTable.Attribute("desc") != null ? xmlTable.Attribute("desc").Value : "";
+                    string new_desc = "";
+
+                    if (local_desc != db_desc)
                     {
-                        var colEl = (from c in xmlTable.Elements()
-                                     where c.Attribute("rawname").Value == col.RawName
-                                     select c).FirstOrDefault();
-                        if (colEl != null)
-                        {
-                            string db_desc = col.Description;
-                            string local_desc = colEl.Attribute("desc").Value;
-                            string new_desc = "";
+                        new_desc = db_desc;
+                    }
 
-                            if (local_desc != db_desc)
-                            {
-                                new_desc = db_desc;
-                            }
+                    tableInfo.Attributes["local_desc"] = local_desc;
+                    tableInfo.Attributes["new_desc"] = new_desc;
 
-                            updateXmlColumn(colEl, col);
-
-                            col.Attributes["local_desc"] = local_desc;
-                            col.Attributes["new_desc"] = new_desc;
-                        }
-                        else
-                        {
-                            colEl = createXmlColumn(col);
-                        }
-                        allXMLColumns.Add(colEl);
+                    List<XElement> allXMLColumns = new List<XElement>();
+                    foreach (IColumnInfo columnInfo in tableInfo.Columns)
+                    {
+                        updateForColumn(xmlTable, allXMLColumns, columnInfo);
                     }
 
                     xmlTable.RemoveNodes();
@@ -94,7 +83,7 @@ namespace CKGen
                 }
                 else
                 {//new table
-                    xmlTable = createXmlTable(tb);
+                    xmlTable = createXmlTable(tableInfo);
                 }
 
                 allXmlTable.Add(xmlTable);
@@ -108,6 +97,34 @@ namespace CKGen
 
             XDocument xdoc = new XDocument(new XDeclaration("1.0", "utf-8", "yes"), root);
             xdoc.Save(filePath);
+        }
+
+        private static void updateForColumn(XElement xmlTable, List<XElement> allXMLColumns, IColumnInfo columnInfo)
+        {
+            var colEl = (from c in xmlTable.Elements()
+                         where c.Attribute("rawname").Value == columnInfo.RawName
+                         select c).FirstOrDefault();
+            if (colEl != null)
+            {
+                string db_desc = columnInfo.Description;
+                string local_desc = colEl.Attribute("desc").Value;
+                string new_desc = "";
+
+                if (local_desc != db_desc)
+                {
+                    new_desc = db_desc;
+                }
+
+                updateXmlColumn(colEl, columnInfo);
+
+                columnInfo.Attributes["local_desc"] = local_desc;
+                columnInfo.Attributes["new_desc"] = new_desc;
+            }
+            else
+            {
+                colEl = createXmlColumn(columnInfo);
+            }
+            allXMLColumns.Add(colEl);
         }
 
         public static void Create(IDatabaseInfo db, string filePath)
@@ -125,9 +142,13 @@ namespace CKGen
 
         private static XElement createXmlTable(ITableInfo tb)
         {
+            tb.Attributes["local_desc"] = tb.Description;
+            tb.Attributes["new_desc"] = "";
+
             XElement elTable = new XElement("table");
             elTable.Add(new XAttribute("rawname", tb.RawName));
             elTable.Add(new XAttribute("schema", tb.Schema));
+            elTable.Add(new XAttribute("desc", tb.Description));
 
             foreach (IColumnInfo col in tb.Columns)
             {
@@ -193,6 +214,18 @@ namespace CKGen
                 XElement elTable = new XElement("table");
                 elTable.Add(new XAttribute("rawname", tb.RawName));
                 elTable.Add(new XAttribute("schema", tb.Schema));
+
+                string table_desc = tb.Description;
+                if (!string.IsNullOrEmpty(tb.Attributes["new_desc"]))
+                {
+                    table_desc = tb.Attributes["new_desc"];
+                    tb.Description = table_desc;
+                    tb.Attributes["local_desc"] = table_desc;
+                    tb.Attributes["new_desc"] = "";
+
+                    SQLHelper.SetTableDesc(SystemConfig.DBLink.ConnectionStringForExecute, tb.Schema, tb.RawName, table_desc);
+                }
+                elTable.Add(new XAttribute("desc", table_desc));
 
                 foreach (IColumnInfo col in tb.Columns)
                 {

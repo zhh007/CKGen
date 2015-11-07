@@ -31,10 +31,10 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.label7 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
+            this.lblTableLocalDesc = new System.Windows.Forms.Label();
             this.lblTableName = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.txtTableDesc = new System.Windows.Forms.TextBox();
+            this.txtTableNewDesc = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.dgvSchema = new System.Windows.Forms.DataGridView();
             this.colName = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -44,31 +44,33 @@
             this.colDescLocal = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colDescNew = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColBlank = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.lblTableDBDesc = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSchema)).BeginInit();
             this.SuspendLayout();
             // 
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(216, 43);
+            this.label7.Location = new System.Drawing.Point(262, 60);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(59, 12);
             this.label7.TabIndex = 13;
             this.label7.Text = "说明(新):";
             // 
-            // label6
+            // lblTableLocalDesc
             // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(80, 43);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(41, 12);
-            this.label6.TabIndex = 12;
-            this.label6.Text = "[说明]";
+            this.lblTableLocalDesc.AutoSize = true;
+            this.lblTableLocalDesc.Location = new System.Drawing.Point(80, 60);
+            this.lblTableLocalDesc.Name = "lblTableLocalDesc";
+            this.lblTableLocalDesc.Size = new System.Drawing.Size(41, 12);
+            this.lblTableLocalDesc.TabIndex = 12;
+            this.lblTableLocalDesc.Text = "[说明]";
             // 
             // lblTableName
             // 
             this.lblTableName.AutoSize = true;
-            this.lblTableName.Location = new System.Drawing.Point(45, 9);
+            this.lblTableName.Location = new System.Drawing.Point(80, 9);
             this.lblTableName.Name = "lblTableName";
             this.lblTableName.Size = new System.Drawing.Size(41, 12);
             this.lblTableName.TabIndex = 11;
@@ -77,18 +79,18 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(3, 43);
+            this.label5.Location = new System.Drawing.Point(3, 60);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(71, 12);
             this.label5.TabIndex = 10;
             this.label5.Text = "说明(本地):";
             // 
-            // txtTableDesc
+            // txtTableNewDesc
             // 
-            this.txtTableDesc.Location = new System.Drawing.Point(281, 40);
-            this.txtTableDesc.Name = "txtTableDesc";
-            this.txtTableDesc.Size = new System.Drawing.Size(187, 21);
-            this.txtTableDesc.TabIndex = 9;
+            this.txtTableNewDesc.Location = new System.Drawing.Point(327, 57);
+            this.txtTableNewDesc.Name = "txtTableNewDesc";
+            this.txtTableNewDesc.Size = new System.Drawing.Size(187, 21);
+            this.txtTableNewDesc.TabIndex = 9;
             // 
             // label4
             // 
@@ -118,13 +120,13 @@
             this.colDescLocal,
             this.colDescNew,
             this.ColBlank});
-            this.dgvSchema.Location = new System.Drawing.Point(0, 74);
+            this.dgvSchema.Location = new System.Drawing.Point(0, 84);
             this.dgvSchema.MultiSelect = false;
             this.dgvSchema.Name = "dgvSchema";
             this.dgvSchema.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
             this.dgvSchema.RowTemplate.Height = 23;
             this.dgvSchema.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvSchema.Size = new System.Drawing.Size(834, 419);
+            this.dgvSchema.Size = new System.Drawing.Size(834, 409);
             this.dgvSchema.TabIndex = 7;
             this.dgvSchema.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvSchema_CellEndEdit);
             // 
@@ -191,15 +193,35 @@
             this.ColBlank.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.ColBlank.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
+            // lblTableDBDesc
+            // 
+            this.lblTableDBDesc.AutoSize = true;
+            this.lblTableDBDesc.Location = new System.Drawing.Point(80, 34);
+            this.lblTableDBDesc.Name = "lblTableDBDesc";
+            this.lblTableDBDesc.Size = new System.Drawing.Size(41, 12);
+            this.lblTableDBDesc.TabIndex = 15;
+            this.lblTableDBDesc.Text = "[说明]";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(3, 34);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(35, 12);
+            this.label2.TabIndex = 14;
+            this.label2.Text = "说明:";
+            // 
             // UCDetail
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.lblTableDBDesc);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.label7);
-            this.Controls.Add(this.label6);
+            this.Controls.Add(this.lblTableLocalDesc);
             this.Controls.Add(this.lblTableName);
             this.Controls.Add(this.label5);
-            this.Controls.Add(this.txtTableDesc);
+            this.Controls.Add(this.txtTableNewDesc);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.dgvSchema);
             this.Name = "UCDetail";
@@ -214,10 +236,10 @@
         #endregion
 
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label lblTableLocalDesc;
         private System.Windows.Forms.Label lblTableName;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.TextBox txtTableDesc;
+        private System.Windows.Forms.TextBox txtTableNewDesc;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.DataGridView dgvSchema;
         private System.Windows.Forms.DataGridViewTextBoxColumn colName;
@@ -227,5 +249,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colDescLocal;
         private System.Windows.Forms.DataGridViewTextBoxColumn colDescNew;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColBlank;
+        private System.Windows.Forms.Label lblTableDBDesc;
+        private System.Windows.Forms.Label label2;
     }
 }

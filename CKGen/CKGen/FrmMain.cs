@@ -98,7 +98,7 @@ namespace CKGen
                 var colHasNewDesc = (from p in tbInfo.Columns
                                      where !string.IsNullOrEmpty(p.Attributes["new_desc"])
                                      select p).Count() > 0;
-                if (colHasNewDesc)
+                if (colHasNewDesc || !string.IsNullOrEmpty(tbInfo.Attributes["new_desc"]))
                 {
                     node.Text = tbInfo.RawName + "(*)";
                     node.ForeColor = Color.Red;
@@ -204,18 +204,32 @@ namespace CKGen
         /// <summary>
         /// 保存说明
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void tsbtnSaveSchema_Click(object sender, EventArgs e)
         {
             this.DetailPage.Save();
+            foreach (TreeNode node in tvSchema.Nodes)
+            {
+                UpdateNode(node);
+            }
+        }
+
+        private void UpdateNode(TreeNode node)
+        {
+            if(node.Tag is ITableInfo)
+            {
+                ITableInfo tbInfo = node.Tag as ITableInfo;
+                node.Text = tbInfo.RawName;
+                node.ForeColor = Color.Black;
+            }
+            foreach (TreeNode item in node.Nodes)
+            {
+                UpdateNode(item);
+            }
         }
 
         /// <summary>
         /// 重新加载元数据
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void tsBtnReloadSchema_Click(object sender, EventArgs e)
         {
 
