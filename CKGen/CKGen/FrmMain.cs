@@ -88,12 +88,22 @@ namespace CKGen
             TreeNode tbNode = new TreeNode("表");
             tbNode.ImageIndex = 1;
             tbNode.SelectedImageIndex = 1;
-            foreach (ITableInfo item in this.DB.Tables)
+            foreach (ITableInfo tbInfo in this.DB.Tables)
             {
-                TreeNode node = new TreeNode(item.RawName);
+                TreeNode node = new TreeNode(tbInfo.RawName);
                 node.ImageIndex = 2;
                 node.SelectedImageIndex = 2;
-                node.Tag = item;
+                node.Tag = tbInfo;
+
+                var colHasNewDesc = (from p in tbInfo.Columns
+                                     where !string.IsNullOrEmpty(p.Attributes["new_desc"])
+                                     select p).Count() > 0;
+                if (colHasNewDesc)
+                {
+                    node.Text = tbInfo.RawName + "(*)";
+                    node.ForeColor = Color.Red;
+                }
+
                 tbNode.Nodes.Add(node);
             }
             this.tvSchema.Nodes.Add(tbNode);

@@ -236,7 +236,7 @@ namespace CKGen
 
                 _stopWatch = new Stopwatch();
                 _stopWatch.Start();
-                DatabaseSchemaSetting.Compute(SystemConfig.Instance.Database);
+                DatabaseSchemaSetting.SyncToLocal(SystemConfig.Instance.Database);
                 _stopWatch.Stop();
                 Debug.WriteLine("执行时间:" + (_stopWatch.Elapsed.TotalMilliseconds * 1.0 / 1000).ToString(CultureInfo.InvariantCulture) + "秒");
 

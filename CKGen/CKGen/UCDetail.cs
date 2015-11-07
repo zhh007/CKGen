@@ -55,7 +55,11 @@ namespace CKGen
         private void dgvSchema_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
             string rawName = dgvSchema.Rows[e.RowIndex].Cells[0].Value.ToString();
-            string value = dgvSchema.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
+            string value = "";
+            if(dgvSchema.Rows[e.RowIndex].Cells[e.ColumnIndex].Value != null)
+            {
+                value = dgvSchema.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
+            }
 
             if (SystemConfig.Instance.SelectedNode != null && SystemConfig.Instance.SelectedNode.Tag is ITableInfo)
             {
@@ -69,8 +73,20 @@ namespace CKGen
                 {
                     col.Attributes["new_desc"] = value;
                 }
-                SystemConfig.Instance.SelectedNode.Text = tbInfo.RawName + "(*)";
-                SystemConfig.Instance.SelectedNode.ForeColor = Color.Red;
+
+                var colHasNewDesc = (from p in tbInfo.Columns
+                                     where !string.IsNullOrEmpty(p.Attributes["new_desc"])
+                                     select p).Count() > 0;
+                if (colHasNewDesc)
+                {
+                    SystemConfig.Instance.SelectedNode.Text = tbInfo.RawName + "(*)";
+                    SystemConfig.Instance.SelectedNode.ForeColor = Color.Red;
+                }
+                else
+                {
+                    SystemConfig.Instance.SelectedNode.Text = tbInfo.RawName;
+                    SystemConfig.Instance.SelectedNode.ForeColor = Color.Black;
+                }
             }
         }
 
