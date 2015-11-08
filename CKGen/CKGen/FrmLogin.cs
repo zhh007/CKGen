@@ -161,28 +161,42 @@ namespace CKGen
                 this.txtLoginName.Enabled = true;
                 this.txtPassword.Enabled = true;
             }
-            this.btnOK.Enabled = true;
-            this.cbDatabases.Enabled = true;
 
-            if (this.SrvInfo != null && this.SrvInfo.Databases != null && this.SrvInfo.Databases.Count > 0)
+            if (connected)
             {
-                cbDatabases.DataSource = this.SrvInfo.Databases;
-                cbDatabases.DisplayMember = "Name";
-                cbDatabases.ValueMember = "Name";
-                if (!string.IsNullOrEmpty(this.curDatabaseName))
+                this.btnOK.Enabled = true;
+                this.cbDatabases.Enabled = true;
+                if (this.SrvInfo != null && this.SrvInfo.Databases != null && this.SrvInfo.Databases.Count > 0)
                 {
-                    cbDatabases.SelectedValue = this.curDatabaseName;
+                    cbDatabases.DataSource = this.SrvInfo.Databases;
+                    cbDatabases.DisplayMember = "Name";
+                    cbDatabases.ValueMember = "Name";
+                    if (!string.IsNullOrEmpty(this.curDatabaseName))
+                    {
+                        cbDatabases.SelectedValue = this.curDatabaseName;
+                    }
                 }
+            }
+            else
+            {
+                this.btnLogin.Enabled = true;
             }
         }
 
         private DatabaseLink DBLink;
         private ServerInfo SrvInfo;
+        private bool connected;
         void worker_DoWork(object sender, DoWorkEventArgs e)
         {
             try
             {
                 this.SrvInfo = new ServerInfo(this.DBLink.ConnectionString, this.DBLink.ServerName);
+                connected = this.SrvInfo.Connect();
+                if(!connected)
+                {
+                    MessageBox.Show("数据库连接失败。", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
                 this.SrvInfo.LoadDatabases();
             }
             catch (Exception ex)
@@ -255,6 +269,18 @@ namespace CKGen
         private void cbServerName_SelectedIndexChanged(object sender, EventArgs e)
         {
             DisabledOKBtn();
+
+            var connList = ConnectionSetting.GetList();
+            if (connList != null && connList.Count > 0)
+            {
+                foreach (var conn in connList)
+                {
+                    if(conn.ServerName == cbServerName.Text)
+                    {
+                        ShowServer(conn.ServerName);
+                    }
+                }
+            }
         }
 
         private void DisabledOKBtn()

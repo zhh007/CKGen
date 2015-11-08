@@ -97,13 +97,13 @@ namespace CKGen.DBLoader
 
         }
 
-        public void Connect()
+        public bool Connect()
         {
             if (_connected)
-                return;
-            _root.Connect(this._dbDriver, this._ConnectionString);
+                return true;
+            _connected = _root.Connect(this._dbDriver, this._ConnectionString);
 
-            _connected = true;
+            //_connected = true;
 
             //_root.Driver = this._dbDriver;
             _root.DbTargetMappingFileName = this._DbTargetMappingFileName;
@@ -111,7 +111,8 @@ namespace CKGen.DBLoader
 
             _root.LanguageMappingFileName = this._LanguageMappingFileName;
             _root.Language = this._Language;
-            
+
+            return _connected;
         }
 
         private bool _connected = false;
