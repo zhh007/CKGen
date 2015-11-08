@@ -94,14 +94,6 @@ namespace CKGen
         {
             if (DialogResult.OK == MessageBox.Show("是否将新的说明同时保存到本地和数据库？", "保存提示", MessageBoxButtons.OKCancel))
             {
-                //foreach (TreeNode node in this._EditNodes)
-                //{
-                //    ITableInfo tbInfo = node.Tag as ITableInfo;
-                //    node.Text = tbInfo.RawName;
-                //    node.ForeColor = Color.Black;
-                //}
-                //this._EditNodes.Clear();
-
                 DatabaseSchemaSetting.SaveDesc(SystemConfig.Instance.Database);
 
                 this.lblTableLocalDesc.Text = this.txtTableNewDesc.Text;

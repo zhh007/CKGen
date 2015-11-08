@@ -54,7 +54,8 @@ namespace CKGen
             //
             InitTree();
 
-            //this.WindowState = FormWindowState.Maximized;
+            //菜单
+            CreateMenu();
 
             //组合部件
             var catalog = new AggregateCatalog();
@@ -112,8 +113,10 @@ namespace CKGen
             {
                 this.tvSchema.SelectedNode = tbNode.Nodes[0];
             }
+        }
 
-            //菜单
+        private void CreateMenu()
+        {
             this.TableMenu = new ContextMenuStrip();
             this.TableMenu.Items.Add("查看前 100 行", null, (s, e) =>
             {
@@ -227,12 +230,36 @@ namespace CKGen
             }
         }
 
+        FrmLoading loadForm;
         /// <summary>
         /// 重新加载元数据
         /// </summary>
         private void tsBtnReloadSchema_Click(object sender, EventArgs e)
         {
+            BackgroundWorker worker = new BackgroundWorker();
+            worker.DoWork += new DoWorkEventHandler(worker_DoWork);
+            worker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(worker_RunWorkerCompleted);
+            worker.RunWorkerAsync();
 
+            loadForm = new FrmLoading();
+            loadForm.ShowDialog();
+        }
+
+        void worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            loadForm.Close();
+        }
+
+        void worker_DoWork(object sender, DoWorkEventArgs e)
+        {
+            //保存说明
+            //重新加载数据结构
+            //更新界面
+            for (int i = 0; i < 10; i++)
+            {
+                Debug.WriteLine(i);
+                Thread.Sleep(1000);
+            }
         }
 
         private void tvSchema_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
