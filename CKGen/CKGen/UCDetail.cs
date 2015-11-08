@@ -168,5 +168,13 @@ namespace CKGen
                 graphics.DrawIcon(myIcon, rectangle);
             }
         }
+
+        private void dgvSchema_CellEnter(object sender, DataGridViewCellEventArgs e)
+        {
+            if (dgvSchema.CurrentCell.ColumnIndex == 5)
+            {
+                dgvSchema.BeginEdit(true);
+            }
+        }
     }
 }

@@ -36,8 +36,6 @@
             this.txtTableNewDesc = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.dgvSchema = new System.Windows.Forms.DataGridView();
-            this.lblTableDBDesc = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
             this.colName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColDBType = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColNull = new System.Windows.Forms.DataGridViewCheckBoxColumn();
@@ -45,6 +43,8 @@
             this.colDescLocal = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colDescNew = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColBlank = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.lblTableDBDesc = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSchema)).BeginInit();
             this.SuspendLayout();
             // 
@@ -130,25 +130,8 @@
             this.dgvSchema.Size = new System.Drawing.Size(834, 409);
             this.dgvSchema.TabIndex = 7;
             this.dgvSchema.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvSchema_CellEndEdit);
+            this.dgvSchema.CellEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvSchema_CellEnter);
             this.dgvSchema.RowPostPaint += new System.Windows.Forms.DataGridViewRowPostPaintEventHandler(this.dgvSchema_RowPostPaint);
-            // 
-            // lblTableDBDesc
-            // 
-            this.lblTableDBDesc.AutoSize = true;
-            this.lblTableDBDesc.Location = new System.Drawing.Point(80, 34);
-            this.lblTableDBDesc.Name = "lblTableDBDesc";
-            this.lblTableDBDesc.Size = new System.Drawing.Size(41, 12);
-            this.lblTableDBDesc.TabIndex = 15;
-            this.lblTableDBDesc.Text = "[说明]";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(3, 34);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(35, 12);
-            this.label2.TabIndex = 14;
-            this.label2.Text = "说明:";
             // 
             // colName
             // 
@@ -216,6 +199,24 @@
             this.ColBlank.ReadOnly = true;
             this.ColBlank.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.ColBlank.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // lblTableDBDesc
+            // 
+            this.lblTableDBDesc.AutoSize = true;
+            this.lblTableDBDesc.Location = new System.Drawing.Point(80, 34);
+            this.lblTableDBDesc.Name = "lblTableDBDesc";
+            this.lblTableDBDesc.Size = new System.Drawing.Size(41, 12);
+            this.lblTableDBDesc.TabIndex = 15;
+            this.lblTableDBDesc.Text = "[说明]";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(3, 34);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(35, 12);
+            this.label2.TabIndex = 14;
+            this.label2.Text = "说明:";
             // 
             // UCDetail
             // 
