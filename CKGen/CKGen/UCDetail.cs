@@ -30,7 +30,7 @@ namespace CKGen
             txtTableNewDesc.Text = "";//new_desc
             dgvSchema.Rows.Clear();
 
-            if(SystemConfig.Instance.SelectedNode != null && SystemConfig.Instance.SelectedNode.Tag is ITableInfo)
+            if (SystemConfig.Instance.SelectedNode != null && SystemConfig.Instance.SelectedNode.Tag is ITableInfo)
             {
                 ITableInfo tbInfo = SystemConfig.Instance.SelectedNode.Tag as ITableInfo;
                 lblTableName.Text = tbInfo.RawName;
@@ -42,7 +42,7 @@ namespace CKGen
                 {
                     string[] row = new string[] {
                         item.RawName,
-                        item.DBType,
+                        Util.GetFullSqlType(item),//item.DBType,
                         item.Nullable ? "Yes" : "No",
                         item.Description,
                         item.Attributes.ContainsKey("local_desc") ? item.Attributes["local_desc"] : "",
@@ -54,20 +54,17 @@ namespace CKGen
             }
         }
 
-        private List<TreeNode> _EditNodes = new List<TreeNode>();
-
         private void dgvSchema_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
             string rawName = dgvSchema.Rows[e.RowIndex].Cells[0].Value.ToString();
             string value = "";
-            if(dgvSchema.Rows[e.RowIndex].Cells[e.ColumnIndex].Value != null)
+            if (dgvSchema.Rows[e.RowIndex].Cells[e.ColumnIndex].Value != null)
             {
                 value = dgvSchema.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
             }
 
             if (SystemConfig.Instance.SelectedNode != null && SystemConfig.Instance.SelectedNode.Tag is ITableInfo)
             {
-                this._EditNodes.Add(SystemConfig.Instance.SelectedNode);
                 ITableInfo tbInfo = SystemConfig.Instance.SelectedNode.Tag as ITableInfo;
 
                 var col = (from c in tbInfo.Columns
@@ -106,7 +103,10 @@ namespace CKGen
                 //}
                 //this._EditNodes.Clear();
 
+                DatabaseSchemaSetting.SaveDesc(SystemConfig.Instance.Database);
+
                 this.lblTableLocalDesc.Text = this.txtTableNewDesc.Text;
+                this.lblTableDBDesc.Text = this.txtTableNewDesc.Text;
                 this.txtTableNewDesc.Text = "";
 
                 foreach (DataGridViewRow row in dgvSchema.Rows)
@@ -120,9 +120,30 @@ namespace CKGen
                     }
                 }
 
-                DatabaseSchemaSetting.SaveDesc(SystemConfig.Instance.Database);
-
                 MessageBox.Show("保存成功。");
+            }
+        }
+
+        private void txtTableNewDesc_TextChanged(object sender, EventArgs e)
+        {
+            if (SystemConfig.Instance.SelectedNode != null && SystemConfig.Instance.SelectedNode.Tag is ITableInfo)
+            {
+                ITableInfo tbInfo = SystemConfig.Instance.SelectedNode.Tag as ITableInfo;
+                if (tbInfo != null)
+                {
+                    tbInfo.Attributes["new_desc"] = txtTableNewDesc.Text;
+
+                    if (!string.IsNullOrEmpty(txtTableNewDesc.Text))
+                    {
+                        SystemConfig.Instance.SelectedNode.Text = tbInfo.RawName + "(*)";
+                        SystemConfig.Instance.SelectedNode.ForeColor = Color.Red;
+                    }
+                    else
+                    {
+                        SystemConfig.Instance.SelectedNode.Text = tbInfo.RawName;
+                        SystemConfig.Instance.SelectedNode.ForeColor = Color.Black;
+                    }
+                }
             }
         }
     }

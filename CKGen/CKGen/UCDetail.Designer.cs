@@ -37,6 +37,8 @@
             this.txtTableNewDesc = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.dgvSchema = new System.Windows.Forms.DataGridView();
+            this.lblTableDBDesc = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
             this.colName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColDBType = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColNull = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -44,8 +46,6 @@
             this.colDescLocal = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colDescNew = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColBlank = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.lblTableDBDesc = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSchema)).BeginInit();
             this.SuspendLayout();
             // 
@@ -91,6 +91,7 @@
             this.txtTableNewDesc.Name = "txtTableNewDesc";
             this.txtTableNewDesc.Size = new System.Drawing.Size(187, 21);
             this.txtTableNewDesc.TabIndex = 9;
+            this.txtTableNewDesc.TextChanged += new System.EventHandler(this.txtTableNewDesc_TextChanged);
             // 
             // label4
             // 
@@ -123,75 +124,12 @@
             this.dgvSchema.Location = new System.Drawing.Point(0, 84);
             this.dgvSchema.MultiSelect = false;
             this.dgvSchema.Name = "dgvSchema";
-            this.dgvSchema.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
+            this.dgvSchema.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToDisplayedHeaders;
             this.dgvSchema.RowTemplate.Height = 23;
             this.dgvSchema.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.dgvSchema.Size = new System.Drawing.Size(834, 409);
             this.dgvSchema.TabIndex = 7;
             this.dgvSchema.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvSchema_CellEndEdit);
-            // 
-            // colName
-            // 
-            this.colName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.colName.HeaderText = "名称";
-            this.colName.Name = "colName";
-            this.colName.ReadOnly = true;
-            this.colName.Width = 54;
-            // 
-            // ColDBType
-            // 
-            this.ColDBType.HeaderText = "数据类型";
-            this.ColDBType.Name = "ColDBType";
-            this.ColDBType.ReadOnly = true;
-            this.ColDBType.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            // 
-            // ColNull
-            // 
-            this.ColNull.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.ColNull.DefaultCellStyle = dataGridViewCellStyle1;
-            this.ColNull.HeaderText = "允许Null值";
-            this.ColNull.Name = "ColNull";
-            this.ColNull.ReadOnly = true;
-            this.ColNull.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.ColNull.Width = 90;
-            // 
-            // colRemark
-            // 
-            this.colRemark.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.colRemark.HeaderText = "说明";
-            this.colRemark.Name = "colRemark";
-            this.colRemark.ReadOnly = true;
-            this.colRemark.Width = 54;
-            // 
-            // colDescLocal
-            // 
-            this.colDescLocal.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.colDescLocal.HeaderText = "说明(本地)";
-            this.colDescLocal.Name = "colDescLocal";
-            this.colDescLocal.ReadOnly = true;
-            this.colDescLocal.Width = 90;
-            // 
-            // colDescNew
-            // 
-            this.colDescNew.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.colDescNew.HeaderText = "说明(新)";
-            this.colDescNew.MaxInputLength = 100;
-            this.colDescNew.MinimumWidth = 200;
-            this.colDescNew.Name = "colDescNew";
-            this.colDescNew.Width = 200;
-            // 
-            // ColBlank
-            // 
-            this.ColBlank.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.White;
-            this.ColBlank.DefaultCellStyle = dataGridViewCellStyle2;
-            this.ColBlank.HeaderText = "";
-            this.ColBlank.Name = "ColBlank";
-            this.ColBlank.ReadOnly = true;
-            this.ColBlank.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.ColBlank.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // lblTableDBDesc
             // 
@@ -210,6 +148,75 @@
             this.label2.Size = new System.Drawing.Size(35, 12);
             this.label2.TabIndex = 14;
             this.label2.Text = "说明:";
+            // 
+            // colName
+            // 
+            this.colName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.colName.HeaderText = "名称";
+            this.colName.Name = "colName";
+            this.colName.ReadOnly = true;
+            this.colName.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.colName.Width = 35;
+            // 
+            // ColDBType
+            // 
+            this.ColDBType.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.ColDBType.HeaderText = "数据类型";
+            this.ColDBType.MinimumWidth = 100;
+            this.ColDBType.Name = "ColDBType";
+            this.ColDBType.ReadOnly = true;
+            this.ColDBType.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // ColNull
+            // 
+            this.ColNull.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.ColNull.DefaultCellStyle = dataGridViewCellStyle1;
+            this.ColNull.HeaderText = "允许Null值";
+            this.ColNull.Name = "ColNull";
+            this.ColNull.ReadOnly = true;
+            this.ColNull.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.ColNull.Width = 71;
+            // 
+            // colRemark
+            // 
+            this.colRemark.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.colRemark.HeaderText = "说明";
+            this.colRemark.Name = "colRemark";
+            this.colRemark.ReadOnly = true;
+            this.colRemark.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.colRemark.Width = 35;
+            // 
+            // colDescLocal
+            // 
+            this.colDescLocal.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.colDescLocal.HeaderText = "说明(本地)";
+            this.colDescLocal.Name = "colDescLocal";
+            this.colDescLocal.ReadOnly = true;
+            this.colDescLocal.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.colDescLocal.Width = 71;
+            // 
+            // colDescNew
+            // 
+            this.colDescNew.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.colDescNew.HeaderText = "说明(新)";
+            this.colDescNew.MaxInputLength = 100;
+            this.colDescNew.MinimumWidth = 200;
+            this.colDescNew.Name = "colDescNew";
+            this.colDescNew.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.colDescNew.Width = 200;
+            // 
+            // ColBlank
+            // 
+            this.ColBlank.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.White;
+            this.ColBlank.DefaultCellStyle = dataGridViewCellStyle2;
+            this.ColBlank.HeaderText = "";
+            this.ColBlank.Name = "ColBlank";
+            this.ColBlank.ReadOnly = true;
+            this.ColBlank.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.ColBlank.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // UCDetail
             // 
@@ -242,6 +249,8 @@
         private System.Windows.Forms.TextBox txtTableNewDesc;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.DataGridView dgvSchema;
+        private System.Windows.Forms.Label lblTableDBDesc;
+        private System.Windows.Forms.Label label2;
         private System.Windows.Forms.DataGridViewTextBoxColumn colName;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColDBType;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColNull;
@@ -249,7 +258,5 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colDescLocal;
         private System.Windows.Forms.DataGridViewTextBoxColumn colDescNew;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColBlank;
-        private System.Windows.Forms.Label lblTableDBDesc;
-        private System.Windows.Forms.Label label2;
     }
 }

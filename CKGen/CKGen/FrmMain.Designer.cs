@@ -39,8 +39,8 @@
             this.tvSchema = new System.Windows.Forms.TreeView();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tbTemp = new System.Windows.Forms.TreeView();
+            this.tabControl1 = new System.Windows.Forms.TabControl();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -64,7 +64,7 @@
             // 
             // tsbtnSaveSchema
             // 
-            this.tsbtnSaveSchema.Image = ((System.Drawing.Image)(resources.GetObject("tsbtnSaveSchema.Image")));
+            this.tsbtnSaveSchema.Image = global::CKGen.Properties.Resources.saveHS;
             this.tsbtnSaveSchema.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbtnSaveSchema.Name = "tsbtnSaveSchema";
             this.tsbtnSaveSchema.Size = new System.Drawing.Size(76, 22);
@@ -74,7 +74,7 @@
             // 
             // tsBtnReloadSchema
             // 
-            this.tsBtnReloadSchema.Image = ((System.Drawing.Image)(resources.GetObject("tsBtnReloadSchema.Image")));
+            this.tsBtnReloadSchema.Image = global::CKGen.Properties.Resources.fresh;
             this.tsBtnReloadSchema.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsBtnReloadSchema.Name = "tsBtnReloadSchema";
             this.tsBtnReloadSchema.Size = new System.Drawing.Size(76, 22);
@@ -157,6 +157,15 @@
             this.tabPage2.Text = "模板";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
+            // tbTemp
+            // 
+            this.tbTemp.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbTemp.Location = new System.Drawing.Point(3, 3);
+            this.tbTemp.Name = "tbTemp";
+            this.tbTemp.Size = new System.Drawing.Size(186, 456);
+            this.tbTemp.TabIndex = 0;
+            this.tbTemp.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.tbTemp_NodeMouseDoubleClick);
+            // 
             // tabControl1
             // 
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -166,15 +175,6 @@
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(843, 488);
             this.tabControl1.TabIndex = 0;
-            // 
-            // tbTemp
-            // 
-            this.tbTemp.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbTemp.Location = new System.Drawing.Point(3, 3);
-            this.tbTemp.Name = "tbTemp";
-            this.tbTemp.Size = new System.Drawing.Size(186, 456);
-            this.tbTemp.TabIndex = 0;
-            this.tbTemp.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.tbTemp_NodeMouseDoubleClick);
             // 
             // FrmMain
             // 

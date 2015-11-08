@@ -223,6 +223,7 @@
     <Content Include="readme.txt" />
     <None Include="Resources\New.ico" />
     <None Include="Resources\PrimaryKeyHS.png" />
+    <None Include="Resources\saveHS.png" />
     <Content Include="Resources\server_link_ico.ico" />
     <None Include="Resources\fresh.png" />
     <None Include="Resources\folder.png" />
