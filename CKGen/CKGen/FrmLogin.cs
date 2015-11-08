@@ -24,6 +24,11 @@ namespace CKGen
 
         private void FrmLogin_Load(object sender, EventArgs e)
         {
+            Image img = CKGen.Properties.Resources.link;
+            Bitmap myBitmap = new Bitmap(img);
+            Icon myIcon = Icon.FromHandle(myBitmap.GetHicon());
+            this.Icon = myIcon;
+
             this.bar = new ProgressBar();
             this.bar.Location = new System.Drawing.Point(18, 0);
             this.bar.Size = new System.Drawing.Size(367, 10);
