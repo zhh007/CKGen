@@ -40,16 +40,15 @@ namespace CKGen
 
                 foreach (var item in tbInfo.Columns)
                 {
-                    string[] row = new string[] {
-                        item.RawName,
-                        Util.GetFullSqlType(item),//item.DBType,
-                        item.Nullable ? "Yes" : "No",
-                        item.Description,
-                        item.Attributes.ContainsKey("local_desc") ? item.Attributes["local_desc"] : "",
-                        item.Attributes.ContainsKey("new_desc") ? item.Attributes["new_desc"] : ""
-                    };
-
-                    dgvSchema.Rows.Add(row);
+                    int index = dgvSchema.Rows.Add();
+                    DataGridViewRow row = dgvSchema.Rows[index];
+                    row.Tag = item.IsPrimaryKey;
+                    row.Cells[0].Value = item.RawName;
+                    row.Cells[1].Value = Util.GetFullSqlType(item);//item.DBType
+                    row.Cells[2].Value = item.Nullable ? true : false;
+                    row.Cells[3].Value = item.Description;
+                    row.Cells[4].Value = item.Attributes.ContainsKey("local_desc") ? item.Attributes["local_desc"] : "";
+                    row.Cells[5].Value = item.Attributes.ContainsKey("new_desc") ? item.Attributes["new_desc"] : "";
                 }
             }
         }
@@ -144,6 +143,29 @@ namespace CKGen
                         SystemConfig.Instance.SelectedNode.ForeColor = Color.Black;
                     }
                 }
+            }
+        }
+
+        private void dgvSchema_RowPostPaint(object sender, DataGridViewRowPostPaintEventArgs e)
+        {
+            DataGridViewRow row = dgvSchema.Rows[e.RowIndex];
+
+            if (row.Tag != null && row.Tag is bool && (bool)row.Tag)
+            {
+                Image img = CKGen.Properties.Resources.PrimaryKeyHS;
+                Bitmap myBitmap = new Bitmap(img);
+                Icon myIcon = Icon.FromHandle(myBitmap.GetHicon());
+
+                Graphics graphics = e.Graphics;
+
+                int iconHeight = 16;
+                int iconWidth = 16;
+
+                int xPosition = e.RowBounds.X + (dgvSchema.RowHeadersWidth / 2);
+                int yPosition = e.RowBounds.Y + ((row.Height - iconHeight) / 2);
+
+                Rectangle rectangle = new Rectangle(xPosition, yPosition, iconWidth, iconHeight);
+                graphics.DrawIcon(myIcon, rectangle);
             }
         }
     }
