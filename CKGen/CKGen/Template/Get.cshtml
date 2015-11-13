@@ -10,7 +10,7 @@ public static @(Model.PascalName) Get(@(Util.GetPKDefine(Model)))
 {
     string sql = @@"@(Util.BuildGetByPKSql(Model))";
 
-    @(Model.PascalName) info = null;
+    @(Model.PascalName) entity = null;
     using (SqlConnection conn = new SqlConnection('conn_name'))
     {
         SqlCommand cmd = new SqlCommand(sql, conn);
@@ -38,13 +38,13 @@ public static @(Model.PascalName) Get(@(Util.GetPKDefine(Model)))
 
                 if (sdr.Read())
                 {
-                    info = new @(Model.PascalName);
+                    entity = new @(Model.PascalName);
 @foreach(var column in Model.Columns)
 {
 <text>
                     if(sdr.IsDBNull(@(column.CamelName)Ordinal))
                     {
-                        info.@(column.PascalName) = @(Util.BuildGetSqlReaderNullStr(column));
+                        entity.@(column.PascalName) = @(Util.BuildGetSqlReaderNullStr(column));
                     }
                     else
                     {
