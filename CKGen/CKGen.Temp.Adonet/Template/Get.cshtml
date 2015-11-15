@@ -42,7 +42,7 @@ public @(Model.PascalName) Get(@(Util.GetPKDefine(Model)))
 @foreach(var column in Model.Columns)
 {
 <text>
-                    if(sdr.IsDBNull(@(column.CamelName)Ordinal))
+                    if (sdr.IsDBNull(@(column.CamelName)Ordinal))
                     {
                         entity.@(column.PascalName) = @(Util.BuildGetSqlReaderNullStr(column));
                     }

@@ -8,14 +8,14 @@
 /// </summary>
 public void Insert(@(Model.PascalName) entity)
 {
-    if(entity == null)
+    if (entity == null)
         throw new ArgumentNullException("entity");
 
 @foreach (var column in Model.Columns)
 {
     if (column.IsPrimaryKey && !column.Identity && !LanguageConvert.IsValueType(column.CSharpType))
     {
-<text>    if(entity.@(column.PascalName) == null)
+<text>    if (entity.@(column.PascalName) == null)
         throw new Exception("主键不能为空值。");
 </text>
     }

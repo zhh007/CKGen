@@ -30,7 +30,7 @@ public bool Exist(@(Util.GetPKDefine(Model)))
         {
             conn.Open();
             object r = cmd.ExecuteScalar();
-            if(r != null)
+            if (r != null)
             {
                 int.TryParse(r.ToString(), out count);
             }

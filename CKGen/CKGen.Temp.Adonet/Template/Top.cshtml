@@ -32,7 +32,7 @@ public List<@(Model.PascalName)> Top(int topN)
 @foreach(var column in Model.Columns)
 {
 <text>
-                    if(sdr.IsDBNull(@(column.CamelName)Ordinal))
+                    if (sdr.IsDBNull(@(column.CamelName)Ordinal))
                     {
                         entity.@(column.PascalName) = @(Util.BuildGetSqlReaderNullStr(column));
                     }
