@@ -278,7 +278,7 @@ WHERE user_type_id =
             sbSql.Append("END ELSE BEGIN");
 
             //update
-            sbSql.Append(Util.GetUpdateByPKSql_2(table));
+            sbSql.Append(Util.GetUpdateByPKSql(table));
 
             sbSql.Append("END");
 
@@ -756,9 +756,6 @@ WHERE user_type_id =
             for (int i = 0; i < len; i++)
             {
                 IColumnInfo col = table.Columns[i];
-                //if (col.InPrimaryKey)
-                //    continue;
-
                 sbSql.AppendFormat("[{0}]", col.RawName);
                 if (i != len - 1)
                 {
@@ -776,6 +773,58 @@ WHERE user_type_id =
             sbSql.Append("]\r\n");
 
             return sbSql.ToString();
+        }
+
+        public static string BuildSQL_Paged(ITableInfo table)
+        {
+            string orderbyStr = string.Format("{0} DESC", GetDefaultColumn(table));
+            string whereStr = "";
+            string sql = string.Format(@"
+SELECT * FROM (
+    SELECT *
+        , (ROW_NUMBER() OVER (ORDER BY {0})) AS RowNumber
+        , (((ROW_NUMBER() OVER (ORDER BY {0})) - 1)/@PageSize) + 1 AS PageNumber
+    FROM [{1}] {2}
+) as t
+WHERE PageNumber = @PageIndex
+
+SELECT @TotalCount = COUNT(*) FROM (
+    SELECT *
+        , (ROW_NUMBER() OVER (ORDER BY {0})) AS RowNumber
+        , (((ROW_NUMBER() OVER (ORDER BY {0})) - 1)/@PageSize) + 1 AS PageNumber
+    FROM [{1}] {2}
+) as t", orderbyStr, table.RawName, whereStr);
+
+            return sql;
+        }
+
+        public static string GetDefaultColumn(ITableInfo table)
+        {
+            var col = (from p in table.Columns
+                       where p.IsPrimaryKey && p.Identity
+                       select p).FirstOrDefault();
+            if(col != null)
+            {
+                return "[" + col.RawName + "]";
+            }
+
+            col = (from p in table.Columns
+                   where p.CSharpType == "DateTime" && (p.LowerName.Contains("update") && p.LowerName.Contains("modif"))
+                   select p).FirstOrDefault();
+            if (col != null)
+            {
+                return "[" + col.RawName + "]";
+            }
+
+            col = (from p in table.Columns
+                   where p.CSharpType == "DateTime" && (p.LowerName.Contains("create") && p.LowerName.Contains("add"))
+                   select p).FirstOrDefault();
+            if (col != null)
+            {
+                return "[" + col.RawName + "]";
+            }
+
+            return "[" + table.Columns[0].RawName + "]";
         }
 
         public static string GetColumnString(ITableInfo table)
@@ -842,7 +891,7 @@ WHERE user_type_id =
         /// <returns></returns>
         public static string BuildSetFieldValue(IColumnInfo column)
         {
-            string tmp = "info.{0} = {1};";
+            string tmp = "entity.{0} = {1};";
             string result = "";
 
             string sqlType = column.DBType;

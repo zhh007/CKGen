@@ -13,6 +13,7 @@ using System.Globalization;
 using System.Threading;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
+using CKGen.Temp.Adonet;
 
 namespace CKGen
 {
@@ -136,9 +137,13 @@ namespace CKGen
             });
             ToolStripSeparator spliter = new ToolStripSeparator();
             this.TableMenu.Items.Add(spliter);
-            this.TableMenu.Items.Add("生成代码 - Model", null, (s, e) =>
+            this.TableMenu.Items.Add("生成 - 实体类", null, (s, e) =>
             {
                 GenCode("Model.cshtml");
+            });
+            this.TableMenu.Items.Add("生成 - 数据访问类", null, (s, e) =>
+            {
+                GenDataAccessCode();
             });
             this.TableMenu.Items.Add("生成代码 - Insert", null, (s, e) =>
             {
@@ -187,6 +192,23 @@ namespace CKGen
                 UCCodeShow codeShow = new UCCodeShow();
                 codeShow.Dock = DockStyle.Fill;
                 TabPage tab1 = new TabPage("Model For " + tbInfo.Name);
+                tab1.Controls.Add(codeShow);
+                this.tabControl1.TabPages.Add(tab1);
+                this.tabControl1.SelectTab(tab1);
+                codeShow.Show(code);
+            }
+        }
+
+        private void GenDataAccessCode()
+        {
+            if (this.tvSchema.SelectedNode.Tag is ITableInfo)
+            {
+                TableDataAccessGen gen = new TableDataAccessGen();
+                ITableInfo tbInfo = this.tvSchema.SelectedNode.Tag as ITableInfo;
+                string code = gen.Build("Test", tbInfo);
+                UCCodeShow codeShow = new UCCodeShow();
+                codeShow.Dock = DockStyle.Fill;
+                TabPage tab1 = new TabPage("DataAccess For " + tbInfo.Name);
                 tab1.Controls.Add(codeShow);
                 this.tabControl1.TabPages.Add(tab1);
                 this.tabControl1.SelectTab(tab1);

@@ -131,7 +131,6 @@
     <Compile Include="UCQuery.Designer.cs">
       <DependentUpon>UCQuery.cs</DependentUpon>
     </Compile>
-    <Compile Include="Util.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
@@ -183,36 +182,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <None Include="Template\Insert.cshtml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Template\Delete.cshtml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Template\Paged.cshtml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Template\Save.cshtml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Template\Exist.cshtml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Template\Get.cshtml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Template\Top.cshtml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Template\Select.cshtml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Template\Update.cshtml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Template\Model.cshtml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CKGen.Base\CKGen.Base.csproj">
@@ -222,6 +191,10 @@
     <ProjectReference Include="..\CKGen.DBLoader\CKGen.DBLoader.csproj">
       <Project>{838634ed-ca1d-4884-a026-15e9666eac3b}</Project>
       <Name>CKGen.DBLoader</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CKGen.Temp.Adonet\CKGen.Temp.Adonet.csproj">
+      <Project>{876b3437-a905-488a-8b67-b8b222e691bc}</Project>
+      <Name>CKGen.Temp.Adonet</Name>
     </ProjectReference>
     <ProjectReference Include="..\CKGen.Temp.AspnetMVC\CKGen.Temp.AspnetMVC.csproj">
       <Project>{1f3c9cc8-a0f4-4de3-b257-b7d4cb7fc2fb}</Project>

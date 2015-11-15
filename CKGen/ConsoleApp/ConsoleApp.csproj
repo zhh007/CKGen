@@ -32,6 +32,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="RazorEngine, Version=3.7.1.0, Culture=neutral, PublicKeyToken=9ee697374c7e744a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\RazorEngine.3.7.1-alpha1\lib\net40\RazorEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="ScintillaNET">
+      <HintPath>..\packages\jacobslusser.ScintillaNET.3.5.0\lib\net40\ScintillaNET.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -53,6 +60,10 @@
       <Project>{838634ed-ca1d-4884-a026-15e9666eac3b}</Project>
       <Name>CKGen.DBLoader</Name>
     </ProjectReference>
+    <ProjectReference Include="..\CKGen.Temp.Adonet\CKGen.Temp.Adonet.csproj">
+      <Project>{876b3437-a905-488a-8b67-b8b222e691bc}</Project>
+      <Name>CKGen.Temp.Adonet</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CKGen.Temp.AspnetMVC\CKGen.Temp.AspnetMVC.csproj">
       <Project>{1f3c9cc8-a0f4-4de3-b257-b7d4cb7fc2fb}</Project>
       <Name>CKGen.Temp.AspnetMVC</Name>
@@ -64,6 +75,10 @@
     <ProjectReference Include="..\CKGen.Temp.DBDoc\CKGen.Temp.DBDoc.csproj">
       <Project>{dc89b60f-c05a-4f7c-b332-c2804ad161c5}</Project>
       <Name>CKGen.Temp.DBDoc</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CKGen\CKGen.csproj">
+      <Project>{82e6990c-4aa3-40e4-9f0d-41a929d9b357}</Project>
+      <Name>CKGen</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

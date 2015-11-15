@@ -1,0 +1,14 @@
+﻿@using RazorEngine.Templating
+@using CKGen.DBSchema;
+@using CKGen.Temp.Adonet;
+@inherits TemplateBase<TestProjectModel>
+
+<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+    <startup useLegacyV2RuntimeActivationPolicy="true">
+        <supportedRuntime version="v4.0" sku=".NETFramework,Version=v4.0" />
+    </startup>
+    <connectionStrings>
+        <add name="testapp" connectionString="@(Model.ConnectionString)" />
+    </connectionStrings>
+</configuration>

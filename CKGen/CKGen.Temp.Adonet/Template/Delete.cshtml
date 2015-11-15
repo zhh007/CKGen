@@ -1,0 +1,41 @@
+﻿@using RazorEngine.Templating
+@using CKGen.DBSchema;
+@using CKGen;
+@inherits TemplateBase<ITableInfo>
+
+/// <summary>
+/// 根据主键删除记录
+/// </summary>
+public void Delete(@(Util.GetPKDefine(Model)))
+{
+    string sql = @@"@(Util.GetDeleteByPKSql(Model))";
+
+    using (SqlConnection conn = new SqlConnection('conn_name'))
+    {
+        SqlCommand cmd = new SqlCommand(sql, conn);
+@foreach(var column in Model.Columns)
+{
+    if (!column.IsPrimaryKey)
+    {
+        continue;
+    }
+<text>
+        SqlParameter para_@(column.PascalName) = @(Util.GetSqlParameter(column));
+        para_@(column.PascalName).Value = @(column.CamelName);
+        cmd.Parameters.Add(para_@(column.PascalName));</text>
+}
+
+        try
+        {
+            conn.Open();
+            cmd.ExecuteNonQuery();
+        }
+        finally
+        {
+            if (conn.State != ConnectionState.Closed)
+                conn.Close();
+            if (conn != null)
+                conn.Dispose();
+        }
+    }
+}

@@ -1,0 +1,22 @@
+﻿@using RazorEngine.Templating
+@using CKGen.DBSchema;
+@using CKGen.Temp.Adonet;
+@inherits TemplateBase<TestProjectModel>
+
+using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Linq;
+using System.Text;
+
+namespace TestApp
+{
+    class Program
+    {
+        public static string TestConnection = ConfigurationManager.ConnectionStrings["testapp"].ConnectionString;
+        static void Main(string[] args)
+        {
+        }
+    }
+}
+
