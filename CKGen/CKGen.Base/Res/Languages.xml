@@ -27,6 +27,13 @@
 		<Type From="varchar" To="string" />
 		<Type From="xml" To="string" />
 		<Type From="sql_variant" To="object" />
+    <Type From="date" To="DateTime" />
+    <Type From="datetime2" To="DateTime" />
+    <Type From="datetimeoffset" To="DateTime" />
+    <Type From="time" To="TimeSpan" />
+    <Type From="geography" To="byte[]" />
+    <Type From="geometry" To="byte[]" />
+    <Type From="hierarchyid" To="byte[]" />
 	</Language>
 	<Language From="SQL" To="C# System Types">
 		<Type From="bigint" To="System.Int64" />

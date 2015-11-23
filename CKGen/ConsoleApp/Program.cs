@@ -109,7 +109,7 @@ namespace ConsoleApp
         {
             string dbConnStr = @"Provider=SQLOLEDB.1;Persist Security Info=False;User ID=sa;Password=pass@word1;Initial Catalog=DBTest;Data Source=.\SQL2008R2";
             string dbname = "DBTest";
-            string tableName = "df_TestUser";
+            string tableName = "SampleInt";
             string connStr2 = @"Data Source=.\SQL2008R2;Initial Catalog=DBTest;User ID=sa;Password=pass@word1;Persist Security Info=False;";
             ServerInfo serverInfo = new ServerInfo(dbConnStr, dbname);
             IDatabaseInfo database = serverInfo.GetDatabase(dbname);

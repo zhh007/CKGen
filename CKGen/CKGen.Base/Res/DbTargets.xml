@@ -27,6 +27,13 @@
 		<Type From="varchar" To="SqlDbType.VarChar" />
 		<Type From="xml" To="SqlDbType.Xml" />
 		<Type From="sql_variant" To="SqlDbType.Variant" />
+    <Type From="date" To="SqlDbType.DateTime" />
+    <Type From="datetime2" To="SqlDbType.DateTime2" />
+    <Type From="datetimeoffset" To="SqlDbType.DateTimeOffset" />
+    <Type From="time" To="SqlDbType.Time" />
+    <Type From="geography" To="SqlDbType.Image" />
+    <Type From="geometry" To="SqlDbType.Image" />
+    <Type From="hierarchyid" To="SqlDbType.Image" />
 	</DbTarget>
 	<DbTarget From="SQLCE" To="SqlServerCe">
 		<Type From="bigint" To="SqlDbType.BigInt" />

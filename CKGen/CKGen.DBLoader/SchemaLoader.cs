@@ -12,6 +12,7 @@ namespace CKGen.DBLoader
     using System.Text;
     using System.IO;
     using System.Reflection;
+    using DBSchema;
 
     /// <summary>
     /// TODO: Update summary.
@@ -51,7 +52,7 @@ namespace CKGen.DBLoader
 
             if (!System.IO.File.Exists(this._DbTargetMappingFileName))
             {
-                using (Stream input = Assembly.GetAssembly(typeof(SchemaLoader)).GetManifestResourceStream("CKGen.DBSchema.Res.DbTargets.xml"))
+                using (Stream input = Assembly.GetAssembly(typeof(IDatabaseInfo)).GetManifestResourceStream("CKGen.Base.Res.DbTargets.xml"))
                 using (Stream output = File.Create(this._DbTargetMappingFileName))
                 {
                     byte[] buffer = new byte[8192];
@@ -66,7 +67,7 @@ namespace CKGen.DBLoader
 
             if (!System.IO.File.Exists(this._LanguageMappingFileName))
             {
-                using (Stream input = Assembly.GetAssembly(typeof(SchemaLoader)).GetManifestResourceStream("CKGen.DBSchema.Res.Languages.xml"))
+                using (Stream input = Assembly.GetAssembly(typeof(IDatabaseInfo)).GetManifestResourceStream("CKGen.Base.Res.Languages.xml"))
                 using (Stream output = File.Create(this._LanguageMappingFileName))
                 {
                     byte[] buffer = new byte[8192];
