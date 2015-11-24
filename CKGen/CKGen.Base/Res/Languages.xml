@@ -29,7 +29,7 @@
 		<Type From="sql_variant" To="object" />
     <Type From="date" To="DateTime" />
     <Type From="datetime2" To="DateTime" />
-    <Type From="datetimeoffset" To="DateTime" />
+    <Type From="datetimeoffset" To="DateTimeOffset" />
     <Type From="time" To="TimeSpan" />
     <Type From="geography" To="byte[]" />
     <Type From="geometry" To="byte[]" />

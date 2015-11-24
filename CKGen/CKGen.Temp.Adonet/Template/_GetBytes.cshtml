@@ -1,0 +1,16 @@
+﻿@using RazorEngine.Templating
+@using CKGen.DBSchema;
+@using CKGen;
+@inherits TemplateBase<ITableInfo>
+
+private byte[] GetBytes(SqlDataReader reader, int ordinal)
+{
+    long blobSize = reader.GetBytes(ordinal, 0, null, 0, 0);
+    byte[] buffer = new byte[blobSize];
+    long currPos = 0;
+    while (currPos < blobSize)
+    {
+        currPos += reader.GetBytes(ordinal, currPos, buffer, 0, 1024);
+    }
+    return buffer;
+}

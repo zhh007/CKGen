@@ -30,11 +30,21 @@ namespace CKGen.Temp.Adonet
             Gen(sb, "Update.cshtml", tbInfo);
             Gen(sb, "Delete.cshtml", tbInfo);
             //Gen(sb, "Save.cshtml", tbInfo);
-            Gen(sb, "Exist.cshtml", tbInfo);
+            //Gen(sb, "Exist.cshtml", tbInfo);
             Gen(sb, "Get.cshtml", tbInfo);
             //Gen(sb, "Top.cshtml", tbInfo);
             Gen(sb, "Select.cshtml", tbInfo);
             Gen(sb, "Paged.cshtml", tbInfo);
+
+            if ((from col in tbInfo.Columns
+                 where col.SqlDataType == "SqlDbType.Image" || col.SqlDataType == "SqlDbType.Binary"
+                 || col.SqlDataType == "SqlDbType.VarBinary" || col.SqlDataType == "SqlDbType.Timestamp"
+                 select col).Count() > 0)
+            {
+                Gen(sb, "_GetBytes.cshtml", tbInfo);
+            }
+
+            Gen(sb, "_GetMany.cshtml", tbInfo);
 
             sb.AppendLine("    }");
             sb.AppendLine("}");
@@ -54,7 +64,7 @@ namespace CKGen.Temp.Adonet
                 string line;
                 while ((line = sr.ReadLine()) != null)
                 {
-                    if(line.IndexOf(" sql = ") > -1 && sqlBegin == false)
+                    if (line.IndexOf(" sql = ") > -1 && sqlBegin == false)
                     {
                         sqlBegin = true;
                         sqlLine = true;

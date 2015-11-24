@@ -891,7 +891,6 @@ SELECT @TotalCount = COUNT(*) FROM (
         /// <returns></returns>
         public static string BuildSetFieldValue(IColumnInfo column)
         {
-            string tmp = "entity.{0} = {1};";
             string result = "";
 
             string sqlType = column.DBType;
@@ -900,21 +899,22 @@ SELECT @TotalCount = COUNT(*) FROM (
             if (sqlDbType == "SqlDbType.Image" || sqlDbType == "SqlDbType.Binary"
                 || sqlDbType == "SqlDbType.VarBinary" || sqlDbType == "SqlDbType.Timestamp")
             {
-                string t = @"
-long blobSize = sdr.GetBytes({0}Ordinal, 0, null, 0, 0);
-byte[] buffer = new byte[blobSize];
-long currPos = 0;
-while (currPos < blobSize)
-{{
-    currPos += sdr.GetBytes({0}Ordinal, currPos, buffer, 0, 1024);
-}}
-info.{1} = buffer;
-";
-                result = string.Format(t, column.CamelName, column.PascalName);
+//                string t = @"
+//long blobSize = sdr.GetBytes({0}Ordinal, 0, null, 0, 0);
+//byte[] buffer = new byte[blobSize];
+//long currPos = 0;
+//while (currPos < blobSize)
+//{{
+//    currPos += sdr.GetBytes({0}Ordinal, currPos, buffer, 0, 1024);
+//}}
+//entity.{1} = buffer;
+//";
+//                result = string.Format(t, column.CamelName, column.PascalName);
+                result = string.Format("GetBytes(sdr, {1}Ordinal)", column.PascalName, column.CamelName);
             }
             else
             {
-                result = string.Format(tmp, column.PascalName, BuildGetSqlReaderValueStr(column));
+                result = BuildGetSqlReaderValueStr(column);
             }
 
             return result;
@@ -999,6 +999,12 @@ info.{1} = buffer;
                     break;
                 case "SqlDbType.Variant":
                     sdrGetMenth = "GetValue";
+                    break;
+                case "SqlDbType.DateTimeOffset":
+                    sdrGetMenth = "GetDateTimeOffset";
+                    break;
+                case "SqlDbType.Time":
+                    sdrGetMenth = "GetTimeSpan";
                     break;
                 default:
                     break;

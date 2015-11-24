@@ -87,6 +87,12 @@
     <None Include="Template\Top.cshtml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Template\_GetMany.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Template\_GetBytes.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Template\Update.cshtml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
