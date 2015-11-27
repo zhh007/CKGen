@@ -12,6 +12,11 @@
 /// <param name="totalCount">总记录数</param>
 public List<@(Model.PascalName)> PagedList(int pageIndex, int pageSize, out int pageCount, out int totalCount)
 {
+    pageIndex = (pageIndex <= 0) ? 1 : pageIndex;
+    if(pageSize <= 0)
+    {
+        throw new ArgumentException("每页数据条数必须大于0。", "pageSize");
+    }
     List<@(Model.PascalName)> list = new List<@(Model.PascalName)>();
 
     string sql = @@"@(Util.BuildSQL_Paged(Model))";
@@ -20,13 +25,13 @@ public List<@(Model.PascalName)> PagedList(int pageIndex, int pageSize, out int 
     {
         SqlCommand cmd = new SqlCommand(sql, conn);
 
-        SqlParameter para_PageSize = new SqlParameter("PageSize", SqlDbType.Int);
-        para_PageSize.Value = pageSize;
-        cmd.Parameters.Add(para_PageSize);
+        SqlParameter para_Begin = new SqlParameter("Begin", SqlDbType.Int);
+        para_Begin.Value = (pageIndex - 1) * pageSize + 1;
+        cmd.Parameters.Add(para_Begin);
 
-        SqlParameter para_PageIndex = new SqlParameter("PageIndex", SqlDbType.Int);
-        para_PageIndex.Value = pageIndex;
-        cmd.Parameters.Add(para_PageIndex);
+        SqlParameter para_End = new SqlParameter("End", SqlDbType.Int);
+        para_End.Value = pageIndex * pageSize;
+        cmd.Parameters.Add(para_End);
 
         SqlParameter para_TotalCount = new SqlParameter("TotalCount", SqlDbType.Int);
         para_TotalCount.Direction = ParameterDirection.Output;

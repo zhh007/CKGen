@@ -784,23 +784,35 @@ WHERE user_type_id =
 
         public static string BuildSQL_Paged(ITableInfo table)
         {
+            StringBuilder sb = new StringBuilder();
+            int len = table.Columns.Count;
+            for (int i = 0; i < len; i++)
+            {
+                IColumnInfo col = table.Columns[i];
+                //if (col.InPrimaryKey)
+                //    continue;
+
+                sb.AppendFormat("[{0}]", col.RawName);
+                if (i != len - 1)
+                {
+                    sb.Append("\r\n");
+                    sb.Append(' ', 8);
+                    sb.Append(",");
+                }
+            }
+
             string orderbyStr = string.Format("{0} DESC", GetDefaultColumn(table));
             string whereStr = "";
             string sql = string.Format(@"
 SELECT * FROM (
-    SELECT *
-        , (ROW_NUMBER() OVER (ORDER BY {0})) AS RowNumber
-        , (((ROW_NUMBER() OVER (ORDER BY {0})) - 1)/@PageSize) + 1 AS PageNumber
+    SELECT {3}
+        ,(ROW_NUMBER() OVER (ORDER BY {0})) AS RowNumber
     FROM [{1}] {2}
 ) as t
-WHERE PageNumber = @PageIndex
+WHERE PageNumber BETWEEN @Begin AND @End
 
-SELECT @TotalCount = COUNT(*) FROM (
-    SELECT *
-        , (ROW_NUMBER() OVER (ORDER BY {0})) AS RowNumber
-        , (((ROW_NUMBER() OVER (ORDER BY {0})) - 1)/@PageSize) + 1 AS PageNumber
-    FROM [{1}] {2}
-) as t", orderbyStr, table.RawName, whereStr);
+SELECT @TotalCount = COUNT(*) FROM [{1}] {2}
+", orderbyStr, table.RawName, whereStr, sb.ToString());
 
             return sql;
         }
