@@ -385,7 +385,14 @@ WHERE user_type_id =
 
             if (col.Nullable)
             {
-                ret = "(object)" + objName + "." + col.PascalName + " ?? DBNull.Value";
+                if (col.CSharpType == "object")
+                {
+                    ret = objName + "." + col.PascalName + " ?? DBNull.Value";
+                }
+                else
+                {
+                    ret = "(object)" + objName + "." + col.PascalName + " ?? DBNull.Value";
+                }
             }
             else
             {
