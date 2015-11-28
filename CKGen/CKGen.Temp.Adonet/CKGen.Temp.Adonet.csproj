@@ -81,7 +81,7 @@
     <None Include="Template\Save.cshtml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Template\Select.cshtml">
+    <None Include="Template\GetAll.cshtml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Template\Top.cshtml">

@@ -33,7 +33,7 @@ namespace CKGen.Temp.Adonet
             //Gen(sb, "Exist.cshtml", tbInfo);
             Gen(sb, "Get.cshtml", tbInfo);
             //Gen(sb, "Top.cshtml", tbInfo);
-            Gen(sb, "Select.cshtml", tbInfo);
+            Gen(sb, "GetAll.cshtml", tbInfo);
             Gen(sb, "Paged.cshtml", tbInfo);
 
             if ((from col in tbInfo.Columns

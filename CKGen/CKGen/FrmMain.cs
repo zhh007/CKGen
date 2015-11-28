@@ -169,13 +169,13 @@ namespace CKGen
             {
                 GenCode("Get.cshtml");
             });
+            this.TableMenu.Items.Add("生成代码 - GetAll", null, (s, e) =>
+            {
+                GenCode("GetAll.cshtml");
+            });
             this.TableMenu.Items.Add("生成代码 - Top", null, (s, e) =>
             {
                 GenCode("Top.cshtml");
-            });
-            this.TableMenu.Items.Add("生成代码 - Select", null, (s, e) =>
-            {
-                GenCode("Select.cshtml");
             });
             this.TableMenu.Items.Add("生成代码 - Paged", null, (s, e) =>
             {
