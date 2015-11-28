@@ -4,7 +4,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace CKGen.DBLoader
+namespace CKGen
 {
     using System;
     using System.Collections.Generic;
@@ -14,7 +14,7 @@ namespace CKGen.DBLoader
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
-    internal class StringHelper
+    public class StringHelper
     {
         /// <summary>
         /// 无效字符串验证

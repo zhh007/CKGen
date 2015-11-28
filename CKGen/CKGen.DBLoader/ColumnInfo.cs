@@ -6,6 +6,7 @@
 
 namespace CKGen.DBLoader
 {
+    using CKGen;
     using CKGen.DBSchema;
     using System;
     using System.Collections.Generic;

@@ -44,7 +44,7 @@ namespace CKGen
                     DataGridViewRow row = dgvSchema.Rows[index];
                     row.Tag = item.IsPrimaryKey;
                     row.Cells[0].Value = item.RawName;
-                    row.Cells[1].Value = Util.GetFullSqlType(item);//item.DBType
+                    row.Cells[1].Value = SQLHelper.GetFullSqlType(item);
                     row.Cells[2].Value = item.Nullable ? true : false;
                     row.Cells[3].Value = item.Description;
                     row.Cells[4].Value = item.Attributes.ContainsKey("local_desc") ? item.Attributes["local_desc"] : "";

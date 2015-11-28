@@ -70,7 +70,6 @@
     <Compile Include="SchemaLoader.cs" />
     <Compile Include="ServerInfo.cs" />
     <Compile Include="SQLSchemaLoader.cs" />
-    <Compile Include="StringHelper.cs" />
     <Compile Include="TableInfo.cs" />
     <Compile Include="ViewInfo.cs" />
   </ItemGroup>
