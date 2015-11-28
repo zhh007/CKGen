@@ -22,7 +22,7 @@ namespace CKGen.Temp.AspnetMVC
             parent = _parent;
             InitializeComponent();
 
-            txtCode.Font = new Font("Consolas", 14);
+            txtCode.Font = new Font("Consolas", 12);
         }
 
         public void Show(string folder)
@@ -37,9 +37,15 @@ namespace CKGen.Temp.AspnetMVC
             folderPath = folder;
 
             DirectoryInfo dir = new DirectoryInfo(folder);
-            TreeNode first = BuildDirForTreeview(dir);
-            first.ExpandAll();
-            tvRoot.Nodes.Add(first);
+            TreeNode root = BuildDirForTreeview(dir);
+            root.ExpandAll();
+            tvRoot.Nodes.Add(root);
+            if(root.Nodes != null && root.Nodes.Count > 0)
+            {
+                tvRoot.SelectedNode = root.Nodes[0];
+                string txt = File.ReadAllText(root.Nodes[0].Tag as string);
+                txtCode.Text = txt;
+            }
         }
 
         private TreeNode BuildDirForTreeview(DirectoryInfo dir)

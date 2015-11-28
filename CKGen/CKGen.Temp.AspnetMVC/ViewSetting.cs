@@ -18,6 +18,7 @@ namespace CKGen.Temp.AspnetMVC
         private string tableName;
         private string nsString;
         private string webNSString;
+        private ITableInfo SelectedTable;
 
         public ViewSetting(MainUI _parent)
         {
@@ -57,6 +58,7 @@ namespace CKGen.Temp.AspnetMVC
             {
                 if(item.Name == tbName)
                 {
+                    SelectedTable = item;
                     hasTable = true;
                     break;
                 }
@@ -108,12 +110,10 @@ namespace CKGen.Temp.AspnetMVC
 
         private void _bgWorker_DoWork(object sender, DoWorkEventArgs e)
         {
-
-            IDatabaseInfo database = parent.Database;
-
-            CodeBuilder mvcBuilder = new CodeBuilder(database, tableName, nsString, webNSString);
-
-            folderPath = mvcBuilder.Build();
+            //IDatabaseInfo database = parent.Database;
+            CodeBuilder mvcBuilder = new CodeBuilder();
+            //folderPath = mvcBuilder.Build(database, tableName, nsString, webNSString);
+            folderPath = mvcBuilder.Build(SelectedTable, nsString, webNSString);
         }
 
         /// <summary>

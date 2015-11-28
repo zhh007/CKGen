@@ -10,68 +10,69 @@ namespace CKGen.Temp.AspnetMVC
 {
     public class CodeBuilder
     {
-        private IDatabaseInfo _database;
-        private string _namespace;
-        private string _webProjNameSpace;
         private string _targetFolder;
-        private string _tableName;
 
         private readonly ICodeGenService codeGen = ServiceLocator.Instance.GetService<ICodeGenService>();
 
-        public CodeBuilder(IDatabaseInfo database, string tableName, string ns, string webns)
+        public CodeBuilder()
         {
-            this._database = database;
-            this._targetFolder = Path.Combine(Environment.CurrentDirectory, database.Name);
-            this._tableName = tableName;
-            this._namespace = ns;
-            this._webProjNameSpace = webns;
+            Guid testProjID = Guid.NewGuid();
+            _targetFolder = Path.Combine(Path.GetTempPath(), testProjID.ToString("P"));
+            Directory.CreateDirectory(_targetFolder);
+        }
 
+        public string Build(IDatabaseInfo database, string tableName, string ns, string webns)
+        {
             try
             {
-                if (!Directory.Exists(this._targetFolder))
+                if (!Directory.Exists(_targetFolder))
                 {
-                    Directory.CreateDirectory(this._targetFolder);
+                    Directory.CreateDirectory(_targetFolder);
                 }
                 else
                 {
-                    Directory.Delete(this._targetFolder, true);
-                    Directory.CreateDirectory(this._targetFolder);
+                    Directory.Delete(_targetFolder, true);
+                    Directory.CreateDirectory(_targetFolder);
                 }
             }
             catch (Exception)
             {
                 throw new Exception("目标文件夹创建失败。");
             }
-        }
 
-        public string Build()
-        {
             List<string> filePaths = new List<string>();
-            foreach (ITableInfo tInfo in _database.Tables)
+            foreach (ITableInfo tInfo in database.Tables)
             {
-                if (tInfo.LowerName != _tableName.ToLower())
+                if (tInfo.LowerName != tableName.ToLower())
                 {
                     continue;
                 }
 
-                PageViewModel pvModel = new PageViewModel();
-                pvModel.NameSpacePR = this._namespace;
-                pvModel.WebProjNameSpace = this._webProjNameSpace;
-                pvModel.DBTable = tInfo;
-
-                _build("Model.cshtml", typeof(PageViewModel), pvModel, tInfo.PascalName + ".cs");
-                _build("Map.cshtml", typeof(PageViewModel), pvModel, tInfo.PascalName + "Map.cs");
-                _build("Repository.cshtml", typeof(PageViewModel), pvModel, tInfo.PascalName + "Repository.cs");
-                _build("DTO.cshtml", typeof(PageViewModel), pvModel, tInfo.PascalName + "DTO.cs");
-                _build("IService.cshtml", typeof(PageViewModel), pvModel, "I" + tInfo.PascalName + "Service.cs");
-                _build("Service.cshtml", typeof(PageViewModel), pvModel, tInfo.PascalName + "Service.cs");
-
-                _build("Controller.cshtml", typeof(PageViewModel), pvModel, "Controller.cs");
-                _build("ViewModel.cshtml", typeof(PageViewModel), pvModel, tInfo.PascalName + "ViewModel.cs");
-                _build("Index.cshtml", typeof(PageViewModel), pvModel, "Index.cshtml");
-                _build("Create.cshtml", typeof(PageViewModel), pvModel, "Create.cshtml");
-                _build("Edit.cshtml", typeof(PageViewModel), pvModel, "Edit.cshtml");
+                Build(tInfo, ns, webns);
             }
+            return _targetFolder;
+        }
+
+        public string Build(ITableInfo tInfo, string ns, string webns)
+        {
+            PageViewModel pvModel = new PageViewModel();
+            pvModel.NameSpacePR = ns;
+            pvModel.WebProjNameSpace = webns;
+            pvModel.DBTable = tInfo;
+
+            _build("Model.cshtml", typeof(PageViewModel), pvModel, tInfo.PascalName + ".cs");
+            _build("Map.cshtml", typeof(PageViewModel), pvModel, tInfo.PascalName + "Map.cs");
+            _build("Repository.cshtml", typeof(PageViewModel), pvModel, tInfo.PascalName + "Repository.cs");
+            _build("DTO.cshtml", typeof(PageViewModel), pvModel, tInfo.PascalName + "DTO.cs");
+            _build("IService.cshtml", typeof(PageViewModel), pvModel, "I" + tInfo.PascalName + "Service.cs");
+            _build("Service.cshtml", typeof(PageViewModel), pvModel, tInfo.PascalName + "Service.cs");
+
+            _build("Controller.cshtml", typeof(PageViewModel), pvModel, "Controller.cs");
+            _build("ViewModel.cshtml", typeof(PageViewModel), pvModel, tInfo.PascalName + "ViewModel.cs");
+            _build("Index.cshtml", typeof(PageViewModel), pvModel, "Index.cshtml");
+            _build("Create.cshtml", typeof(PageViewModel), pvModel, "Create.cshtml");
+            _build("Edit.cshtml", typeof(PageViewModel), pvModel, "Edit.cshtml");
+
             return this._targetFolder;
         }
 

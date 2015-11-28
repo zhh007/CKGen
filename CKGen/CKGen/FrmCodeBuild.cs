@@ -182,10 +182,8 @@ namespace CKGen
             string nsString = txtNamespace.Text;
             string webNSString = txtWebProjNameSpace.Text;
 
-            CKGen.Temp.AspnetMVC.CodeBuilder mvcBuilder = new CKGen.Temp.AspnetMVC.CodeBuilder(
-                database, tableName, nsString, webNSString);
-
-            folderPath = mvcBuilder.Build();
+            CKGen.Temp.AspnetMVC.CodeBuilder mvcBuilder = new CKGen.Temp.AspnetMVC.CodeBuilder();
+            folderPath = mvcBuilder.Build(database, tableName, nsString, webNSString);
         }
 
         private void FrmCodeBuild_Load(object sender, EventArgs e)
