@@ -66,7 +66,7 @@ namespace CKGen.Temp.Adonet
             //access.cs
             TableDataAccessGen accessgen = new TableDataAccessGen();
             string accessFilePath = Path.Combine(testappFolder, model.ModelClassName + "Access.cs");
-            string accessContent = accessgen.Build("TestApp", info);
+            string accessContent = accessgen.GenDataAccessCode("TestApp", info);
             File.WriteAllText(accessFilePath, accessContent.Replace("'conn_name'", "Program.TestConnection"));
 
             return root;

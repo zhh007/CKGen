@@ -96,7 +96,7 @@ namespace ConsoleApp
 
             //string code = CodeGen.GenForTable("Model.cshtml", tbInfo);
 
-            string code = gen.Build("TestApp", tbInfo);
+            string code = gen.GenDataAccessCode("TestApp", tbInfo);
 
             string fileName = System.IO.Path.GetTempFileName();
 

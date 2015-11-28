@@ -22,6 +22,7 @@ namespace CKGen
         private IDatabaseInfo DB = null;
         private UCDetail DetailPage = null;
         private ContextMenuStrip TableMenu = null;
+        private TableDataAccessGen gen = new TableDataAccessGen();
 
         public FrmMain()
         {
@@ -139,76 +140,79 @@ namespace CKGen
             this.TableMenu.Items.Add(spliter);
             this.TableMenu.Items.Add("生成 - 实体类", null, (s, e) =>
             {
-                GenCode("Model.cshtml");
+                ITableInfo tbInfo = this.tvSchema.SelectedNode.Tag as ITableInfo;
+                string code = gen.GenModelCode(tbInfo);
+                ShowCode(string.Format("{0}.cs", tbInfo.PascalName), code);
             });
             this.TableMenu.Items.Add("生成 - 数据访问类", null, (s, e) =>
             {
-                GenDataAccessCode();
+                ITableInfo tbInfo = this.tvSchema.SelectedNode.Tag as ITableInfo;
+                string code = gen.GenDataAccessCode("Test", tbInfo);
+                ShowCode(string.Format("{0}Access.cs", tbInfo.PascalName), code);
             });
-            this.TableMenu.Items.Add("生成代码 - Insert", null, (s, e) =>
+            this.TableMenu.Items.Add("生成 - Insert", null, (s, e) =>
             {
-                GenCode("Insert.cshtml");
+                ITableInfo tbInfo = this.tvSchema.SelectedNode.Tag as ITableInfo;
+                string code = gen.GenInsertCode(tbInfo);
+                ShowCode(string.Format("{0} - Insert", tbInfo.PascalName), code);
             });
-            this.TableMenu.Items.Add("生成代码 - Update", null, (s, e) =>
+            this.TableMenu.Items.Add("生成 - Update", null, (s, e) =>
             {
-                GenCode("Update.cshtml");
+                ITableInfo tbInfo = this.tvSchema.SelectedNode.Tag as ITableInfo;
+                string code = gen.GenUpdateCode(tbInfo);
+                ShowCode(string.Format("{0} - Update", tbInfo.PascalName), code);
             });
-            this.TableMenu.Items.Add("生成代码 - Delete", null, (s, e) =>
+            this.TableMenu.Items.Add("生成 - Delete", null, (s, e) =>
             {
-                GenCode("Delete.cshtml");
+                ITableInfo tbInfo = this.tvSchema.SelectedNode.Tag as ITableInfo;
+                string code = gen.GenDeleteCode(tbInfo);
+                ShowCode(string.Format("{0} - Delete", tbInfo.PascalName), code);
             });
-            this.TableMenu.Items.Add("生成代码 - Save", null, (s, e) =>
+            this.TableMenu.Items.Add("生成 - Save", null, (s, e) =>
             {
-                GenCode("Save.cshtml");
+                ITableInfo tbInfo = this.tvSchema.SelectedNode.Tag as ITableInfo;
+                string code = gen.GenSaveCode(tbInfo);
+                ShowCode(string.Format("{0} - Save", tbInfo.PascalName), code);
             });
-            this.TableMenu.Items.Add("生成代码 - Exist", null, (s, e) =>
+            this.TableMenu.Items.Add("生成 - Exist", null, (s, e) =>
             {
-                GenCode("Exist.cshtml");
+                ITableInfo tbInfo = this.tvSchema.SelectedNode.Tag as ITableInfo;
+                string code = gen.GenExistCode(tbInfo);
+                ShowCode(string.Format("{0} - Exist", tbInfo.PascalName), code);
             });
-            this.TableMenu.Items.Add("生成代码 - Get", null, (s, e) =>
+            this.TableMenu.Items.Add("生成 - Get", null, (s, e) =>
             {
-                GenCode("Get.cshtml");
+                ITableInfo tbInfo = this.tvSchema.SelectedNode.Tag as ITableInfo;
+                string code = gen.GenGetCode(tbInfo);
+                ShowCode(string.Format("{0} - Get", tbInfo.PascalName), code);
             });
-            this.TableMenu.Items.Add("生成代码 - GetAll", null, (s, e) =>
+            this.TableMenu.Items.Add("生成 - GetAll", null, (s, e) =>
             {
-                GenCode("GetAll.cshtml");
+                ITableInfo tbInfo = this.tvSchema.SelectedNode.Tag as ITableInfo;
+                string code = gen.GenGetAllCode(tbInfo);
+                ShowCode(string.Format("{0} - GetAll", tbInfo.PascalName), code);
             });
-            this.TableMenu.Items.Add("生成代码 - Top", null, (s, e) =>
+            this.TableMenu.Items.Add("生成 - Top", null, (s, e) =>
             {
-                GenCode("Top.cshtml");
+                ITableInfo tbInfo = this.tvSchema.SelectedNode.Tag as ITableInfo;
+                string code = gen.GenTopCode(tbInfo);
+                ShowCode(string.Format("{0} - Top", tbInfo.PascalName), code);
             });
-            this.TableMenu.Items.Add("生成代码 - Paged", null, (s, e) =>
+            this.TableMenu.Items.Add("生成 - Paged", null, (s, e) =>
             {
-                GenCode("Paged.cshtml");
+                ITableInfo tbInfo = this.tvSchema.SelectedNode.Tag as ITableInfo;
+                string code = gen.GenPagedCode(tbInfo);
+                ShowCode(string.Format("{0} - Paged", tbInfo.PascalName), code);
             });
         }
 
-        private void GenCode(string viewName)
+        private void ShowCode(string title, string code)
         {
-            if (this.tvSchema.SelectedNode.Tag is ITableInfo)
+            if(!string.IsNullOrEmpty(code))
             {
-                ITableInfo tbInfo = this.tvSchema.SelectedNode.Tag as ITableInfo;
-                string code = CodeGen.GenForTable(viewName, tbInfo);
                 UCCodeShow codeShow = new UCCodeShow();
                 codeShow.Dock = DockStyle.Fill;
-                TabPage tab1 = new TabPage("Model For " + tbInfo.Name);
-                tab1.Controls.Add(codeShow);
-                this.tabControl1.TabPages.Add(tab1);
-                this.tabControl1.SelectTab(tab1);
-                codeShow.Show(code);
-            }
-        }
-
-        private void GenDataAccessCode()
-        {
-            if (this.tvSchema.SelectedNode.Tag is ITableInfo)
-            {
-                TableDataAccessGen gen = new TableDataAccessGen();
-                ITableInfo tbInfo = this.tvSchema.SelectedNode.Tag as ITableInfo;
-                string code = gen.Build("Test", tbInfo);
-                UCCodeShow codeShow = new UCCodeShow();
-                codeShow.Dock = DockStyle.Fill;
-                TabPage tab1 = new TabPage("DataAccess For " + tbInfo.Name);
+                TabPage tab1 = new TabPage(title);
                 tab1.Controls.Add(codeShow);
                 this.tabControl1.TabPages.Add(tab1);
                 this.tabControl1.SelectTab(tab1);

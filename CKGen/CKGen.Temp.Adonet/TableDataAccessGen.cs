@@ -11,7 +11,7 @@ namespace CKGen.Temp.Adonet
     public class TableDataAccessGen
     {
         private readonly ICodeGenService codeGen = ServiceLocator.Instance.GetService<ICodeGenService>();
-        public string Build(string nameSpace, ITableInfo tbInfo)
+        public string GenDataAccessCode(string nameSpace, ITableInfo tbInfo)
         {
             StringBuilder sb = new StringBuilder();
             sb.AppendLine("using System;");
@@ -52,7 +52,7 @@ namespace CKGen.Temp.Adonet
             return sb.ToString();
         }
 
-        public void Gen(StringBuilder sb, string viewName, ITableInfo tbInfo)
+        private void Gen(StringBuilder sb, string viewName, ITableInfo tbInfo)
         {
             string viewPath = System.IO.Path.Combine(Environment.CurrentDirectory, "Template\\" + viewName);
             string code = codeGen.Gen(viewPath, tbInfo);
@@ -87,6 +87,66 @@ namespace CKGen.Temp.Adonet
             }//using
 
             sb.AppendLine();
+        }
+
+        public string GenModelCode(ITableInfo tbInfo)
+        {
+            string viewPath = System.IO.Path.Combine(Environment.CurrentDirectory, "Template\\Model.cshtml");
+            return codeGen.Gen(viewPath, tbInfo);
+        }
+
+        public string GenInsertCode(ITableInfo tbInfo)
+        {
+            string viewPath = System.IO.Path.Combine(Environment.CurrentDirectory, "Template\\Insert.cshtml");
+            return codeGen.Gen(viewPath, tbInfo);
+        }
+
+        public string GenUpdateCode(ITableInfo tbInfo)
+        {
+            string viewPath = System.IO.Path.Combine(Environment.CurrentDirectory, "Template\\Update.cshtml");
+            return codeGen.Gen(viewPath, tbInfo);
+        }
+
+        public string GenDeleteCode(ITableInfo tbInfo)
+        {
+            string viewPath = System.IO.Path.Combine(Environment.CurrentDirectory, "Template\\Delete.cshtml");
+            return codeGen.Gen(viewPath, tbInfo);
+        }
+
+        public string GenSaveCode(ITableInfo tbInfo)
+        {
+            string viewPath = System.IO.Path.Combine(Environment.CurrentDirectory, "Template\\Save.cshtml");
+            return codeGen.Gen(viewPath, tbInfo);
+        }
+
+        public string GenExistCode(ITableInfo tbInfo)
+        {
+            string viewPath = System.IO.Path.Combine(Environment.CurrentDirectory, "Template\\Exist.cshtml");
+            return codeGen.Gen(viewPath, tbInfo);
+        }
+
+        public string GenGetCode(ITableInfo tbInfo)
+        {
+            string viewPath = System.IO.Path.Combine(Environment.CurrentDirectory, "Template\\Get.cshtml");
+            return codeGen.Gen(viewPath, tbInfo);
+        }
+
+        public string GenGetAllCode(ITableInfo tbInfo)
+        {
+            string viewPath = System.IO.Path.Combine(Environment.CurrentDirectory, "Template\\GetAll.cshtml");
+            return codeGen.Gen(viewPath, tbInfo);
+        }
+
+        public string GenTopCode(ITableInfo tbInfo)
+        {
+            string viewPath = System.IO.Path.Combine(Environment.CurrentDirectory, "Template\\Top.cshtml");
+            return codeGen.Gen(viewPath, tbInfo);
+        }
+
+        public string GenPagedCode(ITableInfo tbInfo)
+        {
+            string viewPath = System.IO.Path.Combine(Environment.CurrentDirectory, "Template\\Paged.cshtml");
+            return codeGen.Gen(viewPath, tbInfo);
         }
     }
 }
