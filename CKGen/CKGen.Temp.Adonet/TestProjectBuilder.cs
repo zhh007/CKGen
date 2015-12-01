@@ -27,7 +27,7 @@ namespace CKGen.Temp.Adonet
 
             //sln
             string slnFilePath = Path.Combine(root, string.Format("{0}.sln", model.ProjectName));
-            string slnContent = Gen("Proj\\sln.cshtml", model);
+            string slnContent = codeGen.Gen(Comm.GetProjTemplete("sln.cshtml"), model);
             File.WriteAllText(slnFilePath, slnContent);
 
             //testapp proj folder
@@ -36,7 +36,7 @@ namespace CKGen.Temp.Adonet
 
             //testapp csproj
             string csprojFilePath = Path.Combine(testappFolder, string.Format("{0}.csproj", model.ProjectName));
-            string csprojContent = Gen("Proj\\csproj.cshtml", model);
+            string csprojContent = codeGen.Gen(Comm.GetProjTemplete("csproj.cshtml"), model);
             File.WriteAllText(csprojFilePath, csprojContent);
 
             //Properties
@@ -45,22 +45,22 @@ namespace CKGen.Temp.Adonet
 
             //AssemblyInfo.cs
             string assemblyFilePath = Path.Combine(PropertiesFolder, "AssemblyInfo.cs");
-            string assemblyContent = Gen("Proj\\AssemblyInfo.cshtml", model);
+            string assemblyContent = codeGen.Gen(Comm.GetProjTemplete("AssemblyInfo.cshtml"), model);
             File.WriteAllText(assemblyFilePath, assemblyContent);
 
             //program.cs
             string programFilePath = Path.Combine(testappFolder, "Program.cs");
-            string programContent = Gen("Proj\\Program.cshtml", model);
+            string programContent = codeGen.Gen(Comm.GetProjTemplete("Program.cshtml"), model);
             File.WriteAllText(programFilePath, programContent);
 
             //app.config
             string configFilePath = Path.Combine(testappFolder, "App.config");
-            string configContent = Gen("Proj\\appconfig.cshtml", model);
+            string configContent = codeGen.Gen(Comm.GetProjTemplete("appconfig.cshtml"), model);
             File.WriteAllText(configFilePath, configContent);
 
             //model.cs
             string modelFilePath = Path.Combine(testappFolder, model.ModelClassName + ".cs");
-            string modelContent = Gen("Template\\Model.cshtml", info);
+            string modelContent = codeGen.Gen(Comm.GetTemplete("Model.cshtml"), info);
             File.WriteAllText(modelFilePath, modelContent);
 
             //access.cs
@@ -72,10 +72,12 @@ namespace CKGen.Temp.Adonet
             return root;
         }
 
-        public string Gen(string viewname, object model)
-        {
-            string viewPath = System.IO.Path.Combine(Environment.CurrentDirectory, viewname);
-            return codeGen.Gen(viewPath, model);
-        }
+        //public string Gen(string viewname, object model)
+        //{
+        //    //string viewPath = System.IO.Path.Combine(Environment.CurrentDirectory, viewname);
+        //    //return codeGen.GenByPath(viewPath, model);
+        //    string tmp = Comm.GetProjTemplete(viewname);
+        //    return codeGen.Gen(tmp, model);
+        //}
     }
 }

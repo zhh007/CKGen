@@ -7,8 +7,10 @@ namespace CKGen.Base
 {
     public interface ICodeGenService
     {
-        string Gen(string viewpath, object model);
+        string GenByPath(string viewpath, object model);
 
         void GenSave(string viewpath, object model, string filepath);
+
+        string Gen(string view, object model);
     }
 }

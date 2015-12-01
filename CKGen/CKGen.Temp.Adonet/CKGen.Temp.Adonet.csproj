@@ -39,63 +39,30 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Comm.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TableDataAccessGen.cs" />
     <Compile Include="TestProjectBuilder.cs" />
     <Compile Include="TestProjectModel.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Proj\AssemblyInfo.cshtml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Proj\appconfig.cshtml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Proj\sln.cshtml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Proj\csproj.cshtml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Proj\Program.cshtml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Template\Delete.cshtml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Template\Exist.cshtml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Template\Get.cshtml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Template\Insert.cshtml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Template\Model.cshtml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Template\Paged.cshtml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Template\Save.cshtml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Template\GetAll.cshtml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Template\Top.cshtml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Template\_GetMany.cshtml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Template\_GetBytes.cshtml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Template\Update.cshtml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    <EmbeddedResource Include="Proj\AssemblyInfo.cshtml" />
+    <EmbeddedResource Include="Proj\appconfig.cshtml" />
+    <EmbeddedResource Include="Proj\sln.cshtml" />
+    <EmbeddedResource Include="Proj\csproj.cshtml" />
+    <EmbeddedResource Include="Proj\Program.cshtml" />
+    <EmbeddedResource Include="Template\Delete.cshtml" />
+    <EmbeddedResource Include="Template\Exist.cshtml" />
+    <EmbeddedResource Include="Template\Get.cshtml" />
+    <EmbeddedResource Include="Template\Insert.cshtml" />
+    <EmbeddedResource Include="Template\Model.cshtml" />
+    <EmbeddedResource Include="Template\Paged.cshtml" />
+    <EmbeddedResource Include="Template\Save.cshtml" />
+    <EmbeddedResource Include="Template\GetAll.cshtml" />
+    <EmbeddedResource Include="Template\Top.cshtml" />
+    <EmbeddedResource Include="Template\_GetMany.cshtml" />
+    <EmbeddedResource Include="Template\_GetBytes.cshtml" />
+    <EmbeddedResource Include="Template\Update.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CKGen.Base\CKGen.Base.csproj">

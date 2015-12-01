@@ -54,8 +54,10 @@ namespace CKGen.Temp.Adonet
 
         private void Gen(StringBuilder sb, string viewName, ITableInfo tbInfo)
         {
-            string viewPath = System.IO.Path.Combine(Environment.CurrentDirectory, "Template\\" + viewName);
-            string code = codeGen.Gen(viewPath, tbInfo);
+            //string viewPath = System.IO.Path.Combine(Environment.CurrentDirectory, "Template\\" + viewName);
+            //string code = codeGen.GenByPath(viewPath, tbInfo);
+            string tmp = Comm.GetTemplete(viewName);
+            string code = codeGen.Gen(tmp, tbInfo);
 
             bool sqlLine = false;
             bool sqlBegin = false;
@@ -91,62 +93,82 @@ namespace CKGen.Temp.Adonet
 
         public string GenModelCode(ITableInfo tbInfo)
         {
-            string viewPath = System.IO.Path.Combine(Environment.CurrentDirectory, "Template\\Model.cshtml");
-            return codeGen.Gen(viewPath, tbInfo);
+            //string viewPath = System.IO.Path.Combine(Environment.CurrentDirectory, "Template\\Model.cshtml");
+            //return codeGen.GenByPath(viewPath, tbInfo);
+            string tmp = Comm.GetTemplete("Model.cshtml");
+            return codeGen.Gen(tmp, tbInfo);
         }
 
         public string GenInsertCode(ITableInfo tbInfo)
         {
-            string viewPath = System.IO.Path.Combine(Environment.CurrentDirectory, "Template\\Insert.cshtml");
-            return codeGen.Gen(viewPath, tbInfo);
+            //string viewPath = System.IO.Path.Combine(Environment.CurrentDirectory, "Template\\Insert.cshtml");
+            //return codeGen.GenByPath(viewPath, tbInfo);
+            string tmp = Comm.GetTemplete("Insert.cshtml");
+            return codeGen.Gen(tmp, tbInfo);
         }
 
         public string GenUpdateCode(ITableInfo tbInfo)
         {
-            string viewPath = System.IO.Path.Combine(Environment.CurrentDirectory, "Template\\Update.cshtml");
-            return codeGen.Gen(viewPath, tbInfo);
+            //string viewPath = System.IO.Path.Combine(Environment.CurrentDirectory, "Template\\Update.cshtml");
+            //return codeGen.GenByPath(viewPath, tbInfo);
+            string tmp = Comm.GetTemplete("Update.cshtml");
+            return codeGen.Gen(tmp, tbInfo);
         }
 
         public string GenDeleteCode(ITableInfo tbInfo)
         {
-            string viewPath = System.IO.Path.Combine(Environment.CurrentDirectory, "Template\\Delete.cshtml");
-            return codeGen.Gen(viewPath, tbInfo);
+            //string viewPath = System.IO.Path.Combine(Environment.CurrentDirectory, "Template\\Delete.cshtml");
+            //return codeGen.GenByPath(viewPath, tbInfo);
+            string tmp = Comm.GetTemplete("Delete.cshtml");
+            return codeGen.Gen(tmp, tbInfo);
         }
 
         public string GenSaveCode(ITableInfo tbInfo)
         {
-            string viewPath = System.IO.Path.Combine(Environment.CurrentDirectory, "Template\\Save.cshtml");
-            return codeGen.Gen(viewPath, tbInfo);
+            //string viewPath = System.IO.Path.Combine(Environment.CurrentDirectory, "Template\\Save.cshtml");
+            //return codeGen.GenByPath(viewPath, tbInfo);
+            string tmp = Comm.GetTemplete("Save.cshtml");
+            return codeGen.Gen(tmp, tbInfo);
         }
 
         public string GenExistCode(ITableInfo tbInfo)
         {
-            string viewPath = System.IO.Path.Combine(Environment.CurrentDirectory, "Template\\Exist.cshtml");
-            return codeGen.Gen(viewPath, tbInfo);
+            //string viewPath = System.IO.Path.Combine(Environment.CurrentDirectory, "Template\\Exist.cshtml");
+            //return codeGen.GenByPath(viewPath, tbInfo);
+            string tmp = Comm.GetTemplete("Exist.cshtml");
+            return codeGen.Gen(tmp, tbInfo);
         }
 
         public string GenGetCode(ITableInfo tbInfo)
         {
-            string viewPath = System.IO.Path.Combine(Environment.CurrentDirectory, "Template\\Get.cshtml");
-            return codeGen.Gen(viewPath, tbInfo);
+            //string viewPath = System.IO.Path.Combine(Environment.CurrentDirectory, "Template\\Get.cshtml");
+            //return codeGen.GenByPath(viewPath, tbInfo);
+            string tmp = Comm.GetTemplete("Get.cshtml");
+            return codeGen.Gen(tmp, tbInfo);
         }
 
         public string GenGetAllCode(ITableInfo tbInfo)
         {
-            string viewPath = System.IO.Path.Combine(Environment.CurrentDirectory, "Template\\GetAll.cshtml");
-            return codeGen.Gen(viewPath, tbInfo);
+            //string viewPath = System.IO.Path.Combine(Environment.CurrentDirectory, "Template\\GetAll.cshtml");
+            //return codeGen.GenByPath(viewPath, tbInfo);
+            string tmp = Comm.GetTemplete("GetAll.cshtml");
+            return codeGen.Gen(tmp, tbInfo);
         }
 
         public string GenTopCode(ITableInfo tbInfo)
         {
-            string viewPath = System.IO.Path.Combine(Environment.CurrentDirectory, "Template\\Top.cshtml");
-            return codeGen.Gen(viewPath, tbInfo);
+            //string viewPath = System.IO.Path.Combine(Environment.CurrentDirectory, "Template\\Top.cshtml");
+            //return codeGen.GenByPath(viewPath, tbInfo);
+            string tmp = Comm.GetTemplete("Top.cshtml");
+            return codeGen.Gen(tmp, tbInfo);
         }
 
         public string GenPagedCode(ITableInfo tbInfo)
         {
-            string viewPath = System.IO.Path.Combine(Environment.CurrentDirectory, "Template\\Paged.cshtml");
-            return codeGen.Gen(viewPath, tbInfo);
+            //string viewPath = System.IO.Path.Combine(Environment.CurrentDirectory, "Template\\Paged.cshtml");
+            //return codeGen.GenByPath(viewPath, tbInfo);
+            string tmp = Comm.GetTemplete("Paged.cshtml");
+            return codeGen.Gen(tmp, tbInfo);
         }
     }
 }

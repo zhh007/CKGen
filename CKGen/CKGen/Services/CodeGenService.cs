@@ -7,13 +7,14 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 
 namespace CKGen.Services
 {
     public class CodeGenService : ICodeGenService
     {
-        public string Gen(string viewpath, object model)
+        public string GenByPath(string viewpath, object model)
         {
             string viewname = System.IO.Path.GetFileName(viewpath);
             string tmp = System.IO.File.ReadAllText(viewpath);
@@ -35,6 +36,28 @@ namespace CKGen.Services
             {
                 sw.Write(result);
             }
+        }
+
+        public string Gen(string tmp, object model)
+        {
+            string viewname = MD5(tmp);
+            return GetRazor().RunCompile(tmp, viewname, model.GetType(), model);
+        }
+
+        public string MD5(string input)
+        {
+            // step 1, calculate MD5 hash from input
+            MD5 md5 = System.Security.Cryptography.MD5.Create();
+            byte[] inputBytes = System.Text.Encoding.ASCII.GetBytes(input);
+            byte[] hash = md5.ComputeHash(inputBytes);
+
+            // step 2, convert byte array to hex string
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < hash.Length; i++)
+            {
+                sb.Append(hash[i].ToString("X2"));
+            }
+            return sb.ToString();
         }
 
         private static IRazorEngineService GetRazor()
