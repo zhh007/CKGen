@@ -90,7 +90,6 @@ namespace CKGen.DBLoader
         /// <summary>
         /// 说明
         /// </summary>
-        /// <returns></returns>
         public string Description
         {
             get { return _desc; }
@@ -107,10 +106,10 @@ namespace CKGen.DBLoader
         /// </summary>
         public List<IColumnInfo> Columns
         {
-            get 
+            get
             {
                 LoadColumns();
-                return _columns; 
+                return _columns;
             }
             set { _columns = value; }
         }
@@ -134,15 +133,8 @@ namespace CKGen.DBLoader
 
         public Dictionary<string, string> Attributes
         {
-            get
-            {
-                return _attr;
-            }
-
-            set
-            {
-                _attr = value;
-            }
+            get { return _attr; }
+            set { _attr = value; }
         }
 
         public IDatabaseInfo Database
@@ -160,7 +152,7 @@ namespace CKGen.DBLoader
             this._database = database;
             this.loader = database.Loader;
         }
-                
+
         public void LoadColumns()
         {
             if (_columnsLoaded)
@@ -169,14 +161,14 @@ namespace CKGen.DBLoader
             loader.Connect();
 
             this._columns = new List<IColumnInfo>();
-            MyMeta.ITable table= loader.Root.Databases[this.Database.Name].Tables[this.RawName];
+            MyMeta.ITable table = loader.Root.Databases[this.Database.Name].Tables[this.RawName];
             foreach (MyMeta.Column item in table.Columns)
             {
                 string columnName = item.Name;
 
                 IColumnInfo cInfo = new ColumnInfo();
                 cInfo.RawName = columnName;
-                
+
                 //string dbtype = "";
                 //string sqlDbType = item.DataType.SqlDataType.ToString();
                 //if (item.DataType.SqlDataType == SqlDataType.UserDefinedDataType)
@@ -209,7 +201,6 @@ namespace CKGen.DBLoader
                 cInfo.Scale = item.NumericScale;
                 cInfo.Identity = item.IsAutoKey;
                 cInfo.Computed = item.IsComputed;
-
 
                 this._columns.Add(cInfo);
             }

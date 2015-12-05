@@ -167,7 +167,7 @@ namespace CKGen.DBLoader
                 //if (Array.IndexOf(this.ignoreDatabaseName, dbname) != -1)
                 //    continue;
                 ViewInfo item = new ViewInfo();
-                item.Name = tablename;
+                item.RawName = tablename;
                 //item.Loader = this;
                 views.Add(item);
             }

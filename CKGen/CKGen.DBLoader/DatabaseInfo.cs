@@ -36,7 +36,7 @@ namespace CKGen.DBLoader
         {
             get { return name; }
             set { name = value; }
-        }        
+        }
 
         /// <summary>
         /// 数据库id
@@ -46,7 +46,7 @@ namespace CKGen.DBLoader
             get { return dbid; }
             set { dbid = value; }
         }
-        
+
         /// <summary>
         /// 创建时间
         /// </summary>
@@ -61,22 +61,22 @@ namespace CKGen.DBLoader
         /// </summary>
         public List<ITableInfo> Tables
         {
-            get 
+            get
             {
                 this.LoadTables();
                 return tables;
             }
-        }        
+        }
 
         /// <summary>
         /// 视图
         /// </summary>
         public List<IViewInfo> Views
         {
-            get 
+            get
             {
                 this.LoadViews();
-                return views; 
+                return views;
             }
         }
 
@@ -107,7 +107,7 @@ namespace CKGen.DBLoader
 
         internal DatabaseInfo()
         {
-            
+
         }
 
         internal DatabaseInfo(ServerInfo server)
@@ -152,12 +152,12 @@ namespace CKGen.DBLoader
             this.views = new List<IViewInfo>();
             foreach (MyMeta.View view in loader.Root.Databases[this.Name].Views)
             {
-                string tablename = view.Name;
+                string viewname = view.Name;
                 //if (Array.IndexOf(this.ignoreDatabaseName, dbname) != -1)
                 //    continue;
 
                 IViewInfo item = new ViewInfo(this);
-                item.Name = tablename;
+                item.RawName = viewname;
                 item.Schema = view.Schema;
                 this.views.Add(item);
             }
@@ -189,7 +189,7 @@ namespace CKGen.DBLoader
             }
             //this.procs = loader.LoadProcedures(this.name);
             _procLoaded = true;
-        } 
+        }
         #endregion
     }
 }

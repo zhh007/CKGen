@@ -21,8 +21,22 @@ namespace ConsoleApp
             ServiceLocator.Instance.AddService<ICodeGenService>(new CodeGenService());
             Console.WriteLine("正在生成...");
 
-            BuildModel("SampleInt");
-            BuildModel("df_TestUser");
+            string dbConnStr = @"Provider=SQLOLEDB.1;Persist Security Info=False;User ID=sa;Password=pass@word1;Initial Catalog=ENTERPRISES_SUPERWORKFLOW;Data Source=.\SQL2008R2";
+            string dbname = "ENTERPRISES_SUPERWORKFLOW";
+            ServerInfo serverInfo = new ServerInfo(dbConnStr, dbname);
+            IDatabaseInfo database = serverInfo.GetDatabase(dbname);
+
+            foreach (var item in database.Views)
+            {
+                Console.WriteLine("{0}", item.Name);
+                foreach (var col in item.Columns)
+                {
+                    Console.WriteLine("    {0}", col.Name);
+                }
+            }
+
+            //BuildModel("SampleInt");
+            //BuildModel("df_TestUser");
 
             //BuildProj();
 

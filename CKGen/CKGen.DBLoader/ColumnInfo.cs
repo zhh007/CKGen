@@ -23,7 +23,6 @@ namespace CKGen.DBLoader
         private string _camelName;
         private string _pascalName;
         private string _lowerName;
-        //private string _schema;
         private string _dbType;
         private string _sqlDataType;
         private string _csharpType;
@@ -82,15 +81,6 @@ namespace CKGen.DBLoader
         {
             get { return _name; }
         }
-
-        ///// <summary>
-        ///// 架构名称
-        ///// </summary>
-        //public string Schema
-        //{
-        //    get { return _schema; }
-        //    set { _schema = value; }
-        //}
 
         /// <summary>
         /// sql类型，如datetime,varchar等
@@ -206,15 +196,8 @@ namespace CKGen.DBLoader
 
         public Dictionary<string, string> Attributes
         {
-            get
-            {
-                return _attr;
-            }
-
-            set
-            {
-                _attr = value;
-            }
+            get { return _attr; }
+            set { _attr = value; }
         }
     }
 }

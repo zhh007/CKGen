@@ -33,7 +33,7 @@ namespace CKGen.DBLoader
         {
             get { return _name; }
             set { _name = value; }
-        }        
+        }
 
         /// <summary>
         /// 数据库连接字符串
@@ -42,17 +42,17 @@ namespace CKGen.DBLoader
         {
             get { return _connection; }
             set { _connection = value; }
-        }        
+        }
 
         /// <summary>
         /// 数据库
         /// </summary>
         public List<IDatabaseInfo> Databases
         {
-            get 
+            get
             {
                 this.LoadDatabases();
-                return _databases; 
+                return _databases;
             }
         }
 
