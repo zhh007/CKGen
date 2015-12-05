@@ -12,5 +12,10 @@ namespace CKGen.DBSchema
         string Schema { get; set; }
 
         IDatabaseInfo Database { get; }
+
+        /// <summary>
+        /// 参数集合
+        /// </summary>
+        List<ISqlParameter> Parameters { get; set; }
     }
 }

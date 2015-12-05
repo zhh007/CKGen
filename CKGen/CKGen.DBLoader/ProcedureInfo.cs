@@ -19,7 +19,10 @@ namespace CKGen.DBLoader
     {
         private string _name;
         private string _schema;
+        private List<ISqlParameter> _parameters = new List<ISqlParameter>();
         private IDatabaseInfo _database;
+        private SchemaLoader loader = null;
+        private bool _paraLoaded = false;
 
         public string Name
         {
@@ -31,6 +34,16 @@ namespace CKGen.DBLoader
         {
             get { return _schema; }
             set { _schema = value; }
+        }
+
+        public List<ISqlParameter> Parameters
+        {
+            get
+            {
+                LoadParameters();
+                return _parameters;
+            }
+            set { _parameters = value; }
         }
 
         public IDatabaseInfo Database
@@ -46,6 +59,37 @@ namespace CKGen.DBLoader
         internal ProcedureInfo(DatabaseInfo database)
         {
             this._database = database;
+            this.loader = database.Loader;
+        }
+
+        private void LoadParameters()
+        {
+            if (_paraLoaded)
+                return;
+
+            loader.Connect();
+
+            this._parameters = new List<ISqlParameter>();
+            MyMeta.IProcedure proc = loader.Root.Databases[this.Database.Name].Procedures[this.Name];
+            foreach (MyMeta.IParameter para in proc.Parameters)
+            {
+                ISqlParameter item = new SqlParameter();
+                item.Name = para.Name;
+                item.DataType = para.TypeName;
+                item.FullDataType = para.DataTypeNameComplete;
+                item.LanguageType = para.LanguageType;
+                item.DbTargetType = para.DbTargetType;
+                item.MaxLength = para.CharacterMaxLength;
+                item.Precision = para.NumericPrecision;
+                item.Scale = para.NumericScale;
+                item.Nullable = para.IsNullable;
+                item.HasDefault = para.HasDefault;
+                item.Default = para.Default;
+                item.Description = para.Description;
+                _parameters.Add(item);
+            }
+
+            _paraLoaded = true;
         }
     }
 }

@@ -22,14 +22,14 @@ namespace ConsoleApp
             Console.WriteLine("正在生成...");
 
             string dbConnStr = @"Provider=SQLOLEDB.1;Persist Security Info=False;User ID=sa;Password=pass@word1;Initial Catalog=ENTERPRISES_SUPERWORKFLOW;Data Source=.\SQL2008R2";
-            string dbname = "ENTERPRISES_SUPERWORKFLOW";
+            string dbname = "YONGAN_UAAS";
             ServerInfo serverInfo = new ServerInfo(dbConnStr, dbname);
             IDatabaseInfo database = serverInfo.GetDatabase(dbname);
 
-            foreach (var item in database.Views)
+            foreach (var item in database.Procedures)
             {
                 Console.WriteLine("{0}", item.Name);
-                foreach (var col in item.Columns)
+                foreach (var col in item.Parameters)
                 {
                     Console.WriteLine("    {0}", col.Name);
                 }

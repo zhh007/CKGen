@@ -69,6 +69,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SchemaLoader.cs" />
     <Compile Include="ServerInfo.cs" />
+    <Compile Include="SqlParameter.cs" />
     <Compile Include="SQLSchemaLoader.cs" />
     <Compile Include="TableInfo.cs" />
     <Compile Include="ViewInfo.cs" />

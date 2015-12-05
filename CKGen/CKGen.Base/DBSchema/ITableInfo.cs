@@ -40,7 +40,6 @@ namespace CKGen.DBSchema
         /// <summary>
         /// 说明
         /// </summary>
-        /// <returns></returns>
         string Description { get; set; }
 
         /// <summary>

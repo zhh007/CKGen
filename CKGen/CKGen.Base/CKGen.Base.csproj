@@ -43,6 +43,7 @@
     <Compile Include="CompositePresentationEvent.cs" />
     <Compile Include="DBSchema\IColumnInfo.cs" />
     <Compile Include="DBSchema\IDatabaseInfo.cs" />
+    <Compile Include="DBSchema\ISqlParameter.cs" />
     <Compile Include="DBSchema\IProcedureInfo.cs" />
     <Compile Include="DBSchema\IServerInfo.cs" />
     <Compile Include="DBSchema\ITableInfo.cs" />

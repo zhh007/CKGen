@@ -62,7 +62,7 @@ namespace CKGen.Services
         {
             TemplateServiceConfiguration config = new TemplateServiceConfiguration();
             config.DisableTempFileLocking = true; // loads the files in-memory (gives the templates full-trust permissions)
-            config.CachingProvider = new DefaultCachingProvider(); //disables the warnings
+            config.CachingProvider = new DefaultCachingProvider(t => { }); //disables the warnings
             config.EncodedStringFactory = new RazorEngine.Text.RawStringFactory(); // Raw string encoding.
 
             // Use the config
