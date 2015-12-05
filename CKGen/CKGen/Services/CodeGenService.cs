@@ -21,7 +21,6 @@ namespace CKGen.Services
         {
             string viewname = System.IO.Path.GetFileName(viewpath);
             string tmp = System.IO.File.ReadAllText(viewpath);
-            //return GetRazor().RunCompile(tmp, viewname, model.GetType(), model);
             return RazorService.Instance.Gen(tmp, model);
         }
 
@@ -29,7 +28,6 @@ namespace CKGen.Services
         {
             string viewname = System.IO.Path.GetFileName(viewpath);
             string tmp = System.IO.File.ReadAllText(viewpath);
-            //string result = GetRazor().RunCompile(tmp, viewname, model.GetType(), model);
             string result = RazorService.Instance.Gen(tmp, model);
 
             string dir = System.IO.Path.GetPathRoot(filepath);
