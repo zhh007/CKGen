@@ -21,7 +21,10 @@ namespace ConsoleApp
             ServiceLocator.Instance.AddService<ICodeGenService>(new CodeGenService());
             Console.WriteLine("正在生成...");
 
-            BuildProj();
+            BuildModel("SampleInt");
+            BuildModel("df_TestUser");
+
+            //BuildProj();
 
             //BuildDBAccess();
 
@@ -128,6 +131,31 @@ namespace ConsoleApp
             TestProjectBuilder builder = new TestProjectBuilder();
             string folder = builder.Build(tbInfo, connStr2);
             Process.Start(folder);
+        }
+
+        private static void BuildModel(string tableName)
+        {
+            string dbConnStr = @"Provider=SQLOLEDB.1;Persist Security Info=False;User ID=sa;Password=pass@word1;Initial Catalog=DBTest;Data Source=.\SQL2008R2";
+            string dbname = "DBTest";
+            //string tableName = "SampleInt";
+            //string connStr2 = @"Data Source=.\SQL2008R2;Initial Catalog=DBTest;User ID=sa;Password=pass@word1;Persist Security Info=False;";
+            ServerInfo serverInfo = new ServerInfo(dbConnStr, dbname);
+            IDatabaseInfo database = serverInfo.GetDatabase(dbname);
+
+            ITableInfo tbInfo = null;
+
+            foreach (ITableInfo tInfo in database.Tables)
+            {
+                if (tInfo.LowerName == tableName.ToLower())
+                {
+                    tbInfo = tInfo;
+                    break;
+                }
+            }
+
+            TableDataAccessGen builder = new TableDataAccessGen();
+            string folder = builder.GenModelCode(tbInfo);
+            //Process.Start(folder);
         }
     }
 }

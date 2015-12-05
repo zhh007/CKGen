@@ -4,9 +4,12 @@ using RazorEngine;
 using RazorEngine.Configuration;
 using RazorEngine.Templating;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -18,14 +21,16 @@ namespace CKGen.Services
         {
             string viewname = System.IO.Path.GetFileName(viewpath);
             string tmp = System.IO.File.ReadAllText(viewpath);
-            return GetRazor().RunCompile(tmp, viewname, model.GetType(), model);
+            //return GetRazor().RunCompile(tmp, viewname, model.GetType(), model);
+            return RazorService.Instance.Gen(tmp, model);
         }
 
         public void GenSave(string viewpath, object model, string filepath)
         {
             string viewname = System.IO.Path.GetFileName(viewpath);
             string tmp = System.IO.File.ReadAllText(viewpath);
-            string result = GetRazor().RunCompile(tmp, viewname, model.GetType(), model);
+            //string result = GetRazor().RunCompile(tmp, viewname, model.GetType(), model);
+            string result = RazorService.Instance.Gen(tmp, model);
 
             string dir = System.IO.Path.GetPathRoot(filepath);
             if (!Directory.Exists(dir))
@@ -40,8 +45,36 @@ namespace CKGen.Services
 
         public string Gen(string tmp, object model)
         {
+            return RazorService.Instance.Gen(tmp, model);
+        }
+    }
+
+    internal class RazorService
+    {
+        private readonly IRazorEngineService _service;
+        private static RazorService instance = new RazorService();
+        public static RazorService Instance
+        {
+            get
+            {
+                return instance;
+            }
+        }
+        private RazorService()
+        {
+            TemplateServiceConfiguration config = new TemplateServiceConfiguration();
+            config.DisableTempFileLocking = true; // loads the files in-memory (gives the templates full-trust permissions)
+            config.CachingProvider = new DefaultCachingProvider(); //disables the warnings
+            config.EncodedStringFactory = new RazorEngine.Text.RawStringFactory(); // Raw string encoding.
+
+            // Use the config
+            _service = RazorEngineService.Create(config); // new API
+        }
+
+        public string Gen(string tmp, object model)
+        {
             string viewname = MD5(tmp);
-            return GetRazor().RunCompile(tmp, viewname, model.GetType(), model);
+            return _service.RunCompile(tmp, viewname, model.GetType(), model);
         }
 
         public string MD5(string input)
@@ -59,18 +92,6 @@ namespace CKGen.Services
             }
             return sb.ToString();
         }
-
-        private static IRazorEngineService GetRazor()
-        {
-            TemplateServiceConfiguration config = new TemplateServiceConfiguration();
-            config.DisableTempFileLocking = true; // loads the files in-memory (gives the templates full-trust permissions)
-            config.CachingProvider = new DefaultCachingProvider(t => { }); //disables the warnings
-            config.EncodedStringFactory = new RazorEngine.Text.RawStringFactory(); // Raw string encoding.
-
-            // Use the config
-            Engine.Razor = RazorEngineService.Create(config); // new API
-
-            return Engine.Razor;
-        }
     }
+
 }
