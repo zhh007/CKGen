@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CKGen", "CKGen\CKGen.csproj", "{82E6990C-4AA3-40E4-9F0D-41A929D9B357}"
 EndProject
@@ -40,7 +40,6 @@ Global
 		{82E6990C-4AA3-40E4-9F0D-41A929D9B357}.Release|x86.ActiveCfg = Release|Any CPU
 		{82E6990C-4AA3-40E4-9F0D-41A929D9B357}.Release|x86.Build.0 = Release|Any CPU
 		{1F3C9CC8-A0F4-4DE3-B257-B7D4CB7FC2FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1F3C9CC8-A0F4-4DE3-B257-B7D4CB7FC2FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1F3C9CC8-A0F4-4DE3-B257-B7D4CB7FC2FB}.Debug|x86.ActiveCfg = Debug|Any CPU
 		{1F3C9CC8-A0F4-4DE3-B257-B7D4CB7FC2FB}.Debug|x86.Build.0 = Debug|Any CPU
 		{1F3C9CC8-A0F4-4DE3-B257-B7D4CB7FC2FB}.Release|Any CPU.ActiveCfg = Release|Any CPU

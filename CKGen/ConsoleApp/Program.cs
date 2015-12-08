@@ -21,8 +21,8 @@ namespace ConsoleApp
             ServiceLocator.Instance.AddService<ICodeGenService>(new CodeGenService());
             Console.WriteLine("正在生成...");
 
-            string dbConnStr = @"Provider=SQLOLEDB.1;Persist Security Info=False;User ID=sa;Password=pass@word1;Initial Catalog=ENTERPRISES_SUPERWORKFLOW;Data Source=.\SQL2008R2";
-            string dbname = "YONGAN_UAAS";
+            string dbConnStr = @"Provider=SQLOLEDB.1;Persist Security Info=False;User ID=sa;Password=pass@word1;Initial Catalog=DBTest;Data Source=.\SQL2008R2";
+            string dbname = "DBTest";
             ServerInfo serverInfo = new ServerInfo(dbConnStr, dbname);
             IDatabaseInfo database = serverInfo.GetDatabase(dbname);
 
