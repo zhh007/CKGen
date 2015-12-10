@@ -817,7 +817,7 @@ SELECT @TotalCount = COUNT(*) FROM [{1}] {2}
         public static string BuildGetSqlReaderNullStr(IColumnInfo column)
         {
             string sqlType = column.DBType;
-            string sqlDbType = column.SqlDataType;
+            string sqlDbType = column.DbTargetType;
             string languageType = column.CSharpType;
             StringBuilder sb = new StringBuilder();
 
@@ -1003,7 +1003,7 @@ SELECT @TotalCount = COUNT(*) FROM [{1}] {2}
         {
             string result = "";
             int colSize = 0;
-            switch (col.SqlDataType)
+            switch (col.DbTargetType)
             {
                 case "SqlDbType.Int":
                     colSize = 4;
@@ -1027,11 +1027,11 @@ SELECT @TotalCount = COUNT(*) FROM [{1}] {2}
 
             if (colSize != 0)
             {
-                result = string.Format("new SqlParameter(\"{0}\", {1}, {2})", col.Name, col.SqlDataType, colSize);
+                result = string.Format("new SqlParameter(\"{0}\", {1}, {2})", col.Name, col.DbTargetType, colSize);
             }
             else
             {
-                result = string.Format("new SqlParameter(\"{0}\", {1})", col.Name, col.SqlDataType);
+                result = string.Format("new SqlParameter(\"{0}\", {1})", col.Name, col.DbTargetType);
             }
 
             return result;

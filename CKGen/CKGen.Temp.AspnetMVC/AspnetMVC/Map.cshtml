@@ -1,0 +1,39 @@
+﻿@using RazorEngine.Templating
+@using CKGen.Temp.AspnetMVC
+@using CKGen.DBSchema;
+@inherits TemplateBase<PageViewModel>
+using System.ComponentModel.DataAnnotations;
+using System.Data.Entity.ModelConfiguration;
+
+namespace @(Model.NameSpacePR).Data.Models.Mapping
+{
+    public class @(Model.DBTable.Name)Map : EntityTypeConfiguration@("<" + Model.DBTable.Name + ">")
+    {
+        public @(Model.DBTable.Name)Map()
+        {
+            // Primary Key
+        @foreach (var column in Model.DBTable.Keys)
+        {
+            <text>this.HasKey(t => t.@(column.PascalName));</text>
+        }
+
+            // Properties
+        @foreach (var column in Model.DBTable.Columns)
+        {
+            <text>@(Model.BuildPropertieStr(column))</text>
+        }
+
+            // Table & Column Mappings
+            this.ToTable("@(Model.DBTable.Name)");
+        @foreach (var column in Model.DBTable.Columns)
+        {
+            <text>this.Property(t => t.@(column.PascalName)).HasColumnName("@(column.RawName)");</text>
+        }
+
+            // Relationships
+            this.HasOptional(t => t.ModifyUser)
+                .WithMany(t => t.Modify@(Model.DBTable.Name)s)
+                .HasForeignKey(d => d.ModifyUserID);
+        }
+    }
+}

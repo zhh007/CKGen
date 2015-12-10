@@ -1,0 +1,41 @@
+﻿@using RazorEngine.Templating
+@using CKGen.Temp.AspnetMVC
+@using CKGen.DBSchema;
+@inherits TemplateBase<PageViewModel>
+
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+using Enterprises.Mvc.WebExtension;
+using @(Model.NameSpacePR).DTO;
+
+namespace @(Model.WebProjNameSpace).Models
+{
+    public class @(Model.DBTable.Name)ViewModel
+    {
+        @foreach (var column in Model.DBTable.Columns)
+        {
+        <text>[DisplayName("@(column.Description)")]</text>
+if((column.CSharpType == "string" || column.CSharpType == "DateTime") && !column.Nullable) 
+{
+        <text>[Required(ErrorMessage = "请输入{0}！")]</text>
+}
+if(column.HasStringLength) {
+        <text>[StringLength(@(column.MaxLength.ToString()), ErrorMessage = "{0}不能超过@(column.MaxLength.ToString())个字符")]</text>
+}
+        <text>public @(column.CSharpType) @(column.PascalName) { get; set; }</text>
+        @("\r\n")
+        }
+    }
+
+    public class @(Model.DBTable.Name)ListViewModel
+    {
+        public string Text { get; set; }
+        public IPagedList@(Model.DBTable.Name)IncludeModifyUserDTO> List { get; set; }
+    }
+}
+

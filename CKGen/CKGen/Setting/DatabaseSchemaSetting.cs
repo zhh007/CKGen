@@ -11,7 +11,7 @@ using System.Xml.Linq;
 /*
 <database name="">
     <table rawname="" schema="" desc="">
-        <column rawname="" dbtype="" sqldatatype="" csharptype="" desc="" nullable="" iskey="" maxlength="" precision="" scale="" identity="" computed="" />
+        <column rawname="" dbtype="" dbtargettype="" csharptype="" desc="" nullable="" iskey="" maxlength="" precision="" scale="" identity="" computed="" />
     </table>
 </database>
 */
@@ -167,7 +167,7 @@ namespace CKGen
             XElement elColumn = new XElement("column");
             elColumn.Add(new XAttribute("rawname", col.RawName));
             elColumn.Add(new XAttribute("dbtype", col.DBType));
-            elColumn.Add(new XAttribute("sqldatatype", col.SqlDataType));
+            elColumn.Add(new XAttribute("dbtargettype", col.DbTargetType));
             elColumn.Add(new XAttribute("csharptype", col.CSharpType));
             elColumn.Add(new XAttribute("desc", col.Description));
             elColumn.Add(new XAttribute("nullable", col.Nullable));
@@ -185,7 +185,7 @@ namespace CKGen
         {
             el.Attribute("rawname").SetValue(col.RawName);
             el.Attribute("dbtype").SetValue(col.DBType);
-            el.Attribute("sqldatatype").SetValue(col.SqlDataType);
+            el.Attribute("dbtargettype").SetValue(col.DbTargetType);
             el.Attribute("csharptype").SetValue(col.CSharpType);
             //el.Attribute("desc").SetValue(col.Description);
             el.Attribute("nullable").SetValue(col.Nullable);
@@ -243,7 +243,7 @@ namespace CKGen
                     XElement elColumn = new XElement("column");
                     elColumn.Add(new XAttribute("rawname", col.RawName));
                     elColumn.Add(new XAttribute("dbtype", col.DBType));
-                    elColumn.Add(new XAttribute("sqldatatype", col.SqlDataType));
+                    elColumn.Add(new XAttribute("dbtargettype", col.DbTargetType));
                     elColumn.Add(new XAttribute("csharptype", col.CSharpType));
                     elColumn.Add(new XAttribute("desc", desc));
                     elColumn.Add(new XAttribute("nullable", col.Nullable));

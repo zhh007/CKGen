@@ -1,0 +1,50 @@
+﻿@using RazorEngine.Templating
+@using CKGen.Temp.AspnetMVC
+@using CKGen.DBSchema;
+@inherits TemplateBase<PageViewModel>
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using EntityFramework.Extensions;
+using Enterprises.Yibiyi.Data.Infrastructure;
+using @(Model.NameSpacePR).Data.Models;
+
+namespace @(Model.NameSpacePR).Data.Repositories
+{
+    public class @(Model.DBTable.Name)Repository : RepositoryBase@("<" + Model.DBTable.Name + ">"), I@(Model.DBTable.Name)Repository
+    {
+        public @(Model.DBTable.Name)Repository(IDatabaseFactory databaseFactory)
+            : base(databaseFactory)
+        {
+
+        }
+
+        public void UpdatePartial(@(Model.DBTable.Name) model)
+        {
+            DataContext.Set@("<" + Model.DBTable.Name + ">")().Update@("<" + Model.DBTable.Name +">")(
+                p => @(Model.GetUpdateFilterString()),
+                m => new @(Model.DBTable.Name)
+                {
+        @foreach (IColumnInfo column in Model.DBTable.Columns)
+        {
+            if (column.IsPrimaryKey)
+            {
+                continue;
+            }
+            if (column.LowerName.Contains("create"))
+            {
+                continue;
+            }
+                    <text>@(column.PascalName) = model.@(column.PascalName),</text>
+        }
+                }
+            );
+        }
+    }
+
+    public interface I@(Model.DBTable.Name)Repository : IRepository@("<" + Model.DBTable.Name + ">")
+    {
+        void UpdatePartial(@(Model.DBTable.Name) model);
+    }
+}

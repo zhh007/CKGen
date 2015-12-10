@@ -62,7 +62,7 @@ namespace <#= NameSpace #>.Schema
 			<#= ColName #>.Name = "<#= column.Name #>";
 			<#= ColName #>.RawName = "<#= column.RawName #>";
 			<#= ColName #>.DBType = "<#= column.DBType #>";
-			<#= ColName #>.SqlDataType = "<#= column.SqlDataType #>";
+			<#= ColName #>.SqlDataType = "<#= column.DbTargetType #>";
 			<#= ColName #>.Nullable = <#= nullable #>;
 			<#= ColName #>.MaxLength = <#= column.MaxLength #>;
 <# if(LanguageConvert.IsNumericType(column.DBType)) { #>

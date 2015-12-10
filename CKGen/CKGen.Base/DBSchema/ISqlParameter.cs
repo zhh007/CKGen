@@ -11,11 +11,11 @@ namespace CKGen.DBSchema
         /// <summary>
         /// nvarchar
         /// </summary>
-        string DataType { get; set; }
+        string DBType { get; set; }
         /// <summary>
         /// nvarchar(255)
         /// </summary>
-        string FullDataType { get; set; }
+        string DBTypeFull { get; set; }
         /// <summary>
         /// string
         /// </summary>

@@ -812,7 +812,7 @@ WHERE user_type_id =
         public static string BuildGetSqlReaderNullStr(IColumnInfo column)
         {
             string sqlType = column.DBType;
-            string sqlDbType = column.SqlDataType;
+            string sqlDbType = column.DbTargetType;
             string languageType = column.CSharpType;
             StringBuilder sb = new StringBuilder();
 

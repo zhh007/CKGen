@@ -174,7 +174,7 @@ namespace CKGen.DBLoader
                 //}
 
                 cInfo.DBType = item.DataTypeName;//dbtype;
-                cInfo.SqlDataType = item.DbTargetType;//sqlDbType;
+                cInfo.DbTargetType = item.DbTargetType;//sqlDbType;
                 cInfo.CSharpType = LanguageConvert.GetCSharpTypeFromMSSQL(cInfo.DBType, item.IsNullable);
                 cInfo.Nullable = item.IsNullable;
                 cInfo.Description = item.Description;

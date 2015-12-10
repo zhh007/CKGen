@@ -1,0 +1,137 @@
+﻿@using RazorEngine.Templating
+@using CKGen.Temp.AspnetMVC
+@using CKGen.DBSchema;
+@inherits TemplateBase<PageViewModel>
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using AutoMapper;
+using Enterprises.Yibiyi.Data.Infrastructure;
+using Enterprises.Yibiyi.Infrastructure;
+using Enterprises.Yibiyi.Infrastructure.Validate;
+using Enterprises.Yibiyi.Infrastructure.UnityExtentions;
+using @(Model.NameSpacePR).Data.Models;
+using @(Model.NameSpacePR).Data.Repositories;
+using @(Model.NameSpacePR).DTO;
+using @(Model.NameSpacePR).ServiceInterface;
+
+namespace @(Model.NameSpacePR).EFAdapter
+{
+    public class @(Model.DBTable.Name)Service : I@(Model.DBTable.Name)Service
+    {
+        private IDatabaseFactory fDatabaseFactory;
+        private IUnitOfWork fUnitofWork;
+        private I@(Model.DBTable.Name)Repository f@(Model.DBTable.Name)Repository;
+
+        public @(Model.DBTable.Name)Service()
+        {
+            fDatabaseFactory = ServiceLocator.Instance.GetService<IDatabaseFactory>();
+            fUnitofWork = new UnitOfWork(fDatabaseFactory);
+            f@(Model.DBTable.Name)Repository = ServiceLocator.Instance.GetService@("<I" + Model.DBTable.Name)Repository>();
+        }
+
+        [LogException]
+        public IList@("<" + Model.DBTable.Name)IncludeModifyUserDTO> GetPagedList(string text, int page, int pageSize, out int total)
+        {
+            var lst = f@(Model.DBTable.Name)Repository.GetAll();
+            if (!string.IsNullOrEmpty(text))
+            {
+                text = text.Trim();
+                lst = lst.Where(p => @(Model.GetSearchTextFilterString()));
+            }
+
+            lst = lst.OrderByDescending(p => @(Model.GetOrderByString()));
+
+            total = lst.Count();
+
+            var lstresult = lst.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+
+            return Mapper.Map@("<List<" + Model.DBTable.Name + ">"), @("List<" + Model.DBTable.Name + "IncludeModifyUserDTO>>")(lstresult);
+        }
+
+        [LogException]
+        public void Add(@(Model.DBTable.Name)DTO dto)
+        {
+            var model = Mapper.Map@("<" + Model.DBTable.Name)DTO, @(Model.DBTable.Name)>(dto);
+            f@(Model.DBTable.Name)Repository.Add(model);
+            fUnitofWork.Commit();
+        }
+
+        [LogException]
+        public void Update(@(Model.DBTable.Name)DTO dto)
+        {
+            var model = f@(Model.DBTable.Name)Repository.Get(p => @(Model.GetUpdateFilterString()));
+
+        @foreach (IColumnInfo column in Model.DBTable.Columns)
+        {
+            if (column.IsPrimaryKey)
+            {
+                continue;
+            }
+            if (column.LowerName.Contains("create"))
+            {
+                continue;
+            }
+            <text>model.@(column.PascalName) = dto.@(column.PascalName);</text>
+}
+            
+            fUnitofWork.Commit();
+        }
+
+        [LogException]
+        public void Delete(@(Model.GetKeyParamterString()))
+        {
+            f@(Model.DBTable.Name)Repository.Delete(p => @(Model.GetDeleteFilterString()));
+            fUnitofWork.Commit();
+        }
+
+        [LogException]
+        public IEnumerable<ValidateResult> CanAdd(@(Model.DBTable.Name)DTO dto)
+        {
+            //int count = f@(Model.DBTable.Name)Repository.Count(p => p.Name == dto.Name);
+            //if (count > 0)
+            //{
+            //    yield return new ValidateResult("Name", "已经存在相同数据。");
+            //}
+            return null;
+        }
+
+        [LogException]
+        public IEnumerable<ValidateResult> CanUpdate(@(Model.DBTable.Name)DTO dto)
+        {
+            //int count = f@(Model.DBTable.Name)Repository.Count(p => p.Name == dto.Name && @(Model.GetCanUpdateFilterString()));
+            //if (count > 0)
+            //{
+            //    yield return new ValidateResult("Name", "已经存在相同数据。");
+            //}
+            return null;
+        }
+
+        [LogException]
+        public IEnumerable<ValidateResult> CanDelete(@(Model.GetKeyParamterString()))
+        {
+            //int count = fModuleRepsitory.Count(p => p.TypeID == ID);
+            //if (count > 0)
+            //{
+            //    yield return new ValidateResult("", "该已经在使用，不能删除。");
+            //}
+            return null;
+        }
+
+        [LogException]
+        public @(Model.DBTable.Name)DTO GetByID(@(Model.GetKeyParamterString()))
+        {
+            var model = f@(Model.DBTable.Name)Repository.Get(p => @(Model.GetDeleteFilterString()));
+            return Mapper.Map<@(Model.DBTable.Name), @(Model.DBTable.Name)DTO>(model);
+        }
+
+        [LogException]
+        public IList<@(Model.DBTable.Name)DTO> GetAll()
+        {
+            var lst = f@(Model.DBTable.Name)Repository.GetAll().ToList();
+            return Mapper.Map@("<List<" + Model.DBTable.Name + ">"), @("List<" + Model.DBTable.Name + "DTO>>")(lst);
+        }
+
+    }
+}

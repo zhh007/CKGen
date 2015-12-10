@@ -40,7 +40,7 @@ namespace CKGen.DBSchema
         /// <summary>
         /// System.Data.SqlDbType类型
         /// </summary>
-        string SqlDataType { get; set; }
+        string DbTargetType { get; set; }
 
         /// <summary>
         /// C#类型，如DateTime,string等

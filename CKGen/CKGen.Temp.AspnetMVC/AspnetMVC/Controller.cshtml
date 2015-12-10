@@ -1,0 +1,131 @@
+﻿@using RazorEngine.Templating
+@using CKGen.Temp.AspnetMVC
+@using CKGen.DBSchema;
+@inherits TemplateBase<PageViewModel>
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web.Mvc;
+using AutoMapper;
+using Enterprises.Mvc.WebExtension;
+using Enterprises.Yibiyi.Infrastructure;
+using Enterprises.Yibiyi.Infrastructure.Log;
+using Enterprises.Yibiyi.Infrastructure.Validate;
+using @(Model.NameSpacePR).DTO;
+using @(Model.NameSpacePR).ServiceInterface;
+using @(Model.WebProjNameSpace).Models;
+
+namespace @(Model.WebProjNameSpace).Controllers
+{
+    public class @(Model.DBTable.Name)Controller : BaseController
+    {
+        private I@(Model.DBTable.Name)Service @(Model.DBTable.Name)Service = ServiceLocator.Instance.GetService@("<I"+Model.DBTable.Name)Service>();
+
+        public ActionResult Index(int? id, string searchText)
+        {
+            @(Model.DBTable.Name)ListViewModel model = new @(Model.DBTable.Name)ListViewModel();
+            model.Text = searchText;
+
+            int totalRecords = 0;
+            int pagesize = 20;
+            var list = @(Model.DBTable.Name)Service.GetPagedList(searchText, id ?? 1, pagesize, out totalRecords);
+
+            IPagedList@("<" + Model.DBTable.Name)IncludeModifyUserDTO> pagedList = new StaticPagedList@("<" + Model.DBTable.Name)IncludeModifyUserDTO>(list.ToArray@("<" + Model.DBTable.Name)IncludeModifyUserDTO>(), id ?? 1, pagesize, totalRecords);
+            model.List = pagedList;
+            return View(model);
+        }
+
+        public ActionResult Add()
+        {
+            @(Model.DBTable.Name)ViewModel model = new @(Model.DBTable.Name)ViewModel();
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Add(@(Model.DBTable.Name)ViewModel model)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    @(Model.DBTable.Name)DTO dto = Mapper.Map@("<" + Model.DBTable.Name)ViewModel, @(Model.DBTable.Name)DTO>(model);
+                    //dto.ID = Guid.NewGuid();
+                    dto.CreateTime = DateTime.Now;
+                    dto.CreateUserID = CurrentUser.ID;
+                    dto.ModifyTime = DateTime.Now;
+                    dto.ModifyUserID = CurrentUser.ID;
+                    IEnumerable<ValidateResult> resultList = @(Model.DBTable.Name)Service.CanAdd(dto);
+                    ModelState.AddModelErrors(resultList);
+                    if (ModelState.IsValid)
+                    {
+                        @(Model.DBTable.Name)Service.Add(dto);
+                        return Json(new { success = true, message = "保存成功。" }, "text/html");
+                    }
+                }
+                return Json(new { success = false, message = this.GetErrors() }, "text/html");
+            }
+            catch (Exception ex)
+            {
+                LogHelper.Error("保存失败", ex);
+                return Json(new { success = false, message = "发生错误，请联系管理员。" });
+            }
+        }
+
+        public ActionResult Edit(int id)
+        {
+            var dto = @(Model.DBTable.Name)Service.GetByID(id);
+            @(Model.DBTable.Name)ViewModel model = Mapper.Map@("<" + Model.DBTable.Name)DTO, @(Model.DBTable.Name)ViewModel>(dto);
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(@(Model.DBTable.Name)ViewModel model)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    @(Model.DBTable.Name)DTO dto = Mapper.Map@("<" + Model.DBTable.Name)ViewModel, @(Model.DBTable.Name)DTO>(model);
+                    dto.ModifyTime = DateTime.Now;
+                    dto.ModifyUserID = CurrentUser.ID;
+                    IEnumerable<ValidateResult> resultList = @(Model.DBTable.Name)Service.CanUpdate(dto);
+                    ModelState.AddModelErrors(resultList);
+                    if (ModelState.IsValid)
+                    {
+                        @(Model.DBTable.Name)Service.Update(dto);
+                        return Json(new { success = true, message = "保存成功。" }, "text/html");
+                    }
+                }
+                return Json(new { success = false, message = this.GetErrors() }, "text/html");
+            }
+            catch (Exception ex)
+            {
+                LogHelper.Error("保存失败", ex);
+                return Json(new { success = false, message = "发生错误，请联系管理员。" });
+            }
+        }
+
+        [HttpPost]
+        public ActionResult Delete(int id)
+        {
+            try
+            {
+                IEnumerable<ValidateResult> resultList = @(Model.DBTable.Name)Service.CanDelete(id);
+                ModelState.AddModelErrors(resultList);
+                if (ModelState.IsValid)
+                {
+                    @(Model.DBTable.Name)Service.Delete(id);
+                    return Json(new { result = true, message = "" });
+                }
+                return Json(new { success = false, message = this.GetErrors() });
+            }
+            catch (Exception ex)
+            {
+                LogHelper.Error("删除失败", ex);
+                return Json(new { success = false, message = "发生错误，请联系管理员。" });
+            }
+        }
+    }
+}

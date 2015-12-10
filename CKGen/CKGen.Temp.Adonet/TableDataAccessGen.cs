@@ -37,8 +37,8 @@ namespace CKGen.Temp.Adonet
             Gen(sb, "Paged.cshtml", tbInfo);
 
             if ((from col in tbInfo.Columns
-                 where col.SqlDataType == "SqlDbType.Image" || col.SqlDataType == "SqlDbType.Binary"
-                 || col.SqlDataType == "SqlDbType.VarBinary" || col.SqlDataType == "SqlDbType.Timestamp"
+                 where col.DbTargetType == "SqlDbType.Image" || col.DbTargetType == "SqlDbType.Binary"
+                 || col.DbTargetType == "SqlDbType.VarBinary" || col.DbTargetType == "SqlDbType.Timestamp"
                  select col).Count() > 0)
             {
                 Gen(sb, "_GetBytes.cshtml", tbInfo);

@@ -1,0 +1,29 @@
+﻿@using RazorEngine.Templating
+@using CKGen.Temp.AspnetMVC
+@using CKGen.DBSchema;
+@inherits TemplateBase<PageViewModel>
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using Enterprises.Yibiyi.Infrastructure.Validate;
+using @(Model.NameSpacePR).DTO;
+
+namespace @(Model.NameSpacePR).ServiceInterface
+{
+    public interface I@(Model.DBTable.Name)Service
+    {
+        IList<@(Model.DBTable.Name)DTO> GetAll();
+        @(Model.DBTable.Name)DTO GetByID(@(Model.GetKeyParamterString()));
+        IList<@(Model.DBTable.Name)IncludeModifyUserDTO> GetPagedList(string text, int page, int pageSize, out int total);
+
+        void Add(@(Model.DBTable.Name)DTO dto);
+        void Update(@(Model.DBTable.Name)DTO dto);
+        void Delete(@(Model.GetKeyParamterString()));
+
+        IEnumerable<ValidateResult> CanAdd(@(Model.DBTable.Name)DTO dto);
+        IEnumerable<ValidateResult> CanUpdate(@(Model.DBTable.Name)DTO dto);
+        IEnumerable<ValidateResult> CanDelete(@(Model.GetKeyParamterString()));
+
+    }
+}

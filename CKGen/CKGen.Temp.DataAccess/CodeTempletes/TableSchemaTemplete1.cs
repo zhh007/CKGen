@@ -178,7 +178,7 @@ namespace CKGen.Temp.DataAccess.CodeTempletes
             this.Write(".SqlDataType = \"");
             
             #line 65 "D:\zhhcode\CKGen\CKGen\CKGen.Temp.DataAccess\CodeTempletes\TableSchemaTemplete.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(column.SqlDataType));
+            this.Write(this.ToStringHelper.ToStringWithCulture(column.DbTargetType));
             
             #line default
             #line hidden

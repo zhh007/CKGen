@@ -75,8 +75,8 @@ namespace CKGen.DBLoader
             {
                 ISqlParameter item = new SqlParameter();
                 item.Name = para.Name;
-                item.DataType = para.TypeName;
-                item.FullDataType = para.DataTypeNameComplete;
+                item.DBType = para.TypeName;
+                item.DBTypeFull = para.DataTypeNameComplete;
                 item.LanguageType = para.LanguageType;
                 item.DbTargetType = para.DbTargetType;
                 item.MaxLength = para.CharacterMaxLength;

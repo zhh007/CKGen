@@ -24,7 +24,7 @@ namespace CKGen.DBLoader
         private string _pascalName;
         private string _lowerName;
         private string _dbType;
-        private string _sqlDataType;
+        private string _dbTargetType;
         private string _csharpType;
         private string _desc;
         private bool _nullable;
@@ -94,10 +94,10 @@ namespace CKGen.DBLoader
         /// <summary>
         /// System.Data.SqlDbType类型
         /// </summary>
-        public string SqlDataType
+        public string DbTargetType
         {
-            get { return _sqlDataType; }
-            set { _sqlDataType = value; }
+            get { return _dbTargetType; }
+            set { _dbTargetType = value; }
         }
 
         /// <summary>

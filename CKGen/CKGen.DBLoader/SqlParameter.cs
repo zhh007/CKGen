@@ -12,11 +12,11 @@ namespace CKGen.DBLoader
         /// <summary>
         /// nvarchar
         /// </summary>
-        public string DataType { get; set; }
+        public string DBType { get; set; }
         /// <summary>
         /// nvarchar(255)
         /// </summary>
-        public string FullDataType { get; set; }
+        public string DBTypeFull { get; set; }
         /// <summary>
         /// string
         /// </summary>
