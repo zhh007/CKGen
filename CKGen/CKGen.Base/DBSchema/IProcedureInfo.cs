@@ -17,5 +17,7 @@ namespace CKGen.DBSchema
         /// 参数集合
         /// </summary>
         List<ISqlParameter> Parameters { get; set; }
+
+        void LoadParameters();
     }
 }

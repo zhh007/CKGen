@@ -51,6 +51,7 @@
     <Compile Include="DbTargetConvert.cs" />
     <Compile Include="EventAggregator.cs" />
     <Compile Include="EventBase.cs" />
+    <Compile Include="Extensions.cs" />
     <Compile Include="ICodeGenService.cs" />
     <Compile Include="IEventAggregator.cs" />
     <Compile Include="LanguageConvert.cs" />

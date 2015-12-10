@@ -183,18 +183,18 @@ namespace CKGen
 
         private static void updateXmlColumn(XElement el, IColumnInfo col)
         {
-            el.Attribute("rawname").SetValue(col.RawName);
-            el.Attribute("dbtype").SetValue(col.DBType);
-            el.Attribute("dbtargettype").SetValue(col.DbTargetType);
-            el.Attribute("languagetype").SetValue(col.LanguageType);
-            //el.Attribute("desc").SetValue(col.Description);
-            el.Attribute("nullable").SetValue(col.Nullable);
-            el.Attribute("iskey").SetValue(col.IsPrimaryKey);
-            el.Attribute("maxlength").SetValue(col.MaxLength);
-            el.Attribute("precision").SetValue(col.Precision);
-            el.Attribute("scale").SetValue(col.Scale);
-            el.Attribute("identity").SetValue(col.Identity);
-            el.Attribute("computed").SetValue(col.Computed);
+            el.SetAttributeValue("rawname", col.RawName);
+            el.SetAttributeValue("dbtype", col.DBType);
+            el.SetAttributeValue("dbtargettype", col.DbTargetType);
+            el.SetAttributeValue("languagetype", col.LanguageType);
+            //el.SetAttributeValue("desc", col.Description);
+            el.SetAttributeValue("nullable", col.Nullable);
+            el.SetAttributeValue("iskey", col.IsPrimaryKey);
+            el.SetAttributeValue("maxlength", col.MaxLength);
+            el.SetAttributeValue("precision", col.Precision);
+            el.SetAttributeValue("scale", col.Scale);
+            el.SetAttributeValue("identity", col.Identity);
+            el.SetAttributeValue("computed", col.Computed);
         }
 
         #endregion

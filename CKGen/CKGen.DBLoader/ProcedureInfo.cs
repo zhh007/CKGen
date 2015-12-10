@@ -62,7 +62,7 @@ namespace CKGen.DBLoader
             this.loader = database.Loader;
         }
 
-        private void LoadParameters()
+        public void LoadParameters()
         {
             if (_paraLoaded)
                 return;

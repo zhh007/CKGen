@@ -192,7 +192,7 @@ namespace CKGen
             {
                 this.SrvInfo = new ServerInfo(this.DBLink.ConnectionString, this.DBLink.ServerName);
                 connected = this.SrvInfo.Connect();
-                if(!connected)
+                if (!connected)
                 {
                     MessageBox.Show("数据库连接失败。", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
@@ -250,6 +250,21 @@ namespace CKGen
                 Stopwatch _stopWatch = new Stopwatch();
                 _stopWatch.Start();
                 LoadData();
+
+                int size = SystemConfig.Instance.Database.Views.Count;
+                for (int i = 0; i < size; i++)
+                {
+                    IViewInfo vw = SystemConfig.Instance.Database.Views[i];
+                    vw.LoadColumns();
+                }
+
+                size = SystemConfig.Instance.Database.Procedures.Count;
+                for (int i = 0; i < size; i++)
+                {
+                    IProcedureInfo proc = SystemConfig.Instance.Database.Procedures[i];
+                    proc.LoadParameters();
+                }
+
                 _stopWatch.Stop();
                 Debug.WriteLine("执行时间:" + (_stopWatch.Elapsed.TotalMilliseconds * 1.0 / 1000).ToString(CultureInfo.InvariantCulture) + "秒");
 
@@ -275,7 +290,7 @@ namespace CKGen
             {
                 foreach (var conn in connList)
                 {
-                    if(conn.ServerName == cbServerName.Text)
+                    if (conn.ServerName == cbServerName.Text)
                     {
                         ShowServer(conn.ServerName);
                     }
@@ -352,9 +367,9 @@ namespace CKGen
             {
                 list[i].Start(args[i]);
             }
-            
+
             signal.WaitOne();
         }
-        
+
     }
 }

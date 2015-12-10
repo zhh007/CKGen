@@ -94,14 +94,14 @@ namespace CKGen
             foreach (ITableInfo tbInfo in this.DB.Tables)
             {
                 TreeNode node = new TreeNode(tbInfo.RawName);
-                node.ImageIndex = 2;
-                node.SelectedImageIndex = 2;
+                node.ImageIndex = 3;
+                node.SelectedImageIndex = 3;
                 node.Tag = tbInfo;
 
                 var colHasNewDesc = (from p in tbInfo.Columns
-                                     where !string.IsNullOrEmpty(p.Attributes["new_desc"])
+                                     where p.Attributes.ContainsKey("new_desc") && !string.IsNullOrEmpty(p.Attributes["new_desc"])
                                      select p).Count() > 0;
-                if (colHasNewDesc || !string.IsNullOrEmpty(tbInfo.Attributes["new_desc"]))
+                if (colHasNewDesc || (tbInfo.Attributes.ContainsKey("new_desc") && !string.IsNullOrEmpty(tbInfo.Attributes["new_desc"])))
                 {
                     node.Text = tbInfo.RawName + "(*)";
                     node.ForeColor = Color.Red;
@@ -115,6 +115,54 @@ namespace CKGen
             {
                 this.tvSchema.SelectedNode = tbNode.Nodes[0];
             }
+
+            //视图
+            TreeNode vwRoot = new TreeNode("视图");
+            vwRoot.ImageIndex = 1;
+            vwRoot.SelectedImageIndex = 1;
+            foreach (var vwInfo in this.DB.Views)
+            {
+                TreeNode node = new TreeNode(vwInfo.RawName);
+                node.ImageIndex = 4;
+                node.SelectedImageIndex = 4;
+                node.Tag = vwInfo;
+
+                var colHasNewDesc = (from p in vwInfo.Columns
+                                     where p.Attributes.ContainsKey("new_desc") && !string.IsNullOrEmpty(p.Attributes["new_desc"])
+                                     select p).Count() > 0;
+                if (colHasNewDesc || (vwInfo.Attributes.ContainsKey("new_desc") && !string.IsNullOrEmpty(vwInfo.Attributes["new_desc"])))
+                {
+                    node.Text = vwInfo.RawName + "(*)";
+                    node.ForeColor = Color.Red;
+                }
+
+                vwRoot.Nodes.Add(node);
+            }
+            this.tvSchema.Nodes.Add(vwRoot);
+
+            //存储过程
+            TreeNode procRoot = new TreeNode("存储过程");
+            procRoot.ImageIndex = 1;
+            procRoot.SelectedImageIndex = 1;
+            foreach (var procInfo in this.DB.Procedures)
+            {
+                TreeNode node = new TreeNode(procInfo.Name);
+                node.ImageIndex = 2;
+                node.SelectedImageIndex = 2;
+                node.Tag = procInfo;
+
+                //var colHasNewDesc = (from p in procInfo.Columns
+                //                     where !string.IsNullOrEmpty(p.Attributes["new_desc"])
+                //                     select p).Count() > 0;
+                //if (colHasNewDesc || !string.IsNullOrEmpty(procInfo.Attributes["new_desc"]))
+                //{
+                //    node.Text = procInfo.RawName + "(*)";
+                //    node.ForeColor = Color.Red;
+                //}
+
+                procRoot.Nodes.Add(node);
+            }
+            this.tvSchema.Nodes.Add(procRoot);
         }
 
         private void CreateMenu()
