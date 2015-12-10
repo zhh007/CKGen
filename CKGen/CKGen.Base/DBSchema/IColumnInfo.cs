@@ -45,7 +45,7 @@ namespace CKGen.DBSchema
         /// <summary>
         /// C#类型，如DateTime,string等
         /// </summary>
-        string CSharpType { get; set; }
+        string LanguageType { get; set; }
 
         /// <summary>
         /// 描述

@@ -60,7 +60,7 @@ namespace CKGen.Temp.DataAccess.CodeTempletes
             this.Write("\t\tprivate ");
             
             #line 18 "D:\zhhcode\CKGen\CKGen\CKGen.Temp.DataAccess\CodeTempletes\TableModelTemplete.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(column.CSharpType));
+            this.Write(this.ToStringHelper.ToStringWithCulture(column.LanguageType));
             
             #line default
             #line hidden
@@ -81,7 +81,7 @@ namespace CKGen.Temp.DataAccess.CodeTempletes
             this.Write("\r\n        /// </summary>\r\n\t\tpublic virtual ");
             
             #line 22 "D:\zhhcode\CKGen\CKGen\CKGen.Temp.DataAccess\CodeTempletes\TableModelTemplete.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(column.CSharpType));
+            this.Write(this.ToStringHelper.ToStringWithCulture(column.LanguageType));
             
             #line default
             #line hidden
@@ -116,7 +116,7 @@ namespace CKGen.Temp.DataAccess.CodeTempletes
             this.Write("(");
             
             #line 34 "D:\zhhcode\CKGen\CKGen\CKGen.Temp.DataAccess\CodeTempletes\TableModelTemplete.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(column.CSharpType));
+            this.Write(this.ToStringHelper.ToStringWithCulture(column.LanguageType));
             
             #line default
             #line hidden

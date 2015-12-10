@@ -40,7 +40,7 @@ namespace <#= NameSpace #>.Entities
 		/// <summary>
         /// <#= column.Description #>
         /// </summary>
-		public override <#= column.CSharpType #> <#= column.PascalName #>
+		public override <#= column.LanguageType #> <#= column.PascalName #>
 		{
 			get 
 			{
@@ -65,7 +65,7 @@ namespace <#= NameSpace #>.Entities
 <#
 foreach(var column in DBTable.Columns)
 {
-if (column.IsPrimaryKey && !LanguageConvert.IsValueType(column.CSharpType))
+if (column.IsPrimaryKey && !LanguageConvert.IsValueType(column.LanguageType))
 {
 #>			
 			if(this.<#= column.PascalName #> == null)
@@ -89,7 +89,7 @@ if (column.IsPrimaryKey && !LanguageConvert.IsValueType(column.CSharpType))
 <#
 foreach(var column in DBTable.Columns)
 {
-if (column.IsPrimaryKey && !LanguageConvert.IsValueType(column.CSharpType))
+if (column.IsPrimaryKey && !LanguageConvert.IsValueType(column.LanguageType))
 {
 #>			
 			if(this.<#= column.PascalName #> == null)
@@ -115,7 +115,7 @@ if (column.IsPrimaryKey && !LanguageConvert.IsValueType(column.CSharpType))
 <#
 foreach(var column in DBTable.Columns)
 {
-if (column.IsPrimaryKey && !LanguageConvert.IsValueType(column.CSharpType))
+if (column.IsPrimaryKey && !LanguageConvert.IsValueType(column.LanguageType))
 {
 #>			
 			if(this.<#= column.PascalName #> == null)
@@ -141,7 +141,7 @@ if (column.IsPrimaryKey && !LanguageConvert.IsValueType(column.CSharpType))
 <#
 foreach(var column in DBTable.Columns)
 {
-if (column.IsPrimaryKey && !LanguageConvert.IsValueType(column.CSharpType))
+if (column.IsPrimaryKey && !LanguageConvert.IsValueType(column.LanguageType))
 {
 #>			
 			if(this.<#= column.PascalName #> == null)
@@ -162,7 +162,7 @@ if (column.IsPrimaryKey && !LanguageConvert.IsValueType(column.CSharpType))
 <#
 foreach(var column in DBTable.Columns)
 {
-if (column.IsPrimaryKey && !LanguageConvert.IsValueType(column.CSharpType))
+if (column.IsPrimaryKey && !LanguageConvert.IsValueType(column.LanguageType))
 {
 #>			
 			if(this.<#= column.PascalName #> == null)

@@ -20,14 +20,14 @@ namespace @(Model.WebProjNameSpace).Models
         @foreach (var column in Model.DBTable.Columns)
         {
         <text>[DisplayName("@(column.Description)")]</text>
-if((column.CSharpType == "string" || column.CSharpType == "DateTime") && !column.Nullable) 
+if((column.LanguageType == "string" || column.LanguageType == "DateTime") && !column.Nullable) 
 {
         <text>[Required(ErrorMessage = "请输入{0}！")]</text>
 }
 if(column.HasStringLength) {
         <text>[StringLength(@(column.MaxLength.ToString()), ErrorMessage = "{0}不能超过@(column.MaxLength.ToString())个字符")]</text>
 }
-        <text>public @(column.CSharpType) @(column.PascalName) { get; set; }</text>
+        <text>public @(column.LanguageType) @(column.PascalName) { get; set; }</text>
         @("\r\n")
         }
     }

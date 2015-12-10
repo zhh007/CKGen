@@ -24,7 +24,7 @@ namespace CKGen.Temp.AspnetMVC
                     sb.Append(", ");
                 }
                 var item = this.DBTable.Keys[i];
-                sb.AppendFormat("{0} {1}", item.CSharpType, item.PascalName);
+                sb.AppendFormat("{0} {1}", item.LanguageType, item.PascalName);
             }
             return sb.ToString();
         }
@@ -110,7 +110,7 @@ namespace CKGen.Temp.AspnetMVC
         //            sb.Append(", ");
         //        }
         //        var item = this.DBTable.Keys[i];
-        //        sb.AppendFormat("{0} {1}", item.CSharpType, item.PascalName);
+        //        sb.AppendFormat("{0} {1}", item.LanguageType, item.PascalName);
         //    }
         //    return sb.ToString();
         //}
@@ -166,7 +166,7 @@ namespace CKGen.Temp.AspnetMVC
             for (int i = 0; i < this.DBTable.Columns.Count; i++)
             {
                 var item = this.DBTable.Columns[i];
-                if (item.CSharpType == "string")
+                if (item.LanguageType == "string")
                 {
                     if (sb.Length > 0)
                     {
@@ -196,7 +196,7 @@ namespace CKGen.Temp.AspnetMVC
             for (int i = 0; i < this.DBTable.Columns.Count; i++)
             {
                 var item = this.DBTable.Columns[i];
-                if (item.CSharpType == "DateTime")
+                if (item.LanguageType == "DateTime")
                 {
                     if (item.LowerName.Contains("create") || item.LowerName.Contains("add"))
                     {

@@ -15,11 +15,11 @@ namespace <#= NameSpace #>.Model
 	    foreach (var column in DBTable.Columns)
 	    {
 #>
-		private <#= column.CSharpType #> <#= "_" + column.CamelName #>;
+		private <#= column.LanguageType #> <#= "_" + column.CamelName #>;
 		/// <summary>
         /// <#= column.Description #>
         /// </summary>
-		public virtual <#= column.CSharpType #> <#= column.PascalName #>
+		public virtual <#= column.LanguageType #> <#= column.PascalName #>
 		{
 			get 
 			{
@@ -31,7 +31,7 @@ namespace <#= NameSpace #>.Model
 			}
 		}
 		
-		internal void _set<#= column.PascalName #>(<#= column.CSharpType #> value)
+		internal void _set<#= column.PascalName #>(<#= column.LanguageType #> value)
 		{
 			<#= "_" + column.CamelName #> = value;
 		}

@@ -15,7 +15,7 @@ public partial class @(Model.PascalName)
     <text>/// @("<summary>")</text>
     <text>/// @(column.Description)</text>
     <text>/// @("</summary>")</text>
-    <text>public @(column.CSharpType) @(column.PascalName) { get; set; }</text>
+    <text>public @(column.LanguageType) @(column.PascalName) { get; set; }</text>
     @("\r\n")
     }
 }

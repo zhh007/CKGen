@@ -25,7 +25,7 @@ namespace CKGen.DBLoader
         private string _lowerName;
         private string _dbType;
         private string _dbTargetType;
-        private string _csharpType;
+        private string _languagetype;
         private string _desc;
         private bool _nullable;
         private bool _isPrimaryKey;
@@ -103,10 +103,10 @@ namespace CKGen.DBLoader
         /// <summary>
         /// C#类型，如DateTime,string等
         /// </summary>
-        public string CSharpType
+        public string LanguageType
         {
-            get { return _csharpType; }
-            set { _csharpType = value; }
+            get { return _languagetype; }
+            set { _languagetype = value; }
         }
 
         /// <summary>
@@ -179,7 +179,7 @@ namespace CKGen.DBLoader
         {
             get
             {
-                if (!this.Nullable && this.CSharpType == "string")
+                if (!this.Nullable && this.LanguageType == "string")
                 {
                     if (this.MaxLength.HasValue)
                     {

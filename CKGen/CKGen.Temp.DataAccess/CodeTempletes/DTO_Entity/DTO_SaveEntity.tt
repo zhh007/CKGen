@@ -9,7 +9,7 @@
 <#
 foreach(var column in DBTable.Columns)
 {
-if (column.IsPrimaryKey && !column.Identity && !LanguageConvert.IsValueType(column.CSharpType))
+if (column.IsPrimaryKey && !column.Identity && !LanguageConvert.IsValueType(column.LanguageType))
 {
 #>			
 			if(entity.<#= column.PascalName #> == null)

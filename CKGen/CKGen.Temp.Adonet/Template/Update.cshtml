@@ -13,7 +13,7 @@ public void Update(@(Model.PascalName) entity)
 
 @foreach(var column in Model.Columns)
 {
-    if (column.IsPrimaryKey && !LanguageConvert.IsValueType(column.CSharpType))
+    if (column.IsPrimaryKey && !LanguageConvert.IsValueType(column.LanguageType))
     {
 <text>    if (entity.@(column.PascalName) == null)
         throw new Exception("主键不能为空值。");

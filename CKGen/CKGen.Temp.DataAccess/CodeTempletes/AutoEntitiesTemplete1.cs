@@ -134,7 +134,7 @@ namespace CKGen.Temp.DataAccess.CodeTempletes
             this.Write("\r\n        /// </summary>\r\n\t\tpublic override ");
             
             #line 43 "D:\zhhcode\CKGen\CKGen\CKGen.Temp.DataAccess\CodeTempletes\AutoEntitiesTemplete.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(column.CSharpType));
+            this.Write(this.ToStringHelper.ToStringWithCulture(column.LanguageType));
             
             #line default
             #line hidden
@@ -182,7 +182,7 @@ namespace CKGen.Temp.DataAccess.CodeTempletes
 
 foreach(var column in DBTable.Columns)
 {
-if (column.IsPrimaryKey && !LanguageConvert.IsValueType(column.CSharpType))
+if (column.IsPrimaryKey && !LanguageConvert.IsValueType(column.LanguageType))
 {
 
             
@@ -220,7 +220,7 @@ if (column.IsPrimaryKey && !LanguageConvert.IsValueType(column.CSharpType))
 
 foreach(var column in DBTable.Columns)
 {
-if (column.IsPrimaryKey && !LanguageConvert.IsValueType(column.CSharpType))
+if (column.IsPrimaryKey && !LanguageConvert.IsValueType(column.LanguageType))
 {
 
             
@@ -259,7 +259,7 @@ if (column.IsPrimaryKey && !LanguageConvert.IsValueType(column.CSharpType))
 
 foreach(var column in DBTable.Columns)
 {
-if (column.IsPrimaryKey && !LanguageConvert.IsValueType(column.CSharpType))
+if (column.IsPrimaryKey && !LanguageConvert.IsValueType(column.LanguageType))
 {
 
             
@@ -298,7 +298,7 @@ if (column.IsPrimaryKey && !LanguageConvert.IsValueType(column.CSharpType))
 
 foreach(var column in DBTable.Columns)
 {
-if (column.IsPrimaryKey && !LanguageConvert.IsValueType(column.CSharpType))
+if (column.IsPrimaryKey && !LanguageConvert.IsValueType(column.LanguageType))
 {
 
             
@@ -342,7 +342,7 @@ if (column.IsPrimaryKey && !LanguageConvert.IsValueType(column.CSharpType))
 
 foreach(var column in DBTable.Columns)
 {
-if (column.IsPrimaryKey && !LanguageConvert.IsValueType(column.CSharpType))
+if (column.IsPrimaryKey && !LanguageConvert.IsValueType(column.LanguageType))
 {
 
             

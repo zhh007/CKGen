@@ -70,7 +70,7 @@ namespace CKGen.Temp.DataAccess.CodeTempletes
 			string colName = "_" + column.CamelName;
 			string ColName = column.PascalName;
 			string sqlType = column.DBType;
-			string csharpType = column.CSharpType;
+			string csharpType = column.LanguageType;
 			string desc = column.Description;
 
             

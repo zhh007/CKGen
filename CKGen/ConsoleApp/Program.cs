@@ -21,24 +21,24 @@ namespace ConsoleApp
             ServiceLocator.Instance.AddService<ICodeGenService>(new CodeGenService());
             Console.WriteLine("正在生成...");
 
-            string dbConnStr = @"Provider=SQLOLEDB.1;Persist Security Info=False;User ID=sa;Password=pass@word1;Initial Catalog=DBTest;Data Source=.\SQL2008R2";
-            string dbname = "DBTest";
-            ServerInfo serverInfo = new ServerInfo(dbConnStr, dbname);
-            IDatabaseInfo database = serverInfo.GetDatabase(dbname);
+            //string dbConnStr = @"Provider=SQLOLEDB.1;Persist Security Info=False;User ID=sa;Password=pass@word1;Initial Catalog=DBTest;Data Source=.\SQL2008R2";
+            //string dbname = "DBTest";
+            //ServerInfo serverInfo = new ServerInfo(dbConnStr, dbname);
+            //IDatabaseInfo database = serverInfo.GetDatabase(dbname);
 
-            foreach (var item in database.Procedures)
-            {
-                Console.WriteLine("{0}", item.Name);
-                foreach (var col in item.Parameters)
-                {
-                    Console.WriteLine("    {0}", col.Name);
-                }
-            }
+            //foreach (var item in database.Procedures)
+            //{
+            //    Console.WriteLine("{0}", item.Name);
+            //    foreach (var col in item.Parameters)
+            //    {
+            //        Console.WriteLine("    {0}", col.Name);
+            //    }
+            //}
 
             //BuildModel("SampleInt");
             //BuildModel("df_TestUser");
 
-            //BuildProj();
+            BuildProj();
 
             //BuildDBAccess();
 

@@ -316,7 +316,7 @@ WHERE user_type_id =
 
             if (col.Nullable)
             {
-                if (col.CSharpType == "object")
+                if (col.LanguageType == "object")
                 {
                     ret = objName + "." + col.PascalName + " ?? DBNull.Value";
                 }
@@ -539,7 +539,7 @@ WHERE user_type_id =
             {
                 IColumnInfo col = pks[i];
 
-                sbSql.AppendFormat("{0} {1}", col.CSharpType, col.CamelName);
+                sbSql.AppendFormat("{0} {1}", col.LanguageType, col.CamelName);
                 if (i != len - 1)
                 {
                     sbSql.Append(", ");
@@ -759,7 +759,7 @@ SELECT @TotalCount = COUNT(*) FROM [{1}] {2}
             }
 
             col = (from p in table.Columns
-                   where p.CSharpType == "DateTime" && (p.LowerName.Contains("update") && p.LowerName.Contains("modif"))
+                   where p.LanguageType == "DateTime" && (p.LowerName.Contains("update") && p.LowerName.Contains("modif"))
                    select p).FirstOrDefault();
             if (col != null)
             {
@@ -767,7 +767,7 @@ SELECT @TotalCount = COUNT(*) FROM [{1}] {2}
             }
 
             col = (from p in table.Columns
-                   where p.CSharpType == "DateTime" && (p.LowerName.Contains("create") && p.LowerName.Contains("add"))
+                   where p.LanguageType == "DateTime" && (p.LowerName.Contains("create") && p.LowerName.Contains("add"))
                    select p).FirstOrDefault();
             if (col != null)
             {
@@ -818,7 +818,7 @@ SELECT @TotalCount = COUNT(*) FROM [{1}] {2}
         {
             string sqlType = column.DBType;
             string sqlDbType = column.DbTargetType;
-            string languageType = column.CSharpType;
+            string languageType = column.LanguageType;
             StringBuilder sb = new StringBuilder();
 
             //如果该列是可空，并且是值类型

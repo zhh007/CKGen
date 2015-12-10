@@ -478,7 +478,7 @@ foreach(var column in DBTable.Columns)
 
 foreach(var column in DBTable.Columns)
 {
-if (column.IsPrimaryKey && !column.Identity && !LanguageConvert.IsValueType(column.CSharpType))
+if (column.IsPrimaryKey && !column.Identity && !LanguageConvert.IsValueType(column.LanguageType))
 {
 
             
@@ -612,7 +612,7 @@ if (column.Identity || column.Computed)
 
 foreach(var column in DBTable.Columns)
 {
-if (column.IsPrimaryKey && !LanguageConvert.IsValueType(column.CSharpType))
+if (column.IsPrimaryKey && !LanguageConvert.IsValueType(column.LanguageType))
 {
 
             
@@ -731,7 +731,7 @@ string ColName = Util.SetPascalCase(column.Name);
 
 foreach(var column in DBTable.Columns)
 {
-if (column.IsPrimaryKey && !column.Identity && !LanguageConvert.IsValueType(column.CSharpType))
+if (column.IsPrimaryKey && !column.Identity && !LanguageConvert.IsValueType(column.LanguageType))
 {
 
             
@@ -2762,7 +2762,7 @@ foreach(var column in DBTable.Columns)
 
 foreach(var column in DBTable.Columns)
 {
-if (column.IsPrimaryKey && !column.Identity && !LanguageConvert.IsValueType(column.CSharpType))
+if (column.IsPrimaryKey && !column.Identity && !LanguageConvert.IsValueType(column.LanguageType))
 {
 
             
@@ -3375,7 +3375,7 @@ foreach(var column in DBTable.Columns)
 
 foreach(var column in DBTable.Columns)
 {
-if (column.IsPrimaryKey && !column.Identity && !LanguageConvert.IsValueType(column.CSharpType))
+if (column.IsPrimaryKey && !column.Identity && !LanguageConvert.IsValueType(column.LanguageType))
 {
 
             
@@ -3975,7 +3975,7 @@ foreach(var column in DBTable.Columns)
 
 foreach(var column in DBTable.Columns)
 {
-if (column.IsPrimaryKey && !LanguageConvert.IsValueType(column.CSharpType))
+if (column.IsPrimaryKey && !LanguageConvert.IsValueType(column.LanguageType))
 {
 
             

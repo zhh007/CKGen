@@ -600,7 +600,7 @@ WHERE user_type_id =
             {
                 IColumnInfo col = pks[i];
 
-                sbSql.AppendFormat("{0} {1}", col.CSharpType, col.CamelName);
+                sbSql.AppendFormat("{0} {1}", col.LanguageType, col.CamelName);
                 if (i != len - 1)
                 {
                     sbSql.Append(", ");
@@ -813,7 +813,7 @@ WHERE user_type_id =
         {
             string sqlType = column.DBType;
             string sqlDbType = column.DbTargetType;
-            string languageType = column.CSharpType;
+            string languageType = column.LanguageType;
             StringBuilder sb = new StringBuilder();
 
             //如果该列是可空，并且是值类型
