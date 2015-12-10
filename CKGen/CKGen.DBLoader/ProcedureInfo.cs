@@ -83,8 +83,6 @@ namespace CKGen.DBLoader
                 item.Precision = para.NumericPrecision;
                 item.Scale = para.NumericScale;
                 item.Nullable = para.IsNullable;
-                item.HasDefault = para.HasDefault;
-                item.Default = para.Default;
                 item.Description = para.Description;
                 _parameters.Add(item);
             }

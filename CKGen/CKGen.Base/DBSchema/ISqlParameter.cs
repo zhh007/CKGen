@@ -42,8 +42,6 @@ namespace CKGen.DBSchema
         /// 是否可空
         /// </summary>
         bool Nullable { get; set; }
-        bool HasDefault { get; set; }
-        string Default { get; set; }
         /// <summary>
         /// 说明
         /// </summary>

@@ -43,8 +43,6 @@ namespace CKGen.DBLoader
         /// 是否可空
         /// </summary>
         public bool Nullable { get; set; }
-        public bool HasDefault { get; set; }
-        public string Default { get; set; }
         /// <summary>
         /// 说明
         /// </summary>
