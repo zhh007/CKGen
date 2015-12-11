@@ -39,12 +39,12 @@ namespace CKGen
                 root = XElement.Parse(txt);
             }
 
-            if(root == null)
+            if (root == null)
             {
                 root = new XElement("database");
             }
 
-            Update(root, db.Tables);
+            UpdateTables(root, db.Tables);
 
             XDocument xdoc = new XDocument(new XDeclaration("1.0", "utf-8", "yes"), root);
             xdoc.Save(filePath);
@@ -52,14 +52,14 @@ namespace CKGen
             return db;
         }
 
-        private static void Update(XElement root, List<ITableInfo> tables)
+        private static void UpdateTables(XElement root, List<ITableInfo> tables)
         {
             List<XElement> allXmlTable = new List<XElement>();
             foreach (ITableInfo tableInfo in tables)
             {
                 var tableNode = (from p in root.Elements()
-                                where p.Attribute("rawname").Value == tableInfo.RawName
-                                select p).FirstOrDefault();
+                                 where p.Attribute("rawname").Value == tableInfo.RawName
+                                 select p).FirstOrDefault();
                 if (tableNode != null)
                 {
                     string db_desc = tableInfo.Description;
@@ -73,24 +73,19 @@ namespace CKGen
 
                     tableInfo.Attributes["local_desc"] = local_desc;
                     tableInfo.Attributes["new_desc"] = new_desc;
-
-                    List<XElement> allXMLColumns = new List<XElement>();
-                    foreach (IColumnInfo col in tableInfo.Columns)
-                    {
-                        var colEl = updateForColumn(tableNode, col);
-                        allXMLColumns.Add(colEl);
-                    }
-
-                    tableNode.RemoveNodes();
-                    foreach (var col in allXMLColumns)
-                    {
-                        tableNode.Add(col);
-                    }
                 }
                 else
                 {//new table
-                    tableNode = createXmlTable(tableInfo);
+                    tableInfo.Attributes["local_desc"] = tableInfo.Description;
+                    tableInfo.Attributes["new_desc"] = "";
+
+                    tableNode = new XElement("table");
+                    tableNode.Add(new XAttribute("rawname", tableInfo.RawName));
+                    tableNode.Add(new XAttribute("schema", tableInfo.Schema));
+                    tableNode.Add(new XAttribute("desc", tableInfo.Description));
                 }
+
+                UpdateTableColumns(tableNode, tableInfo);
 
                 allXmlTable.Add(tableNode);
             }
@@ -102,99 +97,55 @@ namespace CKGen
             }
         }
 
-        private static XElement updateForColumn(XElement tableNode, IColumnInfo col)
+        private static void UpdateTableColumns(XElement tableNode, ITableInfo tableInfo)
         {
-            var colNode = (from c in tableNode.Elements()
-                         where c.Attribute("rawname").Value == col.RawName
-                         select c).FirstOrDefault();
-            if (colNode != null)
+            List<XElement> allXMLColumns = new List<XElement>();
+            foreach (IColumnInfo col in tableInfo.Columns)
             {
-                string db_desc = col.Description;
-                string local_desc = colNode.Attribute("desc").Value;
-                string new_desc = "";
-                if (local_desc != db_desc)
+                var colNode = (from c in tableNode.Elements()
+                               where c.Attribute("rawname").Value == col.RawName
+                               select c).FirstOrDefault();
+                if (colNode != null)
                 {
-                    new_desc = db_desc;
+                    string db_desc = col.Description;
+                    string local_desc = colNode.Attribute("desc").Value;
+                    string new_desc = "";
+                    if (local_desc != db_desc)
+                    {
+                        new_desc = db_desc;
+                    }
+                    col.Attributes["local_desc"] = local_desc;
+                    col.Attributes["new_desc"] = new_desc;
                 }
-                col.Attributes["local_desc"] = local_desc;
-                col.Attributes["new_desc"] = new_desc;
+                else
+                {
+                    col.Attributes["local_desc"] = col.Description;
+                    col.Attributes["new_desc"] = "";
+                    colNode = new XElement("column");
+                    colNode.SetAttributeValue("desc", col.Description);
+                }
+
+                colNode.SetAttributeValue("rawname", col.RawName);
+                colNode.SetAttributeValue("dbtype", col.DBType);
+                colNode.SetAttributeValue("dbtargettype", col.DbTargetType);
+                colNode.SetAttributeValue("languagetype", col.LanguageType);
+                colNode.SetAttributeValue("nullable", col.Nullable);
+                colNode.SetAttributeValue("iskey", col.IsPrimaryKey);
+                colNode.SetAttributeValue("maxlength", col.MaxLength);
+                colNode.SetAttributeValue("precision", col.Precision);
+                colNode.SetAttributeValue("scale", col.Scale);
+                colNode.SetAttributeValue("identity", col.Identity);
+                colNode.SetAttributeValue("computed", col.Computed);
+
+                allXMLColumns.Add(colNode);
             }
-            else
+
+            tableNode.RemoveNodes();
+            foreach (var col in allXMLColumns)
             {
-                col.Attributes["local_desc"] = col.Description;
-                col.Attributes["new_desc"] = "";
-                colNode = new XElement("column");
-                colNode.SetAttributeValue("desc", col.Description);
+                tableNode.Add(col);
             }
-
-            colNode.SetAttributeValue("rawname", col.RawName);
-            colNode.SetAttributeValue("dbtype", col.DBType);
-            colNode.SetAttributeValue("dbtargettype", col.DbTargetType);
-            colNode.SetAttributeValue("languagetype", col.LanguageType);
-            colNode.SetAttributeValue("nullable", col.Nullable);
-            colNode.SetAttributeValue("iskey", col.IsPrimaryKey);
-            colNode.SetAttributeValue("maxlength", col.MaxLength);
-            colNode.SetAttributeValue("precision", col.Precision);
-            colNode.SetAttributeValue("scale", col.Scale);
-            colNode.SetAttributeValue("identity", col.Identity);
-            colNode.SetAttributeValue("computed", col.Computed);
-
-            return colNode;
         }
-
-        private static XElement createXmlTable(ITableInfo tb)
-        {
-            tb.Attributes["local_desc"] = tb.Description;
-            tb.Attributes["new_desc"] = "";
-
-            XElement tableNode = new XElement("table");
-            tableNode.Add(new XAttribute("rawname", tb.RawName));
-            tableNode.Add(new XAttribute("schema", tb.Schema));
-            tableNode.Add(new XAttribute("desc", tb.Description));
-
-            foreach (IColumnInfo col in tb.Columns)
-            {
-                var elColumn = updateForColumn(tableNode, col);
-                tableNode.Add(elColumn);
-            }
-
-            return tableNode;
-        }
-
-        //private static XElement createXmlColumn(IColumnInfo col)
-        //{
-        //    XElement elColumn = new XElement("column");
-        //    elColumn.Add(new XAttribute("rawname", col.RawName));
-        //    elColumn.Add(new XAttribute("dbtype", col.DBType));
-        //    elColumn.Add(new XAttribute("dbtargettype", col.DbTargetType));
-        //    elColumn.Add(new XAttribute("languagetype", col.LanguageType));
-            
-        //    elColumn.Add(new XAttribute("nullable", col.Nullable));
-        //    elColumn.Add(new XAttribute("iskey", col.IsPrimaryKey));
-        //    elColumn.Add(new XAttribute("maxlength", col.MaxLength));
-        //    elColumn.Add(new XAttribute("precision", col.Precision));
-        //    elColumn.Add(new XAttribute("scale", col.Scale));
-        //    elColumn.Add(new XAttribute("identity", col.Identity));
-        //    elColumn.Add(new XAttribute("computed", col.Computed));
-
-        //    return elColumn;
-        //}
-
-        //private static void updateXmlColumn(XElement el, IColumnInfo col)
-        //{
-        //    el.SetAttributeValue("rawname", col.RawName);
-        //    el.SetAttributeValue("dbtype", col.DBType);
-        //    el.SetAttributeValue("dbtargettype", col.DbTargetType);
-        //    el.SetAttributeValue("languagetype", col.LanguageType);
-        //    //el.SetAttributeValue("desc", col.Description);
-        //    el.SetAttributeValue("nullable", col.Nullable);
-        //    el.SetAttributeValue("iskey", col.IsPrimaryKey);
-        //    el.SetAttributeValue("maxlength", col.MaxLength);
-        //    el.SetAttributeValue("precision", col.Precision);
-        //    el.SetAttributeValue("scale", col.Scale);
-        //    el.SetAttributeValue("identity", col.Identity);
-        //    el.SetAttributeValue("computed", col.Computed);
-        //}
 
         #endregion
 
