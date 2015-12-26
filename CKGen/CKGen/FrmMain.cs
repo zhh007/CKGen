@@ -21,7 +21,7 @@ namespace CKGen
     public partial class FrmMain : Form
     {
         private IDatabaseInfo DB = null;
-        private UCDetail DetailPage = null;
+        private TableDetail DetailPage = null;
         private ContextMenuStrip TableMenu = null;
         private TableDataAccessGen gen = new TableDataAccessGen();
 

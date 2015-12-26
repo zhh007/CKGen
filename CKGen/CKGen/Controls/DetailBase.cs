@@ -6,7 +6,7 @@ using System.Windows.Forms;
 
 namespace CKGen.Controls
 {
-    public class DetailControlBase : UserControl
+    public class DetailBase : UserControl
     {
         public virtual void LoadDetail()
         {

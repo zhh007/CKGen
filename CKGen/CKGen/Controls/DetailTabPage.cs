@@ -12,7 +12,7 @@ namespace CKGen.Controls
 {
     public class DetailTabPage : TabPage
     {
-        private DetailControlBase innerControl = null;
+        private DetailBase innerControl = null;
         public DetailTabPage()
         {
             this.Text = "详细信息";
@@ -29,9 +29,9 @@ namespace CKGen.Controls
 
             if(SystemConfig.Instance.SelectedNode.Tag is ITableInfo)
             {
-                if (!(innerControl is UCDetail))
+                if (!(innerControl is TableDetail))
                 {
-                    innerControl = new UCDetail();
+                    innerControl = new TableDetail();
                     innerControl.Dock = DockStyle.Fill;
                     this.Controls.Add(innerControl);
                 }

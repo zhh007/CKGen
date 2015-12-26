@@ -7,13 +7,12 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using CKGen.DBSchema;
-using CKGen.Controls;
 
-namespace CKGen
+namespace CKGen.Controls
 {
-    public partial class UCDetail : DetailControlBase
+    public partial class TableDetail : DetailBase
     {
-        public UCDetail()
+        public TableDetail()
         {
             InitializeComponent();
         }

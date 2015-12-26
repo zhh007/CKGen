@@ -1,6 +1,6 @@
-﻿namespace CKGen
+﻿namespace CKGen.Controls
 {
-    partial class UCDetail
+    partial class TableDetail
     {
         /// <summary> 
         /// 必需的设计器变量。
