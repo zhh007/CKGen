@@ -210,9 +210,9 @@ namespace CKGen
             this.DBLink.SetDatabaseName(cbDatabases.Text);
             ConnectionSetting.Add(this.DBLink);
 
-            SystemConfig.Instance.DBLink = this.DBLink;
-            SystemConfig.Instance.SrvInfo = this.SrvInfo;
-            SystemConfig.Instance.DBName = cbDatabases.Text;
+            App.Instance.DBLink = this.DBLink;
+            App.Instance.SrvInfo = this.SrvInfo;
+            App.Instance.DBName = cbDatabases.Text;
 
             cbServerType.Enabled = false;
             cbServerName.Enabled = false;
@@ -228,8 +228,8 @@ namespace CKGen
             bar.Location = new Point(0, (this.ClientSize.Height - bar.Height));
             bar.Width = this.Width;
 
-            IDatabaseInfo dbi = SystemConfig.Instance.SrvInfo.GetDatabase(SystemConfig.Instance.DBName);
-            SystemConfig.Instance.Database = dbi;
+            IDatabaseInfo dbi = App.Instance.SrvInfo.GetDatabase(App.Instance.DBName);
+            App.Instance.Database = dbi;
 
             BackgroundWorker worker = new BackgroundWorker();
             worker.DoWork += new DoWorkEventHandler(worker_DoWork2);
@@ -251,17 +251,17 @@ namespace CKGen
                 _stopWatch.Start();
                 LoadData();
 
-                int size = SystemConfig.Instance.Database.Views.Count;
+                int size = App.Instance.Database.Views.Count;
                 for (int i = 0; i < size; i++)
                 {
-                    IViewInfo vw = SystemConfig.Instance.Database.Views[i];
+                    IViewInfo vw = App.Instance.Database.Views[i];
                     vw.LoadColumns();
                 }
 
-                size = SystemConfig.Instance.Database.Procedures.Count;
+                size = App.Instance.Database.Procedures.Count;
                 for (int i = 0; i < size; i++)
                 {
-                    IProcedureInfo proc = SystemConfig.Instance.Database.Procedures[i];
+                    IProcedureInfo proc = App.Instance.Database.Procedures[i];
                     proc.LoadParameters();
                 }
 
@@ -270,7 +270,7 @@ namespace CKGen
 
                 _stopWatch = new Stopwatch();
                 _stopWatch.Start();
-                DatabaseSchemaSetting.SyncToLocal(SystemConfig.Instance.Database);
+                DatabaseSchemaSetting.SyncToLocal(App.Instance.Database);
                 _stopWatch.Stop();
                 Debug.WriteLine("执行时间:" + (_stopWatch.Elapsed.TotalMilliseconds * 1.0 / 1000).ToString(CultureInfo.InvariantCulture) + "秒");
 
@@ -318,7 +318,7 @@ namespace CKGen
 
         private void LoadData()
         {
-            int size = SystemConfig.Instance.Database.Tables.Count;
+            int size = App.Instance.Database.Tables.Count;
             int N = size;
             int P = Environment.ProcessorCount; // assume twice the procs for 
                                                 // good work distribution
@@ -345,9 +345,9 @@ namespace CKGen
 
                     for (int i = start; i < end; i++)
                     {
-                        if (i < SystemConfig.Instance.Database.Tables.Count)
+                        if (i < App.Instance.Database.Tables.Count)
                         {
-                            ITableInfo tb = SystemConfig.Instance.Database.Tables[i];
+                            ITableInfo tb = App.Instance.Database.Tables[i];
                             tb.LoadColumns();
                         }
                     }

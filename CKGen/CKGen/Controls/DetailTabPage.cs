@@ -16,18 +16,18 @@ namespace CKGen.Controls
         public DetailTabPage()
         {
             this.Text = "详细信息";
-            SystemConfig.Instance.PropertyChanged += Instance_PropertyChanged;
+            App.Instance.PropertyChanged += Instance_PropertyChanged;
         }
 
         private void Instance_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if(SystemConfig.Instance.SelectedNode == null)
+            if(App.Instance.SelectedNode == null)
             {
                 this.Controls.Clear();
                 return;
             }
 
-            if(SystemConfig.Instance.SelectedNode.Tag is ITableInfo)
+            if(App.Instance.SelectedNode.Tag is ITableInfo)
             {
                 if (!(innerControl is TableDetail))
                 {
@@ -38,7 +38,7 @@ namespace CKGen.Controls
                 }
                 innerControl.LoadDetail();
             }
-            else if(SystemConfig.Instance.SelectedNode.Tag is IViewInfo)
+            else if(App.Instance.SelectedNode.Tag is IViewInfo)
             {
                 if (!(innerControl is ViewDetail))
                 {
@@ -49,7 +49,7 @@ namespace CKGen.Controls
                 }
                 innerControl.LoadDetail();
             }
-            else if(SystemConfig.Instance.SelectedNode.Tag is IProcedureInfo)
+            else if(App.Instance.SelectedNode.Tag is IProcedureInfo)
             {
                 if (!(innerControl is ProcedureDetail))
                 {

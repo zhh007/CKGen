@@ -10,14 +10,16 @@ using System.ComponentModel.Composition;
 
 namespace CKGen
 {
-    public class SystemConfig //: INotifyPropertyChanged
+    public class App
     {
-        private SystemConfig()
+        private TreeNode _selectNode = null;
+        private static App instance = new App();
+
+        private App()
         {
         }
-        private static SystemConfig instance = new SystemConfig();
 
-        public static SystemConfig Instance
+        public static App Instance
         {
             get
             {
@@ -25,10 +27,12 @@ namespace CKGen
             }
         }
 
-        public DatabaseLink DBLink = null;
-        public ServerInfo SrvInfo = null;
-        public string DBName = "";
-        private TreeNode _selectNode = null;
+        public DatabaseLink DBLink { get; set; }
+        public ServerInfo SrvInfo { get; set; }
+        public string DBName { get; set; }
+        [Export("ModuleName")]
+        public IDatabaseInfo Database { get; set; }
+
         public TreeNode SelectedNode
         {
             get { return _selectNode; }
@@ -38,9 +42,6 @@ namespace CKGen
                 InvokePropertyChanged(new PropertyChangedEventArgs(""));
             }
         }
-
-        [Export("ModuleName")]
-        public IDatabaseInfo Database { get; set; }
 
         #region Implementation of INotifyPropertyChanged
 

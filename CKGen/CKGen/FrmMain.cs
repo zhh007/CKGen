@@ -35,7 +35,7 @@ namespace CKGen
 
         private void FrmMain_Load(object sender, EventArgs e)
         {
-            if (SystemConfig.Instance.SrvInfo == null)
+            if (App.Instance.SrvInfo == null)
             {
                 FrmLogin frmLogin = new FrmLogin();
                 if (frmLogin.ShowDialog() == DialogResult.Cancel)
@@ -45,7 +45,7 @@ namespace CKGen
                 }
             }
 
-            this.DB = SystemConfig.Instance.Database;
+            this.DB = App.Instance.Database;
 
             //详细信息
             this.tabControl1.TabPages.Add(new DetailTabPage());
@@ -61,7 +61,7 @@ namespace CKGen
             catalog.Catalogs.Add(new AssemblyCatalog(System.Reflection.Assembly.GetExecutingAssembly()));
             catalog.Catalogs.Add(new DirectoryCatalog(Environment.CurrentDirectory));
             var container = new CompositionContainer(catalog);
-            container.ComposeExportedValue("ModuleName", SystemConfig.Instance.Database);
+            container.ComposeExportedValue("ModuleName", App.Instance.Database);
             container.ComposeParts(this);
 
             LoadTemplates();
@@ -267,7 +267,7 @@ namespace CKGen
 
         private void tvSchema_AfterSelect(object sender, TreeViewEventArgs e)
         {
-            SystemConfig.Instance.SelectedNode = e.Node;
+            App.Instance.SelectedNode = e.Node;
         }
 
         /// <summary>

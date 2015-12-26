@@ -124,7 +124,7 @@
     <Compile Include="Setting\ConnectionSetting.cs" />
     <Compile Include="Setting\DatabaseSchemaSetting.cs" />
     <Compile Include="SQLHelper.cs" />
-    <Compile Include="SystemConfig.cs" />
+    <Compile Include="App.cs" />
     <Compile Include="UCCodeShow.cs">
       <SubType>UserControl</SubType>
     </Compile>

@@ -25,9 +25,9 @@ namespace CKGen.Controls
             txtTableNewDesc.Text = "";//new_desc
             dgvSchema.Rows.Clear();
 
-            if (SystemConfig.Instance.SelectedNode != null && SystemConfig.Instance.SelectedNode.Tag is ITableInfo)
+            if (App.Instance.SelectedNode != null && App.Instance.SelectedNode.Tag is ITableInfo)
             {
-                ITableInfo tbInfo = SystemConfig.Instance.SelectedNode.Tag as ITableInfo;
+                ITableInfo tbInfo = App.Instance.SelectedNode.Tag as ITableInfo;
                 lblTableName.Text = tbInfo.RawName;
                 lblTableDBDesc.Text = tbInfo.Description;//db_desc
                 lblTableLocalDesc.Text = tbInfo.Attributes.ContainsKey("local_desc") ? tbInfo.Attributes["local_desc"] : "";//local_desc
@@ -57,9 +57,9 @@ namespace CKGen.Controls
                 value = dgvSchema.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
             }
 
-            if (SystemConfig.Instance.SelectedNode != null && SystemConfig.Instance.SelectedNode.Tag is ITableInfo)
+            if (App.Instance.SelectedNode != null && App.Instance.SelectedNode.Tag is ITableInfo)
             {
-                ITableInfo tbInfo = SystemConfig.Instance.SelectedNode.Tag as ITableInfo;
+                ITableInfo tbInfo = App.Instance.SelectedNode.Tag as ITableInfo;
 
                 var col = (from c in tbInfo.Columns
                            where c.RawName == rawName
@@ -74,13 +74,13 @@ namespace CKGen.Controls
                                      select p).Count() > 0;
                 if (colHasNewDesc || !string.IsNullOrEmpty(tbInfo.Attributes["new_desc"]))
                 {
-                    SystemConfig.Instance.SelectedNode.Text = tbInfo.RawName + "(*)";
-                    SystemConfig.Instance.SelectedNode.ForeColor = Color.Red;
+                    App.Instance.SelectedNode.Text = tbInfo.RawName + "(*)";
+                    App.Instance.SelectedNode.ForeColor = Color.Red;
                 }
                 else
                 {
-                    SystemConfig.Instance.SelectedNode.Text = tbInfo.RawName;
-                    SystemConfig.Instance.SelectedNode.ForeColor = Color.Black;
+                    App.Instance.SelectedNode.Text = tbInfo.RawName;
+                    App.Instance.SelectedNode.ForeColor = Color.Black;
                 }
             }
         }
@@ -89,7 +89,7 @@ namespace CKGen.Controls
         {
             if (DialogResult.OK == MessageBox.Show("是否将新的说明同时保存到本地和数据库？", "保存提示", MessageBoxButtons.OKCancel))
             {
-                DatabaseSchemaSetting.SaveDesc(SystemConfig.Instance.Database);
+                DatabaseSchemaSetting.SaveDesc(App.Instance.Database);
 
                 this.lblTableLocalDesc.Text = this.txtTableNewDesc.Text;
                 this.lblTableDBDesc.Text = this.txtTableNewDesc.Text;
@@ -112,22 +112,22 @@ namespace CKGen.Controls
 
         private void txtTableNewDesc_TextChanged(object sender, EventArgs e)
         {
-            if (SystemConfig.Instance.SelectedNode != null && SystemConfig.Instance.SelectedNode.Tag is ITableInfo)
+            if (App.Instance.SelectedNode != null && App.Instance.SelectedNode.Tag is ITableInfo)
             {
-                ITableInfo tbInfo = SystemConfig.Instance.SelectedNode.Tag as ITableInfo;
+                ITableInfo tbInfo = App.Instance.SelectedNode.Tag as ITableInfo;
                 if (tbInfo != null)
                 {
                     tbInfo.Attributes["new_desc"] = txtTableNewDesc.Text;
 
                     if (!string.IsNullOrEmpty(txtTableNewDesc.Text))
                     {
-                        SystemConfig.Instance.SelectedNode.Text = tbInfo.RawName + "(*)";
-                        SystemConfig.Instance.SelectedNode.ForeColor = Color.Red;
+                        App.Instance.SelectedNode.Text = tbInfo.RawName + "(*)";
+                        App.Instance.SelectedNode.ForeColor = Color.Red;
                     }
                     else
                     {
-                        SystemConfig.Instance.SelectedNode.Text = tbInfo.RawName;
-                        SystemConfig.Instance.SelectedNode.ForeColor = Color.Black;
+                        App.Instance.SelectedNode.Text = tbInfo.RawName;
+                        App.Instance.SelectedNode.ForeColor = Color.Black;
                     }
                 }
             }
