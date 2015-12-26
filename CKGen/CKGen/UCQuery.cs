@@ -62,7 +62,7 @@ namespace CKGen
 
             try
             {
-                using (SqlConnection conn = new SqlConnection(SystemConfig.DBLink.ConnectionStringForExecute))
+                using (SqlConnection conn = new SqlConnection(SystemConfig.Instance.DBLink.ConnectionStringForExecute))
                 {
                     SqlCommand cmd = new SqlCommand(this.txtCode.Text, conn);
                     try

@@ -10,13 +10,12 @@ using System.ComponentModel.Composition;
 
 namespace CKGen
 {
-    public class SystemConfig : INotifyPropertyChanged
+    public class SystemConfig //: INotifyPropertyChanged
     {
-        private static SystemConfig instance = new SystemConfig();
-
         private SystemConfig()
         {
         }
+        private static SystemConfig instance = new SystemConfig();
 
         public static SystemConfig Instance
         {
@@ -26,9 +25,9 @@ namespace CKGen
             }
         }
 
-        public static DatabaseLink DBLink = null;
-        public static ServerInfo SrvInfo = null;
-        public static string DBName = "";
+        public DatabaseLink DBLink = null;
+        public ServerInfo SrvInfo = null;
+        public string DBName = "";
         private TreeNode _selectNode = null;
         public TreeNode SelectedNode
         {

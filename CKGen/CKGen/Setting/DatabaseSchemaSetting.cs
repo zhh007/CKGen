@@ -21,7 +21,7 @@ namespace CKGen
     {
         private static string GetStorePath(IDatabaseInfo db)
         {
-            return Path.Combine(Environment.CurrentDirectory, "Settings\\" + "db_" + SystemConfig.DBName + ".xml");
+            return Path.Combine(Environment.CurrentDirectory, "Settings\\" + "db_" + SystemConfig.Instance.DBName + ".xml");
         }
 
         #region 将新数据结构同步到本地
@@ -173,7 +173,7 @@ namespace CKGen
                     tb.Attributes["local_desc"] = table_desc;
                     tb.Attributes["new_desc"] = "";
 
-                    SQLHelper.SetTableDesc(SystemConfig.DBLink.ConnectionStringForExecute, tb.Schema, tb.RawName, table_desc);
+                    SQLHelper.SetTableDesc(SystemConfig.Instance.DBLink.ConnectionStringForExecute, tb.Schema, tb.RawName, table_desc);
                 }
                 elTable.Add(new XAttribute("desc", table_desc));
 
@@ -188,7 +188,7 @@ namespace CKGen
                         col.Attributes["local_desc"] = desc;
                         col.Attributes["new_desc"] = "";
 
-                        SQLHelper.SetColumnDesc(SystemConfig.DBLink.ConnectionStringForExecute, tb.Schema, tb.RawName, col.RawName, desc);
+                        SQLHelper.SetColumnDesc(SystemConfig.Instance.DBLink.ConnectionStringForExecute, tb.Schema, tb.RawName, col.RawName, desc);
                     }
                     XElement elColumn = new XElement("column");
                     elColumn.Add(new XAttribute("rawname", col.RawName));

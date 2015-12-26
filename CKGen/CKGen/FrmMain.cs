@@ -35,7 +35,7 @@ namespace CKGen
 
         private void FrmMain_Load(object sender, EventArgs e)
         {
-            if (SystemConfig.SrvInfo == null)
+            if (SystemConfig.Instance.SrvInfo == null)
             {
                 FrmLogin frmLogin = new FrmLogin();
                 if (frmLogin.ShowDialog() == DialogResult.Cancel)

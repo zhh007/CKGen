@@ -210,9 +210,9 @@ namespace CKGen
             this.DBLink.SetDatabaseName(cbDatabases.Text);
             ConnectionSetting.Add(this.DBLink);
 
-            SystemConfig.DBLink = this.DBLink;
-            SystemConfig.SrvInfo = this.SrvInfo;
-            SystemConfig.DBName = cbDatabases.Text;
+            SystemConfig.Instance.DBLink = this.DBLink;
+            SystemConfig.Instance.SrvInfo = this.SrvInfo;
+            SystemConfig.Instance.DBName = cbDatabases.Text;
 
             cbServerType.Enabled = false;
             cbServerName.Enabled = false;
@@ -228,7 +228,7 @@ namespace CKGen
             bar.Location = new Point(0, (this.ClientSize.Height - bar.Height));
             bar.Width = this.Width;
 
-            IDatabaseInfo dbi = SystemConfig.SrvInfo.GetDatabase(SystemConfig.DBName);
+            IDatabaseInfo dbi = SystemConfig.Instance.SrvInfo.GetDatabase(SystemConfig.Instance.DBName);
             SystemConfig.Instance.Database = dbi;
 
             BackgroundWorker worker = new BackgroundWorker();
