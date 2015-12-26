@@ -59,6 +59,18 @@
     <Compile Include="Controls\DetailBase.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="Controls\ProcedureDetail.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ProcedureDetail.Designer.cs">
+      <DependentUpon>ProcedureDetail.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ViewDetail.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ViewDetail.Designer.cs">
+      <DependentUpon>ViewDetail.cs</DependentUpon>
+    </Compile>
     <Compile Include="FrmLoading.cs">
       <SubType>Form</SubType>
     </Compile>

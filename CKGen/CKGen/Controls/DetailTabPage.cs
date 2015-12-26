@@ -31,6 +31,7 @@ namespace CKGen.Controls
             {
                 if (!(innerControl is TableDetail))
                 {
+                    this.Controls.Clear();
                     innerControl = new TableDetail();
                     innerControl.Dock = DockStyle.Fill;
                     this.Controls.Add(innerControl);
@@ -39,11 +40,25 @@ namespace CKGen.Controls
             }
             else if(SystemConfig.Instance.SelectedNode.Tag is IViewInfo)
             {
-
+                if (!(innerControl is ViewDetail))
+                {
+                    this.Controls.Clear();
+                    innerControl = new ViewDetail();
+                    innerControl.Dock = DockStyle.Fill;
+                    this.Controls.Add(innerControl);
+                }
+                innerControl.LoadDetail();
             }
             else if(SystemConfig.Instance.SelectedNode.Tag is IProcedureInfo)
             {
-
+                if (!(innerControl is ProcedureDetail))
+                {
+                    this.Controls.Clear();
+                    innerControl = new ProcedureDetail();
+                    innerControl.Dock = DockStyle.Fill;
+                    this.Controls.Add(innerControl);
+                }
+                innerControl.LoadDetail();
             }
             else
             {
