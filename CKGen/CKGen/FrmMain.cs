@@ -22,7 +22,6 @@ namespace CKGen
     public partial class FrmMain : Form
     {
         private IDatabaseInfo DB = null;
-        //private TableDetail DetailPage = null;
         private TableDataAccessGen gen = new TableDataAccessGen();
 
         public FrmMain()
@@ -62,8 +61,8 @@ namespace CKGen
 
             LoadTemplates();
 
-            App.Instance.Events.GetEvent<ShowCodeEvent>().Subscribe(p => this.ShowCode(p));
-            App.Instance.Events.GetEvent<ShowSQLQueryEvent>().Subscribe(p => this.ShowSQLQuery(p));
+            App.Instance.Subscribe<ShowCodeEvent>(p => this.ShowCode(p));
+            App.Instance.Subscribe<ShowSQLQueryEvent>(p => this.ShowSQLQuery(p));
         }
 
         public void ShowCode(ShowCodeEvent e)
@@ -115,9 +114,7 @@ namespace CKGen
             if (DialogResult.OK == MessageBox.Show("是否将新的说明同时保存到本地和数据库？", "保存提示", MessageBoxButtons.OKCancel))
             {
                 DatabaseSchemaSetting.SaveDesc(App.Instance.Database);
-
-                App.Instance.Events.GetEvent<SaveDescToDbEvent>().Publish(new SaveDescToDbEvent());
-
+                App.Instance.Publish<SaveDescToDbEvent>(new SaveDescToDbEvent());
                 MessageBox.Show("保存成功。");
             }
         }

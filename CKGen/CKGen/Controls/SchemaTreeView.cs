@@ -30,7 +30,7 @@ namespace CKGen.Controls
             //菜单
             CreateMenu();
 
-            App.Instance.Events.GetEvent<SaveDescToDbEvent>().Subscribe(p => SaveDescToDb());
+            App.Instance.Subscribe<SaveDescToDbEvent>(p => SaveDescToDb());
         }
 
         private void InitTree()
@@ -213,14 +213,14 @@ namespace CKGen.Controls
             ShowCodeEvent evt = new ShowCodeEvent();
             evt.Title = title;
             evt.Code = code;
-            App.Instance.Events.GetEvent<ShowCodeEvent>().Publish(evt);
+            App.Instance.Publish<ShowCodeEvent>(evt);
         }
 
         private void ShowSQLQuery(string sql)
         {
             ShowSQLQueryEvent evt = new ShowSQLQueryEvent();
             evt.SQL = sql;
-            App.Instance.Events.GetEvent<ShowSQLQueryEvent>().Publish(evt);
+            App.Instance.Publish<ShowSQLQueryEvent>(evt);
         }
 
         private void SaveDescToDb()

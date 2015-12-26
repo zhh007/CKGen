@@ -45,7 +45,7 @@ namespace CKGen
             }
         }
 
-        #region Implementation of INotifyPropertyChanged
+        #region 
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -56,5 +56,17 @@ namespace CKGen
         }
 
         #endregion
+
+        public void Subscribe<T>(Action<T> handler)
+            where T : CompositePresentationEvent<T>, new()
+        {
+            Events.GetEvent<T>().Subscribe(handler);
+        }
+
+        public void Publish<T>(T parameter)
+            where T : CompositePresentationEvent<T>, new()
+        {
+            Events.GetEvent<T>().Publish(parameter);
+        }
     }
 }

@@ -16,7 +16,7 @@ namespace CKGen.Controls
         public TableDetail()
         {
             InitializeComponent();
-            App.Instance.Events.GetEvent<SaveDescToDbEvent>().Subscribe(p => SaveDescToDb());
+            App.Instance.Subscribe<SaveDescToDbEvent>(p => SaveDescToDb());
         }
 
         private void SaveDescToDb()
