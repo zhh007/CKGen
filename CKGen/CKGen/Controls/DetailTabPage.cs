@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using CKGen.DBSchema;
+using CKGen.Events;
 
 namespace CKGen.Controls
 {

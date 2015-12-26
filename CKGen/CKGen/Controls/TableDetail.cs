@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using CKGen.DBSchema;
+using CKGen.Events;
 
 namespace CKGen.Controls
 {
@@ -15,6 +16,25 @@ namespace CKGen.Controls
         public TableDetail()
         {
             InitializeComponent();
+            App.Instance.Events.GetEvent<SaveDescToDbEvent>().Subscribe(p => SaveDescToDb());
+        }
+
+        private void SaveDescToDb()
+        {
+            this.lblTableLocalDesc.Text = this.txtTableNewDesc.Text;
+            this.lblTableDBDesc.Text = this.txtTableNewDesc.Text;
+            this.txtTableNewDesc.Text = "";
+
+            foreach (DataGridViewRow row in dgvSchema.Rows)
+            {
+                string desc = row.Cells[row.Cells.Count - 2].Value as string;
+                if (!string.IsNullOrEmpty(desc))
+                {
+                    row.Cells[row.Cells.Count - 2].Value = "";//new_desc
+                    row.Cells[row.Cells.Count - 3].Value = desc;//local_desc
+                    row.Cells[row.Cells.Count - 4].Value = desc;//db_desc
+                }
+            }
         }
 
         public override void LoadDetail()
@@ -82,31 +102,6 @@ namespace CKGen.Controls
                     App.Instance.SelectedNode.Text = tbInfo.RawName;
                     App.Instance.SelectedNode.ForeColor = Color.Black;
                 }
-            }
-        }
-
-        public void Save()
-        {
-            if (DialogResult.OK == MessageBox.Show("是否将新的说明同时保存到本地和数据库？", "保存提示", MessageBoxButtons.OKCancel))
-            {
-                DatabaseSchemaSetting.SaveDesc(App.Instance.Database);
-
-                this.lblTableLocalDesc.Text = this.txtTableNewDesc.Text;
-                this.lblTableDBDesc.Text = this.txtTableNewDesc.Text;
-                this.txtTableNewDesc.Text = "";
-
-                foreach (DataGridViewRow row in dgvSchema.Rows)
-                {
-                    string desc = row.Cells[row.Cells.Count - 2].Value as string;
-                    if (!string.IsNullOrEmpty(desc))
-                    {
-                        row.Cells[row.Cells.Count - 2].Value = "";//new_desc
-                        row.Cells[row.Cells.Count - 3].Value = desc;//local_desc
-                        row.Cells[row.Cells.Count - 4].Value = desc;//db_desc
-                    }
-                }
-
-                MessageBox.Show("保存成功。");
             }
         }
 

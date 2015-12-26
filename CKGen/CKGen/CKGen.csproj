@@ -65,12 +65,21 @@
     <Compile Include="Controls\ProcedureDetail.Designer.cs">
       <DependentUpon>ProcedureDetail.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\SchemaTreeView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\SchemaTreeView.Designer.cs">
+      <DependentUpon>SchemaTreeView.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\ViewDetail.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Controls\ViewDetail.Designer.cs">
       <DependentUpon>ViewDetail.cs</DependentUpon>
     </Compile>
+    <Compile Include="Events\SaveDescToDbEvent.cs" />
+    <Compile Include="Events\ShowCodeEvent.cs" />
+    <Compile Include="Events\ShowSQLQueryEvent.cs" />
     <Compile Include="FrmLoading.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -125,11 +134,11 @@
     <Compile Include="Setting\DatabaseSchemaSetting.cs" />
     <Compile Include="SQLHelper.cs" />
     <Compile Include="App.cs" />
-    <Compile Include="UCCodeShow.cs">
+    <Compile Include="Controls\CodeView.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="UCCodeShow.Designer.cs">
-      <DependentUpon>UCCodeShow.cs</DependentUpon>
+    <Compile Include="Controls\CodeView.Designer.cs">
+      <DependentUpon>CodeView.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\TableDetail.cs">
       <SubType>UserControl</SubType>
@@ -137,12 +146,15 @@
     <Compile Include="Controls\TableDetail.Designer.cs">
       <DependentUpon>TableDetail.cs</DependentUpon>
     </Compile>
-    <Compile Include="UCQuery.cs">
+    <Compile Include="Controls\SQLQueryView.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="UCQuery.Designer.cs">
-      <DependentUpon>UCQuery.cs</DependentUpon>
+    <Compile Include="Controls\SQLQueryView.Designer.cs">
+      <DependentUpon>SQLQueryView.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Controls\SchemaTreeView.resx">
+      <DependentUpon>SchemaTreeView.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
@@ -171,14 +183,14 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="UCCodeShow.resx">
-      <DependentUpon>UCCodeShow.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\CodeView.resx">
+      <DependentUpon>CodeView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\TableDetail.resx">
       <DependentUpon>TableDetail.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UCQuery.resx">
-      <DependentUpon>UCQuery.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\SQLQueryView.resx">
+      <DependentUpon>SQLQueryView.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.config" />
     <None Include="packages.config" />

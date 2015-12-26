@@ -1,6 +1,6 @@
-﻿namespace CKGen
+﻿namespace CKGen.Controls
 {
-    partial class UCCodeShow
+    partial class CodeView
     {
         /// <summary> 
         /// 必需的设计器变量。

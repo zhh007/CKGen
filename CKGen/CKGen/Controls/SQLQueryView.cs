@@ -8,14 +8,14 @@ using System.Text;
 using System.Windows.Forms;
 using System.Data.SqlClient;
 
-namespace CKGen
+namespace CKGen.Controls
 {
-    public partial class UCQuery : UserControl
+    public partial class SQLQueryView : UserControl
     {
         private DataGridView dgv = null;
         private TextBox txtMsg = null;
 
-        public UCQuery()
+        public SQLQueryView()
         {
             InitializeComponent();
         }

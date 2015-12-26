@@ -8,12 +8,12 @@ using System.Text;
 using System.Windows.Forms;
 using ScintillaNET;
 
-namespace CKGen
+namespace CKGen.Controls
 {
-    public partial class UCCodeShow : UserControl
+    public partial class CodeView : UserControl
     {
         private ScintillaNET.Scintilla scintilla1;
-        public UCCodeShow()
+        public CodeView()
         {
             InitializeComponent();
         }

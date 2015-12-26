@@ -7,12 +7,14 @@ using CKGen.DBLoader;
 using System.Windows.Forms;
 using CKGen.DBSchema;
 using System.ComponentModel.Composition;
+using CKGen.Base;
 
 namespace CKGen
 {
     public class App
     {
         private TreeNode _selectNode = null;
+        public IEventAggregator Events = new EventAggregator();
         private static App instance = new App();
 
         private App()

@@ -36,7 +36,6 @@
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.tabControl2 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.tvSchema = new System.Windows.Forms.TreeView();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.tbTemp = new System.Windows.Forms.TreeView();
@@ -47,7 +46,6 @@
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             this.tabControl2.SuspendLayout();
-            this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -113,7 +111,6 @@
             // 
             // tabPage1
             // 
-            this.tabPage1.Controls.Add(this.tvSchema);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
@@ -121,20 +118,6 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "数据";
             this.tabPage1.UseVisualStyleBackColor = true;
-            // 
-            // tvSchema
-            // 
-            this.tvSchema.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tvSchema.HideSelection = false;
-            this.tvSchema.ImageIndex = 0;
-            this.tvSchema.ImageList = this.imageList1;
-            this.tvSchema.Location = new System.Drawing.Point(3, 3);
-            this.tvSchema.Name = "tvSchema";
-            this.tvSchema.SelectedImageIndex = 0;
-            this.tvSchema.Size = new System.Drawing.Size(186, 456);
-            this.tvSchema.TabIndex = 0;
-            this.tvSchema.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.tvSchema_AfterSelect);
-            this.tvSchema.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.tvSchema_NodeMouseClick);
             // 
             // imageList1
             // 
@@ -195,7 +178,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
             this.tabControl2.ResumeLayout(false);
-            this.tabPage1.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -207,7 +189,6 @@
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.ToolStripButton tsbtnSaveSchema;
-        private System.Windows.Forms.TreeView tvSchema;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.ToolStripButton tsBtnReloadSchema;
         private System.Windows.Forms.TabControl tabControl2;

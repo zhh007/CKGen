@@ -1,6 +1,6 @@
-﻿namespace CKGen
+﻿namespace CKGen.Controls
 {
-    partial class UCQuery
+    partial class SQLQueryView
     {
         /// <summary> 
         /// 必需的设计器变量。
