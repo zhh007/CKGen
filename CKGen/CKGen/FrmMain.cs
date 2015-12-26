@@ -14,6 +14,7 @@ using System.Threading;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
 using CKGen.Temp.Adonet;
+using CKGen.Controls;
 
 namespace CKGen
 {
@@ -47,11 +48,7 @@ namespace CKGen
             this.DB = SystemConfig.Instance.Database;
 
             //详细信息
-            this.DetailPage = new UCDetail();
-            this.DetailPage.Dock = DockStyle.Fill;
-            TabPage tab1 = new TabPage("详细信息");
-            tab1.Controls.Add(this.DetailPage);
-            this.tabControl1.TabPages.Add(tab1);
+            this.tabControl1.TabPages.Add(new DetailTabPage());
 
             //
             InitTree();
@@ -270,12 +267,7 @@ namespace CKGen
 
         private void tvSchema_AfterSelect(object sender, TreeViewEventArgs e)
         {
-            if (e.Node.Tag is ITableInfo)
-            {
-                ITableInfo tbInfo = e.Node.Tag as ITableInfo;
-                SystemConfig.Instance.SelectedNode = e.Node;
-                SystemConfig.Instance.CurrentTableName = tbInfo.RawName;
-            }
+            SystemConfig.Instance.SelectedNode = e.Node;
         }
 
         /// <summary>

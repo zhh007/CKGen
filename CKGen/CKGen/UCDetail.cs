@@ -7,22 +7,18 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using CKGen.DBSchema;
+using CKGen.Controls;
 
 namespace CKGen
 {
-    public partial class UCDetail : UserControl
+    public partial class UCDetail : DetailControlBase
     {
         public UCDetail()
         {
             InitializeComponent();
         }
 
-        private void UCSchema_Load(object sender, EventArgs e)
-        {
-            SystemConfig.Instance.PropertyChanged += Instance_PropertyChanged;
-        }
-
-        private void Instance_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        public override void LoadDetail()
         {
             lblTableName.Text = "";
             lblTableDBDesc.Text = "";//db_desc

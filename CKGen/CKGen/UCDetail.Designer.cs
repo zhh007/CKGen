@@ -233,7 +233,6 @@
             this.Controls.Add(this.dgvSchema);
             this.Name = "UCDetail";
             this.Size = new System.Drawing.Size(834, 493);
-            this.Load += new System.EventHandler(this.UCSchema_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvSchema)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

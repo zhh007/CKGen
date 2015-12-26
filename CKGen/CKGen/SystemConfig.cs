@@ -30,20 +30,29 @@ namespace CKGen
         public static ServerInfo SrvInfo = null;
         public static string DBName = "";
         private string _currentTableName = "";
-        public TreeNode SelectedNode { get; set; }
+        private TreeNode _selectNode = null;
+        public TreeNode SelectedNode
+        {
+            get { return _selectNode; }
+            set
+            {
+                _selectNode = value;
+                InvokePropertyChanged(new PropertyChangedEventArgs(""));
+            }
+        }
 
         [Export("ModuleName")]
         public IDatabaseInfo Database { get; set; }
 
-        public string CurrentTableName
-        {
-            get { return _currentTableName; }
-            set
-            {
-                _currentTableName = value;
-                InvokePropertyChanged(new PropertyChangedEventArgs("CurrentTableName"));
-            }
-        }
+        //public string CurrentTableName
+        //{
+        //    get { return _currentTableName; }
+        //    set
+        //    {
+        //        _currentTableName = value;
+        //        InvokePropertyChanged(new PropertyChangedEventArgs("CurrentTableName"));
+        //    }
+        //}
 
         #region Implementation of INotifyPropertyChanged
 
