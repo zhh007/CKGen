@@ -119,10 +119,10 @@
     <Compile Include="UCCodeShow.Designer.cs">
       <DependentUpon>UCCodeShow.cs</DependentUpon>
     </Compile>
-    <Compile Include="UCDetail.cs">
+    <Compile Include="Controls\UCDetail.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="UCDetail.Designer.cs">
+    <Compile Include="Controls\UCDetail.Designer.cs">
       <DependentUpon>UCDetail.cs</DependentUpon>
     </Compile>
     <Compile Include="UCQuery.cs">
@@ -162,7 +162,7 @@
     <EmbeddedResource Include="UCCodeShow.resx">
       <DependentUpon>UCCodeShow.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UCDetail.resx">
+    <EmbeddedResource Include="Controls\UCDetail.resx">
       <DependentUpon>UCDetail.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UCQuery.resx">
