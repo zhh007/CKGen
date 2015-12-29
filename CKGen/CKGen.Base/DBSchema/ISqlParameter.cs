@@ -46,5 +46,7 @@ namespace CKGen.DBSchema
         /// 说明
         /// </summary>
         string Description { get; set; }
+
+        string this[string key] { get; set; }
     }
 }

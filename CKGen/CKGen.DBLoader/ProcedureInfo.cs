@@ -23,6 +23,7 @@ namespace CKGen.DBLoader
         private IDatabaseInfo _database;
         private SchemaLoader loader = null;
         private bool _paraLoaded = false;
+        private Dictionary<string, string> _attr = new Dictionary<string, string>();
 
         public string Name
         {
@@ -88,6 +89,22 @@ namespace CKGen.DBLoader
             }
 
             _paraLoaded = true;
+        }
+
+        public string this[string key]
+        {
+            get
+            {
+                if (this._attr.ContainsKey(key))
+                {
+                    return this._attr[key];
+                }
+                return null;
+            }
+            set
+            {
+                this._attr[key] = value;
+            }
         }
     }
 }

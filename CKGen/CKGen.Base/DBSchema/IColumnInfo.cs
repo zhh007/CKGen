@@ -83,6 +83,6 @@ namespace CKGen.DBSchema
 
         bool HasStringLength { get; }
 
-        Dictionary<string, string> Attributes { get; set; }
+        string this[string key] { get; set; }
     }
 }

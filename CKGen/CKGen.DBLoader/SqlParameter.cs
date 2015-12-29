@@ -8,6 +8,8 @@ namespace CKGen.DBLoader
 {
     public class SqlParameter : ISqlParameter
     {
+        private Dictionary<string, string> _attr = new Dictionary<string, string>();
+
         public string Name { get; set; }
         /// <summary>
         /// nvarchar
@@ -47,5 +49,21 @@ namespace CKGen.DBLoader
         /// 说明
         /// </summary>
         public string Description { get; set; }
+
+        public string this[string key]
+        {
+            get
+            {
+                if (this._attr.ContainsKey(key))
+                {
+                    return this._attr[key];
+                }
+                return null;
+            }
+            set
+            {
+                this._attr[key] = value;
+            }
+        }
     }
 }

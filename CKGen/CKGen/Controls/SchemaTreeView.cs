@@ -46,9 +46,9 @@ namespace CKGen.Controls
                 node.Tag = tbInfo;
 
                 var colHasNewDesc = (from p in tbInfo.Columns
-                                     where p.Attributes.ContainsKey("new_desc") && !string.IsNullOrEmpty(p.Attributes["new_desc"])
+                                     where !string.IsNullOrEmpty(p["new_desc"])
                                      select p).Count() > 0;
-                if (colHasNewDesc || (tbInfo.Attributes.ContainsKey("new_desc") && !string.IsNullOrEmpty(tbInfo.Attributes["new_desc"])))
+                if (colHasNewDesc || !string.IsNullOrEmpty(tbInfo["new_desc"]))
                 {
                     node.Text = tbInfo.RawName + "(*)";
                     node.ForeColor = Color.Red;
@@ -75,9 +75,9 @@ namespace CKGen.Controls
                 node.Tag = vwInfo;
 
                 var colHasNewDesc = (from p in vwInfo.Columns
-                                     where p.Attributes.ContainsKey("new_desc") && !string.IsNullOrEmpty(p.Attributes["new_desc"])
+                                     where !string.IsNullOrEmpty(p["new_desc"])
                                      select p).Count() > 0;
-                if (colHasNewDesc || (vwInfo.Attributes.ContainsKey("new_desc") && !string.IsNullOrEmpty(vwInfo.Attributes["new_desc"])))
+                if (colHasNewDesc || !string.IsNullOrEmpty(vwInfo["new_desc"]))
                 {
                     node.Text = vwInfo.RawName + "(*)";
                     node.ForeColor = Color.Red;

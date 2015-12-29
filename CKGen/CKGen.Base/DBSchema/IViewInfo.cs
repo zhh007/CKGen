@@ -47,10 +47,10 @@ namespace CKGen.DBSchema
         /// </summary>
         List<IColumnInfo> Columns { get; set; }
 
-        Dictionary<string, string> Attributes { get; set; }
-
         IDatabaseInfo Database { get; }
 
         void LoadColumns();
+
+        string this[string key] { get; set; }
     }
 }

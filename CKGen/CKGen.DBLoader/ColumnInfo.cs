@@ -194,10 +194,20 @@ namespace CKGen.DBLoader
             }
         }
 
-        public Dictionary<string, string> Attributes
+        public string this[string key]
         {
-            get { return _attr; }
-            set { _attr = value; }
+            get
+            {
+                if (this._attr.ContainsKey(key))
+                {
+                    return this._attr[key];
+                }
+                return null;
+            }
+            set
+            {
+                this._attr[key] = value;
+            }
         }
     }
 }

@@ -71,13 +71,13 @@ namespace CKGen
                         new_desc = db_desc;
                     }
 
-                    tableInfo.Attributes["local_desc"] = local_desc;
-                    tableInfo.Attributes["new_desc"] = new_desc;
+                    tableInfo["local_desc"] = local_desc;
+                    tableInfo["new_desc"] = new_desc;
                 }
                 else
                 {//new table
-                    tableInfo.Attributes["local_desc"] = tableInfo.Description;
-                    tableInfo.Attributes["new_desc"] = "";
+                    tableInfo["local_desc"] = tableInfo.Description;
+                    tableInfo["new_desc"] = "";
 
                     tableNode = new XElement("table");
                     tableNode.Add(new XAttribute("rawname", tableInfo.RawName));
@@ -114,13 +114,13 @@ namespace CKGen
                     {
                         new_desc = db_desc;
                     }
-                    col.Attributes["local_desc"] = local_desc;
-                    col.Attributes["new_desc"] = new_desc;
+                    col["local_desc"] = local_desc;
+                    col["new_desc"] = new_desc;
                 }
                 else
                 {
-                    col.Attributes["local_desc"] = col.Description;
-                    col.Attributes["new_desc"] = "";
+                    col["local_desc"] = col.Description;
+                    col["new_desc"] = "";
                     colNode = new XElement("column");
                     colNode.SetAttributeValue("desc", col.Description);
                 }
@@ -166,12 +166,12 @@ namespace CKGen
                 elTable.Add(new XAttribute("schema", tb.Schema));
 
                 string table_desc = tb.Description;
-                if (!string.IsNullOrEmpty(tb.Attributes["new_desc"]))
+                if (!string.IsNullOrEmpty(tb["new_desc"]))
                 {
-                    table_desc = tb.Attributes["new_desc"];
+                    table_desc = tb["new_desc"];
                     tb.Description = table_desc;
-                    tb.Attributes["local_desc"] = table_desc;
-                    tb.Attributes["new_desc"] = "";
+                    tb["local_desc"] = table_desc;
+                    tb["new_desc"] = "";
 
                     SQLHelper.SetTableDesc(App.Instance.DBLink.ConnectionStringForExecute, tb.Schema, tb.RawName, table_desc);
                 }
@@ -181,12 +181,12 @@ namespace CKGen
                 {
                     string desc = col.Description;
 
-                    if (!string.IsNullOrEmpty(col.Attributes["new_desc"]))
+                    if (!string.IsNullOrEmpty(col["new_desc"]))
                     {
-                        desc = col.Attributes["new_desc"];
+                        desc = col["new_desc"];
                         col.Description = desc;
-                        col.Attributes["local_desc"] = desc;
-                        col.Attributes["new_desc"] = "";
+                        col["local_desc"] = desc;
+                        col["new_desc"] = "";
 
                         SQLHelper.SetColumnDesc(App.Instance.DBLink.ConnectionStringForExecute, tb.Schema, tb.RawName, col.RawName, desc);
                     }

@@ -131,12 +131,6 @@ namespace CKGen.DBLoader
             }
         }
 
-        public Dictionary<string, string> Attributes
-        {
-            get { return _attr; }
-            set { _attr = value; }
-        }
-
         public IDatabaseInfo Database
         {
             get { return _database; }
@@ -206,6 +200,22 @@ namespace CKGen.DBLoader
             }
 
             _columnsLoaded = true;
+        }
+
+        public string this[string key]
+        {
+            get
+            {
+                if(this._attr.ContainsKey(key))
+                {
+                    return this._attr[key];
+                }
+                return null;
+            }
+            set
+            {
+                this._attr[key] = value;
+            }
         }
     }
 }
