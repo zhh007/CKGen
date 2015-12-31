@@ -30,6 +30,8 @@ namespace CKGen.Controls
 
             if(App.Instance.SelectedNode.Tag is ITableInfo)
             {
+                var tbInfo = App.Instance.SelectedNode.Tag as ITableInfo;
+                this.Text = tbInfo.RawName;
                 if (!(innerControl is TableDetail))
                 {
                     this.Controls.Clear();
@@ -41,6 +43,8 @@ namespace CKGen.Controls
             }
             else if(App.Instance.SelectedNode.Tag is IViewInfo)
             {
+                var vwInfo = App.Instance.SelectedNode.Tag as IViewInfo;
+                this.Text = vwInfo.RawName;
                 if (!(innerControl is ViewDetail))
                 {
                     this.Controls.Clear();
@@ -52,6 +56,8 @@ namespace CKGen.Controls
             }
             else if(App.Instance.SelectedNode.Tag is IProcedureInfo)
             {
+                var procInfo = App.Instance.SelectedNode.Tag as IProcedureInfo;
+                this.Text = procInfo.Name;
                 if (!(innerControl is ProcedureDetail))
                 {
                     this.Controls.Clear();
