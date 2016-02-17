@@ -27,7 +27,7 @@ public void Save(@(Model.PascalName) entity)
         SqlCommand cmd = new SqlCommand(sql, conn);
 @foreach(var column in Model.Columns)
 {
-    if (column.Identity || column.Computed)
+    if ((column.Identity && !column.IsPrimaryKey) || column.Computed)
     {
         continue;
     }

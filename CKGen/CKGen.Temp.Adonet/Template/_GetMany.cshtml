@@ -3,9 +3,9 @@
 @using CKGen;
 @inherits TemplateBase<ITableInfo>
 
-private List<SampleInt> GetMany(SqlDataReader sdr)
+private List<@(Model.PascalName)> GetMany(SqlDataReader sdr)
 {
-    List<SampleInt> list = new List<SampleInt>();
+    List<@(Model.PascalName)> list = new List<@(Model.PascalName)>();
 @foreach (var column in Model.Columns)
 {
 <text>    int @(column.CamelName)Ordinal = sdr.GetOrdinal("@(column.RawName)");</text>
