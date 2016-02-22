@@ -52,7 +52,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CodeGen.cs" />
     <Compile Include="Controls\DetailTabPage.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -87,10 +86,6 @@
       <DependentUpon>FrmLoading.cs</DependentUpon>
     </Compile>
     <Compile Include="Services\CodeGenService.cs" />
-    <Compile Include="DatabaseLink.cs" />
-    <Compile Include="DatabaseType.cs" />
-    <Compile Include="EnumDescriptionAttribute.cs" />
-    <Compile Include="EnumHelper.cs" />
     <Compile Include="FixedTabControl.cs">
       <SubType>component</SubType>
     </Compile>

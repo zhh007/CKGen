@@ -124,10 +124,10 @@ namespace ConsoleApp
 
         private static void BuildProj()
         {
-            string dbConnStr = @"Provider=SQLOLEDB.1;Persist Security Info=False;User ID=sa;Password=pass@word1;Initial Catalog=DBTest;Data Source=.\SQL2008R2";
-            string dbname = "DBTest";
-            string tableName = "SampleInt";
-            string connStr2 = @"Data Source=.\SQL2008R2;Initial Catalog=DBTest;User ID=sa;Password=pass@word1;Persist Security Info=False;";
+            string dbConnStr = @"Provider=SQLOLEDB.1;Persist Security Info=False;User ID=sa;Password=pass@word1;Initial Catalog=NGB_ONLINE;Data Source=192.168.0.98";
+            string dbname = "NGB_ONLINE";
+            string tableName = "CoursePlan";
+            string connStr2 = @"Data Source=192.168.0.98;Initial Catalog=NGB_ONLINE;User ID=sa;Password=pass@word1;Persist Security Info=False;";
             ServerInfo serverInfo = new ServerInfo(dbConnStr, dbname);
             IDatabaseInfo database = serverInfo.GetDatabase(dbname);
 

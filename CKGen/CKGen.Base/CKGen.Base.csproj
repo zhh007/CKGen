@@ -40,7 +40,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CompositePresentationEvent.cs" />
+    <Compile Include="DatabaseLink.cs" />
+    <Compile Include="DatabaseType.cs" />
+    <Compile Include="EnumDescriptionAttribute.cs" />
+    <Compile Include="EnumHelper.cs" />
+    <Compile Include="Events\CompositePresentationEvent.cs" />
     <Compile Include="DBSchema\IColumnInfo.cs" />
     <Compile Include="DBSchema\IDatabaseInfo.cs" />
     <Compile Include="DBSchema\ISqlParameter.cs" />
@@ -49,14 +53,14 @@
     <Compile Include="DBSchema\ITableInfo.cs" />
     <Compile Include="DBSchema\IViewInfo.cs" />
     <Compile Include="DbTargetConvert.cs" />
-    <Compile Include="EventAggregator.cs" />
-    <Compile Include="EventBase.cs" />
+    <Compile Include="Events\EventAggregator.cs" />
+    <Compile Include="Events\EventBase.cs" />
     <Compile Include="Extensions.cs" />
-    <Compile Include="ICodeGenService.cs" />
-    <Compile Include="IEventAggregator.cs" />
+    <Compile Include="Services\ICodeGenService.cs" />
+    <Compile Include="Events\IEventAggregator.cs" />
     <Compile Include="LanguageConvert.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ServiceLocator.cs" />
+    <Compile Include="Services\ServiceLocator.cs" />
     <Compile Include="SettingStore.cs" />
     <Compile Include="StringHelper.cs" />
     <Compile Include="Util.cs" />
