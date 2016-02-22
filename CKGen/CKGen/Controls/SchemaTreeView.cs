@@ -244,5 +244,10 @@ namespace CKGen.Controls
                 UpdateNode(item);
             }
         }
+
+        private void tvSchema_ItemDrag(object sender, ItemDragEventArgs e)
+        {
+            DoDragDrop(e.Item, DragDropEffects.Copy);
+        }
     }
 }

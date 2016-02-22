@@ -45,6 +45,7 @@
             this.tvSchema.SelectedImageIndex = 0;
             this.tvSchema.Size = new System.Drawing.Size(150, 150);
             this.tvSchema.TabIndex = 0;
+            this.tvSchema.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.tvSchema_ItemDrag);
             this.tvSchema.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.tvSchema_AfterSelect);
             this.tvSchema.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.tvSchema_NodeMouseClick);
             // 
