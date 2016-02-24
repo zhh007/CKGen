@@ -28,12 +28,22 @@ namespace CKGen
             this.IsWindowsLogin = isWinLogin;
         }
 
+        public DatabaseLink(DatabaseType type, string srv, string dbname, string uid, string pwd)
+        {
+            this.Type = type;
+            this.ServerName = srv;
+            this.DatabaseName = dbname;
+            this.LoginName = uid;
+            this.LoginPassword = pwd;
+            this.IsWindowsLogin = false;
+        }
+
         public void SetDatabaseName(string dbName)
         {
             this.DatabaseName = dbName;
         }
 
-        public string ConnectionString
+        public string SchemaConnectionString
         {
             get
             {
@@ -60,7 +70,7 @@ namespace CKGen
             }
         }
 
-        public string ConnectionStringForExecute
+        public string ConnectionString
         {
             get
             {

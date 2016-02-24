@@ -190,7 +190,7 @@ namespace CKGen
         {
             try
             {
-                this.SrvInfo = new ServerInfo(this.DBLink.ConnectionString, this.DBLink.ServerName);
+                this.SrvInfo = new ServerInfo(this.DBLink);
                 connected = this.SrvInfo.Connect();
                 if (!connected)
                 {

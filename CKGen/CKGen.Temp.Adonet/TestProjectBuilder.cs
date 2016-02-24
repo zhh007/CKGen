@@ -11,7 +11,7 @@ namespace CKGen.Temp.Adonet
     public class TestProjectBuilder
     {
         private readonly ICodeGenService codeGen = ServiceLocator.Instance.GetService<ICodeGenService>();
-        public string Build(ITableInfo info, string connStr)
+        public string Build(List<ITableInfo> tables, string connStr, string projName)
         {
             Guid testProjID = Guid.NewGuid();
 
@@ -21,9 +21,13 @@ namespace CKGen.Temp.Adonet
             TestProjectModel model = new TestProjectModel();
             model.ProjectGuid = testProjID.ToString().ToUpper();
             model.ProjectGuidLower = testProjID.ToString().ToLower();
-            model.ProjectName = "TestApp";
-            model.ModelClassName = info.PascalName;
+            model.ProjectName = projName;
             model.ConnectionString = connStr;
+            foreach (var tinfo in tables)
+            {
+                model.Files.Add(string.Format(@"Model\{0}.cs", tinfo.PascalName));
+                model.Files.Add(string.Format(@"DAL\{0}Access.cs", tinfo.PascalName));
+            }
 
             //sln
             string slnFilePath = Path.Combine(root, string.Format("{0}.sln", model.ProjectName));
@@ -58,16 +62,29 @@ namespace CKGen.Temp.Adonet
             string configContent = codeGen.Gen(Comm.GetProjTemplete("appconfig.cshtml"), model);
             File.WriteAllText(configFilePath, configContent);
 
-            //model.cs
-            string modelFilePath = Path.Combine(testappFolder, model.ModelClassName + ".cs");
-            string modelContent = codeGen.Gen(Comm.GetTemplete("Model.cshtml"), info);
-            File.WriteAllText(modelFilePath, modelContent);
+            foreach (var tinfo in tables)
+            {
+                //model.cs
+                string modelFilePath = Path.Combine(testappFolder, string.Format(@"Model\{0}.cs", tinfo.PascalName));
+                string modelContent = codeGen.Gen(Comm.GetTemplete("Model.cshtml"), tinfo);
+                var dir = Directory.GetParent(modelFilePath);
+                if(!dir.Exists)
+                {
+                    dir.Create();
+                }
+                File.WriteAllText(modelFilePath, modelContent.Replace("'namespace'", projName));
 
-            //access.cs
-            TableDataAccessGen accessgen = new TableDataAccessGen();
-            string accessFilePath = Path.Combine(testappFolder, model.ModelClassName + "Access.cs");
-            string accessContent = accessgen.GenDataAccessCode("TestApp", info);
-            File.WriteAllText(accessFilePath, accessContent.Replace("'conn_name'", "Program.TestConnection"));
+                //access.cs
+                TableDataAccessGen accessgen = new TableDataAccessGen();
+                string accessFilePath = Path.Combine(testappFolder, string.Format(@"DAL\{0}Access.cs", tinfo.PascalName));
+                string accessContent = accessgen.GenDataAccessCode(projName, tinfo);
+                dir = Directory.GetParent(accessFilePath);
+                if (!dir.Exists)
+                {
+                    dir.Create();
+                }
+                File.WriteAllText(accessFilePath, accessContent.Replace("'conn_name'", "Program.TestConnection"));
+            }
 
             return root;
         }

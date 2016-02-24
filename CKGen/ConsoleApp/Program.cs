@@ -55,9 +55,10 @@ namespace ConsoleApp
 
         private static void BuildDBDoc()
         {
-            string dbConnStr = @"Provider=SQLOLEDB.1;Persist Security Info=False;User ID=sa;Password=pass@word1;Initial Catalog=ENTERPRISES_SUPERWORKFLOW;Data Source=.\SQL2008R2";
+            //string dbConnStr = @"Provider=SQLOLEDB.1;Persist Security Info=False;User ID=sa;Password=pass@word1;Initial Catalog=ENTERPRISES_SUPERWORKFLOW;Data Source=.\SQL2008R2";
             string dbname = "ENTERPRISES_SUPERWORKFLOW";
-            ServerInfo serverInfo = new ServerInfo(dbConnStr, dbname);
+            DatabaseLink link = new DatabaseLink(DatabaseType.MSSQLServer, @".\SQL2008R2", dbname, "sa", "pass@word1");
+            ServerInfo serverInfo = new ServerInfo(link);
             IDatabaseInfo database = serverInfo.GetDatabase(dbname);
 
             DBDocBuilder builder = new DBDocBuilder(database, dbname);
@@ -70,14 +71,15 @@ namespace ConsoleApp
 
             var watch1 = Stopwatch.StartNew();
 
-            string dbConnStr = @"Provider=SQLOLEDB.1;Persist Security Info=False;User ID=sa;Password=pass@word1;Initial Catalog=ENTERPRISES_SUPERWORKFLOW;Data Source=.\SQL2008R2";
+            //string dbConnStr = @"Provider=SQLOLEDB.1;Persist Security Info=False;User ID=sa;Password=pass@word1;Initial Catalog=ENTERPRISES_SUPERWORKFLOW;Data Source=.\SQL2008R2";
 
             string solutionName = "CK";
             string dbname = "ENTERPRISES_SUPERWORKFLOW";
-            ServerInfo serverInfo = new ServerInfo(dbConnStr, dbname);
+            DatabaseLink link = new DatabaseLink(DatabaseType.MSSQLServer, @".\SQL2008R2", dbname, "sa", "pass@word1");
+            ServerInfo serverInfo = new ServerInfo(link);
             IDatabaseInfo database = serverInfo.GetDatabase(dbname);
 
-            SolutionBuilder sb = new SolutionBuilder(database, solutionName, dbname, dbConnStr);
+            SolutionBuilder sb = new SolutionBuilder(database, solutionName, dbname, link.ConnectionString);
             string errorStr = "";
             if (!sb.Build(ref errorStr))
             {
@@ -92,10 +94,11 @@ namespace ConsoleApp
 
         private static void BuildTableAccess()
         {
-            string dbConnStr = @"Provider=SQLOLEDB.1;Persist Security Info=False;User ID=sa;Password=pass@word1;Initial Catalog=DBTest;Data Source=.\SQL2008R2";
+            //string dbConnStr = @"Provider=SQLOLEDB.1;Persist Security Info=False;User ID=sa;Password=pass@word1;Initial Catalog=DBTest;Data Source=.\SQL2008R2";
             string dbname = "DBTest";
             string tableName = "df_TestUser";
-            ServerInfo serverInfo = new ServerInfo(dbConnStr, dbname);
+            DatabaseLink link = new DatabaseLink(DatabaseType.MSSQLServer, @".\SQL2008R2", dbname, "sa", "pass@word1");
+            ServerInfo serverInfo = new ServerInfo(link);
             IDatabaseInfo database = serverInfo.GetDatabase(dbname);
 
             ITableInfo tbInfo = null;
@@ -124,36 +127,37 @@ namespace ConsoleApp
 
         private static void BuildProj()
         {
-            string dbConnStr = @"Provider=SQLOLEDB.1;Persist Security Info=False;User ID=sa;Password=pass@word1;Initial Catalog=NGB_ONLINE;Data Source=192.168.0.98";
+            //string dbConnStr = @"Provider=SQLOLEDB.1;Persist Security Info=False;User ID=sa;Password=pass@word1;Initial Catalog=NGB_ONLINE;Data Source=192.168.0.98";
             string dbname = "NGB_ONLINE";
             string tableName = "CoursePlan";
-            string connStr2 = @"Data Source=192.168.0.98;Initial Catalog=NGB_ONLINE;User ID=sa;Password=pass@word1;Persist Security Info=False;";
-            ServerInfo serverInfo = new ServerInfo(dbConnStr, dbname);
+            //string connStr2 = @"Data Source=192.168.0.98;Initial Catalog=NGB_ONLINE;User ID=sa;Password=pass@word1;Persist Security Info=False;";
+            DatabaseLink link = new DatabaseLink(DatabaseType.MSSQLServer, @"192.168.0.98", dbname, "sa", "pass@word1");
+            ServerInfo serverInfo = new ServerInfo(link);
             IDatabaseInfo database = serverInfo.GetDatabase(dbname);
 
-            ITableInfo tbInfo = null;
-
+            List<ITableInfo> selTables = new List<ITableInfo>();
             foreach (ITableInfo tInfo in database.Tables)
             {
                 if (tInfo.LowerName == tableName.ToLower())
                 {
-                    tbInfo = tInfo;
+                    selTables.Add(tInfo);
                     break;
                 }
             }
 
             TestProjectBuilder builder = new TestProjectBuilder();
-            string folder = builder.Build(tbInfo, connStr2);
+            string folder = builder.Build(selTables, link.ConnectionString, "TestApp");
             Process.Start(folder);
         }
 
         private static void BuildModel(string tableName)
         {
-            string dbConnStr = @"Provider=SQLOLEDB.1;Persist Security Info=False;User ID=sa;Password=pass@word1;Initial Catalog=DBTest;Data Source=.\SQL2008R2";
+            //string dbConnStr = @"Provider=SQLOLEDB.1;Persist Security Info=False;User ID=sa;Password=pass@word1;Initial Catalog=DBTest;Data Source=.\SQL2008R2";
             string dbname = "DBTest";
             //string tableName = "SampleInt";
             //string connStr2 = @"Data Source=.\SQL2008R2;Initial Catalog=DBTest;User ID=sa;Password=pass@word1;Persist Security Info=False;";
-            ServerInfo serverInfo = new ServerInfo(dbConnStr, dbname);
+            DatabaseLink link = new DatabaseLink(DatabaseType.MSSQLServer, @".\SQL2008R2", dbname, "sa", "pass@word1");
+            ServerInfo serverInfo = new ServerInfo(link);
             IDatabaseInfo database = serverInfo.GetDatabase(dbname);
 
             ITableInfo tbInfo = null;

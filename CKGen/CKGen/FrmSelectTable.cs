@@ -132,7 +132,7 @@ namespace CKGen
                 lbTables.DisplayMember = "RawName";
                 lbTables.ValueMember = "RawName";
                 SetColumnWith(lbTables);
-                
+
             }
         }
 
@@ -140,8 +140,8 @@ namespace CKGen
         {
             try
             {
-                ServerInfo serverInfo = new ServerInfo(this.DBLink.ConnectionString, this.DBLink.ServerName);
-                serverInfo.LoadDatabases();                
+                ServerInfo serverInfo = new ServerInfo(this.DBLink);
+                serverInfo.LoadDatabases();
                 this.SrvInfo = serverInfo;
             }
             catch (Exception ex)

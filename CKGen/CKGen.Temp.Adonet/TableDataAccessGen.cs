@@ -20,8 +20,10 @@ namespace CKGen.Temp.Adonet
             sb.AppendLine("using System.Data.SqlClient;");
             sb.AppendLine("using System.Linq;");
             sb.AppendLine("using System.Text;");
+            sb.AppendFormat("using {0};{1}", nameSpace, Environment.NewLine);
+            sb.AppendFormat("using {0}.Model;{1}", nameSpace, Environment.NewLine);
             sb.AppendLine();
-            sb.AppendLine("namespace " + nameSpace);
+            sb.AppendFormat("namespace {0}.DAL{1}", nameSpace, Environment.NewLine);
             sb.AppendLine("{");
             sb.AppendFormat("    public class {0}Access{1}", tbInfo.PascalName, Environment.NewLine);
             sb.AppendLine("    {");

@@ -173,7 +173,7 @@ namespace CKGen
                     tb["local_desc"] = table_desc;
                     tb["new_desc"] = "";
 
-                    SQLHelper.SetTableDesc(App.Instance.DBLink.ConnectionStringForExecute, tb.Schema, tb.RawName, table_desc);
+                    SQLHelper.SetTableDesc(App.Instance.DBLink.ConnectionString, tb.Schema, tb.RawName, table_desc);
                 }
                 elTable.Add(new XAttribute("desc", table_desc));
 
@@ -188,7 +188,7 @@ namespace CKGen
                         col["local_desc"] = desc;
                         col["new_desc"] = "";
 
-                        SQLHelper.SetColumnDesc(App.Instance.DBLink.ConnectionStringForExecute, tb.Schema, tb.RawName, col.RawName, desc);
+                        SQLHelper.SetColumnDesc(App.Instance.DBLink.ConnectionString, tb.Schema, tb.RawName, col.RawName, desc);
                     }
                     XElement elColumn = new XElement("column");
                     elColumn.Add(new XAttribute("rawname", col.RawName));

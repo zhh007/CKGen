@@ -16,7 +16,12 @@ namespace CKGen.Temp.Adonet
         /// 小写
         /// </summary>
         public string ProjectGuidLower { get; set; }
-        public string ModelClassName { get; set; }
+        //public string ModelClassName { get; set; }
         public string ConnectionString { get; set; }
+        public List<string> Files { get; set; }
+        public TestProjectModel()
+        {
+            this.Files = new List<string>();
+        }
     }
 }

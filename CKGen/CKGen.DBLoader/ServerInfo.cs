@@ -25,6 +25,8 @@ namespace CKGen.DBLoader
         private SchemaLoader loader = null;
         private bool _databasesLoaded = false;
         private bool _hasConnected = false;
+        private DatabaseLink _link = null;
+        private string _schemaConnection;
 
         /// <summary>
         /// 服务器名称
@@ -61,13 +63,24 @@ namespace CKGen.DBLoader
             get { return this.loader; }
         }
 
-        public ServerInfo(string conn, string name)
+        //public ServerInfo(string conn, string name)
+        //{
+        //    this._connection = conn;
+        //    this._name = name;
+        //    this._databases = new List<IDatabaseInfo>();
+
+        //    loader = new SchemaLoader(MyMeta.dbDriver.SQL, "SqlClient", "C#", this._connection);
+        //}
+
+        public ServerInfo(DatabaseLink link)
         {
-            this._connection = conn;
-            this._name = name;
+            _link = link;
+            this._connection = link.ConnectionString;
+            this._schemaConnection = link.SchemaConnectionString;
+            this._name = link.ServerName;
             this._databases = new List<IDatabaseInfo>();
 
-            loader = new SchemaLoader(MyMeta.dbDriver.SQL, "SqlClient", "C#", this._connection);
+            loader = new SchemaLoader(MyMeta.dbDriver.SQL, "SqlClient", "C#", link.SchemaConnectionString);
         }
 
         public bool Connect()
@@ -106,6 +119,7 @@ namespace CKGen.DBLoader
 
         public IDatabaseInfo GetDatabase(string dbname)
         {
+            LoadDatabases();
             foreach (var item in this.Databases)
             {
                 if (item.Name == dbname)

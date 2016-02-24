@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.ComponentModel.Composition;
 using CKGen.DBSchema;
+using System.Diagnostics;
 
 namespace CKGen.Temp.Adonet.TestProj
 {
@@ -20,15 +21,26 @@ namespace CKGen.Temp.Adonet.TestProj
         private int _tableCount = 0;
         private int _viewCount = 0;
         private int _procCount = 0;
+        private string _projName = "";
+
+        private List<ITableInfo> selTables = new List<ITableInfo>();
 
         public MainUI()
         {
             InitializeComponent();
         }
 
-        private void btnBuild_Click(object sender, EventArgs e)
+        private void MainUI_Load(object sender, EventArgs e)
         {
+            lvMain.Groups.Add("table", "表");
+            lvMain.Groups.Add("view", "视图");
+            lvMain.Groups.Add("proc", "存储过程");
 
+            lvMain.Columns.Add(new ColumnHeader() { Name = "Name", Width = 150 });
+            lvMain.HeaderStyle = ColumnHeaderStyle.Clickable;
+            lvMain.Sorting = SortOrder.Ascending;
+
+            txtProjName.Text = string.Format("{0}_{1:yyyyMMddHHmmss}", this.Database.Name, DateTime.Now);
         }
 
         public override string ToString()
@@ -43,6 +55,8 @@ namespace CKGen.Temp.Adonet.TestProj
 
         private void MainUI_DragDrop(object sender, DragEventArgs e)
         {
+            errorProvider1.SetError(groupBox1, "");
+
             TreeNode draggedNode = (TreeNode)e.Data.GetData(typeof(TreeNode));
             if (draggedNode != null)
             {
@@ -105,17 +119,6 @@ namespace CKGen.Temp.Adonet.TestProj
             }
         }
 
-        private void MainUI_Load(object sender, EventArgs e)
-        {
-            lvMain.Groups.Add("table", "表");
-            lvMain.Groups.Add("view", "视图");
-            lvMain.Groups.Add("proc", "存储过程");
-
-            lvMain.Columns.Add(new ColumnHeader() { Name = "Name", Width = 150 });
-            lvMain.HeaderStyle = ColumnHeaderStyle.Clickable;
-            lvMain.Sorting = SortOrder.Ascending;
-        }
-
         private void lvMain_KeyDown(object sender, KeyEventArgs e)
         {
             if (Keys.Delete == e.KeyCode)
@@ -146,6 +149,90 @@ namespace CKGen.Temp.Adonet.TestProj
             lvMain.Groups[0].Header = string.Format("表 ({0})", _tableCount);
             lvMain.Groups[1].Header = string.Format("视图 ({0})", _viewCount);
             lvMain.Groups[2].Header = string.Format("存储过程 ({0})", _procCount);
+        }
+
+        private void btnBuild_Click(object sender, EventArgs e)
+        {
+            if(!string.IsNullOrEmpty(txtProjName.Text))
+            {
+                this._projName = txtProjName.Text.Trim();
+            }
+            else
+            {
+                errorProvider1.SetError(txtProjName, "项目名称不能为空。");
+                return;
+            }
+
+            if(!char.IsLetter(this._projName[0]))
+            {
+                errorProvider1.SetError(txtProjName, "项目名称必须以字母开头。");
+                return;
+            }
+
+            selTables.Clear();
+            foreach (ListViewItem item in lvMain.Items)
+            {
+                if (item.Tag is ITableInfo)
+                {
+                    selTables.Add(item.Tag as ITableInfo);
+                }
+            }
+
+            if(selTables.Count == 0)
+            {
+                errorProvider1.SetError(groupBox1, "选择数据库对象不能为空。");
+                return;
+            }
+
+            this.AllowDrop = false;
+            lvMain.Enabled = false;
+            btnBuild.Enabled = false;
+            btnBuild.Text = "正在生成...";
+            txtProjName.Enabled = false;
+
+            BackgroundWorker _bgWorker = new BackgroundWorker();
+            _bgWorker.WorkerSupportsCancellation = false;
+            _bgWorker.WorkerReportsProgress = false;
+            _bgWorker.DoWork += _bgWorker_DoWork;
+            _bgWorker.RunWorkerCompleted += _bgWorker_RunWorkerCompleted;
+            _bgWorker.RunWorkerAsync();
+        }
+
+        private void _bgWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            this.AllowDrop = true;
+            lvMain.Enabled = true;
+            btnBuild.Enabled = true;
+            btnBuild.Text = "生成";
+            txtProjName.Enabled = true;
+        }
+
+        private void _bgWorker_DoWork(object sender, DoWorkEventArgs e)
+        {
+            TestProjectBuilder builder = new TestProjectBuilder();
+            string folder = builder.Build(selTables, this.Database.Server.Connection, this._projName);
+            Process.Start(folder);
+        }
+
+        private void txtProjName_Validating(object sender, CancelEventArgs e)
+        {
+            if (!string.IsNullOrEmpty(txtProjName.Text))
+            {
+                this._projName = txtProjName.Text.Trim();
+            }
+            else
+            {
+                errorProvider1.SetError(txtProjName, "项目名称不能为空。");
+                return;
+            }
+
+            if (!char.IsLetter(this._projName[0]))
+            {
+                errorProvider1.SetError(txtProjName, "项目名称必须以字母开头。");
+                return;
+            }
+
+            errorProvider1.SetError(txtProjName, "");
         }
     }
 }
