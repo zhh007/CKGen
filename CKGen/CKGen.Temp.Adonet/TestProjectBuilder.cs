@@ -62,6 +62,16 @@ namespace CKGen.Temp.Adonet
             string configContent = codeGen.Gen(Comm.GetProjTemplete("appconfig.cshtml"), model);
             File.WriteAllText(configFilePath, configContent);
 
+            //packages.config
+            string pkgconfigFilePath = Path.Combine(testappFolder, "packages.config");
+            string pkgconfigContent = codeGen.Gen(Comm.GetProjTemplete("packagesconfig.cshtml"), model);
+            File.WriteAllText(pkgconfigFilePath, pkgconfigContent);
+
+            //loghelper.cs
+            string loghelperFilePath = Path.Combine(testappFolder, "LogHelper.cs");
+            string loghelperContent = codeGen.Gen(Comm.GetProjTemplete("loghelper.cshtml"), model);
+            File.WriteAllText(loghelperFilePath, loghelperContent);
+
             foreach (var tinfo in tables)
             {
                 //model.cs

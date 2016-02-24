@@ -16,6 +16,16 @@ namespace @(Model.ProjectName)
         public static string TestConnection = ConfigurationManager.ConnectionStrings["testapp"].ConnectionString;
         static void Main(string[] args)
         {
+            Console.WriteLine("======start======");
+            DateTime begin = DateTime.Now;
+
+
+
+            DateTime end = DateTime.Now;
+            TimeSpan ts = end - begin;
+            Console.WriteLine("running time:{0}", ts);
+            Console.WriteLine("======over!======");
+            Console.ReadKey();
         }
     }
 }

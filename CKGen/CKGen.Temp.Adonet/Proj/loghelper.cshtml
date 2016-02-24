@@ -1,0 +1,40 @@
+﻿@using RazorEngine.Templating
+@using CKGen.DBSchema;
+@using CKGen.Temp.Adonet;
+@inherits TemplateBase<TestProjectModel>
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+namespace @(Model.ProjectName)
+{
+    public class LogHelper
+    {
+        private static readonly log4net.ILog logger = log4net.LogManager.GetLogger(typeof(LogHelper));
+
+        static LogHelper()
+        {
+            log4net.Config.XmlConfigurator.Configure();
+        }
+
+        public static void Debug(string message)
+        {
+            Console.WriteLine(message);
+            logger.Debug(message);
+        }
+
+        public static void Debug(string format, params object[] args)
+        {
+            Console.WriteLine(format, args);
+            logger.DebugFormat(format, args);
+        }
+
+        public static void Error(string message, Exception ex)
+        {
+            Console.WriteLine("异常：" + message);
+            logger.Error(message, ex);
+        }
+    }
+}
