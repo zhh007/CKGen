@@ -16,7 +16,7 @@ namespace CKGen.Controls
     {
         private IDatabaseInfo DB = null;
         private ContextMenuStrip TableMenu = null;
-        private TableDataAccessGen gen = new TableDataAccessGen();
+        private DbTableCodeGen gen = new DbTableCodeGen();
         public SchemaTreeView()
         {
             InitializeComponent();

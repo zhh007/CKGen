@@ -8,7 +8,7 @@ using System.Text;
 
 namespace CKGen.Temp.Adonet
 {
-    public class TableDataAccessGen
+    public class DbTableCodeGen
     {
         private readonly ICodeGenService codeGen = ServiceLocator.Instance.GetService<ICodeGenService>();
         public string GenDataAccessCode(string nameSpace, ITableInfo tbInfo)

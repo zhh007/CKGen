@@ -22,7 +22,7 @@ namespace CKGen
     public partial class FrmMain : Form
     {
         private IDatabaseInfo DB = null;
-        private TableDataAccessGen gen = new TableDataAccessGen();
+        private DbTableCodeGen gen = new DbTableCodeGen();
 
         public FrmMain()
         {

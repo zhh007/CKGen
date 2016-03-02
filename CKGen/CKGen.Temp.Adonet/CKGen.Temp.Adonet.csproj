@@ -43,8 +43,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Comm.cs" />
+    <Compile Include="DbViewCodeGen.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TableDataAccessGen.cs" />
+    <Compile Include="DbTableCodeGen.cs" />
     <Compile Include="TestProjectBuilder.cs" />
     <Compile Include="TestProjectModel.cs" />
     <Compile Include="TestProj\MainUI.cs">

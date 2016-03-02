@@ -112,7 +112,7 @@ namespace ConsoleApp
                 }
             }
 
-            TableDataAccessGen gen = new TableDataAccessGen();
+            DbTableCodeGen gen = new DbTableCodeGen();
 
             //string code = CodeGen.GenForTable("Model.cshtml", tbInfo);
 
@@ -171,7 +171,7 @@ namespace ConsoleApp
                 }
             }
 
-            TableDataAccessGen builder = new TableDataAccessGen();
+            DbTableCodeGen builder = new DbTableCodeGen();
             string folder = builder.GenModelCode(tbInfo);
             //Process.Start(folder);
         }

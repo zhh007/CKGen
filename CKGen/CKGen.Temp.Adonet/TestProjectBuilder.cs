@@ -85,7 +85,7 @@ namespace CKGen.Temp.Adonet
                 File.WriteAllText(modelFilePath, modelContent.Replace("'namespace'", projName));
 
                 //access.cs
-                TableDataAccessGen accessgen = new TableDataAccessGen();
+                DbTableCodeGen accessgen = new DbTableCodeGen();
                 string accessFilePath = Path.Combine(testappFolder, string.Format(@"DAL\{0}Access.cs", tinfo.PascalName));
                 string accessContent = accessgen.GenDataAccessCode(projName, tinfo);
                 dir = Directory.GetParent(accessFilePath);
