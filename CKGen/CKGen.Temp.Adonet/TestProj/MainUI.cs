@@ -24,6 +24,7 @@ namespace CKGen.Temp.Adonet.TestProj
         private string _projName = "";
 
         private List<ITableInfo> selTables = new List<ITableInfo>();
+        private List<IViewInfo> selViews = new List<IViewInfo>();
 
         public MainUI()
         {
@@ -170,15 +171,20 @@ namespace CKGen.Temp.Adonet.TestProj
             }
 
             selTables.Clear();
+            selViews.Clear();
             foreach (ListViewItem item in lvMain.Items)
             {
                 if (item.Tag is ITableInfo)
                 {
                     selTables.Add(item.Tag as ITableInfo);
                 }
+                else if(item.Tag is IViewInfo)
+                {
+                    selViews.Add(item.Tag as IViewInfo);
+                }
             }
 
-            if(selTables.Count == 0)
+            if(selTables.Count == 0 && selViews.Count == 0)
             {
                 errorProvider1.SetError(groupBox1, "选择数据库对象不能为空。");
                 return;
@@ -210,7 +216,7 @@ namespace CKGen.Temp.Adonet.TestProj
         private void _bgWorker_DoWork(object sender, DoWorkEventArgs e)
         {
             TestProjectBuilder builder = new TestProjectBuilder();
-            string folder = builder.Build(selTables, this.Database.Server.Connection, this._projName);
+            string folder = builder.Build(selTables, selViews, this.Database.Server.Connection, this._projName);
             Process.Start(folder);
         }
 

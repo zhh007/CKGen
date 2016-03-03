@@ -144,9 +144,10 @@ namespace ConsoleApp
                     break;
                 }
             }
+            List<IViewInfo> selViews = new List<IViewInfo>();
 
             TestProjectBuilder builder = new TestProjectBuilder();
-            string folder = builder.Build(selTables, link.ConnectionString, "TestApp");
+            string folder = builder.Build(selTables, selViews, link.ConnectionString, "TestApp");
             Process.Start(folder);
         }
 
