@@ -1,0 +1,59 @@
+﻿@using RazorEngine.Templating
+@using CKGen.DBSchema;
+@using CKGen;
+@inherits TemplateBase<ITableInfo>
+
+/// <summary>
+/// 根据条件返回前N条记录
+/// </summary>
+/// <param name="topN">返回几条记录</param>
+public List<@(Model.PascalName)> Top(int topN)
+{
+    List<@(Model.PascalName)> list = new List<@(Model.PascalName)>();
+    string sql = @@"@(Util.BuildSQL_TopNByWhere(Model))";
+
+    using (SqlConnection conn = new SqlConnection('conn_name'))
+    {
+        SqlCommand cmd = new SqlCommand(string.Format(sql, topN), conn);
+
+        try
+        {
+            conn.Open();
+            using (SqlDataReader sdr = cmd.ExecuteReader())
+            {
+@foreach (var column in Model.Columns)
+{
+<text>                int @(column.CamelName)Ordinal = sdr.GetOrdinal("@(column.RawName)");</text>
+}
+
+                while (sdr.Read())
+                {
+                    @(Model.PascalName) entity = new @(Model.PascalName)();
+@foreach(var column in Model.Columns)
+{
+<text>
+                    if (sdr.IsDBNull(@(column.CamelName)Ordinal))
+                    {
+                        entity.@(column.PascalName) = @(Util.BuildGetSqlReaderNullStr(column));
+                    }
+                    else
+                    {
+                        @(Util.BuildSetFieldValue(column))
+                    }</text>
+}
+
+                    list.Add(entity);
+                }
+            }
+        }
+        finally
+        {
+            if (conn.State != ConnectionState.Closed)
+                conn.Close();
+            if (conn != null)
+                conn.Dispose();
+        }
+    }
+
+    return list;
+}

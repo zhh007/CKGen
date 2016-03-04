@@ -5,7 +5,7 @@ using System.Text;
 
 namespace CKGen.Temp.Adonet
 {
-    public class TestProjectModel
+    public class DbProjectModel
     {
         public string ProjectName { get; set; }
         /// <summary>
@@ -19,7 +19,7 @@ namespace CKGen.Temp.Adonet
         //public string ModelClassName { get; set; }
         public string ConnectionString { get; set; }
         public List<string> Files { get; set; }
-        public TestProjectModel()
+        public DbProjectModel()
         {
             this.Files = new List<string>();
         }

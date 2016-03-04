@@ -46,8 +46,8 @@
     <Compile Include="DbViewCodeGen.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DbTableCodeGen.cs" />
-    <Compile Include="TestProjectBuilder.cs" />
-    <Compile Include="TestProjectModel.cs" />
+    <Compile Include="DbProjectBuilder.cs" />
+    <Compile Include="DbProjectModel.cs" />
     <Compile Include="TestProj\MainUI.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -61,18 +61,18 @@
     <EmbeddedResource Include="Proj\sln.cshtml" />
     <EmbeddedResource Include="Proj\csproj.cshtml" />
     <EmbeddedResource Include="Proj\Program.cshtml" />
-    <EmbeddedResource Include="Template\Delete.cshtml" />
-    <EmbeddedResource Include="Template\Exist.cshtml" />
-    <EmbeddedResource Include="Template\Get.cshtml" />
-    <EmbeddedResource Include="Template\Insert.cshtml" />
-    <EmbeddedResource Include="Template\Model.cshtml" />
-    <EmbeddedResource Include="Template\Paged.cshtml" />
-    <EmbeddedResource Include="Template\Save.cshtml" />
-    <EmbeddedResource Include="Template\GetAll.cshtml" />
-    <EmbeddedResource Include="Template\Top.cshtml" />
-    <EmbeddedResource Include="Template\_GetMany.cshtml" />
+    <EmbeddedResource Include="Template\Table\Delete.cshtml" />
+    <EmbeddedResource Include="Template\Table\Exist.cshtml" />
+    <EmbeddedResource Include="Template\Table\Get.cshtml" />
+    <EmbeddedResource Include="Template\Table\Insert.cshtml" />
+    <EmbeddedResource Include="Template\Table\Model.cshtml" />
+    <EmbeddedResource Include="Template\Table\Paged.cshtml" />
+    <EmbeddedResource Include="Template\Table\Save.cshtml" />
+    <EmbeddedResource Include="Template\Table\GetAll.cshtml" />
+    <EmbeddedResource Include="Template\Table\Top.cshtml" />
+    <EmbeddedResource Include="Template\Table\_GetMany.cshtml" />
     <EmbeddedResource Include="Template\_GetBytes.cshtml" />
-    <EmbeddedResource Include="Template\Update.cshtml" />
+    <EmbeddedResource Include="Template\Table\Update.cshtml" />
     <EmbeddedResource Include="TestProj\MainUI.resx">
       <DependentUpon>MainUI.cs</DependentUpon>
     </EmbeddedResource>
@@ -88,6 +88,28 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Proj\loghelper.cshtml" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Template\View\_GetMany.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Template\View\Exist.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Template\View\Get.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Template\View\GetAll.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Template\View\Top.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Template\View\Paged.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Template\View\Model.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

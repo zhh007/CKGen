@@ -28,15 +28,15 @@ namespace CKGen.Temp.Adonet
             sb.AppendFormat("    public class {0}Access{1}", tbInfo.PascalName, Environment.NewLine);
             sb.AppendLine("    {");
 
-            Gen(sb, "Insert.cshtml", tbInfo);
-            Gen(sb, "Update.cshtml", tbInfo);
-            Gen(sb, "Delete.cshtml", tbInfo);
-            //Gen(sb, "Save.cshtml", tbInfo);
-            //Gen(sb, "Exist.cshtml", tbInfo);
-            Gen(sb, "Get.cshtml", tbInfo);
-            //Gen(sb, "Top.cshtml", tbInfo);
-            Gen(sb, "GetAll.cshtml", tbInfo);
-            Gen(sb, "Paged.cshtml", tbInfo);
+            Gen(sb, "Table.Insert.cshtml", tbInfo);
+            Gen(sb, "Table.Update.cshtml", tbInfo);
+            Gen(sb, "Table.Delete.cshtml", tbInfo);
+            //Gen(sb, "Table.Save.cshtml", tbInfo);
+            //Gen(sb, "Table.Exist.cshtml", tbInfo);
+            Gen(sb, "Table.Get.cshtml", tbInfo);
+            //Gen(sb, "Table.Top.cshtml", tbInfo);
+            Gen(sb, "Table.GetAll.cshtml", tbInfo);
+            Gen(sb, "Table.Paged.cshtml", tbInfo);
 
             if ((from col in tbInfo.Columns
                  where col.DbTargetType == "SqlDbType.Image" || col.DbTargetType == "SqlDbType.Binary"
@@ -46,7 +46,7 @@ namespace CKGen.Temp.Adonet
                 Gen(sb, "_GetBytes.cshtml", tbInfo);
             }
 
-            Gen(sb, "_GetMany.cshtml", tbInfo);
+            Gen(sb, "Table._GetMany.cshtml", tbInfo);
 
             sb.AppendLine("    }");
             sb.AppendLine("}");
@@ -97,7 +97,7 @@ namespace CKGen.Temp.Adonet
         {
             //string viewPath = System.IO.Path.Combine(Environment.CurrentDirectory, "Template\\Model.cshtml");
             //return codeGen.GenByPath(viewPath, tbInfo);
-            string tmp = Comm.GetTemplete("Model.cshtml");
+            string tmp = Comm.GetTemplete("Table.Model.cshtml");
             return codeGen.Gen(tmp, tbInfo);
         }
 
@@ -105,7 +105,7 @@ namespace CKGen.Temp.Adonet
         {
             //string viewPath = System.IO.Path.Combine(Environment.CurrentDirectory, "Template\\Insert.cshtml");
             //return codeGen.GenByPath(viewPath, tbInfo);
-            string tmp = Comm.GetTemplete("Insert.cshtml");
+            string tmp = Comm.GetTemplete("Table.Insert.cshtml");
             return codeGen.Gen(tmp, tbInfo);
         }
 
@@ -113,7 +113,7 @@ namespace CKGen.Temp.Adonet
         {
             //string viewPath = System.IO.Path.Combine(Environment.CurrentDirectory, "Template\\Update.cshtml");
             //return codeGen.GenByPath(viewPath, tbInfo);
-            string tmp = Comm.GetTemplete("Update.cshtml");
+            string tmp = Comm.GetTemplete("Table.Update.cshtml");
             return codeGen.Gen(tmp, tbInfo);
         }
 
@@ -121,7 +121,7 @@ namespace CKGen.Temp.Adonet
         {
             //string viewPath = System.IO.Path.Combine(Environment.CurrentDirectory, "Template\\Delete.cshtml");
             //return codeGen.GenByPath(viewPath, tbInfo);
-            string tmp = Comm.GetTemplete("Delete.cshtml");
+            string tmp = Comm.GetTemplete("Table.Delete.cshtml");
             return codeGen.Gen(tmp, tbInfo);
         }
 
@@ -129,7 +129,7 @@ namespace CKGen.Temp.Adonet
         {
             //string viewPath = System.IO.Path.Combine(Environment.CurrentDirectory, "Template\\Save.cshtml");
             //return codeGen.GenByPath(viewPath, tbInfo);
-            string tmp = Comm.GetTemplete("Save.cshtml");
+            string tmp = Comm.GetTemplete("Table.Save.cshtml");
             return codeGen.Gen(tmp, tbInfo);
         }
 
@@ -137,7 +137,7 @@ namespace CKGen.Temp.Adonet
         {
             //string viewPath = System.IO.Path.Combine(Environment.CurrentDirectory, "Template\\Exist.cshtml");
             //return codeGen.GenByPath(viewPath, tbInfo);
-            string tmp = Comm.GetTemplete("Exist.cshtml");
+            string tmp = Comm.GetTemplete("Table.Exist.cshtml");
             return codeGen.Gen(tmp, tbInfo);
         }
 
@@ -145,7 +145,7 @@ namespace CKGen.Temp.Adonet
         {
             //string viewPath = System.IO.Path.Combine(Environment.CurrentDirectory, "Template\\Get.cshtml");
             //return codeGen.GenByPath(viewPath, tbInfo);
-            string tmp = Comm.GetTemplete("Get.cshtml");
+            string tmp = Comm.GetTemplete("Table.Get.cshtml");
             return codeGen.Gen(tmp, tbInfo);
         }
 
@@ -153,7 +153,7 @@ namespace CKGen.Temp.Adonet
         {
             //string viewPath = System.IO.Path.Combine(Environment.CurrentDirectory, "Template\\GetAll.cshtml");
             //return codeGen.GenByPath(viewPath, tbInfo);
-            string tmp = Comm.GetTemplete("GetAll.cshtml");
+            string tmp = Comm.GetTemplete("Table.GetAll.cshtml");
             return codeGen.Gen(tmp, tbInfo);
         }
 
@@ -161,7 +161,7 @@ namespace CKGen.Temp.Adonet
         {
             //string viewPath = System.IO.Path.Combine(Environment.CurrentDirectory, "Template\\Top.cshtml");
             //return codeGen.GenByPath(viewPath, tbInfo);
-            string tmp = Comm.GetTemplete("Top.cshtml");
+            string tmp = Comm.GetTemplete("Table.Top.cshtml");
             return codeGen.Gen(tmp, tbInfo);
         }
 
@@ -169,7 +169,7 @@ namespace CKGen.Temp.Adonet
         {
             //string viewPath = System.IO.Path.Combine(Environment.CurrentDirectory, "Template\\Paged.cshtml");
             //return codeGen.GenByPath(viewPath, tbInfo);
-            string tmp = Comm.GetTemplete("Paged.cshtml");
+            string tmp = Comm.GetTemplete("Table.Paged.cshtml");
             return codeGen.Gen(tmp, tbInfo);
         }
     }

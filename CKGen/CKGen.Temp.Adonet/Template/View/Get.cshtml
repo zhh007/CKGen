@@ -1,0 +1,47 @@
+﻿@using RazorEngine.Templating
+@using CKGen.DBSchema;
+@using CKGen;
+@inherits TemplateBase<ITableInfo>
+
+/// <summary>
+/// 根据主键获取记录
+/// </summary>
+public @(Model.PascalName) Get(@(Util.GetPKDefine(Model)))
+{
+    @(Model.PascalName) entity = null;
+    string sql = @@"@(Util.BuildGetByPKSql(Model))";
+
+    using (SqlConnection conn = new SqlConnection('conn_name'))
+    {
+        SqlCommand cmd = new SqlCommand(sql, conn);
+@foreach(var column in Model.Columns)
+{
+    if (!column.IsPrimaryKey)
+    {
+        continue;
+    }
+<text>
+        SqlParameter para_@(column.PascalName) = @(Util.GetSqlParameter(column));
+        para_@(column.PascalName).Value = @(column.CamelName);
+        cmd.Parameters.Add(para_@(column.PascalName));</text>
+}
+
+        try
+        {
+            conn.Open();
+            using (SqlDataReader sdr = cmd.ExecuteReader())
+            {
+                entity = GetMany(sdr).FirstOrDefault();
+            }
+        }
+        finally
+        {
+            if (conn.State != ConnectionState.Closed)
+                conn.Close();
+            if (conn != null)
+                conn.Dispose();
+        }
+    }
+
+    return entity;
+}

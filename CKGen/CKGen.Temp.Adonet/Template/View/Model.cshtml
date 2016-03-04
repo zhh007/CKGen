@@ -1,0 +1,24 @@
+﻿@using RazorEngine.Templating
+@using CKGen.DBSchema;
+@using CKGen;
+@inherits TemplateBase<IViewInfo>
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+namespace 'namespace'.Model
+{
+    public partial class @(Model.PascalName)
+    {
+        @foreach (var column in Model.Columns)
+        {
+        <text>/// @("<summary>")</text>
+        <text>/// @(column.Description)</text>
+        <text>/// @("</summary>")</text>
+        <text>public @(column.LanguageType) @(column.PascalName) { get; set; }</text>
+        @("\r\n")
+        }
+    }
+}

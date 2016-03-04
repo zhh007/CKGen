@@ -42,7 +42,7 @@ namespace ConsoleApp
 
             //BuildDBAccess();
 
-            //TestProjectBuilder builder = new TestProjectBuilder();
+            //DbProjectBuilder builder = new DbProjectBuilder();
             //string folder = builder.Build();
 
             //Process.Start(folder);
@@ -146,7 +146,7 @@ namespace ConsoleApp
             }
             List<IViewInfo> selViews = new List<IViewInfo>();
 
-            TestProjectBuilder builder = new TestProjectBuilder();
+            DbProjectBuilder builder = new DbProjectBuilder();
             string folder = builder.Build(selTables, selViews, link.ConnectionString, "TestApp");
             Process.Start(folder);
         }

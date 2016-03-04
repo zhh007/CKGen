@@ -644,6 +644,40 @@ WHERE user_type_id =
             sbSql.Append("].[");
             sbSql.Append(table.RawName);
             sbSql.Append("]\r\n");
+            sbSql.Append(GetOrderBy(table));
+
+            return sbSql.ToString();
+        }
+
+        public static string BuildGetByWhere(IViewInfo view)
+        {
+            StringBuilder sbSql = new StringBuilder();
+
+            sbSql.Append("\r\nSELECT ");// [");
+
+            int len = view.Columns.Count;
+            for (int i = 0; i < len; i++)
+            {
+                IColumnInfo col = view.Columns[i];
+                //if (col.InPrimaryKey)
+                //    continue;
+
+                sbSql.AppendFormat("[{0}]", col.RawName);
+                if (i != len - 1)
+                {
+                    sbSql.Append("\r\n");
+                    sbSql.Append(' ', 6);
+                    sbSql.Append(",");
+                }
+            }
+            sbSql.Append("\r\n");
+            sbSql.Append(' ', 2);
+            sbSql.Append("FROM [");
+            sbSql.Append(view.Schema);
+            sbSql.Append("].[");
+            sbSql.Append(view.RawName);
+            sbSql.Append("]\r\n");
+            sbSql.Append(GetOrderBy(view));
 
             return sbSql.ToString();
         }
@@ -732,49 +766,117 @@ WHERE user_type_id =
                 }
             }
 
-            string orderbyStr = string.Format("{0} DESC", GetDefaultColumn(table));
             string whereStr = "";
             string sql = string.Format(@"
 SELECT * FROM (
     SELECT {3}
-        ,(ROW_NUMBER() OVER (ORDER BY {0})) AS RowNumber
+        ,(ROW_NUMBER() OVER ({0})) AS RowNumber
     FROM [{1}] {2}
 ) as t
 WHERE PageNumber BETWEEN @Begin AND @End
 
 SELECT @TotalCount = COUNT(*) FROM [{1}] {2}
-", orderbyStr, table.RawName, whereStr, sb.ToString());
+", GetOrderBy(table), table.RawName, whereStr, sb.ToString());
 
             return sql;
         }
 
-        public static string GetDefaultColumn(ITableInfo table)
+        public static string BuildSQL_Paged(IViewInfo view)
+        {
+            StringBuilder sb = new StringBuilder();
+            int len = view.Columns.Count;
+            for (int i = 0; i < len; i++)
+            {
+                IColumnInfo col = view.Columns[i];
+                //if (col.InPrimaryKey)
+                //    continue;
+
+                sb.AppendFormat("[{0}]", col.RawName);
+                if (i != len - 1)
+                {
+                    sb.Append("\r\n");
+                    sb.Append(' ', 8);
+                    sb.Append(",");
+                }
+            }
+
+            string whereStr = "";
+            string sql = string.Format(@"
+SELECT * FROM (
+    SELECT {3}
+        ,(ROW_NUMBER() OVER ({0})) AS RowNumber
+    FROM [{1}] {2}
+) as t
+WHERE PageNumber BETWEEN @Begin AND @End
+
+SELECT @TotalCount = COUNT(*) FROM [{1}] {2}
+", GetOrderBy(view), view.RawName, whereStr, sb.ToString());
+
+            return sql;
+        }
+
+        public static string GetOrderBy(ITableInfo table)
         {
             var col = (from p in table.Columns
                        where p.IsPrimaryKey && p.Identity
                        select p).FirstOrDefault();
-            if(col != null)
-            {
-                return "[" + col.RawName + "]";
-            }
 
-            col = (from p in table.Columns
-                   where p.LanguageType == "DateTime" && (p.LowerName.Contains("update") && p.LowerName.Contains("modif"))
+            if (col == null)
+            {
+                col = (from p in table.Columns
+                   where p.LanguageType == "DateTime" && (p.LowerName.Contains("update") || p.LowerName.Contains("modif"))
                    select p).FirstOrDefault();
-            if (col != null)
-            {
-                return "[" + col.RawName + "]";
             }
 
-            col = (from p in table.Columns
-                   where p.LanguageType == "DateTime" && (p.LowerName.Contains("create") && p.LowerName.Contains("add"))
+            if (col == null)
+            {
+                col = (from p in table.Columns
+                   where p.LanguageType == "DateTime" && (p.LowerName.Contains("create") || p.LowerName.Contains("add"))
                    select p).FirstOrDefault();
-            if (col != null)
-            {
-                return "[" + col.RawName + "]";
             }
 
-            return "[" + table.Columns[0].RawName + "]";
+            if(col == null)
+            {
+                col = table.Columns[0];
+            }
+
+            return "ORDER BY [" + col.RawName + "] DESC";
+        }
+
+        public static string GetOrderBy(IViewInfo view)
+        {
+            IColumnInfo col = null;
+            //col = (from p in view.Columns
+            //           where p.IsPrimaryKey && p.Identity
+            //           select p).FirstOrDefault();
+
+            if (col == null)
+            {
+                col = (from p in view.Columns
+                           where p.LanguageType == "Int32" && p.LowerName.Contains("id")
+                           select p).FirstOrDefault();
+            }
+
+            if (col == null)
+            {
+                col = (from p in view.Columns
+                   where p.LanguageType == "DateTime" && (p.LowerName.Contains("update") || p.LowerName.Contains("modif"))
+                   select p).FirstOrDefault();
+            }
+
+            if (col == null)
+            {
+                col = (from p in view.Columns
+                   where p.LanguageType == "DateTime" && (p.LowerName.Contains("create") || p.LowerName.Contains("add"))
+                   select p).FirstOrDefault();
+            }
+
+            if (col == null)
+            {
+                col = view.Columns[0];
+            }
+
+            return "ORDER BY [" + col.RawName + "] DESC";
         }
 
         public static string GetColumnString(ITableInfo table)

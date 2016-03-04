@@ -1,0 +1,36 @@
+﻿@using RazorEngine.Templating
+@using CKGen.DBSchema;
+@using CKGen;
+@inherits TemplateBase<IViewInfo>
+
+/// <summary>
+/// 根据条件返回所有记录
+/// </summary>
+public List<@(Model.PascalName)> GetAll()
+{
+    List<@(Model.PascalName)> list = new List<@(Model.PascalName)>();
+    string sql = @@"@(Util.BuildGetByWhere(Model))";
+
+    using (SqlConnection conn = new SqlConnection('conn_name'))
+    {
+        SqlCommand cmd = new SqlCommand(sql, conn);
+
+        try
+        {
+            conn.Open();
+            using (SqlDataReader sdr = cmd.ExecuteReader())
+            {
+                list = GetMany(sdr);
+            }
+        }
+        finally
+        {
+            if (conn.State != ConnectionState.Closed)
+                conn.Close();
+            if (conn != null)
+                conn.Dispose();
+        }
+    }
+
+    return list;
+}

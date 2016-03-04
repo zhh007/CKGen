@@ -1,0 +1,25 @@
+﻿@using RazorEngine.Templating
+@using CKGen.DBSchema;
+@using CKGen;
+@inherits TemplateBase<IViewInfo>
+
+private List<@(Model.PascalName)> GetMany(SqlDataReader sdr)
+{
+    List<@(Model.PascalName)> list = new List<@(Model.PascalName)>();
+@foreach (var column in Model.Columns)
+{
+<text>    int @(column.CamelName)Ordinal = sdr.GetOrdinal("@(column.RawName)");</text>
+}
+
+    while (sdr.Read())
+    {
+        @(Model.PascalName) entity = new @(Model.PascalName)();
+@foreach(var column in Model.Columns)
+{
+<text>        entity.@(column.PascalName) = sdr.IsDBNull(@(column.CamelName)Ordinal) ? @(Util.BuildGetSqlReaderNullStr(column)) : @(Util.BuildSetFieldValue(column));</text>
+}
+
+        list.Add(entity);
+    }
+    return list;
+}

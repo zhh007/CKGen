@@ -215,7 +215,7 @@ namespace CKGen.Temp.Adonet.TestProj
 
         private void _bgWorker_DoWork(object sender, DoWorkEventArgs e)
         {
-            TestProjectBuilder builder = new TestProjectBuilder();
+            DbProjectBuilder builder = new DbProjectBuilder();
             string folder = builder.Build(selTables, selViews, this.Database.Server.Connection, this._projName);
             Process.Start(folder);
         }
