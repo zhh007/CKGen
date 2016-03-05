@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 
 namespace CKGen.Temp.Adonet.DbConsoleProject
@@ -11,6 +12,25 @@ namespace CKGen.Temp.Adonet.DbConsoleProject
     public class DbProjectBuilder
     {
         private readonly ICodeGenService codeGen = ServiceLocator.Instance.GetService<ICodeGenService>();
+        public string TempPath_Sln = GetTemplete("sln.cshtml");
+        public string TempPath_ConsoleProj_AssemblyInfo = GetTemplete("ConsoleProj.AssemblyInfo.cshtml");
+        public string TempPath_ConsoleProj_Program = GetTemplete("ConsoleProj.Program.cshtml");
+        public string TempPath_ConsoleProj_AppConfig = GetTemplete("ConsoleProj.appconfig.cshtml");
+        public string TempPath_ConsoleProj_PackageConfig = GetTemplete("ConsoleProj.packagesconfig.cshtml");
+        public string TempPath_ConsoleProj_LogHelper = GetTemplete("ConsoleProj.loghelper.cshtml");
+        public string TempPath_ConsoleProj_CSProj = GetTemplete("ConsoleProj.csproj.cshtml");
+
+        public static string GetTemplete(string tmp)
+        {
+            string tmpName = string.Format("CKGen.Temp.Adonet.DbConsoleProject.Sln.{0}", tmp);
+            Assembly myAssembly = typeof(Comm).Assembly;
+            using (Stream input = myAssembly.GetManifestResourceStream(tmpName))
+            using (StreamReader reader = new StreamReader(input, Encoding.UTF8))
+            {
+                return reader.ReadToEnd();
+            }
+        }
+
         public string Build(List<ITableInfo> tables, List<IViewInfo> views, string connStr, string projName)
         {
             Guid testProjID = Guid.NewGuid();
@@ -26,7 +46,7 @@ namespace CKGen.Temp.Adonet.DbConsoleProject
 
             //sln
             string slnFilePath = Path.Combine(root, string.Format("{0}.sln", model.ProjectName));
-            string slnContent = codeGen.Gen(Comm.GetProjTemplete("sln.cshtml"), model);
+            string slnContent = codeGen.Gen(this.TempPath_Sln, model);
             File.WriteAllText(slnFilePath, slnContent);
 
             //testapp proj folder
@@ -39,27 +59,27 @@ namespace CKGen.Temp.Adonet.DbConsoleProject
 
             //AssemblyInfo.cs
             string assemblyFilePath = Path.Combine(PropertiesFolder, "AssemblyInfo.cs");
-            string assemblyContent = codeGen.Gen(Comm.GetProjTemplete("AssemblyInfo.cshtml"), model);
+            string assemblyContent = codeGen.Gen(this.TempPath_ConsoleProj_AssemblyInfo, model);
             File.WriteAllText(assemblyFilePath, assemblyContent);
 
             //program.cs
             string programFilePath = Path.Combine(testappFolder, "Program.cs");
-            string programContent = codeGen.Gen(Comm.GetProjTemplete("Program.cshtml"), model);
+            string programContent = codeGen.Gen(this.TempPath_ConsoleProj_Program, model);
             File.WriteAllText(programFilePath, programContent);
 
             //app.config
             string configFilePath = Path.Combine(testappFolder, "App.config");
-            string configContent = codeGen.Gen(Comm.GetProjTemplete("appconfig.cshtml"), model);
+            string configContent = codeGen.Gen(this.TempPath_ConsoleProj_AppConfig, model);
             File.WriteAllText(configFilePath, configContent);
 
             //packages.config
             string pkgconfigFilePath = Path.Combine(testappFolder, "packages.config");
-            string pkgconfigContent = codeGen.Gen(Comm.GetProjTemplete("packagesconfig.cshtml"), model);
+            string pkgconfigContent = codeGen.Gen(this.TempPath_ConsoleProj_PackageConfig, model);
             File.WriteAllText(pkgconfigFilePath, pkgconfigContent);
 
             //loghelper.cs
             string loghelperFilePath = Path.Combine(testappFolder, "LogHelper.cs");
-            string loghelperContent = codeGen.Gen(Comm.GetProjTemplete("loghelper.cshtml"), model);
+            string loghelperContent = codeGen.Gen(this.TempPath_ConsoleProj_LogHelper, model);
             File.WriteAllText(loghelperFilePath, loghelperContent);
 
             foreach (var tinfo in tables)
@@ -120,7 +140,7 @@ namespace CKGen.Temp.Adonet.DbConsoleProject
 
             //testapp csproj
             string csprojFilePath = Path.Combine(testappFolder, string.Format("{0}.csproj", model.ProjectName));
-            string csprojContent = codeGen.Gen(Comm.GetProjTemplete("csproj.cshtml"), model);
+            string csprojContent = codeGen.Gen(this.TempPath_ConsoleProj_CSProj, model);
             File.WriteAllText(csprojFilePath, csprojContent);
 
             return root;

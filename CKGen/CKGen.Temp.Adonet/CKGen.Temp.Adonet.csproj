@@ -56,11 +56,11 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Proj\AssemblyInfo.cshtml" />
-    <EmbeddedResource Include="Proj\appconfig.cshtml" />
-    <EmbeddedResource Include="Proj\sln.cshtml" />
-    <EmbeddedResource Include="Proj\csproj.cshtml" />
-    <EmbeddedResource Include="Proj\Program.cshtml" />
+    <EmbeddedResource Include="DbConsoleProject\Sln\ConsoleProj\AssemblyInfo.cshtml" />
+    <EmbeddedResource Include="DbConsoleProject\Sln\ConsoleProj\appconfig.cshtml" />
+    <EmbeddedResource Include="DbConsoleProject\Sln\sln.cshtml" />
+    <EmbeddedResource Include="DbConsoleProject\Sln\ConsoleProj\csproj.cshtml" />
+    <EmbeddedResource Include="DbConsoleProject\Sln\ConsoleProj\Program.cshtml" />
     <EmbeddedResource Include="Template\Table\Delete.cshtml" />
     <EmbeddedResource Include="Template\Table\Exist.cshtml" />
     <EmbeddedResource Include="Template\Table\Get.cshtml" />
@@ -84,10 +84,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Proj\packagesconfig.cshtml" />
+    <EmbeddedResource Include="DbConsoleProject\Sln\ConsoleProj\packagesconfig.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Proj\loghelper.cshtml" />
+    <EmbeddedResource Include="DbConsoleProject\Sln\ConsoleProj\loghelper.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
