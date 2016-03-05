@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace CKGen.Temp.Adonet
+namespace CKGen.Temp.Adonet.DbConsoleProject
 {
     public class DbProjectModel
     {

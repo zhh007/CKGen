@@ -1,4 +1,4 @@
-﻿namespace CKGen.Temp.Adonet.TestProj
+﻿namespace CKGen.Temp.Adonet.DbConsoleProject.UI
 {
     partial class MainUI
     {

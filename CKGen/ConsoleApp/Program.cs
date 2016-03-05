@@ -4,6 +4,7 @@ using CKGen.DBLoader;
 using CKGen.DBSchema;
 using CKGen.Services;
 using CKGen.Temp.Adonet;
+using CKGen.Temp.Adonet.DbConsoleProject;
 using CKGen.Temp.DataAccess;
 using CKGen.Temp.DBDoc;
 using System;

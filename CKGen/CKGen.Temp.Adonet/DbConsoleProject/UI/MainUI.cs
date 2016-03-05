@@ -10,7 +10,7 @@ using System.ComponentModel.Composition;
 using CKGen.DBSchema;
 using System.Diagnostics;
 
-namespace CKGen.Temp.Adonet.TestProj
+namespace CKGen.Temp.Adonet.DbConsoleProject.UI
 {
     [Export("UserControl", typeof(UserControl))]
     public partial class MainUI : UserControl
