@@ -112,7 +112,7 @@ namespace CKGen.Controls
             }
             titems.Add(btnMessage);
             titems.Add(btnGenCode);
-            if(count.HasValue)
+            if(count.HasValue && count > 0)
             {
                 titems.Add(btnExport);
             }
@@ -133,32 +133,20 @@ namespace CKGen.Controls
             pBox.Controls.Add(txtMsg);
         }
 
+        //取消查询
+        private void toolStripButton2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        //生成代码
         private void btnGenCode_Click(object sender, EventArgs e)
         {
-            
-        }
-
-        private void menuExportExcel_Click(object sender, EventArgs e)
-        {
 
         }
 
-        private void menuExportWord_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void menuExportPDF_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void menuExportHTML_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void toolStripButton2_Click(object sender, EventArgs e)
+        //导出数据
+        private void btnExport_Click(object sender, EventArgs e)
         {
 
         }

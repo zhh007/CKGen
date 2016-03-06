@@ -31,27 +31,23 @@
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.txtCode = new System.Windows.Forms.TextBox();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.Tool2 = new System.Windows.Forms.ToolStrip();
-            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.pBox = new System.Windows.Forms.Panel();
-            this.StatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
+            this.pBox = new System.Windows.Forms.Panel();
+            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.StatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.Tool2 = new System.Windows.Forms.ToolStrip();
             this.btnGenCode = new System.Windows.Forms.ToolStripButton();
-            this.btnExport = new System.Windows.Forms.ToolStripSplitButton();
-            this.menuExportExcel = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuExportWord = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuExportPDF = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuExportHTML = new System.Windows.Forms.ToolStripMenuItem();
             this.btnResult = new System.Windows.Forms.ToolStripButton();
             this.btnMessage = new System.Windows.Forms.ToolStripButton();
+            this.btnExport = new System.Windows.Forms.ToolStripButton();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
-            this.Tool2.SuspendLayout();
             this.statusStrip1.SuspendLayout();
+            this.Tool2.SuspendLayout();
             this.SuspendLayout();
             // 
             // splitContainer1
@@ -96,45 +92,6 @@
             this.toolStrip1.TabIndex = 0;
             this.toolStrip1.Text = "toolStrip1";
             // 
-            // Tool2
-            // 
-            this.Tool2.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            this.Tool2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.btnGenCode,
-            this.btnExport,
-            this.btnResult,
-            this.btnMessage});
-            this.Tool2.Location = new System.Drawing.Point(0, 0);
-            this.Tool2.Name = "Tool2";
-            this.Tool2.Size = new System.Drawing.Size(808, 25);
-            this.Tool2.TabIndex = 0;
-            this.Tool2.Text = "toolStrip2";
-            // 
-            // statusStrip1
-            // 
-            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.StatusLabel});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 227);
-            this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(808, 22);
-            this.statusStrip1.TabIndex = 2;
-            this.statusStrip1.Text = "statusStrip1";
-            // 
-            // pBox
-            // 
-            this.pBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pBox.Location = new System.Drawing.Point(0, 25);
-            this.pBox.Name = "pBox";
-            this.pBox.Size = new System.Drawing.Size(808, 202);
-            this.pBox.TabIndex = 3;
-            // 
-            // StatusLabel
-            // 
-            this.StatusLabel.Image = global::CKGen.Properties.Resources.success;
-            this.StatusLabel.Name = "StatusLabel";
-            this.StatusLabel.Size = new System.Drawing.Size(120, 17);
-            this.StatusLabel.Text = "查询已成功执行。";
-            // 
             // toolStripButton1
             // 
             this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -155,6 +112,45 @@
             this.toolStripButton2.Text = "取消";
             this.toolStripButton2.Click += new System.EventHandler(this.toolStripButton2_Click);
             // 
+            // pBox
+            // 
+            this.pBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pBox.Location = new System.Drawing.Point(0, 25);
+            this.pBox.Name = "pBox";
+            this.pBox.Size = new System.Drawing.Size(808, 202);
+            this.pBox.TabIndex = 3;
+            // 
+            // statusStrip1
+            // 
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.StatusLabel});
+            this.statusStrip1.Location = new System.Drawing.Point(0, 227);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.Size = new System.Drawing.Size(808, 22);
+            this.statusStrip1.TabIndex = 2;
+            this.statusStrip1.Text = "statusStrip1";
+            // 
+            // StatusLabel
+            // 
+            this.StatusLabel.Image = global::CKGen.Properties.Resources.success;
+            this.StatusLabel.Name = "StatusLabel";
+            this.StatusLabel.Size = new System.Drawing.Size(120, 17);
+            this.StatusLabel.Text = "查询已成功执行。";
+            // 
+            // Tool2
+            // 
+            this.Tool2.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.Tool2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.btnGenCode,
+            this.btnExport,
+            this.btnResult,
+            this.btnMessage});
+            this.Tool2.Location = new System.Drawing.Point(0, 0);
+            this.Tool2.Name = "Tool2";
+            this.Tool2.Size = new System.Drawing.Size(808, 25);
+            this.Tool2.TabIndex = 0;
+            this.Tool2.Text = "toolStrip2";
+            // 
             // btnGenCode
             // 
             this.btnGenCode.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
@@ -164,48 +160,6 @@
             this.btnGenCode.Size = new System.Drawing.Size(76, 22);
             this.btnGenCode.Text = "生成代码";
             this.btnGenCode.Click += new System.EventHandler(this.btnGenCode_Click);
-            // 
-            // btnExport
-            // 
-            this.btnExport.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.btnExport.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.menuExportExcel,
-            this.menuExportWord,
-            this.menuExportPDF,
-            this.menuExportHTML});
-            this.btnExport.Image = global::CKGen.Properties.Resources.PageNumber;
-            this.btnExport.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnExport.Name = "btnExport";
-            this.btnExport.Size = new System.Drawing.Size(64, 22);
-            this.btnExport.Text = "导出";
-            // 
-            // menuExportExcel
-            // 
-            this.menuExportExcel.Name = "menuExportExcel";
-            this.menuExportExcel.Size = new System.Drawing.Size(134, 22);
-            this.menuExportExcel.Text = "导出Excel";
-            this.menuExportExcel.Click += new System.EventHandler(this.menuExportExcel_Click);
-            // 
-            // menuExportWord
-            // 
-            this.menuExportWord.Name = "menuExportWord";
-            this.menuExportWord.Size = new System.Drawing.Size(134, 22);
-            this.menuExportWord.Text = "导出Word";
-            this.menuExportWord.Click += new System.EventHandler(this.menuExportWord_Click);
-            // 
-            // menuExportPDF
-            // 
-            this.menuExportPDF.Name = "menuExportPDF";
-            this.menuExportPDF.Size = new System.Drawing.Size(134, 22);
-            this.menuExportPDF.Text = "导出PDF";
-            this.menuExportPDF.Click += new System.EventHandler(this.menuExportPDF_Click);
-            // 
-            // menuExportHTML
-            // 
-            this.menuExportHTML.Name = "menuExportHTML";
-            this.menuExportHTML.Size = new System.Drawing.Size(134, 22);
-            this.menuExportHTML.Text = "导出HTML";
-            this.menuExportHTML.Click += new System.EventHandler(this.menuExportHTML_Click);
             // 
             // btnResult
             // 
@@ -225,12 +179,23 @@
             this.btnMessage.Text = "消息";
             this.btnMessage.Click += new System.EventHandler(this.btnMessage_Click);
             // 
-            // UCQuery
+            // btnExport
+            // 
+            this.btnExport.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.btnExport.Image = global::CKGen.Properties.Resources.PageNumber;
+            this.btnExport.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnExport.Name = "btnExport";
+            this.btnExport.Size = new System.Drawing.Size(76, 22);
+            this.btnExport.Text = "导出数据";
+            this.btnExport.ToolTipText = "导出数据";
+            this.btnExport.Click += new System.EventHandler(this.btnExport_Click);
+            // 
+            // SQLQueryView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.splitContainer1);
-            this.Name = "UCQuery";
+            this.Name = "SQLQueryView";
             this.Size = new System.Drawing.Size(808, 430);
             this.Load += new System.EventHandler(this.UCQuery_Load);
             this.splitContainer1.Panel1.ResumeLayout(false);
@@ -241,10 +206,10 @@
             this.splitContainer1.ResumeLayout(false);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
-            this.Tool2.ResumeLayout(false);
-            this.Tool2.PerformLayout();
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
+            this.Tool2.ResumeLayout(false);
+            this.Tool2.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -257,16 +222,12 @@
         private System.Windows.Forms.ToolStripButton toolStripButton1;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStrip Tool2;
-        private System.Windows.Forms.ToolStripSplitButton btnExport;
-        private System.Windows.Forms.ToolStripMenuItem menuExportExcel;
-        private System.Windows.Forms.ToolStripMenuItem menuExportWord;
-        private System.Windows.Forms.ToolStripMenuItem menuExportPDF;
-        private System.Windows.Forms.ToolStripMenuItem menuExportHTML;
         private System.Windows.Forms.ToolStripButton btnGenCode;
         private System.Windows.Forms.ToolStripButton btnResult;
         private System.Windows.Forms.ToolStripButton btnMessage;
         private System.Windows.Forms.ToolStripButton toolStripButton2;
         private System.Windows.Forms.Panel pBox;
         private System.Windows.Forms.ToolStripStatusLabel StatusLabel;
+        private System.Windows.Forms.ToolStripButton btnExport;
     }
 }
