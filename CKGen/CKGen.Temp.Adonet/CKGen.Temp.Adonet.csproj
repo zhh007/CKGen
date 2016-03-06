@@ -46,8 +46,8 @@
     <Compile Include="DbViewCodeGen.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DbTableCodeGen.cs" />
-    <Compile Include="DbConsoleProject\DbProjectBuilder.cs" />
-    <Compile Include="DbConsoleProject\DbProjectModel.cs" />
+    <Compile Include="DbConsoleProject\DbConsoleProjectBuilder.cs" />
+    <Compile Include="DbConsoleProject\DbConsoleProjectModel.cs" />
     <Compile Include="DbConsoleProject\UI\MainUI.cs">
       <SubType>UserControl</SubType>
     </Compile>

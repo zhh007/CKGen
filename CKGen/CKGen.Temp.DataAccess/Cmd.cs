@@ -122,7 +122,7 @@ namespace CKGen.Temp.DataAccess
 
                 Debug.WriteLine("线程退出。");
             }
-            catch (Exception ex)
+            catch (Exception)
             {
 
             }
@@ -201,7 +201,7 @@ namespace CKGen.Temp.DataAccess
 
                 //log.Write("close end!");
             }
-            catch (Exception ex)
+            catch (Exception)
             {
 
                 //myProcess.Kill();
@@ -266,15 +266,15 @@ namespace CKGen.Temp.DataAccess
                 //Start the thread.
                 objThread.Start(command);
             }
-            catch (ThreadStartException objException)
+            catch (ThreadStartException)
             {
                 // Log the exception
             }
-            catch (ThreadAbortException objException)
+            catch (ThreadAbortException)
             {
                 // Log the exception
             }
-            catch (Exception objException)
+            catch (Exception)
             {
                 // Log the exception
             }

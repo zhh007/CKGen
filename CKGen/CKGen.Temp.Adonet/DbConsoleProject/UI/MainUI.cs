@@ -215,7 +215,7 @@ namespace CKGen.Temp.Adonet.DbConsoleProject.UI
 
         private void _bgWorker_DoWork(object sender, DoWorkEventArgs e)
         {
-            DbProjectBuilder builder = new DbProjectBuilder();
+            DbConsoleProjectBuilder builder = new DbConsoleProjectBuilder();
             string folder = builder.Build(selTables, selViews, this.Database.Server.Connection, this._projName);
             Process.Start(folder);
         }

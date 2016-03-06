@@ -5,7 +5,7 @@ using System.Text;
 
 namespace CKGen.Temp.Adonet.DbConsoleProject
 {
-    public class DbProjectModel
+    public class DbConsoleProjectModel
     {
         public string ProjectName { get; set; }
         /// <summary>
@@ -16,10 +16,9 @@ namespace CKGen.Temp.Adonet.DbConsoleProject
         /// 小写
         /// </summary>
         public string ProjectGuidLower { get; set; }
-        //public string ModelClassName { get; set; }
         public string ConnectionString { get; set; }
         public List<string> Files { get; set; }
-        public DbProjectModel()
+        public DbConsoleProjectModel()
         {
             this.Files = new List<string>();
         }

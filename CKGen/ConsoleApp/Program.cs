@@ -147,7 +147,7 @@ namespace ConsoleApp
             }
             List<IViewInfo> selViews = new List<IViewInfo>();
 
-            DbProjectBuilder builder = new DbProjectBuilder();
+            DbConsoleProjectBuilder builder = new DbConsoleProjectBuilder();
             string folder = builder.Build(selTables, selViews, link.ConnectionString, "TestApp");
             Process.Start(folder);
         }

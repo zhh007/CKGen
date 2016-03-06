@@ -20,16 +20,5 @@ namespace CKGen.Temp.Adonet
                 return reader.ReadToEnd();
             }
         }
-
-        public static string GetProjTemplete(string tmp)
-        {
-            string tmpName = string.Format("CKGen.Temp.Adonet.Proj.{0}", tmp);
-            Assembly myAssembly = typeof(Comm).Assembly;
-            using (Stream input = myAssembly.GetManifestResourceStream(tmpName))
-            using (StreamReader reader = new StreamReader(input, Encoding.UTF8))
-            {
-                return reader.ReadToEnd();
-            }
-        }
     }
 }
