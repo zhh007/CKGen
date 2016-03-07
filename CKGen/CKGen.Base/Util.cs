@@ -1178,7 +1178,32 @@ SELECT @TotalCount = COUNT(*) FROM [{1}] {2}
             return result;
         }
 
+        ///// <summary>
+        ///// 方法1
+        ///// entity.ID = (int)sdr["ID"];
+        ///// entity.C_money = Convert.IsDBNull(sdr["C_money"]) ? default(decimal?) : sdr["C_money"] as decimal?;
+        ///// </summary>
+        //public static string GetPropertySettingString(string entityName, string readerName, ModuleField field)
+        //{
+        //    if (field == null)
+        //    {
+        //        return "";
+        //    }
+
+        //    if (field.Nullable || field.LanguageType.Contains("?") || field.LanguageType.Contains("Nullable<"))
+        //    {
+        //        return string.Format("{3}.{0} = Convert.IsDBNull({4}[\"{1}\"]) ? default({2}) : {4}[\"{1}\"] as {2};"
+        //            , field.CodeName, field.FieldName, field.LanguageType, entityName, readerName);
+        //    }
+        //    else
+        //    {
+        //        return string.Format("{3}.{0} = ({2}){4}[\"{1}\"];"
+        //            , field.CodeName, field.FieldName, field.LanguageType, entityName, readerName);
+        //    }
+        //}
+
         /// <summary>
+        /// 方法2
         /// entity.ID = (int)sdr["ID"];
         /// entity.C_money = Convert.IsDBNull(sdr["C_money"]) ? default(decimal?) : sdr["C_money"] as decimal?;
         /// </summary>
@@ -1191,13 +1216,36 @@ SELECT @TotalCount = COUNT(*) FROM [{1}] {2}
 
             if (field.Nullable || field.LanguageType.Contains("?") || field.LanguageType.Contains("Nullable<"))
             {
-                return string.Format("{3}.{0} = Convert.IsDBNull({4}[\"{1}\"]) ? default({2}) : {4}[\"{1}\"] as {2};"
+                return string.Format("{3}.{0} = {4}[\"{1}\"] as {2};"
                     , field.CodeName, field.FieldName, field.LanguageType, entityName, readerName);
             }
             else
             {
                 return string.Format("{3}.{0} = ({2}){4}[\"{1}\"];"
                     , field.CodeName, field.FieldName, field.LanguageType, entityName, readerName);
+            }
+        }
+
+        /// <summary>
+        /// entity.ID = sdr.GetInt32(idOrdinal);
+        /// entity.C_money = sdr.IsDBNull(c_moneyOrdinal) ? default(decimal?) : sdr.GetDecimal(c_moneyOrdinal);
+        /// </summary>
+        public static string GetPropertySettingString(string entityName, string readerName, IColumnInfo field)
+        {
+            if (field == null)
+            {
+                return "";
+            }
+
+            if (field.Nullable || field.LanguageType.Contains("?") || field.LanguageType.Contains("Nullable<"))
+            {
+                return string.Format("{3}.{0} = {4}.IsDBNull({1}Ordinal) ? default({2}) : {5};"
+                    , field.PascalName, field.CamelName, field.LanguageType, entityName, readerName, Util.BuildSetFieldValue(field));
+            }
+            else
+            {
+                return string.Format("{1}.{0} = {2};"
+                    , field.PascalName, entityName, Util.BuildSetFieldValue(field));
             }
         }
     }

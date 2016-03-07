@@ -31,15 +31,7 @@ public List<@(Model.PascalName)> Top(int topN)
                     @(Model.PascalName) entity = new @(Model.PascalName)();
 @foreach(var column in Model.Columns)
 {
-<text>
-                    if (sdr.IsDBNull(@(column.CamelName)Ordinal))
-                    {
-                        entity.@(column.PascalName) = @(Util.BuildGetSqlReaderNullStr(column));
-                    }
-                    else
-                    {
-                        @(Util.BuildSetFieldValue(column))
-                    }</text>
+<text>        @(Util.GetPropertySettingString("entity", "sdr", column))</text>
 }
 
                     list.Add(entity);

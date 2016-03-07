@@ -16,7 +16,7 @@ private List<@(Model.PascalName)> GetMany(SqlDataReader sdr)
         @(Model.PascalName) entity = new @(Model.PascalName)();
 @foreach(var column in Model.Columns)
 {
-<text>        entity.@(column.PascalName) = sdr.IsDBNull(@(column.CamelName)Ordinal) ? @(Util.BuildGetSqlReaderNullStr(column)) : @(Util.BuildSetFieldValue(column));</text>
+<text>        @(Util.GetPropertySettingString("entity", "sdr", column))</text>
 }
 
         list.Add(entity);
