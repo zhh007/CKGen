@@ -119,10 +119,6 @@
     <Compile Include="FrmSelectTable.Designer.cs">
       <DependentUpon>FrmSelectTable.cs</DependentUpon>
     </Compile>
-    <Compile Include="ModuleEntity.cs" />
-    <Compile Include="ModuleEntityField.cs" />
-    <Compile Include="ModuleField.cs" />
-    <Compile Include="ModuleFieldBase.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Setting\ConnectionSetting.cs" />

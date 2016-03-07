@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CKGen.Base.Form;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -11,7 +12,7 @@ namespace CKGen
 {
     public partial class FrmModuleBuild : Form
     {
-        private ModuleEntity Entity { get; set; }
+        private Module Entity { get; set; }
 
         public FrmModuleBuild()
         {

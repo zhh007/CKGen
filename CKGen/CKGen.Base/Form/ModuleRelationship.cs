@@ -3,41 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace CKGen
+namespace CKGen.Base.Form
 {
     /// <summary>
-    /// 1->1
+    /// 实体关系
     /// </summary>
-    public class ModuleEntityField : ModuleFieldBase
-    {
-        public string FieldName { get; set; }
-        public string CodeName { get; set; }
-
-
-        public ModuleEntityField(ModuleEntity parent, string title)
-            : base(parent, title)
-        {
-
-        }
-    }
-
-    public class ModuleCollectionEntityField : ModuleFieldBase
-    {
-        public string CodeName { get; set; }
-
-        /// <summary>
-        /// 关系实体
-        /// </summary>
-        public ModuleEntity RelationshipEntity { get; private set; }
-
-        public ModuleCollectionEntityField(ModuleEntity parent, string title, ModuleEntity entity)
-            : base(parent, title)
-        {
-            this.RelationshipEntity = entity;
-        }
-    }
-
-    public class EntityRelationship
+    public class ModuleRelationship
     {
         /// <summary>
         /// 主键表
