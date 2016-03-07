@@ -122,6 +122,20 @@ namespace CKGen.DBSchema
             return retVal;
         }
 
+        public static string GetCSharpType(Type type, bool nullable)
+        {
+            string retVal = type.GetFriendlyName();
+
+            if (nullable && (IsValueType(retVal) 
+                || type.IsValueType))
+                //|| retVal == "Guid" || retVal == "DateTime" || retVal == "DateTimeOffset" || retVal == "TimeSpan"))
+            {
+                retVal += "?";
+            }
+
+            return retVal;
+        }
+
         /// <summary>
         /// 是否值类型
         /// </summary>

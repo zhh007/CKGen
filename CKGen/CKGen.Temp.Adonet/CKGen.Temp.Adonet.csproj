@@ -90,7 +90,9 @@
   <ItemGroup>
     <EmbeddedResource Include="DbConsoleProject\Sln\ConsoleProj\loghelper.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Template\Query\GetList.cshtml" />
+  </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Template\View\_GetMany.cshtml" />
   </ItemGroup>
@@ -111,6 +113,18 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Template\View\Model.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Template\Query\TempGetOne.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Template\Query\TempExecuteNonQuery.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Template\Query\TempExecuteScalar.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Template\Query\Model.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

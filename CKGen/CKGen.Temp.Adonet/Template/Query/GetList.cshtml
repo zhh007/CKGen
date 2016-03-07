@@ -1,0 +1,42 @@
+﻿@using RazorEngine.Templating
+@using CKGen.DBSchema;
+@using CKGen;
+@using CKGen.Temp.Adonet;
+@inherits TemplateBase<DbQueryGetListModel>
+
+public List<@(Model.Module.CodeName)> GetList()
+{
+    List<@(Model.Module.CodeName)> list = new List<@(Model.Module.CodeName)>();
+    string sql = @@"@(Model.SQL)";
+
+    using (SqlConnection conn = new SqlConnection('conn_name'))
+    {
+        try
+        {
+            SqlCommand cmd = new SqlCommand(sql, conn);
+            conn.Open();
+            using (SqlDataReader sdr = cmd.ExecuteReader())
+            {
+                while (sdr.Read())
+                {
+                    @(Model.Module.CodeName) entity = new @(Model.Module.CodeName)();
+                    @foreach (var column in Model.Module.Fields)
+                    {
+            <text>        @(Util.GetPropertySettingString("entity", "sdr", column))</text>
+                    }
+
+                    list.Add(entity);
+                }
+            }
+        }
+        finally
+        {
+            if (conn.State != ConnectionState.Closed)
+                conn.Close();
+            if (conn != null)
+                conn.Dispose();
+        }
+    }
+
+    return list;
+}

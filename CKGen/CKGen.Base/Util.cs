@@ -6,6 +6,7 @@ using System.Text;
 using CKGen.DBSchema;
 using System.Data.SqlClient;
 using System.Data;
+using CKGen.Base.Form;
 
 namespace CKGen
 {
@@ -824,18 +825,18 @@ SELECT @TotalCount = COUNT(*) FROM [{1}] {2}
             if (col == null)
             {
                 col = (from p in table.Columns
-                   where p.LanguageType == "DateTime" && (p.LowerName.Contains("update") || p.LowerName.Contains("modif"))
-                   select p).FirstOrDefault();
+                       where p.LanguageType == "DateTime" && (p.LowerName.Contains("update") || p.LowerName.Contains("modif"))
+                       select p).FirstOrDefault();
             }
 
             if (col == null)
             {
                 col = (from p in table.Columns
-                   where p.LanguageType == "DateTime" && (p.LowerName.Contains("create") || p.LowerName.Contains("add"))
-                   select p).FirstOrDefault();
+                       where p.LanguageType == "DateTime" && (p.LowerName.Contains("create") || p.LowerName.Contains("add"))
+                       select p).FirstOrDefault();
             }
 
-            if(col == null)
+            if (col == null)
             {
                 col = table.Columns[0];
             }
@@ -853,22 +854,22 @@ SELECT @TotalCount = COUNT(*) FROM [{1}] {2}
             if (col == null)
             {
                 col = (from p in view.Columns
-                           where p.LanguageType == "Int32" && p.LowerName.Contains("id")
-                           select p).FirstOrDefault();
+                       where p.LanguageType == "Int32" && p.LowerName.Contains("id")
+                       select p).FirstOrDefault();
             }
 
             if (col == null)
             {
                 col = (from p in view.Columns
-                   where p.LanguageType == "DateTime" && (p.LowerName.Contains("update") || p.LowerName.Contains("modif"))
-                   select p).FirstOrDefault();
+                       where p.LanguageType == "DateTime" && (p.LowerName.Contains("update") || p.LowerName.Contains("modif"))
+                       select p).FirstOrDefault();
             }
 
             if (col == null)
             {
                 col = (from p in view.Columns
-                   where p.LanguageType == "DateTime" && (p.LowerName.Contains("create") || p.LowerName.Contains("add"))
-                   select p).FirstOrDefault();
+                       where p.LanguageType == "DateTime" && (p.LowerName.Contains("create") || p.LowerName.Contains("add"))
+                       select p).FirstOrDefault();
             }
 
             if (col == null)
@@ -936,6 +937,28 @@ SELECT @TotalCount = COUNT(*) FROM [{1}] {2}
             return sb.ToString();
         }
 
+        public static string BuildGetSqlReaderNullStr(ModuleField column)
+        {
+            //string sqlType = column.DBType;
+            //string sqlDbType = column.DbTargetType;
+            string languageType = column.LanguageType;
+            StringBuilder sb = new StringBuilder();
+
+            bool nullable = languageType.Contains("?") || languageType.Contains("Nullable<");
+
+            //如果该列是可空，并且是值类型
+            if (nullable && LanguageConvert.IsValueType(languageType))
+            {
+                sb.Append("null");
+            }
+            else
+            {
+                sb.AppendFormat("default({0})", languageType);
+            }
+
+            return sb.ToString();
+        }
+
         /// <summary>
         /// info.PathId = sdr.GetGuid(pathidOrdinal);
         /// </summary>
@@ -951,22 +974,38 @@ SELECT @TotalCount = COUNT(*) FROM [{1}] {2}
             if (sqlDbType == "SqlDbType.Image" || sqlDbType == "SqlDbType.Binary"
                 || sqlDbType == "SqlDbType.VarBinary" || sqlDbType == "SqlDbType.Timestamp")
             {
-//                string t = @"
-//long blobSize = sdr.GetBytes({0}Ordinal, 0, null, 0, 0);
-//byte[] buffer = new byte[blobSize];
-//long currPos = 0;
-//while (currPos < blobSize)
-//{{
-//    currPos += sdr.GetBytes({0}Ordinal, currPos, buffer, 0, 1024);
-//}}
-//entity.{1} = buffer;
-//";
-//                result = string.Format(t, column.CamelName, column.PascalName);
+                //                string t = @"
+                //long blobSize = sdr.GetBytes({0}Ordinal, 0, null, 0, 0);
+                //byte[] buffer = new byte[blobSize];
+                //long currPos = 0;
+                //while (currPos < blobSize)
+                //{{
+                //    currPos += sdr.GetBytes({0}Ordinal, currPos, buffer, 0, 1024);
+                //}}
+                //entity.{1} = buffer;
+                //";
+                //                result = string.Format(t, column.CamelName, column.PascalName);
                 result = string.Format("GetBytes(sdr, {1}Ordinal)", column.PascalName, column.CamelName);
             }
             else
             {
                 result = BuildGetSqlReaderValueStr(column);
+            }
+
+            return result;
+        }
+
+        public static string BuildSetFieldValue(ModuleField column)
+        {
+            string result = "";
+
+            if (LanguageConvert.IsValueType(column.LanguageType))
+            {
+                result = string.Format("({1})sdr[\"{0}\"]", column.FieldName, column.LanguageType);
+            }
+            else
+            {
+                result = string.Format("sdr[\"{0}\"] as {1}", column.FieldName, column.LanguageType);
             }
 
             return result;
@@ -1139,5 +1178,27 @@ SELECT @TotalCount = COUNT(*) FROM [{1}] {2}
             return result;
         }
 
+        /// <summary>
+        /// entity.ID = (int)sdr["ID"];
+        /// entity.C_money = Convert.IsDBNull(sdr["C_money"]) ? default(decimal?) : sdr["C_money"] as decimal?;
+        /// </summary>
+        public static string GetPropertySettingString(string entityName, string readerName, ModuleField field)
+        {
+            if (field == null)
+            {
+                return "";
+            }
+
+            if (field.Nullable || field.LanguageType.Contains("?") || field.LanguageType.Contains("Nullable<"))
+            {
+                return string.Format("{3}.{0} = Convert.IsDBNull({4}[\"{1}\"]) ? default({2}) : {4}[\"{1}\"] as {2};"
+                    , field.CodeName, field.FieldName, field.LanguageType, entityName, readerName);
+            }
+            else
+            {
+                return string.Format("{3}.{0} = ({2}){4}[\"{1}\"];"
+                    , field.CodeName, field.FieldName, field.LanguageType, entityName, readerName);
+            }
+        }
     }
 }

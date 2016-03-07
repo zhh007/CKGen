@@ -19,6 +19,10 @@ namespace ConsoleApp
     {
         static void Main(string[] args)
         {
+            Console.WriteLine(typeof(Tuple<short[], string>).GetFriendlyName());
+            Console.ReadKey();
+            return;
+
             ServiceLocator.Instance.AddService<ICodeGenService>(new CodeGenService());
             Console.WriteLine("正在生成...");
 

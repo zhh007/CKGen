@@ -38,5 +38,10 @@ namespace CKGen.Base.Form
             }
             this.Fields = fields;
         }
+
+        public Module()
+        {
+            this.Fields = new List<ModuleField>();
+        }
     }
 }

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Data.SqlClient;
+using CKGen.Temp.Adonet;
 
 namespace CKGen.Controls
 {
@@ -14,6 +15,7 @@ namespace CKGen.Controls
     {
         private DataGridView dgv = null;
         private TextBox txtMsg = null;
+        private DataSet queryDataSet = null;
 
         public SQLQueryView()
         {
@@ -58,6 +60,7 @@ namespace CKGen.Controls
             Tool2.Items.Clear();
             pBox.Controls.Clear();
             DataSet ds = new DataSet();
+            queryDataSet = new DataSet();
             int? count = null;
 
             try
@@ -69,6 +72,7 @@ namespace CKGen.Controls
                     {
                         SqlDataAdapter sdr = new SqlDataAdapter(cmd);
                         count = sdr.Fill(ds);
+                        sdr.FillSchema(queryDataSet, SchemaType.Mapped);
                     }
                     catch (Exception ex)
                     {
@@ -142,6 +146,12 @@ namespace CKGen.Controls
         //生成代码
         private void btnGenCode_Click(object sender, EventArgs e)
         {
+            DbQueryCodeGen gen = new DbQueryCodeGen();
+            string code = gen.Gen(txtCode.Text, queryDataSet, App.Instance.DBLink.ConnectionString);
+
+            FrmShowCode frm = new FrmShowCode();
+            frm.SetCode(code);
+            frm.Show();
 
         }
 

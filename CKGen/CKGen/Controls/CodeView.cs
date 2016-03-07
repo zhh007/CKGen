@@ -16,10 +16,7 @@ namespace CKGen.Controls
         public CodeView()
         {
             InitializeComponent();
-        }
 
-        private void UCCodeShow_Load(object sender, EventArgs e)
-        {
             this.scintilla1 = new ScintillaNET.Scintilla();
             this.Controls.Add(this.scintilla1);
             this.scintilla1.Dock = DockStyle.Fill;
@@ -62,6 +59,11 @@ namespace CKGen.Controls
             scintilla1.SetKeywords(1, "bool byte char class const decimal double enum float int long sbyte short static string struct uint ulong ushort void");
 
             scintilla1.CharAdded += Scintilla1_CharAdded;
+        }
+
+        private void UCCodeShow_Load(object sender, EventArgs e)
+        {
+            
         }
 
         private void Scintilla1_CharAdded(object sender, CharAddedEventArgs e)
