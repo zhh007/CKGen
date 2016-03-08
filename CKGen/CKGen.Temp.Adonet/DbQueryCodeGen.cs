@@ -45,6 +45,7 @@ namespace CKGen.Temp.Adonet
                     foreach (DataColumn dc in dt.Columns)
                     {
                         ModuleField mf = new ModuleField(module, "", dc.ColumnName, dc.ColumnName);
+                        mf.DataType = dc.DataType;
                         mf.Nullable = dc.AllowDBNull;
                         mf.LanguageType = LanguageConvert.GetCSharpType(dc.DataType, dc.AllowDBNull);
                         //Debug.WriteLine("{0} ---> {1}", mf.FieldName, mf.LanguageType);

@@ -1214,7 +1214,7 @@ SELECT @TotalCount = COUNT(*) FROM [{1}] {2}
                 return "";
             }
 
-            if (field.Nullable || field.LanguageType.Contains("?") || field.LanguageType.Contains("Nullable<"))
+            if (field.Nullable || field.DataType.IsClass || field.LanguageType.Contains("?") || field.LanguageType.Contains("Nullable<"))
             {
                 return string.Format("{3}.{0} = {4}[\"{1}\"] as {2};"
                     , field.CodeName, field.FieldName, field.LanguageType, entityName, readerName);

@@ -33,7 +33,7 @@ namespace CKGen
         /// <returns></returns>
         public static string SetCamelCase(string phrase)
         {
-            string[] splittedPhrase = phrase.Split(' ', '-', '.');
+            string[] splittedPhrase = phrase.Split(' ', '-', '.', '(', ')', '[', ']');
             var sb = new StringBuilder();
 
             sb.Append(splittedPhrase[0].ToLower());
@@ -58,10 +58,8 @@ namespace CKGen
         /// <returns></returns>
         public static string SetPascalCase(string phrase)
         {
-            string[] splittedPhrase = phrase.Split(' ', '-', '.');
+            string[] splittedPhrase = phrase.Split(' ', '-', '.', '(', ')', '[', ']');
             var sb = new StringBuilder();
-
-            //sb = new StringBuilder();
 
             foreach (String s in splittedPhrase)
             {
@@ -77,10 +75,8 @@ namespace CKGen
 
         public static string SetValidName(string phrase)
         {
-            string[] splittedPhrase = phrase.Split(' ', '-', '.');
+            string[] splittedPhrase = phrase.Split(' ', '-', '.', '(', ')', '[', ']');
             var sb = new StringBuilder();
-
-            //sb = new StringBuilder();
 
             foreach (String s in splittedPhrase)
             {

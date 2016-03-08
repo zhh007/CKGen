@@ -7,6 +7,7 @@ namespace CKGen.Base.Form
 {
     public class ModuleField
     {
+        private string _codename = "";
         public Guid Id { get; private set; }
         public Module Parent { get; private set; }
         /// <summary>
@@ -20,7 +21,17 @@ namespace CKGen.Base.Form
         /// <summary>
         /// 英文名/代码变量名（如：GoodName）
         /// </summary>
-        public string CodeName { get; set; }
+        public string CodeName
+        {
+            get
+            {
+                return _codename;
+            }
+            set
+            {
+                _codename = StringHelper.SetPascalCase(value);
+            }
+        }
         /// <summary>
         /// C#类型，如DateTime,string等
         /// </summary>
@@ -29,6 +40,7 @@ namespace CKGen.Base.Form
         /// 是否可空
         /// </summary>
         public bool Nullable { get; set; }
+        public Type DataType { get; set; }
         public bool IsKey { get; set; }
         public bool IsRequired { get; set; }
 
