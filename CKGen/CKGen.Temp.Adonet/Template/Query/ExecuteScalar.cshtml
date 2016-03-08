@@ -1,0 +1,27 @@
+﻿@using RazorEngine.Templating
+@using CKGen.DBSchema;
+@using CKGen;
+@using CKGen.Temp.Adonet;
+@inherits TemplateBase<DbQueryExecuteScalarModel>
+
+public @(Model.TypeString) Query()
+{
+    string sql = @@"@(Model.SQL)";
+
+    using (SqlConnection conn = new SqlConnection('conn_name'))
+    {
+        try
+        {
+            SqlCommand cmd = new SqlCommand(sql, conn);
+            conn.Open();
+            return @(Model.ReturnString)
+        }
+        finally
+        {
+            if (conn.State != ConnectionState.Closed)
+                conn.Close();
+            if (conn != null)
+                conn.Dispose();
+        }
+    }
+}

@@ -22,6 +22,14 @@ namespace CKGen.Temp.Adonet
         }
     }
 
+    public class DbQueryExecuteScalarModel
+    {
+        public string SQL { get; set; }
+        public string ConnectionString { get; set; }
+        public string TypeString { get; set; }
+        public string ReturnString { get; set; }
+    }
+
     public class DbQueryCodeGen
     {
         private readonly ICodeGenService codeGen = ServiceLocator.Instance.GetService<ICodeGenService>();
@@ -30,6 +38,7 @@ namespace CKGen.Temp.Adonet
         private readonly string Temp_Query_GetList = Comm.GetTemplete("Query.GetList.cshtml");
         private readonly string Temp_Query_GetOne = Comm.GetTemplete("Query.GetOne.cshtml");
         private readonly string Temp_Query_ExecuteNonQuery = Comm.GetTemplete("Query.ExecuteNonQuery.cshtml");
+        private readonly string Temp_Query_ExecuteScalar = Comm.GetTemplete("Query.ExecuteScalar.cshtml");
 
         public string GenForQueryList(string query, DataSet ds, string connstr)
         {
@@ -118,6 +127,39 @@ namespace CKGen.Temp.Adonet
             StringBuilder sb = new StringBuilder();
 
             string queryCode = codeGen.Gen(this.Temp_Query_ExecuteNonQuery, gModel);
+            queryCode = queryCode.Replace("'conn_name'", "Program.TestConnection");
+            sb.AppendLine(queryCode);
+
+            return sb.ToString();
+        }
+
+        public string GenForExecuteScalar(string query, DataSet ds, string connstr)
+        {
+            Type t = null;
+            bool allowDBNull = false;
+            if (ds != null && ds.Tables != null && ds.Tables.Count > 0)
+            {
+                var dc = ds.Tables[0].Columns[0];
+                t = dc.DataType;
+                allowDBNull = dc.AllowDBNull;
+            }
+
+            DbQueryExecuteScalarModel gModel = new DbQueryExecuteScalarModel();
+            gModel.SQL = query;
+            gModel.ConnectionString = connstr;
+            gModel.TypeString = LanguageConvert.GetCSharpType(t, allowDBNull);
+            if (allowDBNull || t.IsClass || gModel.TypeString.Contains("?") || gModel.TypeString.Contains("Nullable<"))
+            {
+                gModel.ReturnString = string.Format("cmd.ExecuteScalar() as {0};", gModel.TypeString);
+            }
+            else
+            {
+                gModel.ReturnString = string.Format("({0})cmd.ExecuteScalar();", gModel.TypeString);
+            }
+
+            StringBuilder sb = new StringBuilder();
+
+            string queryCode = codeGen.Gen(this.Temp_Query_ExecuteScalar, gModel);
             queryCode = queryCode.Replace("'conn_name'", "Program.TestConnection");
             sb.AppendLine(queryCode);
 
