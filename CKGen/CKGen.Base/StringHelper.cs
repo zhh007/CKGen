@@ -12,15 +12,15 @@ namespace CKGen
     using System.Text;
 
     /// <summary>
-    /// TODO: Update summary.
+    /// 
     /// </summary>
     public class StringHelper
     {
+        public static char[] InvalidToken = new char[] { ' ', ',', '.', '?', '~', '`', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '-', '+', '=', '[', ']', '{', '}', '\\', '|', ':', ';', '"', '\'', '/', '<', '>' };
+
         /// <summary>
         /// 无效字符串验证
         /// </summary>
-        /// <param name="srcString"></param>
-        /// <returns></returns>
         public static bool InvalidString(object srcString)
         {
             return (((srcString == DBNull.Value) || (srcString == null)) || (srcString.ToString().Trim() == string.Empty));
@@ -29,11 +29,9 @@ namespace CKGen
         /// <summary>
         /// columnName
         /// </summary>
-        /// <param name="phrase"></param>
-        /// <returns></returns>
         public static string SetCamelCase(string phrase)
         {
-            string[] splittedPhrase = phrase.Split(' ', '-', '.', '(', ')', '[', ']');
+            string[] splittedPhrase = phrase.Split(InvalidToken);
             var sb = new StringBuilder();
 
             sb.Append(splittedPhrase[0].ToLower());
@@ -54,11 +52,9 @@ namespace CKGen
         /// <summary>
         /// ColumnName
         /// </summary>
-        /// <param name="phrase"></param>
-        /// <returns></returns>
         public static string SetPascalCase(string phrase)
         {
-            string[] splittedPhrase = phrase.Split(' ', '-', '.', '(', ')', '[', ']');
+            string[] splittedPhrase = phrase.Split(InvalidToken);
             var sb = new StringBuilder();
 
             foreach (String s in splittedPhrase)
@@ -75,7 +71,7 @@ namespace CKGen
 
         public static string SetValidName(string phrase)
         {
-            string[] splittedPhrase = phrase.Split(' ', '-', '.', '(', ')', '[', ']');
+            string[] splittedPhrase = phrase.Split(InvalidToken);
             var sb = new StringBuilder();
 
             foreach (String s in splittedPhrase)
