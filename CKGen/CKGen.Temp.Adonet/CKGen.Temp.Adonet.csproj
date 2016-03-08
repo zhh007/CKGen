@@ -118,7 +118,7 @@
     <EmbeddedResource Include="Template\Query\TempGetOne.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Template\Query\TempExecuteNonQuery.cshtml" />
+    <EmbeddedResource Include="Template\Query\ExecuteNonQuery.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Template\Query\TempExecuteScalar.cshtml" />

@@ -16,6 +16,7 @@ namespace CKGen.Controls
         private DataGridView dgv = null;
         private TextBox txtMsg = null;
         private DataSet queryDataSet = null;
+        private DataSet ds = null;
 
         public SQLQueryView()
         {
@@ -59,10 +60,10 @@ namespace CKGen.Controls
             dgv.DataSource = null;
             Tool2.Items.Clear();
             pBox.Controls.Clear();
-            DataSet ds = new DataSet();
+            ds = new DataSet();
             queryDataSet = new DataSet();
             int? count = null;
-
+            bool hasError = false;
             try
             {
                 using (SqlConnection conn = new SqlConnection(App.Instance.DBLink.ConnectionString))
@@ -73,6 +74,10 @@ namespace CKGen.Controls
                         SqlDataAdapter sdr = new SqlDataAdapter(cmd);
                         count = sdr.Fill(ds);
                         sdr.FillSchema(queryDataSet, SchemaType.Mapped);
+                        if(ds != null && ds.Tables != null && ds.Tables.Count == 0)
+                        {
+                            count = null;
+                        }
                     }
                     catch (Exception ex)
                     {
@@ -89,36 +94,45 @@ namespace CKGen.Controls
             }
             catch (Exception ex)
             {
+                hasError = true;
                 txtMsg.ForeColor = System.Drawing.Color.Red;
                 txtMsg.Text = ex.Message;
                 StatusLabel.Image = global::CKGen.Properties.Resources.error;
                 StatusLabel.Text = "查询已完成，但有错误。";
             }
 
-            if(count.HasValue)
-            {
-                dgv.DataSource = ds.Tables[0].DefaultView;
-                txtMsg.ForeColor = System.Drawing.SystemColors.WindowText;
-                txtMsg.Text = string.Format("返回{0}条记录。", count);
-                StatusLabel.Image = global::CKGen.Properties.Resources.success;
-                StatusLabel.Text = "查询已成功执行。";
-            }
-
             List<ToolStripItem> titems = new List<ToolStripItem>();
-            if(count.HasValue)
+            if (!hasError)
             {
-                titems.Add(btnResult);
-                pBox.Controls.Add(dgv);
-            }
-            else
-            {
-                pBox.Controls.Add(txtMsg);
-            }
-            titems.Add(btnMessage);
-            titems.Add(btnGenCode);
-            if(count.HasValue && count > 0)
-            {
-                titems.Add(btnExport);
+                if (ds != null && ds.Tables != null && ds.Tables.Count > 0)
+                {
+                    dgv.DataSource = ds.Tables[0].DefaultView;
+                    txtMsg.ForeColor = System.Drawing.SystemColors.WindowText;
+                    txtMsg.Text = string.Format("返回{0}条记录。", count);
+                    StatusLabel.Image = global::CKGen.Properties.Resources.success;
+                    StatusLabel.Text = "查询已成功执行。";
+
+                    titems.Add(btnResult);
+                    pBox.Controls.Add(dgv);
+                    titems.Add(btnMessage);
+                    titems.Add(btnGenCode);
+
+                    if (count.HasValue && count > 0)
+                    {
+                        titems.Add(btnExport);
+                    }
+                }
+                else
+                {
+                    txtMsg.ForeColor = System.Drawing.SystemColors.WindowText;
+                    txtMsg.Text = string.Format("执行成功。");
+                    StatusLabel.Image = global::CKGen.Properties.Resources.success;
+                    StatusLabel.Text = "执行成功。";
+
+                    pBox.Controls.Add(txtMsg);
+                    titems.Add(btnMessage);
+                    titems.Add(btnGenCode);
+                }
             }
 
             Tool2.Items.Clear();
@@ -147,7 +161,15 @@ namespace CKGen.Controls
         private void btnGenCode_Click(object sender, EventArgs e)
         {
             DbQueryCodeGen gen = new DbQueryCodeGen();
-            string code = gen.Gen(txtCode.Text, queryDataSet, App.Instance.DBLink.ConnectionString);
+            string code = "";
+            if (ds != null && ds.Tables != null && ds.Tables.Count > 0)
+            {
+                code = gen.GenForQueryList(txtCode.Text, queryDataSet, App.Instance.DBLink.ConnectionString);
+            }
+            else
+            {
+                code = gen.GenForExecuteNoQuery(txtCode.Text, App.Instance.DBLink.ConnectionString);
+            }
 
             FrmShowCode frm = new FrmShowCode();
             frm.SetCode(code);

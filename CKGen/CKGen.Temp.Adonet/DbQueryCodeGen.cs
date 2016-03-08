@@ -28,8 +28,9 @@ namespace CKGen.Temp.Adonet
 
         private readonly string Temp_Query_Model = Comm.GetTemplete("Query.Model.cshtml");
         private readonly string Temp_Query_GetList = Comm.GetTemplete("Query.GetList.cshtml");
+        private readonly string Temp_Query_ExecuteNonQuery = Comm.GetTemplete("Query.ExecuteNonQuery.cshtml");
 
-        public string Gen(string query, DataSet ds, string connstr)
+        public string GenForQueryList(string query, DataSet ds, string connstr)
         {
             DbQueryGetListModel gModel = new DbQueryGetListModel();
             gModel.SQL = query;
@@ -49,7 +50,6 @@ namespace CKGen.Temp.Adonet
                         mf.Nullable = dc.AllowDBNull;
                         mf.LanguageType = LanguageConvert.GetCSharpType(dc.DataType, dc.AllowDBNull);
                         //Debug.WriteLine("{0} ---> {1}", mf.FieldName, mf.LanguageType);
-
                         module.Fields.Add(mf);
                     }
 
@@ -63,6 +63,21 @@ namespace CKGen.Temp.Adonet
             sb.AppendLine(modelCode);
 
             string queryCode = codeGen.Gen(this.Temp_Query_GetList, gModel);
+            queryCode = queryCode.Replace("'conn_name'", "Program.TestConnection");
+            sb.AppendLine(queryCode);
+
+            return sb.ToString();
+        }
+
+        public string GenForExecuteNoQuery(string query, string connstr)
+        {
+            DbQueryGetListModel gModel = new DbQueryGetListModel();
+            gModel.SQL = query;
+            gModel.ConnectionString = connstr;
+
+            StringBuilder sb = new StringBuilder();
+
+            string queryCode = codeGen.Gen(this.Temp_Query_ExecuteNonQuery, gModel);
             queryCode = queryCode.Replace("'conn_name'", "Program.TestConnection");
             sb.AppendLine(queryCode);
 
