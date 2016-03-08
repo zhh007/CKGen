@@ -16,7 +16,7 @@ namespace CKGen
     /// </summary>
     public class StringHelper
     {
-        public static char[] InvalidToken = new char[] {
+        public static char[] InvalidSymbol = new char[] {
             ' ', ',', '.', '?', '~', '`', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '-', '+', '=', '[', ']', '{', '}', '\\', '|', ':', ';', '"', '\'', '/', '<', '>',
             '　', '，', '。', '？', '·', '！', '￥', '%', '…', '&', '*', '（', '）', '—', '【', '】', '、', '|', '：', '；', '“', '”', '‘', '’', '《', '》',
         };
@@ -34,7 +34,7 @@ namespace CKGen
         /// </summary>
         public static string SetCamelCase(string phrase)
         {
-            string[] splittedPhrase = phrase.Split(InvalidToken);
+            string[] splittedPhrase = phrase.Split(InvalidSymbol);
             var sb = new StringBuilder();
 
             sb.Append(splittedPhrase[0].ToLower());
@@ -57,7 +57,7 @@ namespace CKGen
         /// </summary>
         public static string SetPascalCase(string phrase)
         {
-            string[] splittedPhrase = phrase.Split(InvalidToken);
+            string[] splittedPhrase = phrase.Split(InvalidSymbol);
             var sb = new StringBuilder();
 
             foreach (String s in splittedPhrase)
@@ -74,7 +74,7 @@ namespace CKGen
 
         public static string SetValidName(string phrase)
         {
-            string[] splittedPhrase = phrase.Split(InvalidToken);
+            string[] splittedPhrase = phrase.Split(InvalidSymbol);
             var sb = new StringBuilder();
 
             foreach (String s in splittedPhrase)
