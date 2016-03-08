@@ -28,6 +28,7 @@ namespace CKGen.Temp.Adonet
 
         private readonly string Temp_Query_Model = Comm.GetTemplete("Query.Model.cshtml");
         private readonly string Temp_Query_GetList = Comm.GetTemplete("Query.GetList.cshtml");
+        private readonly string Temp_Query_GetOne = Comm.GetTemplete("Query.GetOne.cshtml");
         private readonly string Temp_Query_ExecuteNonQuery = Comm.GetTemplete("Query.ExecuteNonQuery.cshtml");
 
         public string GenForQueryList(string query, DataSet ds, string connstr)
@@ -63,6 +64,45 @@ namespace CKGen.Temp.Adonet
             sb.AppendLine(modelCode);
 
             string queryCode = codeGen.Gen(this.Temp_Query_GetList, gModel);
+            queryCode = queryCode.Replace("'conn_name'", "Program.TestConnection");
+            sb.AppendLine(queryCode);
+
+            return sb.ToString();
+        }
+
+        public string GenForQueryOne(string query, DataSet ds, string connstr)
+        {
+            DbQueryGetListModel gModel = new DbQueryGetListModel();
+            gModel.SQL = query;
+            gModel.ConnectionString = connstr;
+            if (ds != null && ds.Tables != null && ds.Tables.Count > 0)
+            {
+                for (int i = 0; i < ds.Tables.Count; i++)
+                {
+                    DataTable dt = ds.Tables[i];
+                    Module module = new Module();
+                    module.ModuleName = string.Format("Result{0}", i);
+                    module.CodeName = string.Format("Result{0}", i);
+                    foreach (DataColumn dc in dt.Columns)
+                    {
+                        ModuleField mf = new ModuleField(module, "", dc.ColumnName, dc.ColumnName);
+                        mf.DataType = dc.DataType;
+                        mf.Nullable = dc.AllowDBNull;
+                        mf.LanguageType = LanguageConvert.GetCSharpType(dc.DataType, dc.AllowDBNull);
+                        //Debug.WriteLine("{0} ---> {1}", mf.FieldName, mf.LanguageType);
+                        module.Fields.Add(mf);
+                    }
+
+                    gModel.Module = module;
+                }
+            }
+
+            string modelCode = GenModelCode(gModel.Module);
+
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine(modelCode);
+
+            string queryCode = codeGen.Gen(this.Temp_Query_GetOne, gModel);
             queryCode = queryCode.Replace("'conn_name'", "Program.TestConnection");
             sb.AppendLine(queryCode);
 

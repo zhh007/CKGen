@@ -115,7 +115,7 @@
     <EmbeddedResource Include="Template\View\Model.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Template\Query\TempGetOne.cshtml" />
+    <EmbeddedResource Include="Template\Query\GetOne.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Template\Query\ExecuteNonQuery.cshtml" />
