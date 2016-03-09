@@ -33,13 +33,14 @@
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.tsbtnSaveSchema = new System.Windows.Forms.ToolStripButton();
             this.tsBtnReloadSchema = new System.Windows.Forms.ToolStripButton();
+            this.tsBtnQuery = new System.Windows.Forms.ToolStripButton();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.tabControl2 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.tbTemp = new System.Windows.Forms.TreeView();
             this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -53,7 +54,8 @@
             // 
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsbtnSaveSchema,
-            this.tsBtnReloadSchema});
+            this.tsBtnReloadSchema,
+            this.tsBtnQuery});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(1045, 25);
@@ -78,6 +80,15 @@
             this.tsBtnReloadSchema.Size = new System.Drawing.Size(76, 22);
             this.tsBtnReloadSchema.Text = "重新加载";
             this.tsBtnReloadSchema.Click += new System.EventHandler(this.tsBtnReloadSchema_Click);
+            // 
+            // tsBtnQuery
+            // 
+            this.tsBtnQuery.Image = global::CKGen.Properties.Resources.Sqlfile;
+            this.tsBtnQuery.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsBtnQuery.Name = "tsBtnQuery";
+            this.tsBtnQuery.Size = new System.Drawing.Size(76, 22);
+            this.tsBtnQuery.Text = "新建查询";
+            this.tsBtnQuery.Click += new System.EventHandler(this.tsBtnQuery_Click);
             // 
             // splitContainer1
             // 
@@ -119,16 +130,6 @@
             this.tabPage1.Text = "数据";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
-            // imageList1
-            // 
-            this.imageList1.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList1.ImageStream")));
-            this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
-            this.imageList1.Images.SetKeyName(0, "database.png");
-            this.imageList1.Images.SetKeyName(1, "folder.png");
-            this.imageList1.Images.SetKeyName(2, "proc.png");
-            this.imageList1.Images.SetKeyName(3, "table.png");
-            this.imageList1.Images.SetKeyName(4, "view.png");
-            // 
             // tabPage2
             // 
             this.tabPage2.Controls.Add(this.tbTemp);
@@ -158,6 +159,16 @@
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(843, 488);
             this.tabControl1.TabIndex = 0;
+            // 
+            // imageList1
+            // 
+            this.imageList1.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList1.ImageStream")));
+            this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
+            this.imageList1.Images.SetKeyName(0, "database.png");
+            this.imageList1.Images.SetKeyName(1, "folder.png");
+            this.imageList1.Images.SetKeyName(2, "proc.png");
+            this.imageList1.Images.SetKeyName(3, "table.png");
+            this.imageList1.Images.SetKeyName(4, "view.png");
             // 
             // FrmMain
             // 
@@ -196,5 +207,6 @@
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.ImageList imageList1;
         private System.Windows.Forms.TreeView tbTemp;
+        private System.Windows.Forms.ToolStripButton tsBtnQuery;
     }
 }

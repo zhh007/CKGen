@@ -37,6 +37,7 @@ namespace CKGen.Controls
             txtMsg = new TextBox();
             txtMsg.Multiline = true;
             txtMsg.Dock = DockStyle.Fill;
+            StatusLabel.Text = "就绪。";
         }
 
         /// <summary>
@@ -51,8 +52,11 @@ namespace CKGen.Controls
 
         public void Query(string txt)
         {
-            this.txtCode.Text = txt;
-            _query();
+            if (!string.IsNullOrEmpty(txt))
+            {
+                this.txtCode.Text = txt;
+                _query();
+            }
         }
 
         public void _query()

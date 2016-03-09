@@ -38,9 +38,9 @@
             this.StatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.Tool2 = new System.Windows.Forms.ToolStrip();
             this.btnGenCode = new System.Windows.Forms.ToolStripButton();
+            this.btnExport = new System.Windows.Forms.ToolStripButton();
             this.btnResult = new System.Windows.Forms.ToolStripButton();
             this.btnMessage = new System.Windows.Forms.ToolStripButton();
-            this.btnExport = new System.Windows.Forms.ToolStripButton();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -154,12 +154,23 @@
             // btnGenCode
             // 
             this.btnGenCode.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.btnGenCode.Image = global::CKGen.Properties.Resources.EditCodeHS;
+            this.btnGenCode.Image = global::CKGen.Properties.Resources.CSCodefile;
             this.btnGenCode.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnGenCode.Name = "btnGenCode";
             this.btnGenCode.Size = new System.Drawing.Size(76, 22);
             this.btnGenCode.Text = "生成代码";
             this.btnGenCode.Click += new System.EventHandler(this.btnGenCode_Click);
+            // 
+            // btnExport
+            // 
+            this.btnExport.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.btnExport.Image = global::CKGen.Properties.Resources.PageNumber;
+            this.btnExport.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnExport.Name = "btnExport";
+            this.btnExport.Size = new System.Drawing.Size(76, 22);
+            this.btnExport.Text = "导出数据";
+            this.btnExport.ToolTipText = "导出数据";
+            this.btnExport.Click += new System.EventHandler(this.btnExport_Click);
             // 
             // btnResult
             // 
@@ -178,17 +189,6 @@
             this.btnMessage.Size = new System.Drawing.Size(52, 22);
             this.btnMessage.Text = "消息";
             this.btnMessage.Click += new System.EventHandler(this.btnMessage_Click);
-            // 
-            // btnExport
-            // 
-            this.btnExport.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.btnExport.Image = global::CKGen.Properties.Resources.PageNumber;
-            this.btnExport.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnExport.Name = "btnExport";
-            this.btnExport.Size = new System.Drawing.Size(76, 22);
-            this.btnExport.Text = "导出数据";
-            this.btnExport.ToolTipText = "导出数据";
-            this.btnExport.Click += new System.EventHandler(this.btnExport_Click);
             // 
             // SQLQueryView
             // 

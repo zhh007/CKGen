@@ -87,7 +87,10 @@ namespace CKGen
             tab1.Controls.Add(query);
             this.tabControl1.TabPages.Add(tab1);
             this.tabControl1.SelectTab(tab1);
-            query.Query(e.SQL);
+            if (!string.IsNullOrEmpty(e.SQL))
+            {
+                query.Query(e.SQL);
+            }
         }
 
         private void LoadTemplates()
@@ -179,6 +182,12 @@ namespace CKGen
                 }
             }
             return null;
+        }
+
+        private void tsBtnQuery_Click(object sender, EventArgs e)
+        {
+            ShowSQLQueryEvent evt = new ShowSQLQueryEvent();
+            App.Instance.Publish<ShowSQLQueryEvent>(evt);
         }
     }
 }

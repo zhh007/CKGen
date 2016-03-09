@@ -83,6 +83,16 @@ namespace CKGen.Properties {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
+        internal static System.Drawing.Bitmap CSCodefile {
+            get {
+                object obj = ResourceManager.GetObject("CSCodefile", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
         internal static System.Drawing.Bitmap database {
             get {
                 object obj = ResourceManager.GetObject("database", resourceCulture);
@@ -237,6 +247,16 @@ namespace CKGen.Properties {
             get {
                 object obj = ResourceManager.GetObject("server_link_ico", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap Sqlfile {
+            get {
+                object obj = ResourceManager.GetObject("Sqlfile", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         
