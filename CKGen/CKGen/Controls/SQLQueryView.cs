@@ -15,7 +15,6 @@ namespace CKGen.Controls
 {
     public partial class SQLQueryView : UserControl
     {
-        //private DataGridView dgv = null;
         private Panel resultPanel = null;
         private TextBox txtMsg = null;
         private DataSet queryDataSet = null;
@@ -29,13 +28,6 @@ namespace CKGen.Controls
         private void UCQuery_Load(object sender, EventArgs e)
         {
             Tool2.Items.Clear();
-
-            //dgv = new DataGridView();
-            //dgv.AllowUserToAddRows = false;
-            //dgv.AllowUserToDeleteRows = false;
-            //dgv.MultiSelect = false;
-            //dgv.AutoGenerateColumns = true;
-            //dgv.Dock = DockStyle.Fill;
 
             resultPanel = new Panel();
             resultPanel.Dock = DockStyle.Fill;
@@ -68,7 +60,6 @@ namespace CKGen.Controls
 
         public void _query()
         {
-            //dgv.DataSource = null;
             Tool2.Items.Clear();
             pBox.Controls.Clear();
             ds = new DataSet();
