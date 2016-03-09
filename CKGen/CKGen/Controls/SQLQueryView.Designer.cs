@@ -35,23 +35,26 @@
             this.btnCancel = new System.Windows.Forms.ToolStripButton();
             this.pBox = new System.Windows.Forms.Panel();
             this.Tool2 = new System.Windows.Forms.ToolStrip();
-            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.StatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.btnGenCode = new System.Windows.Forms.ToolStripButton();
             this.btnExport = new System.Windows.Forms.ToolStripButton();
             this.btnResult = new System.Windows.Forms.ToolStripButton();
             this.btnMessage = new System.Windows.Forms.ToolStripButton();
+            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.StatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
+            this.Tool2.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // splitContainer1
             // 
-            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.splitContainer1.Location = new System.Drawing.Point(0, 0);
             this.splitContainer1.Name = "splitContainer1";
             this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
@@ -65,7 +68,7 @@
             // 
             this.splitContainer1.Panel2.Controls.Add(this.pBox);
             this.splitContainer1.Panel2.Controls.Add(this.Tool2);
-            this.splitContainer1.Size = new System.Drawing.Size(808, 430);
+            this.splitContainer1.Size = new System.Drawing.Size(808, 405);
             this.splitContainer1.SplitterDistance = 177;
             this.splitContainer1.TabIndex = 0;
             // 
@@ -113,37 +116,27 @@
             // 
             // pBox
             // 
-            this.pBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.pBox.Location = new System.Drawing.Point(0, 25);
             this.pBox.Name = "pBox";
-            this.pBox.Size = new System.Drawing.Size(808, 224);
+            this.pBox.Size = new System.Drawing.Size(808, 202);
             this.pBox.TabIndex = 3;
             // 
             // Tool2
             // 
             this.Tool2.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.Tool2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.btnGenCode,
+            this.btnExport,
+            this.btnResult,
+            this.btnMessage});
             this.Tool2.Location = new System.Drawing.Point(0, 0);
             this.Tool2.Name = "Tool2";
             this.Tool2.Size = new System.Drawing.Size(808, 25);
             this.Tool2.TabIndex = 0;
             this.Tool2.Text = "toolStrip2";
-            // 
-            // statusStrip1
-            // 
-            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.StatusLabel});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 408);
-            this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(808, 22);
-            this.statusStrip1.TabIndex = 2;
-            this.statusStrip1.Text = "statusStrip1";
-            // 
-            // StatusLabel
-            // 
-            this.StatusLabel.Image = global::CKGen.Properties.Resources.success;
-            this.StatusLabel.Name = "StatusLabel";
-            this.StatusLabel.Size = new System.Drawing.Size(120, 17);
-            this.StatusLabel.Text = "查询已成功执行。";
             // 
             // btnGenCode
             // 
@@ -184,6 +177,23 @@
             this.btnMessage.Text = "消息";
             this.btnMessage.Click += new System.EventHandler(this.btnMessage_Click);
             // 
+            // statusStrip1
+            // 
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.StatusLabel});
+            this.statusStrip1.Location = new System.Drawing.Point(0, 408);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.Size = new System.Drawing.Size(808, 22);
+            this.statusStrip1.TabIndex = 2;
+            this.statusStrip1.Text = "statusStrip1";
+            // 
+            // StatusLabel
+            // 
+            this.StatusLabel.Image = global::CKGen.Properties.Resources.success;
+            this.StatusLabel.Name = "StatusLabel";
+            this.StatusLabel.Size = new System.Drawing.Size(120, 17);
+            this.StatusLabel.Text = "查询已成功执行。";
+            // 
             // SQLQueryView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -201,6 +211,8 @@
             this.splitContainer1.ResumeLayout(false);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
+            this.Tool2.ResumeLayout(false);
+            this.Tool2.PerformLayout();
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
             this.ResumeLayout(false);

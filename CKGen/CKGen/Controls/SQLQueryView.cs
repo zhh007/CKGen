@@ -41,27 +41,36 @@ namespace CKGen.Controls
             {
                 CancelQuery();
             }
+            else if(keyData == (Keys.Control | Keys.R))
+            {
+                splitContainer1.Panel2Collapsed = !splitContainer1.Panel2Collapsed;
+            }
             return base.ProcessCmdKey(ref msg, keyData);
         }
 
         private void UCQuery_Load(object sender, EventArgs e)
         {
-            Tool2.Items.Clear();
+            btnRun.Enabled = true;
+            btnCancel.Enabled = false;
 
-            resultPanel = new Panel();
-            resultPanel.Dock = DockStyle.Fill;
-            resultPanel.BorderStyle = BorderStyle.None;
+            Tool2.Items.Clear();
+            List<ToolStripItem> titems2 = new List<ToolStripItem>();
+            titems2.Add(btnMessage);
+            Tool2.Items.AddRange(titems2.ToArray());
 
             txtMsg = new TextBox();
             txtMsg.Multiline = true;
             txtMsg.Dock = DockStyle.Fill;
+            pBox.Controls.Add(txtMsg);
+
             StatusLabel.Image = global::CKGen.Properties.Resources.link;
             StatusLabel.Text = "就绪。";
 
-            btnRun.Enabled = true;
-            btnCancel.Enabled = false;
-
             splitContainer1.Panel2Collapsed = true;
+
+            resultPanel = new Panel();
+            resultPanel.Dock = DockStyle.Fill;
+            resultPanel.BorderStyle = BorderStyle.None;
         }
 
         /// <summary>
