@@ -59,7 +59,9 @@ namespace CKGen.Controls
             Tool2.Items.AddRange(titems2.ToArray());
 
             txtMsg = new TextBox();
+            txtMsg.ReadOnly = true;
             txtMsg.Multiline = true;
+            txtMsg.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             txtMsg.Dock = DockStyle.Fill;
             pBox.Controls.Add(txtMsg);
 
