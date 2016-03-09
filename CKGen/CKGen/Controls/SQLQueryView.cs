@@ -44,7 +44,10 @@ namespace CKGen.Controls
             StatusLabel.Image = global::CKGen.Properties.Resources.link;
             StatusLabel.Text = "就绪。";
 
-            toolStripButton2.Enabled = false;
+            btnRun.Enabled = true;
+            btnCancel.Enabled = false;
+
+            splitContainer1.Panel2Collapsed = true;
         }
 
         /// <summary>
@@ -52,12 +55,12 @@ namespace CKGen.Controls
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void toolStripButton1_Click(object sender, EventArgs e)
+        private void btnRun_Click(object sender, EventArgs e)
         {
             if (!string.IsNullOrEmpty(this.txtCode.Text))
             {
-                toolStripButton1.Enabled = false;
-                toolStripButton2.Enabled = true;
+                btnRun.Enabled = false;
+                btnCancel.Enabled = true;
                 sql = this.txtCode.Text;
                 Thread th = new Thread(new ThreadStart(_query));
                 th.Start();
@@ -68,8 +71,8 @@ namespace CKGen.Controls
         {
             if (!string.IsNullOrEmpty(txt))
             {
-                toolStripButton1.Enabled = false;
-                toolStripButton2.Enabled = true;
+                btnRun.Enabled = false;
+                btnCancel.Enabled = true;
                 sql = txt;
                 this.txtCode.Text = txt;
                 Thread th = new Thread(new ThreadStart(_query));
@@ -124,8 +127,8 @@ namespace CKGen.Controls
                     hasError = true;
                     this.BeginInvoke(new Action(() =>
                     {
-                        toolStripButton1.Enabled = true;
-                        toolStripButton2.Enabled = false;
+                        btnRun.Enabled = true;
+                        btnCancel.Enabled = false;
                         txtMsg.ForeColor = System.Drawing.Color.Red;
                         txtMsg.Text = ex.Message;
                         pBox.Controls.Add(txtMsg);
@@ -140,12 +143,17 @@ namespace CKGen.Controls
                 }
             }
 
+            this.BeginInvoke(new Action(() =>
+            {
+                splitContainer1.Panel2Collapsed = false;
+            }));
+
             if (!this.cancel)
             {
                 this.BeginInvoke(new Action(() =>
                 {
-                    toolStripButton1.Enabled = true;
-                    toolStripButton2.Enabled = false;
+                    btnRun.Enabled = true;
+                    btnCancel.Enabled = false;
                     List<ToolStripItem> titems = new List<ToolStripItem>();
                     if (!hasError)
                     {
@@ -222,9 +230,9 @@ namespace CKGen.Controls
         }
 
         //取消查询
-        private void toolStripButton2_Click(object sender, EventArgs e)
+        private void btnCancel_Click(object sender, EventArgs e)
         {
-            toolStripButton2.Enabled = false;
+            btnCancel.Enabled = false;
             Thread th = new Thread(new ThreadStart(Thread_Cancel));
             th.Start();
         }
@@ -252,8 +260,8 @@ namespace CKGen.Controls
             }
             this.BeginInvoke(new Action(() =>
             {
-                toolStripButton1.Enabled = true;
-                toolStripButton2.Enabled = false;
+                btnRun.Enabled = true;
+                btnCancel.Enabled = false;
             }));
         }
 

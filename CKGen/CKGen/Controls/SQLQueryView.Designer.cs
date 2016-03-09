@@ -31,12 +31,12 @@
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.txtCode = new System.Windows.Forms.TextBox();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
+            this.btnRun = new System.Windows.Forms.ToolStripButton();
+            this.btnCancel = new System.Windows.Forms.ToolStripButton();
             this.pBox = new System.Windows.Forms.Panel();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.StatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.Tool2 = new System.Windows.Forms.ToolStrip();
+            this.StatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.btnGenCode = new System.Windows.Forms.ToolStripButton();
             this.btnExport = new System.Windows.Forms.ToolStripButton();
             this.btnResult = new System.Windows.Forms.ToolStripButton();
@@ -46,8 +46,6 @@
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
-            this.statusStrip1.SuspendLayout();
-            this.Tool2.SuspendLayout();
             this.SuspendLayout();
             // 
             // splitContainer1
@@ -84,6 +82,9 @@
             // 
             // toolStrip1
             // 
+            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.btnRun,
+            this.btnCancel});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(808, 25);
@@ -92,23 +93,23 @@
             // 
             // toolStripButton1
             // 
-            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton1.Image = global::CKGen.Properties.Resources.PlayHS;
-            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButton1.Text = "执行";
-            this.toolStripButton1.Click += new System.EventHandler(this.toolStripButton1_Click);
+            this.btnRun.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnRun.Image = global::CKGen.Properties.Resources.PlayHS;
+            this.btnRun.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnRun.Name = "toolStripButton1";
+            this.btnRun.Size = new System.Drawing.Size(23, 22);
+            this.btnRun.Text = "执行";
+            this.btnRun.Click += new System.EventHandler(this.btnRun_Click);
             // 
             // toolStripButton2
             // 
-            this.toolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton2.Image = global::CKGen.Properties.Resources.StopHS;
-            this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton2.Name = "toolStripButton2";
-            this.toolStripButton2.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButton2.Text = "取消";
-            this.toolStripButton2.Click += new System.EventHandler(this.toolStripButton2_Click);
+            this.btnCancel.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnCancel.Image = global::CKGen.Properties.Resources.StopHS;
+            this.btnCancel.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnCancel.Name = "toolStripButton2";
+            this.btnCancel.Size = new System.Drawing.Size(23, 22);
+            this.btnCancel.Text = "取消";
+            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
             // pBox
             // 
@@ -126,13 +127,6 @@
             this.statusStrip1.TabIndex = 2;
             this.statusStrip1.Text = "statusStrip1";
             // 
-            // StatusLabel
-            // 
-            this.StatusLabel.Image = global::CKGen.Properties.Resources.success;
-            this.StatusLabel.Name = "StatusLabel";
-            this.StatusLabel.Size = new System.Drawing.Size(120, 17);
-            this.StatusLabel.Text = "查询已成功执行。";
-            // 
             // Tool2
             // 
             this.Tool2.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
@@ -141,6 +135,13 @@
             this.Tool2.Size = new System.Drawing.Size(808, 25);
             this.Tool2.TabIndex = 0;
             this.Tool2.Text = "toolStrip2";
+            // 
+            // StatusLabel
+            // 
+            this.StatusLabel.Image = global::CKGen.Properties.Resources.success;
+            this.StatusLabel.Name = "StatusLabel";
+            this.StatusLabel.Size = new System.Drawing.Size(120, 17);
+            this.StatusLabel.Text = "查询已成功执行。";
             // 
             // btnGenCode
             // 
@@ -197,10 +198,6 @@
             this.splitContainer1.ResumeLayout(false);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
-            this.statusStrip1.ResumeLayout(false);
-            this.statusStrip1.PerformLayout();
-            this.Tool2.ResumeLayout(false);
-            this.Tool2.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -210,13 +207,13 @@
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.TextBox txtCode;
         private System.Windows.Forms.ToolStrip toolStrip1;
-        private System.Windows.Forms.ToolStripButton toolStripButton1;
+        private System.Windows.Forms.ToolStripButton btnRun;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStrip Tool2;
         private System.Windows.Forms.ToolStripButton btnGenCode;
         private System.Windows.Forms.ToolStripButton btnResult;
         private System.Windows.Forms.ToolStripButton btnMessage;
-        private System.Windows.Forms.ToolStripButton toolStripButton2;
+        private System.Windows.Forms.ToolStripButton btnCancel;
         private System.Windows.Forms.Panel pBox;
         private System.Windows.Forms.ToolStripStatusLabel StatusLabel;
         private System.Windows.Forms.ToolStripButton btnExport;
