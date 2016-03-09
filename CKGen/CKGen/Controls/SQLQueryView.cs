@@ -8,12 +8,15 @@ using System.Text;
 using System.Windows.Forms;
 using System.Data.SqlClient;
 using CKGen.Temp.Adonet;
+using System.IO;
+using System.Diagnostics;
 
 namespace CKGen.Controls
 {
     public partial class SQLQueryView : UserControl
     {
-        private DataGridView dgv = null;
+        //private DataGridView dgv = null;
+        private Panel resultPanel = null;
         private TextBox txtMsg = null;
         private DataSet queryDataSet = null;
         private DataSet ds = null;
@@ -27,12 +30,16 @@ namespace CKGen.Controls
         {
             Tool2.Items.Clear();
 
-            dgv = new DataGridView();
-            dgv.AllowUserToAddRows = false;
-            dgv.AllowUserToDeleteRows = false;
-            dgv.MultiSelect = false;
-            dgv.AutoGenerateColumns = true;
-            dgv.Dock = DockStyle.Fill;
+            //dgv = new DataGridView();
+            //dgv.AllowUserToAddRows = false;
+            //dgv.AllowUserToDeleteRows = false;
+            //dgv.MultiSelect = false;
+            //dgv.AutoGenerateColumns = true;
+            //dgv.Dock = DockStyle.Fill;
+
+            resultPanel = new Panel();
+            resultPanel.Dock = DockStyle.Fill;
+            resultPanel.BorderStyle = BorderStyle.None;
 
             txtMsg = new TextBox();
             txtMsg.Multiline = true;
@@ -61,7 +68,7 @@ namespace CKGen.Controls
 
         public void _query()
         {
-            dgv.DataSource = null;
+            //dgv.DataSource = null;
             Tool2.Items.Clear();
             pBox.Controls.Clear();
             ds = new DataSet();
@@ -78,7 +85,7 @@ namespace CKGen.Controls
                         SqlDataAdapter sdr = new SqlDataAdapter(cmd);
                         count = sdr.Fill(ds);
                         sdr.FillSchema(queryDataSet, SchemaType.Mapped);
-                        if(ds != null && ds.Tables != null && ds.Tables.Count == 0)
+                        if (ds != null && ds.Tables != null && ds.Tables.Count == 0)
                         {
                             count = null;
                         }
@@ -110,14 +117,37 @@ namespace CKGen.Controls
             {
                 if (ds != null && ds.Tables != null && ds.Tables.Count > 0)
                 {
-                    dgv.DataSource = ds.Tables[0].DefaultView;
+                    resultPanel.Controls.Clear();
+                    for (int i = 0; i < ds.Tables.Count; i++)
+                    {
+                        var dgv = new DataGridView();
+                        dgv.BorderStyle = BorderStyle.None;
+                        dgv.AllowUserToAddRows = false;
+                        dgv.AllowUserToDeleteRows = false;
+                        dgv.MultiSelect = false;
+                        dgv.AutoGenerateColumns = true;
+                        dgv.DataSource = ds.Tables[i].DefaultView;
+                        if (ds.Tables.Count == 1)
+                        {
+                            dgv.Dock = DockStyle.Fill;
+                        }
+                        else
+                        {
+                            dgv.Width = pBox.Width;
+                            dgv.Height = 200;
+                            dgv.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+                            dgv.Top = 205 * i;
+                        }
+                        resultPanel.Controls.Add(dgv);
+                    }
+                    pBox.Controls.Add(resultPanel);
+
                     txtMsg.ForeColor = System.Drawing.SystemColors.WindowText;
                     txtMsg.Text = string.Format("返回{0}条记录。", count);
                     StatusLabel.Image = global::CKGen.Properties.Resources.success;
                     StatusLabel.Text = "查询已成功执行。";
 
                     titems.Add(btnResult);
-                    pBox.Controls.Add(dgv);
                     titems.Add(btnMessage);
                     titems.Add(btnGenCode);
 
@@ -146,7 +176,7 @@ namespace CKGen.Controls
         private void btnResult_Click(object sender, EventArgs e)
         {
             pBox.Controls.Clear();
-            pBox.Controls.Add(dgv);
+            pBox.Controls.Add(resultPanel);
         }
 
         private void btnMessage_Click(object sender, EventArgs e)
@@ -178,13 +208,21 @@ namespace CKGen.Controls
             FrmShowCode frm = new FrmShowCode();
             frm.SetCode(code);
             frm.Show();
-
         }
 
         //导出数据
         private void btnExport_Click(object sender, EventArgs e)
         {
+            if (ds != null && ds.Tables != null && ds.Tables.Count > 0)
+            {
+                Guid folderID = Guid.NewGuid();
+                string folder = Path.Combine(Path.GetTempPath(), folderID.ToString("P"));
+                Directory.CreateDirectory(folder);
 
+                string filepath = Path.Combine(folder, string.Format("file_{0:yyyyMMddHHmmss}.xls", DateTime.Now));
+                ExcelHelper.ExportFile(ds, filepath);
+                Process.Start(folder);
+            }
         }
     }
 }

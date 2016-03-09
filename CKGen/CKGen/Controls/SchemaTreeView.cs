@@ -201,10 +201,7 @@ namespace CKGen.Controls
 
         private void tvSchema_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
         {
-            if (e.Button == MouseButtons.Left)
-            {
-                this.tvSchema.SelectedNode = e.Node;
-            }
+            this.tvSchema.SelectedNode = e.Node;
             if (e.Button == MouseButtons.Right && e.Node.Tag is ITableInfo)
             {
                 this.TableMenu.Show(this.tvSchema, e.Location);
