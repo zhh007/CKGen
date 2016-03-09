@@ -78,14 +78,12 @@
             this.txtCode.Location = new System.Drawing.Point(0, 25);
             this.txtCode.Multiline = true;
             this.txtCode.Name = "txtCode";
+            this.txtCode.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.txtCode.Size = new System.Drawing.Size(808, 152);
             this.txtCode.TabIndex = 1;
             // 
             // toolStrip1
             // 
-            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripButton1,
-            this.toolStripButton2});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(808, 25);
@@ -122,8 +120,6 @@
             // 
             // statusStrip1
             // 
-            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.StatusLabel});
             this.statusStrip1.Location = new System.Drawing.Point(0, 227);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(808, 22);
@@ -140,11 +136,6 @@
             // Tool2
             // 
             this.Tool2.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            this.Tool2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.btnGenCode,
-            this.btnExport,
-            this.btnResult,
-            this.btnMessage});
             this.Tool2.Location = new System.Drawing.Point(0, 0);
             this.Tool2.Name = "Tool2";
             this.Tool2.Size = new System.Drawing.Size(808, 25);

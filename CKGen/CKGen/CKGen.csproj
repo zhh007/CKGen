@@ -253,8 +253,9 @@
     <None Include="Resources\New.ico" />
     <None Include="Resources\PrimaryKeyHS.png" />
     <None Include="Resources\saveHS.png" />
-    <None Include="Resources\Error2.bmp" />
     <None Include="Resources\loading.gif" />
+    <None Include="Resources\error.png" />
+    <None Include="Resources\error3.png" />
     <Content Include="Resources\server_link_ico.ico" />
     <None Include="Resources\fresh.png" />
     <None Include="Resources\folder.png" />
@@ -268,7 +269,6 @@
     <None Include="Resources\link.png" />
     <None Include="Resources\home.png" />
     <None Include="Resources\success.png" />
-    <None Include="Resources\error.png" />
     <None Include="Resources\PageNumber.png" />
     <None Include="Resources\EditCodeHS.png" />
     <None Include="Resources\TableHS.png" />

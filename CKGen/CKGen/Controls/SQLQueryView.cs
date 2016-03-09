@@ -43,6 +43,8 @@ namespace CKGen.Controls
             txtMsg.Dock = DockStyle.Fill;
             StatusLabel.Image = global::CKGen.Properties.Resources.link;
             StatusLabel.Text = "就绪。";
+
+            toolStripButton2.Enabled = false;
         }
 
         /// <summary>
@@ -54,6 +56,8 @@ namespace CKGen.Controls
         {
             if (!string.IsNullOrEmpty(this.txtCode.Text))
             {
+                toolStripButton1.Enabled = false;
+                toolStripButton2.Enabled = true;
                 sql = this.txtCode.Text;
                 Thread th = new Thread(new ThreadStart(_query));
                 th.Start();
@@ -64,6 +68,8 @@ namespace CKGen.Controls
         {
             if (!string.IsNullOrEmpty(txt))
             {
+                toolStripButton1.Enabled = false;
+                toolStripButton2.Enabled = true;
                 sql = txt;
                 this.txtCode.Text = txt;
                 Thread th = new Thread(new ThreadStart(_query));
@@ -118,6 +124,8 @@ namespace CKGen.Controls
                     hasError = true;
                     this.BeginInvoke(new Action(() =>
                     {
+                        toolStripButton1.Enabled = true;
+                        toolStripButton2.Enabled = false;
                         txtMsg.ForeColor = System.Drawing.Color.Red;
                         txtMsg.Text = ex.Message;
                         pBox.Controls.Add(txtMsg);
@@ -136,6 +144,8 @@ namespace CKGen.Controls
             {
                 this.BeginInvoke(new Action(() =>
                 {
+                    toolStripButton1.Enabled = true;
+                    toolStripButton2.Enabled = false;
                     List<ToolStripItem> titems = new List<ToolStripItem>();
                     if (!hasError)
                     {
@@ -214,6 +224,7 @@ namespace CKGen.Controls
         //取消查询
         private void toolStripButton2_Click(object sender, EventArgs e)
         {
+            toolStripButton2.Enabled = false;
             Thread th = new Thread(new ThreadStart(Thread_Cancel));
             th.Start();
         }
@@ -239,6 +250,11 @@ namespace CKGen.Controls
                     pBox.Controls.Add(txtMsg);
                 }));
             }
+            this.BeginInvoke(new Action(() =>
+            {
+                toolStripButton1.Enabled = true;
+                toolStripButton2.Enabled = false;
+            }));
         }
 
         //生成代码
