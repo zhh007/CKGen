@@ -30,6 +30,20 @@ namespace CKGen.Controls
             InitializeComponent();
         }
 
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            if (keyData == Keys.F5)
+            {
+                Query(this.txtCode.Text);
+                return true;
+            }
+            else if(keyData == Keys.Escape)
+            {
+                CancelQuery();
+            }
+            return base.ProcessCmdKey(ref msg, keyData);
+        }
+
         private void UCQuery_Load(object sender, EventArgs e)
         {
             Tool2.Items.Clear();
@@ -57,14 +71,7 @@ namespace CKGen.Controls
         /// <param name="e"></param>
         private void btnRun_Click(object sender, EventArgs e)
         {
-            if (!string.IsNullOrEmpty(this.txtCode.Text))
-            {
-                btnRun.Enabled = false;
-                btnCancel.Enabled = true;
-                sql = this.txtCode.Text;
-                Thread th = new Thread(new ThreadStart(_query));
-                th.Start();
-            }
+            Query(this.txtCode.Text);
         }
 
         public void Query(string txt)
@@ -75,12 +82,12 @@ namespace CKGen.Controls
                 btnCancel.Enabled = true;
                 sql = txt;
                 this.txtCode.Text = txt;
-                Thread th = new Thread(new ThreadStart(_query));
+                Thread th = new Thread(new ThreadStart(Thread_Query));
                 th.Start();
             }
         }
 
-        public void _query()
+        private void Thread_Query()
         {
             this.BeginInvoke(new Action(() =>
             {
@@ -232,12 +239,17 @@ namespace CKGen.Controls
         //取消查询
         private void btnCancel_Click(object sender, EventArgs e)
         {
+            CancelQuery();
+        }
+
+        private void CancelQuery()
+        {
             btnCancel.Enabled = false;
             Thread th = new Thread(new ThreadStart(Thread_Cancel));
             th.Start();
         }
 
-        public void Thread_Cancel()
+        private void Thread_Cancel()
         {
             if (conn != null && cmd != null && conn.State != ConnectionState.Closed)
             {
