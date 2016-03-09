@@ -253,6 +253,8 @@
     <None Include="Resources\New.ico" />
     <None Include="Resources\PrimaryKeyHS.png" />
     <None Include="Resources\saveHS.png" />
+    <None Include="Resources\Error2.bmp" />
+    <None Include="Resources\loading.gif" />
     <Content Include="Resources\server_link_ico.ico" />
     <None Include="Resources\fresh.png" />
     <None Include="Resources\folder.png" />
