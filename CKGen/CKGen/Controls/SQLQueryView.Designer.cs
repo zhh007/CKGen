@@ -74,6 +74,7 @@
             // 
             // txtCode
             // 
+            this.txtCode.AllowDrop = true;
             this.txtCode.Dock = System.Windows.Forms.DockStyle.Fill;
             this.txtCode.ForeColor = System.Drawing.SystemColors.WindowText;
             this.txtCode.Location = new System.Drawing.Point(0, 25);
@@ -82,6 +83,9 @@
             this.txtCode.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.txtCode.Size = new System.Drawing.Size(808, 152);
             this.txtCode.TabIndex = 1;
+            this.txtCode.DragDrop += new System.Windows.Forms.DragEventHandler(this.txtCode_DragDrop);
+            this.txtCode.DragEnter += new System.Windows.Forms.DragEventHandler(this.txtCode_DragEnter);
+            this.txtCode.DragOver += new System.Windows.Forms.DragEventHandler(this.txtCode_DragOver);
             // 
             // toolStrip1
             // 

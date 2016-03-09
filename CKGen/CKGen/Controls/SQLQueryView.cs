@@ -11,6 +11,7 @@ using CKGen.Temp.Adonet;
 using System.IO;
 using System.Diagnostics;
 using System.Threading;
+using CKGen.DBSchema;
 
 namespace CKGen.Controls
 {
@@ -320,6 +321,114 @@ namespace CKGen.Controls
                 ExcelHelper.ExportFile(ds, filepath);
                 Process.Start(folder);
             }
+        }
+
+        private void txtCode_DragEnter(object sender, DragEventArgs e)
+        {
+            TreeNode draggedNode = (TreeNode)e.Data.GetData(typeof(TreeNode));
+            if (draggedNode != null && (draggedNode.Tag is ITableInfo || draggedNode.Tag is IViewInfo || draggedNode.Tag is IProcedureInfo))
+            {
+                e.Effect = e.AllowedEffect;
+            }
+        }
+
+        private void txtCode_DragDrop(object sender, DragEventArgs e)
+        {
+            TreeNode draggedNode = (TreeNode)e.Data.GetData(typeof(TreeNode));
+            if (draggedNode != null)
+            {
+                string txt = GetDragText(draggedNode, (e.KeyState & 8) == 8);
+                int pos = txtCode.SelectionStart;
+                txtCode.Text = txtCode.Text.Insert(pos, txt);
+                txtCode.SelectionStart = pos + txt.Length;
+                txtCode.SelectionLength = 0;
+            }
+        }
+
+        /// <remarks>
+        /// GetCharIndexFromPosition is missing one caret position, as there is one extra caret
+        /// position than there are characters (an extra one at the end).
+        /// </remarks>
+        private int GetCaretIndexFromPoint(System.Windows.Forms.TextBox box, int x, int y)
+        {
+            Point realPoint = box.PointToClient(new Point(x, y));
+            int index = box.GetCharIndexFromPosition(realPoint);
+            if (index == box.Text.Length - 1)
+            {
+                Point caretPoint = box.GetPositionFromCharIndex(index);
+                if (realPoint.X > caretPoint.X)
+                {
+                    index += 1;
+                }
+            }
+            return index;
+        }
+
+        private void txtCode_DragOver(object sender, DragEventArgs e)
+        {
+            TreeNode draggedNode = (TreeNode)e.Data.GetData(typeof(TreeNode));
+            if (draggedNode != null)
+            {
+                // fake moving the text caret
+                txtCode.SelectionStart = GetCaretIndexFromPoint(txtCode, e.X, e.Y);
+                txtCode.SelectionLength = 0;
+                // don't forget to set focus to the text box to make the caret visible!
+                txtCode.Focus();
+            }
+        }
+
+        private string GetDragText(TreeNode draggedNode, bool ctrlDown)
+        {
+            StringBuilder sb = new StringBuilder();
+            if (draggedNode.Tag is ITableInfo)
+            {
+                var tInfo = draggedNode.Tag as ITableInfo;
+                if (ctrlDown)
+                {
+                    for (int i = 0; i < tInfo.Columns.Count; i++)
+                    {
+                        if(i > 0)
+                        {
+                            sb.Append(", ");
+                        }
+                        sb.Append(tInfo.Columns[i].Name);
+                    }
+                }
+                else
+                {
+                    sb.Append(tInfo.Name);
+                }
+            }
+            else if (draggedNode.Tag is IViewInfo)
+            {
+                var vInfo = draggedNode.Tag as IViewInfo;
+                if (ctrlDown)
+                {
+                    for (int i = 0; i < vInfo.Columns.Count; i++)
+                    {
+                        if (i > 0)
+                        {
+                            sb.Append(", ");
+                        }
+                        sb.Append(vInfo.Columns[i].Name);
+                    }
+                }
+                else
+                {
+                    sb.Append(vInfo.Name);
+                }
+            }
+            else if (draggedNode.Tag is IProcedureInfo)
+            {
+                var procInfo = draggedNode.Tag as IProcedureInfo;
+                sb.Append(procInfo.Name);
+            }
+            else
+            {
+
+            }
+
+            return sb.ToString();
         }
     }
 }
