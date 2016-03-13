@@ -40,6 +40,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CodeModel\ClassDefine.cs" />
+    <Compile Include="CodeModel\MethodDefine.cs" />
+    <Compile Include="CodeModel\PropertyDefine.cs" />
     <Compile Include="DatabaseLink.cs" />
     <Compile Include="DatabaseType.cs" />
     <Compile Include="EnumDescriptionAttribute.cs" />
@@ -61,6 +64,7 @@
     <Compile Include="Form\ModuleRelationship.cs" />
     <Compile Include="Form\StringField.cs" />
     <Compile Include="Form\ModuleField.cs" />
+    <Compile Include="CodeModel\ParamDefine.cs" />
     <Compile Include="Services\ICodeGenService.cs" />
     <Compile Include="Events\IEventAggregator.cs" />
     <Compile Include="LanguageConvert.cs" />

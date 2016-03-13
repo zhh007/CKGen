@@ -292,20 +292,23 @@ namespace CKGen.Controls
         //生成代码
         private void btnGenCode_Click(object sender, EventArgs e)
         {
-            DbQueryCodeGen gen = new DbQueryCodeGen();
-            string code = "";
-            if (ds != null && ds.Tables != null && ds.Tables.Count > 0)
-            {
-                code = gen.GenForQueryList(txtCode.Text, queryDataSet, App.Instance.DBLink.ConnectionString);
-            }
-            else
-            {
-                code = gen.GenForExecuteNoQuery(txtCode.Text, App.Instance.DBLink.ConnectionString);
-            }
+            SQLQueryCodeGenWizard wizard = new SQLQueryCodeGenWizard();
+            wizard.ShowDialog();
 
-            FrmShowCode frm = new FrmShowCode();
-            frm.SetCode(code);
-            frm.Show();
+            //DbQueryCodeGen gen = new DbQueryCodeGen();
+            //string code = "";
+            //if (ds != null && ds.Tables != null && ds.Tables.Count > 0)
+            //{
+            //    code = gen.GenForQueryList(txtCode.Text, queryDataSet, App.Instance.DBLink.ConnectionString);
+            //}
+            //else
+            //{
+            //    code = gen.GenForExecuteNoQuery(txtCode.Text, App.Instance.DBLink.ConnectionString);
+            //}
+
+            //FrmShowCode frm = new FrmShowCode();
+            //frm.SetCode(code);
+            //frm.Show();
         }
 
         //导出数据
