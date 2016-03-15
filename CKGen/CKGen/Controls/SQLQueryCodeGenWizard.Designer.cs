@@ -35,15 +35,18 @@
             this.btnAddParam = new System.Windows.Forms.ToolStripButton();
             this.btnRemoveParam = new System.Windows.Forms.ToolStripButton();
             this.dgvParam = new System.Windows.Forms.DataGridView();
+            this.ResultSettingPage = new AeroWizard.WizardPage();
+            this.codePage = new AeroWizard.WizardPage();
+            this.txtSQL = new System.Windows.Forms.TextBox();
             this.colName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colType = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.colAllowNull = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.colRemark = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ResultSettingPage = new AeroWizard.WizardPage();
             ((System.ComponentModel.ISupportInitialize)(this.wizardControl1)).BeginInit();
             this.QueryParamPage.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvParam)).BeginInit();
+            this.codePage.SuspendLayout();
             this.SuspendLayout();
             // 
             // wizardControl1
@@ -53,9 +56,10 @@
             this.wizardControl1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.wizardControl1.Location = new System.Drawing.Point(0, 0);
             this.wizardControl1.Name = "wizardControl1";
+            this.wizardControl1.Pages.Add(this.codePage);
             this.wizardControl1.Pages.Add(this.QueryParamPage);
             this.wizardControl1.Pages.Add(this.ResultSettingPage);
-            this.wizardControl1.Size = new System.Drawing.Size(574, 383);
+            this.wizardControl1.Size = new System.Drawing.Size(808, 550);
             this.wizardControl1.SuppressParentFormCaptionSync = true;
             this.wizardControl1.SuppressParentFormIconSync = true;
             this.wizardControl1.TabIndex = 0;
@@ -67,7 +71,7 @@
             this.QueryParamPage.Controls.Add(this.toolStrip1);
             this.QueryParamPage.Controls.Add(this.dgvParam);
             this.QueryParamPage.Name = "QueryParamPage";
-            this.QueryParamPage.Size = new System.Drawing.Size(527, 227);
+            this.QueryParamPage.Size = new System.Drawing.Size(761, 394);
             this.QueryParamPage.TabIndex = 0;
             this.QueryParamPage.Text = "查询参数设置";
             // 
@@ -80,7 +84,7 @@
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.toolStrip1.Size = new System.Drawing.Size(527, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(761, 25);
             this.toolStrip1.TabIndex = 1;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -92,6 +96,7 @@
             this.btnAddParam.Name = "btnAddParam";
             this.btnAddParam.Size = new System.Drawing.Size(23, 22);
             this.btnAddParam.Text = "增加参数";
+            this.btnAddParam.Click += new System.EventHandler(this.btnAddParam_Click);
             // 
             // btnRemoveParam
             // 
@@ -101,6 +106,7 @@
             this.btnRemoveParam.Name = "btnRemoveParam";
             this.btnRemoveParam.Size = new System.Drawing.Size(23, 22);
             this.btnRemoveParam.Text = "删除参数";
+            this.btnRemoveParam.Click += new System.EventHandler(this.btnRemoveParam_Click);
             // 
             // dgvParam
             // 
@@ -113,45 +119,14 @@
             this.colType,
             this.colAllowNull,
             this.colRemark});
-            this.dgvParam.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgvParam.Location = new System.Drawing.Point(0, 0);
+            this.dgvParam.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
+            this.dgvParam.Location = new System.Drawing.Point(0, 25);
             this.dgvParam.Name = "dgvParam";
             this.dgvParam.RowTemplate.Height = 23;
-            this.dgvParam.Size = new System.Drawing.Size(527, 227);
+            this.dgvParam.Size = new System.Drawing.Size(761, 366);
             this.dgvParam.TabIndex = 0;
-            // 
-            // colName
-            // 
-            this.colName.HeaderText = "参数名";
-            this.colName.Name = "colName";
-            // 
-            // colType
-            // 
-            this.colType.HeaderText = "类型";
-            this.colType.Items.AddRange(new object[] {
-            "string",
-            "char",
-            "int",
-            "long",
-            "float",
-            "double",
-            "bool",
-            "DateTime",
-            "TimeSpan",
-            "Guid"});
-            this.colType.Name = "colType";
-            this.colType.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.colType.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            // 
-            // colAllowNull
-            // 
-            this.colAllowNull.HeaderText = "允许空";
-            this.colAllowNull.Name = "colAllowNull";
-            // 
-            // colRemark
-            // 
-            this.colRemark.HeaderText = "说明";
-            this.colRemark.Name = "colRemark";
+            this.dgvParam.CurrentCellDirtyStateChanged += new System.EventHandler(this.dgvParam_CurrentCellDirtyStateChanged);
+            this.dgvParam.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.dgvParam_EditingControlShowing);
             // 
             // ResultSettingPage
             // 
@@ -160,24 +135,116 @@
             this.ResultSettingPage.TabIndex = 1;
             this.ResultSettingPage.Text = "查询结果设置页";
             // 
+            // codePage
+            // 
+            this.codePage.Controls.Add(this.txtSQL);
+            this.codePage.Name = "codePage";
+            this.codePage.Size = new System.Drawing.Size(761, 394);
+            this.codePage.TabIndex = 2;
+            this.codePage.Text = "SQL语句";
+            // 
+            // txtSQL
+            // 
+            this.txtSQL.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtSQL.Location = new System.Drawing.Point(0, 0);
+            this.txtSQL.Multiline = true;
+            this.txtSQL.Name = "txtSQL";
+            this.txtSQL.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.txtSQL.Size = new System.Drawing.Size(761, 394);
+            this.txtSQL.TabIndex = 0;
+            // 
+            // colName
+            // 
+            this.colName.FillWeight = 150F;
+            this.colName.HeaderText = "参数名";
+            this.colName.Name = "colName";
+            this.colName.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.colName.Width = 150;
+            // 
+            // colType
+            // 
+            this.colType.DisplayStyle = System.Windows.Forms.DataGridViewComboBoxDisplayStyle.ComboBox;
+            this.colType.FillWeight = 130F;
+            this.colType.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.colType.HeaderText = "类型";
+            this.colType.Items.AddRange(new object[] {
+            "bigint",
+            "binary(50)",
+            "bit",
+            "char(10)",
+            "date",
+            "datetime",
+            "datetime2(7)",
+            "datetimeoffset(7)",
+            "decimal(18, 0)",
+            "float",
+            "geography",
+            "geometry",
+            "hierarchyid",
+            "image",
+            "int",
+            "money",
+            "nchar(10)",
+            "ntext",
+            "numeric(18, 0)",
+            "nvarchar(50)",
+            "nvarchar(MAX)",
+            "real",
+            "smalldatetime",
+            "smallint",
+            "smallmoney",
+            "sql_variant",
+            "text",
+            "time(7)",
+            "timestamp",
+            "tinyint",
+            "uniqueidentifier",
+            "varbinary(50)",
+            "varbinary(MAX)",
+            "varchar(50)",
+            "varchar(MAX)",
+            "xml"});
+            this.colType.MinimumWidth = 130;
+            this.colType.Name = "colType";
+            this.colType.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.colType.Width = 130;
+            // 
+            // colAllowNull
+            // 
+            this.colAllowNull.FillWeight = 50F;
+            this.colAllowNull.HeaderText = "允许空";
+            this.colAllowNull.MinimumWidth = 50;
+            this.colAllowNull.Name = "colAllowNull";
+            this.colAllowNull.Width = 50;
+            // 
+            // colRemark
+            // 
+            this.colRemark.FillWeight = 250F;
+            this.colRemark.HeaderText = "说明";
+            this.colRemark.MinimumWidth = 250;
+            this.colRemark.Name = "colRemark";
+            this.colRemark.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.colRemark.Width = 250;
+            // 
             // SQLQueryCodeGenWizard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(574, 383);
+            this.ClientSize = new System.Drawing.Size(808, 550);
             this.Controls.Add(this.wizardControl1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "SQLQueryCodeGenWizard";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Load += new System.EventHandler(this.SQLQueryCodeGenWizard_Load);
             ((System.ComponentModel.ISupportInitialize)(this.wizardControl1)).EndInit();
             this.QueryParamPage.ResumeLayout(false);
             this.QueryParamPage.PerformLayout();
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvParam)).EndInit();
+            this.codePage.ResumeLayout(false);
+            this.codePage.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -188,12 +255,14 @@
         private AeroWizard.WizardPage QueryParamPage;
         private AeroWizard.WizardPage ResultSettingPage;
         private System.Windows.Forms.DataGridView dgvParam;
+        private System.Windows.Forms.ToolStrip toolStrip1;
+        private System.Windows.Forms.ToolStripButton btnAddParam;
+        private System.Windows.Forms.ToolStripButton btnRemoveParam;
+        private AeroWizard.WizardPage codePage;
+        private System.Windows.Forms.TextBox txtSQL;
         private System.Windows.Forms.DataGridViewTextBoxColumn colRemark;
         private System.Windows.Forms.DataGridViewCheckBoxColumn colAllowNull;
         private System.Windows.Forms.DataGridViewComboBoxColumn colType;
         private System.Windows.Forms.DataGridViewTextBoxColumn colName;
-        private System.Windows.Forms.ToolStrip toolStrip1;
-        private System.Windows.Forms.ToolStripButton btnAddParam;
-        private System.Windows.Forms.ToolStripButton btnRemoveParam;
     }
 }

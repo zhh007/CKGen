@@ -293,6 +293,7 @@ namespace CKGen.Controls
         private void btnGenCode_Click(object sender, EventArgs e)
         {
             SQLQueryCodeGenWizard wizard = new SQLQueryCodeGenWizard();
+            wizard.SQL = txtCode.Text;
             wizard.ShowDialog();
 
             //DbQueryCodeGen gen = new DbQueryCodeGen();
