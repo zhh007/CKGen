@@ -19,6 +19,8 @@ namespace CKGen.Controls
 
             codePage.Initialize += CodePage_Initialize;
             codePage.Commit += CodePage_Commit;
+            QueryParamPage.Initialize += QueryParamPage_Initialize;
+            QueryParamPage.Commit += QueryParamPage_Commit;
 
             //if (MethodInfo == null || MethodInfo.Count == 0)
             //{
@@ -36,26 +38,6 @@ namespace CKGen.Controls
         {
             this.SQL = txtSQL.Text;
             MethodInfo.Params = GetMethodParams(this.SQL);
-
-            List<DataGridViewRow> rlist = new List<DataGridViewRow>();
-            dgvParam.Rows.Clear();
-            foreach (var item in MethodInfo.Params)
-            {
-                int rowIndex = dgvParam.Rows.Add();
-                DataGridViewRow row = dgvParam.Rows[rowIndex];
-                row.Cells[0].Value = item.ParamName;
-
-                DataGridViewComboBoxCell cboCol = (DataGridViewComboBoxCell)row.Cells[1];
-                if (!cboCol.Items.Contains(item.ParamType))
-                {
-                    cboCol.Items.Add(item.ParamType);
-                }
-                row.Cells[1].Value = item.ParamType;
-
-                row.Cells[2].Value = item.AllowNull ? true : false;
-                row.Cells[3].Value = item.Remark;
-            }
-            dgvParam.Rows.AddRange(rlist.ToArray());
         }
 
         private List<ParamDefine> GetMethodParams(string sql)
@@ -82,6 +64,32 @@ namespace CKGen.Controls
         #endregion
 
         #region [2] Query Param Page
+        private void QueryParamPage_Initialize(object sender, AeroWizard.WizardPageInitEventArgs e)
+        {
+            List<DataGridViewRow> rlist = new List<DataGridViewRow>();
+            dgvParam.Rows.Clear();
+            foreach (var item in MethodInfo.Params)
+            {
+                int rowIndex = dgvParam.Rows.Add();
+                DataGridViewRow row = dgvParam.Rows[rowIndex];
+                row.Cells[0].Value = item.ParamName;
+                DataGridViewComboBoxCell cboCol = (DataGridViewComboBoxCell)row.Cells[1];
+                if (!cboCol.Items.Contains(item.ParamType))
+                {
+                    cboCol.Items.Add(item.ParamType);
+                }
+                row.Cells[1].Value = item.ParamType;
+                row.Cells[2].Value = item.AllowNull ? true : false;
+                row.Cells[3].Value = item.Remark;
+            }
+            dgvParam.Rows.AddRange(rlist.ToArray());
+        }
+
+        private void QueryParamPage_Commit(object sender, AeroWizard.WizardPageConfirmEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
         //增加查询参数
         private void btnAddParam_Click(object sender, EventArgs e)
         {
