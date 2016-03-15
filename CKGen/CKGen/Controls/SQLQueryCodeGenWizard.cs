@@ -51,7 +51,7 @@ namespace CKGen.Controls
                 {
                     ParamDefine pd = new ParamDefine();
                     pd.ParamName = matchResults.Groups[1].Value;
-                    pd.ParamType = matchResults.Groups[2].Value;
+                    pd.ParamType = matchResults.Groups[2].Value.ToLower();
                     list.Add(pd);
                     matchResults = matchResults.NextMatch();
                 }
