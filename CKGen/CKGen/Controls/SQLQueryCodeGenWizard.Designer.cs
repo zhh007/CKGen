@@ -30,23 +30,23 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SQLQueryCodeGenWizard));
             this.wizardControl1 = new AeroWizard.WizardControl();
+            this.codePage = new AeroWizard.WizardPage();
+            this.txtSQL = new System.Windows.Forms.TextBox();
             this.QueryParamPage = new AeroWizard.WizardPage();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.btnAddParam = new System.Windows.Forms.ToolStripButton();
             this.btnRemoveParam = new System.Windows.Forms.ToolStripButton();
             this.dgvParam = new System.Windows.Forms.DataGridView();
-            this.ResultSettingPage = new AeroWizard.WizardPage();
-            this.codePage = new AeroWizard.WizardPage();
-            this.txtSQL = new System.Windows.Forms.TextBox();
             this.colName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colType = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.colAllowNull = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.colRemark = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ResultSettingPage = new AeroWizard.WizardPage();
             ((System.ComponentModel.ISupportInitialize)(this.wizardControl1)).BeginInit();
+            this.codePage.SuspendLayout();
             this.QueryParamPage.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvParam)).BeginInit();
-            this.codePage.SuspendLayout();
             this.SuspendLayout();
             // 
             // wizardControl1
@@ -65,6 +65,24 @@
             this.wizardControl1.TabIndex = 0;
             this.wizardControl1.Title = "代码生成";
             this.wizardControl1.TitleIcon = global::CKGen.Properties.Resources.move;
+            // 
+            // codePage
+            // 
+            this.codePage.Controls.Add(this.txtSQL);
+            this.codePage.Name = "codePage";
+            this.codePage.Size = new System.Drawing.Size(761, 394);
+            this.codePage.TabIndex = 2;
+            this.codePage.Text = "SQL语句";
+            // 
+            // txtSQL
+            // 
+            this.txtSQL.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtSQL.Location = new System.Drawing.Point(0, 0);
+            this.txtSQL.Multiline = true;
+            this.txtSQL.Name = "txtSQL";
+            this.txtSQL.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.txtSQL.Size = new System.Drawing.Size(761, 394);
+            this.txtSQL.TabIndex = 0;
             // 
             // QueryParamPage
             // 
@@ -127,31 +145,6 @@
             this.dgvParam.TabIndex = 0;
             this.dgvParam.CurrentCellDirtyStateChanged += new System.EventHandler(this.dgvParam_CurrentCellDirtyStateChanged);
             this.dgvParam.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.dgvParam_EditingControlShowing);
-            // 
-            // ResultSettingPage
-            // 
-            this.ResultSettingPage.Name = "ResultSettingPage";
-            this.ResultSettingPage.Size = new System.Drawing.Size(527, 227);
-            this.ResultSettingPage.TabIndex = 1;
-            this.ResultSettingPage.Text = "查询结果设置页";
-            // 
-            // codePage
-            // 
-            this.codePage.Controls.Add(this.txtSQL);
-            this.codePage.Name = "codePage";
-            this.codePage.Size = new System.Drawing.Size(761, 394);
-            this.codePage.TabIndex = 2;
-            this.codePage.Text = "SQL语句";
-            // 
-            // txtSQL
-            // 
-            this.txtSQL.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtSQL.Location = new System.Drawing.Point(0, 0);
-            this.txtSQL.Multiline = true;
-            this.txtSQL.Name = "txtSQL";
-            this.txtSQL.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.txtSQL.Size = new System.Drawing.Size(761, 394);
-            this.txtSQL.TabIndex = 0;
             // 
             // colName
             // 
@@ -226,25 +219,31 @@
             this.colRemark.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.colRemark.Width = 250;
             // 
+            // ResultSettingPage
+            // 
+            this.ResultSettingPage.Name = "ResultSettingPage";
+            this.ResultSettingPage.Size = new System.Drawing.Size(761, 394);
+            this.ResultSettingPage.TabIndex = 1;
+            this.ResultSettingPage.Text = "查询结果设置页";
+            // 
             // SQLQueryCodeGenWizard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(808, 550);
             this.Controls.Add(this.wizardControl1);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "SQLQueryCodeGenWizard";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             ((System.ComponentModel.ISupportInitialize)(this.wizardControl1)).EndInit();
+            this.codePage.ResumeLayout(false);
+            this.codePage.PerformLayout();
             this.QueryParamPage.ResumeLayout(false);
             this.QueryParamPage.PerformLayout();
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvParam)).EndInit();
-            this.codePage.ResumeLayout(false);
-            this.codePage.PerformLayout();
             this.ResumeLayout(false);
 
         }

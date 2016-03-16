@@ -83,6 +83,16 @@ namespace CKGen.Properties {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
+        internal static System.Drawing.Bitmap Collapse_large {
+            get {
+                object obj = ResourceManager.GetObject("Collapse_large", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
         internal static System.Drawing.Bitmap CSCodefile {
             get {
                 object obj = ResourceManager.GetObject("CSCodefile", resourceCulture);
@@ -126,6 +136,16 @@ namespace CKGen.Properties {
         internal static System.Drawing.Bitmap Error {
             get {
                 object obj = ResourceManager.GetObject("Error", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap Expand_large {
+            get {
+                object obj = ResourceManager.GetObject("Expand_large", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

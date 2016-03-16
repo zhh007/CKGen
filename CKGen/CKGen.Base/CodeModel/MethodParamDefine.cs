@@ -5,7 +5,7 @@ using System.Text;
 
 namespace CKGen.Base.CodeModel
 {
-    public class ParamDefine
+    public class MethodParamDefine
     {
         public string ParamName { get; set; }
         public string ParamType { get; set; }

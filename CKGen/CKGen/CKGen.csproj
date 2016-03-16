@@ -90,6 +90,12 @@
     <Compile Include="Controls\FrmShowCode.Designer.cs">
       <DependentUpon>FrmShowCode.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\ModuleEditControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ModuleEditControl.Designer.cs">
+      <DependentUpon>ModuleEditControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\ProcedureDetail.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -185,6 +191,9 @@
     <EmbeddedResource Include="Controls\FrmShowCode.resx">
       <DependentUpon>FrmShowCode.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ModuleEditControl.resx">
+      <DependentUpon>ModuleEditControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\SchemaTreeView.resx">
       <DependentUpon>SchemaTreeView.cs</DependentUpon>
     </EmbeddedResource>
@@ -276,6 +285,8 @@
     <None Include="Resources\move.ico" />
     <None Include="Resources\Plus.png" />
     <None Include="Resources\Minus.png" />
+    <None Include="Resources\Collapse_large.bmp" />
+    <None Include="Resources\Expand_large.bmp" />
     <Content Include="Resources\server_link_ico.ico" />
     <None Include="Resources\fresh.png" />
     <None Include="Resources\folder.png" />

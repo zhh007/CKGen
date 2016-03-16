@@ -9,11 +9,11 @@ namespace CKGen.Base.CodeModel
     {
         public string MethodName { get; set; }
         public string Remark { get; set; }
-        public List<ParamDefine> Params { get; set; }
+        public List<MethodParamDefine> Params { get; set; }
         public string ReturnType { get; set; }
         public MethodDefine()
         {
-            this.Params = new List<ParamDefine>();
+            this.Params = new List<MethodParamDefine>();
         }
     }
 }

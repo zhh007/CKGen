@@ -64,7 +64,7 @@
     <Compile Include="Form\ModuleRelationship.cs" />
     <Compile Include="Form\StringField.cs" />
     <Compile Include="Form\ModuleField.cs" />
-    <Compile Include="CodeModel\ParamDefine.cs" />
+    <Compile Include="CodeModel\MethodParamDefine.cs" />
     <Compile Include="Services\ICodeGenService.cs" />
     <Compile Include="Events\IEventAggregator.cs" />
     <Compile Include="LanguageConvert.cs" />

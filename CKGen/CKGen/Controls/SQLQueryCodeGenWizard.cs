@@ -22,6 +22,10 @@ namespace CKGen.Controls
             QueryParamPage.Initialize += QueryParamPage_Initialize;
             QueryParamPage.Commit += QueryParamPage_Commit;
 
+            var mctrl = new ModuleEditControl();
+            mctrl.Height = 300;
+            ResultSettingPage.Controls.Add(mctrl);
+
             //if (MethodInfo == null || MethodInfo.Count == 0)
             //{
             //    QueryParamPage.Suppress = true;//隐藏参数页
@@ -40,16 +44,16 @@ namespace CKGen.Controls
             MethodInfo.Params = GetMethodParams(this.SQL);
         }
 
-        private List<ParamDefine> GetMethodParams(string sql)
+        private List<MethodParamDefine> GetMethodParams(string sql)
         {
-            List<ParamDefine> list = new List<ParamDefine>();
+            List<MethodParamDefine> list = new List<MethodParamDefine>();
             try
             {
                 Regex regexObj = new Regex(@"\s+@([a-z_0-9]+)\s+([a-z_0-9()]+)");
                 Match matchResults = regexObj.Match(sql);
                 while (matchResults.Success)
                 {
-                    ParamDefine pd = new ParamDefine();
+                    MethodParamDefine pd = new MethodParamDefine();
                     pd.ParamName = matchResults.Groups[1].Value;
                     pd.ParamType = matchResults.Groups[2].Value.ToLower();
                     list.Add(pd);
@@ -87,7 +91,7 @@ namespace CKGen.Controls
 
         private void QueryParamPage_Commit(object sender, AeroWizard.WizardPageConfirmEventArgs e)
         {
-            throw new NotImplementedException();
+            
         }
 
         //增加查询参数
