@@ -42,11 +42,13 @@
             this.colAllowNull = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.colRemark = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ResultSettingPage = new AeroWizard.WizardPage();
+            this.resultSettingPanel = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.wizardControl1)).BeginInit();
             this.codePage.SuspendLayout();
             this.QueryParamPage.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvParam)).BeginInit();
+            this.ResultSettingPage.SuspendLayout();
             this.SuspendLayout();
             // 
             // wizardControl1
@@ -221,10 +223,20 @@
             // 
             // ResultSettingPage
             // 
+            this.ResultSettingPage.Controls.Add(this.resultSettingPanel);
             this.ResultSettingPage.Name = "ResultSettingPage";
             this.ResultSettingPage.Size = new System.Drawing.Size(761, 394);
             this.ResultSettingPage.TabIndex = 1;
             this.ResultSettingPage.Text = "查询结果设置页";
+            // 
+            // resultSettingPanel
+            // 
+            this.resultSettingPanel.AutoScroll = true;
+            this.resultSettingPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.resultSettingPanel.Location = new System.Drawing.Point(0, 0);
+            this.resultSettingPanel.Name = "resultSettingPanel";
+            this.resultSettingPanel.Size = new System.Drawing.Size(761, 394);
+            this.resultSettingPanel.TabIndex = 0;
             // 
             // SQLQueryCodeGenWizard
             // 
@@ -244,6 +256,7 @@
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvParam)).EndInit();
+            this.ResultSettingPage.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -263,5 +276,6 @@
         private System.Windows.Forms.DataGridViewCheckBoxColumn colAllowNull;
         private System.Windows.Forms.DataGridViewComboBoxColumn colType;
         private System.Windows.Forms.DataGridViewTextBoxColumn colName;
+        private System.Windows.Forms.Panel resultSettingPanel;
     }
 }

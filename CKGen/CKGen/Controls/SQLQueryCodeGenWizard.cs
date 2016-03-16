@@ -23,8 +23,13 @@ namespace CKGen.Controls
             QueryParamPage.Commit += QueryParamPage_Commit;
 
             var mctrl = new ModuleEditControl();
-            mctrl.Height = 300;
-            ResultSettingPage.Controls.Add(mctrl);
+            var mctrl2 = new ModuleEditControl();
+            mctrl2.Location = new System.Drawing.Point(0, 310);
+            resultSettingPanel.Controls.Add(mctrl);
+            resultSettingPanel.Controls.Add(mctrl2);
+
+
+            //ResultSettingPage.Controls.Add(mctrl);
 
             //if (MethodInfo == null || MethodInfo.Count == 0)
             //{
