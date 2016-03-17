@@ -40,32 +40,33 @@ namespace CKGen.Temp.Adonet
         private readonly string Temp_Query_ExecuteNonQuery = Comm.GetTemplete("Query.ExecuteNonQuery.cshtml");
         private readonly string Temp_Query_ExecuteScalar = Comm.GetTemplete("Query.ExecuteScalar.cshtml");
 
-        public string GenForQueryList(string query, DataSet ds, string connstr)
+        public string GenForQueryList(string query, Module module, string connstr)
         {
             DbQueryGetListModel gModel = new DbQueryGetListModel();
             gModel.SQL = query;
             gModel.ConnectionString = connstr;
-            if (ds != null && ds.Tables != null && ds.Tables.Count > 0)
-            {
-                for (int i = 0; i < ds.Tables.Count; i++)
-                {
-                    DataTable dt = ds.Tables[i];
-                    Module module = new Module();
-                    module.ModuleName = string.Format("Result{0}", i);
-                    module.CodeName = string.Format("Result{0}", i);
-                    foreach (DataColumn dc in dt.Columns)
-                    {
-                        ModuleField mf = new ModuleField(module, "", dc.ColumnName, dc.ColumnName);
-                        mf.DataType = dc.DataType;
-                        mf.Nullable = dc.AllowDBNull;
-                        mf.LanguageType = LanguageConvert.GetCSharpType(dc.DataType, dc.AllowDBNull);
-                        //Debug.WriteLine("{0} ---> {1}", mf.FieldName, mf.LanguageType);
-                        module.Fields.Add(mf);
-                    }
+            gModel.Module = module;
+            //if (ds != null && ds.Tables != null && ds.Tables.Count > 0)
+            //{
+            //    for (int i = 0; i < ds.Tables.Count; i++)
+            //    {
+            //        DataTable dt = ds.Tables[i];
+            //        Module module = new Module();
+            //        module.ModuleName = string.Format("Result{0}", i);
+            //        module.CodeName = string.Format("Result{0}", i);
+            //        foreach (DataColumn dc in dt.Columns)
+            //        {
+            //            ModuleField mf = new ModuleField(module, "", dc.ColumnName, dc.ColumnName);
+            //            mf.DataType = dc.DataType;
+            //            mf.Nullable = dc.AllowDBNull;
+            //            mf.LanguageType = LanguageConvert.GetCSharpType(dc.DataType, dc.AllowDBNull);
+            //            //Debug.WriteLine("{0} ---> {1}", mf.FieldName, mf.LanguageType);
+            //            module.Fields.Add(mf);
+            //        }
 
-                    gModel.Module = module;
-                }
-            }
+            //        gModel.Module = module;
+            //    }
+            //}
 
             string modelCode = GenModelCode(gModel.Module);
 
@@ -79,32 +80,33 @@ namespace CKGen.Temp.Adonet
             return sb.ToString();
         }
 
-        public string GenForQueryOne(string query, DataSet ds, string connstr)
+        public string GenForQueryOne(string query, Module module, string connstr)
         {
             DbQueryGetListModel gModel = new DbQueryGetListModel();
             gModel.SQL = query;
             gModel.ConnectionString = connstr;
-            if (ds != null && ds.Tables != null && ds.Tables.Count > 0)
-            {
-                for (int i = 0; i < ds.Tables.Count; i++)
-                {
-                    DataTable dt = ds.Tables[i];
-                    Module module = new Module();
-                    module.ModuleName = string.Format("Result{0}", i);
-                    module.CodeName = string.Format("Result{0}", i);
-                    foreach (DataColumn dc in dt.Columns)
-                    {
-                        ModuleField mf = new ModuleField(module, "", dc.ColumnName, dc.ColumnName);
-                        mf.DataType = dc.DataType;
-                        mf.Nullable = dc.AllowDBNull;
-                        mf.LanguageType = LanguageConvert.GetCSharpType(dc.DataType, dc.AllowDBNull);
-                        //Debug.WriteLine("{0} ---> {1}", mf.FieldName, mf.LanguageType);
-                        module.Fields.Add(mf);
-                    }
+            gModel.Module = module;
+            //if (ds != null && ds.Tables != null && ds.Tables.Count > 0)
+            //{
+            //    for (int i = 0; i < ds.Tables.Count; i++)
+            //    {
+            //        DataTable dt = ds.Tables[i];
+            //        Module module = new Module();
+            //        module.ModuleName = string.Format("Result{0}", i);
+            //        module.CodeName = string.Format("Result{0}", i);
+            //        foreach (DataColumn dc in dt.Columns)
+            //        {
+            //            ModuleField mf = new ModuleField(module, "", dc.ColumnName, dc.ColumnName);
+            //            mf.DataType = dc.DataType;
+            //            mf.Nullable = dc.AllowDBNull;
+            //            mf.LanguageType = LanguageConvert.GetCSharpType(dc.DataType, dc.AllowDBNull);
+            //            //Debug.WriteLine("{0} ---> {1}", mf.FieldName, mf.LanguageType);
+            //            module.Fields.Add(mf);
+            //        }
 
-                    gModel.Module = module;
-                }
-            }
+            //        gModel.Module = module;
+            //    }
+            //}
 
             string modelCode = GenModelCode(gModel.Module);
 
@@ -133,16 +135,16 @@ namespace CKGen.Temp.Adonet
             return sb.ToString();
         }
 
-        public string GenForExecuteScalar(string query, DataSet ds, string connstr)
+        public string GenForExecuteScalar(string query, Type t, bool allowDBNull, string connstr)
         {
-            Type t = null;
-            bool allowDBNull = false;
-            if (ds != null && ds.Tables != null && ds.Tables.Count > 0)
-            {
-                var dc = ds.Tables[0].Columns[0];
-                t = dc.DataType;
-                allowDBNull = dc.AllowDBNull;
-            }
+            //Type t = null;
+            //bool allowDBNull = false;
+            //if (ds != null && ds.Tables != null && ds.Tables.Count > 0)
+            //{
+            //    var dc = ds.Tables[0].Columns[0];
+            //    t = dc.DataType;
+            //    allowDBNull = dc.AllowDBNull;
+            //}
 
             DbQueryExecuteScalarModel gModel = new DbQueryExecuteScalarModel();
             gModel.SQL = query;
@@ -169,6 +171,13 @@ namespace CKGen.Temp.Adonet
         private string GenModelCode(Module module)
         {
             return codeGen.Gen(this.Temp_Query_Model, module);
+        }
+
+        public string GenForMultiQuery(string query, List<Module> modules, string connstr)
+        {
+            StringBuilder sb = new StringBuilder();
+
+            return sb.ToString();
         }
     }
 }

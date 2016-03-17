@@ -43,6 +43,7 @@
     <Compile Include="CodeModel\ClassDefine.cs" />
     <Compile Include="CodeModel\MethodDefine.cs" />
     <Compile Include="CodeModel\PropertyDefine.cs" />
+    <Compile Include="CodeModel\SQLQuerySetting.cs" />
     <Compile Include="DatabaseLink.cs" />
     <Compile Include="DatabaseType.cs" />
     <Compile Include="EnumDescriptionAttribute.cs" />

@@ -43,6 +43,7 @@
             this.colRemark = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ResultSettingPage = new AeroWizard.WizardPage();
             this.resultSettingPanel = new System.Windows.Forms.Panel();
+            this.ResultPage = new AeroWizard.WizardPage();
             ((System.ComponentModel.ISupportInitialize)(this.wizardControl1)).BeginInit();
             this.codePage.SuspendLayout();
             this.QueryParamPage.SuspendLayout();
@@ -61,6 +62,7 @@
             this.wizardControl1.Pages.Add(this.codePage);
             this.wizardControl1.Pages.Add(this.QueryParamPage);
             this.wizardControl1.Pages.Add(this.ResultSettingPage);
+            this.wizardControl1.Pages.Add(this.ResultPage);
             this.wizardControl1.Size = new System.Drawing.Size(808, 550);
             this.wizardControl1.SuppressParentFormCaptionSync = true;
             this.wizardControl1.SuppressParentFormIconSync = true;
@@ -238,6 +240,13 @@
             this.resultSettingPanel.Size = new System.Drawing.Size(761, 394);
             this.resultSettingPanel.TabIndex = 0;
             // 
+            // ResultPage
+            // 
+            this.ResultPage.Name = "ResultPage";
+            this.ResultPage.Size = new System.Drawing.Size(761, 394);
+            this.ResultPage.TabIndex = 3;
+            this.ResultPage.Text = "生成结果";
+            // 
             // SQLQueryCodeGenWizard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -277,5 +286,6 @@
         private System.Windows.Forms.DataGridViewComboBoxColumn colType;
         private System.Windows.Forms.DataGridViewTextBoxColumn colName;
         private System.Windows.Forms.Panel resultSettingPanel;
+        private AeroWizard.WizardPage ResultPage;
     }
 }

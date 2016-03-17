@@ -114,6 +114,12 @@
     <Compile Include="Controls\SQLQueryCodeGenWizard.Designer.cs">
       <DependentUpon>SQLQueryCodeGenWizard.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\SQLQueryResultControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\SQLQueryResultControl.Designer.cs">
+      <DependentUpon>SQLQueryResultControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\ViewDetail.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -199,6 +205,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\SQLQueryCodeGenWizard.resx">
       <DependentUpon>SQLQueryCodeGenWizard.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\SQLQueryResultControl.resx">
+      <DependentUpon>SQLQueryResultControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\ViewDetail.resx">
       <DependentUpon>ViewDetail.cs</DependentUpon>

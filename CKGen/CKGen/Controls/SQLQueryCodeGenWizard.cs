@@ -1,8 +1,12 @@
 ﻿using CKGen.Base;
 using CKGen.Base.CodeModel;
+using CKGen.Base.Form;
+using CKGen.DBSchema;
+using CKGen.Temp.Adonet;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Data;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
@@ -13,6 +17,8 @@ namespace CKGen.Controls
         public string SQL { get; set; }
         public MethodDefine MethodInfo = new MethodDefine();
         public List<ClassDefine> ResultTypeList = new List<ClassDefine>();
+        public DataSet ds { get; set; }
+        public List<SQLQueryResultControl> ResultList = new List<SQLQueryResultControl>();
         public SQLQueryCodeGenWizard()
         {
             InitializeComponent();
@@ -21,15 +27,8 @@ namespace CKGen.Controls
             codePage.Commit += CodePage_Commit;
             QueryParamPage.Initialize += QueryParamPage_Initialize;
             QueryParamPage.Commit += QueryParamPage_Commit;
-
-            var mctrl = new ModuleEditControl();
-            var mctrl2 = new ModuleEditControl();
-            mctrl2.Location = new System.Drawing.Point(0, 310);
-            resultSettingPanel.Controls.Add(mctrl);
-            resultSettingPanel.Controls.Add(mctrl2);
-
-
-            //ResultSettingPage.Controls.Add(mctrl);
+            ResultSettingPage.Initialize += ResultSettingPage_Initialize;
+            ResultSettingPage.Commit += ResultSettingPage_Commit;
 
             //if (MethodInfo == null || MethodInfo.Count == 0)
             //{
@@ -96,7 +95,7 @@ namespace CKGen.Controls
 
         private void QueryParamPage_Commit(object sender, AeroWizard.WizardPageConfirmEventArgs e)
         {
-            
+
         }
 
         //增加查询参数
@@ -152,6 +151,84 @@ namespace CKGen.Controls
                 dgvParam.CommitEdit(DataGridViewDataErrorContexts.Commit);
                 dgvParam.EndEdit();
             }
+        }
+        #endregion
+
+        #region [3] Result Setting Page
+        private void ResultSettingPage_Initialize(object sender, AeroWizard.WizardPageInitEventArgs e)
+        {
+            if (ds != null && ds.Tables != null && ds.Tables.Count > 0)
+            {
+                resultSettingPanel.Controls.Clear();
+                for (int i = 0; i < ds.Tables.Count; i++)
+                {
+                    var mctrl = new SQLQueryResultControl(ds.Tables[i], i + 1);
+                    ResultList.Add(mctrl);
+                    mctrl.Location = new System.Drawing.Point(0, 160 * i);
+                    mctrl.Size = new System.Drawing.Size(600, 160);
+                    resultSettingPanel.Controls.Add(mctrl);
+                }
+            }
+        }
+
+        private void ResultSettingPage_Commit(object sender, AeroWizard.WizardPageConfirmEventArgs e)
+        {
+            if (ResultList == null || ResultList.Count == 0)
+                return;
+
+            DbQueryCodeGen gen = new DbQueryCodeGen();
+            string code = string.Empty;
+            string connstr = App.Instance.DBLink.ConnectionString;
+            if (ResultList.Count == 1)
+            {
+                var ctrl = ResultList[0];
+                Module module = new Module();
+                module.ModuleName = ctrl.RowClassName;
+                module.CodeName = ctrl.RowClassName;
+                if (ctrl.DataTable != null)
+                {
+                    foreach (DataColumn dc in ctrl.DataTable.Columns)
+                    {
+                        ModuleField mf = new ModuleField(module, "", dc.ColumnName, dc.ColumnName);
+                        mf.DataType = dc.DataType;
+                        mf.Nullable = dc.AllowDBNull;
+                        mf.LanguageType = LanguageConvert.GetCSharpType(dc.DataType, dc.AllowDBNull);
+                        //Debug.WriteLine("{0} ---> {1}", mf.FieldName, mf.LanguageType);
+                        module.Fields.Add(mf);
+                    }
+                }
+                if (ctrl.QueryExecuteType == SQLQueryExecuteType.ReadRows)
+                {
+                    code = gen.GenForQueryList(this.SQL, module, connstr);
+                }
+                else if (ctrl.QueryExecuteType == SQLQueryExecuteType.ReadOneRow)
+                {
+                    code = gen.GenForQueryOne(this.SQL, module, connstr);
+                }
+                else if (ctrl.QueryExecuteType == SQLQueryExecuteType.ExecuteSclor)
+                {
+                    if (ctrl.DataTable != null && ctrl.DataTable.Columns != null && ctrl.DataTable.Columns.Count > 0)
+                    {
+                        var dc = ctrl.DataTable.Columns[0];
+                        Type t = dc.DataType;
+                        bool allowDBNull = dc.AllowDBNull;
+                        code = gen.GenForExecuteScalar(this.SQL, t, allowDBNull, connstr);
+                    }
+                }
+                else
+                {
+                    code = gen.GenForExecuteNoQuery(this.SQL, connstr);
+                }
+            }
+            else
+            {
+
+            }
+
+            CodeView codeView = new CodeView();
+            codeView.Dock = DockStyle.Fill;
+            ResultPage.Controls.Add(codeView);
+            codeView.Show(code);
         }
         #endregion
     }

@@ -294,22 +294,8 @@ namespace CKGen.Controls
         {
             SQLQueryCodeGenWizard wizard = new SQLQueryCodeGenWizard();
             wizard.SQL = txtCode.Text;
+            wizard.ds = this.ds;
             wizard.ShowDialog();
-
-            //DbQueryCodeGen gen = new DbQueryCodeGen();
-            //string code = "";
-            //if (ds != null && ds.Tables != null && ds.Tables.Count > 0)
-            //{
-            //    code = gen.GenForQueryList(txtCode.Text, queryDataSet, App.Instance.DBLink.ConnectionString);
-            //}
-            //else
-            //{
-            //    code = gen.GenForExecuteNoQuery(txtCode.Text, App.Instance.DBLink.ConnectionString);
-            //}
-
-            //FrmShowCode frm = new FrmShowCode();
-            //frm.SetCode(code);
-            //frm.Show();
         }
 
         //导出数据
