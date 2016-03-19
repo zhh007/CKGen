@@ -31,6 +31,18 @@ namespace CKGen.Controls
             }
         }
 
+        public bool HasMoreResult
+        {
+            set
+            {
+                if (value)
+                {
+                    rbExecuteNonQuery.Hide();
+                    rbExecuteScalar.Hide();
+                }
+            }
+        }
+
         public SQLQueryExecuteType QueryExecuteType
         {
             get
@@ -68,25 +80,33 @@ namespace CKGen.Controls
             {
                 if(dt == null || dt.Columns == null || dt.Columns.Count == 0)
                 {
+                    rbReadRows.Hide();
+                    rbReadOneRow.Hide();
+                    rbExecuteScalar.Hide();
                     rbExecuteNonQuery.Checked = true;
                 }
                 else
                 {
+                    rbExecuteNonQuery.Hide();
                     if (dt.Columns.Count == 1)
                     {
+                        txtRowClassName.Hide();
                         if (dt.Rows.Count <= 1)
                         {
+                            rbReadOneRow.Hide();
                             rbExecuteScalar.Checked = true;
                         }
                         else
                         {
+                            rbExecuteScalar.Hide();
                             rbReadRows.Checked = true;
-                            txtRowClassName.Text = string.Format("Result{0}", index);
+                            //txtRowClassName.Text = string.Format("Result{0}", index);
                         }
                     }
                     
                     if(dt.Columns.Count > 1)
                     {
+                        rbExecuteScalar.Hide();
                         if (dt.Rows.Count <= 1)
                         {
                             rbReadOneRow.Checked = true;

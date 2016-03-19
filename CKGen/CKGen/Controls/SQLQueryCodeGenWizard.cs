@@ -160,12 +160,14 @@ namespace CKGen.Controls
             if (ds != null && ds.Tables != null && ds.Tables.Count > 0)
             {
                 resultSettingPanel.Controls.Clear();
-                for (int i = 0; i < ds.Tables.Count; i++)
+                int dtcount = ds.Tables.Count;
+                for (int i = 0; i < dtcount; i++)
                 {
                     var mctrl = new SQLQueryResultControl(ds.Tables[i], i + 1);
                     ResultList.Add(mctrl);
                     mctrl.Location = new System.Drawing.Point(0, 160 * i);
                     mctrl.Size = new System.Drawing.Size(600, 160);
+                    mctrl.HasMoreResult = dtcount > 1;
                     resultSettingPanel.Controls.Add(mctrl);
                 }
             }
