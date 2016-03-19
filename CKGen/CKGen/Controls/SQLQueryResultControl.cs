@@ -80,33 +80,32 @@ namespace CKGen.Controls
             {
                 if(dt == null || dt.Columns == null || dt.Columns.Count == 0)
                 {
-                    rbReadRows.Hide();
-                    rbReadOneRow.Hide();
-                    rbExecuteScalar.Hide();
+                    rbReadRows.Enabled = false;
+                    rbReadOneRow.Enabled = false;
+                    rbExecuteScalar.Enabled = false;
                     rbExecuteNonQuery.Checked = true;
                 }
                 else
                 {
-                    rbExecuteNonQuery.Hide();
+                    rbExecuteNonQuery.Enabled = false;
                     if (dt.Columns.Count == 1)
                     {
-                        txtRowClassName.Hide();
+                        txtRowClassName.Enabled = false;
                         if (dt.Rows.Count <= 1)
                         {
-                            rbReadOneRow.Hide();
+                            rbReadOneRow.Enabled = false;
                             rbExecuteScalar.Checked = true;
                         }
                         else
                         {
-                            rbExecuteScalar.Hide();
+                            rbExecuteScalar.Enabled = false;
                             rbReadRows.Checked = true;
-                            //txtRowClassName.Text = string.Format("Result{0}", index);
                         }
                     }
                     
                     if(dt.Columns.Count > 1)
                     {
-                        rbExecuteScalar.Hide();
+                        rbExecuteScalar.Enabled = false;
                         if (dt.Rows.Count <= 1)
                         {
                             rbReadOneRow.Checked = true;

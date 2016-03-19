@@ -163,7 +163,8 @@ namespace CKGen.Controls
                 int dtcount = ds.Tables.Count;
                 for (int i = 0; i < dtcount; i++)
                 {
-                    var mctrl = new SQLQueryResultControl(ds.Tables[i], i + 1);
+                    var dt = ds.Tables[i].Copy();
+                    var mctrl = new SQLQueryResultControl(dt, i + 1);
                     ResultList.Add(mctrl);
                     mctrl.Location = new System.Drawing.Point(0, 160 * i);
                     mctrl.Size = new System.Drawing.Size(600, 160);
