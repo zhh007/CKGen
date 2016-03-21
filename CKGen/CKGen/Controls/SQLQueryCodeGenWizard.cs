@@ -225,7 +225,27 @@ namespace CKGen.Controls
             }
             else
             {
-
+                List<Module> modules = new List<Module>();
+                foreach (var ctrl in this.ResultList)
+                {
+                    Module module = new Module();
+                    module.ModuleName = ctrl.RowClassName;
+                    module.CodeName = ctrl.RowClassName;
+                    if (ctrl.DataTable != null)
+                    {
+                        foreach (DataColumn dc in ctrl.DataTable.Columns)
+                        {
+                            ModuleField mf = new ModuleField(module, "", dc.ColumnName, dc.ColumnName);
+                            mf.DataType = dc.DataType;
+                            mf.Nullable = dc.AllowDBNull;
+                            mf.LanguageType = LanguageConvert.GetCSharpType(dc.DataType, dc.AllowDBNull);
+                            //Debug.WriteLine("{0} ---> {1}", mf.FieldName, mf.LanguageType);
+                            module.Fields.Add(mf);
+                        }
+                    }
+                    modules.Add(module);
+                }
+                code = gen.GenForMultiQuery(this.SQL, modules, connstr);
             }
 
             CodeView codeView = new CodeView();

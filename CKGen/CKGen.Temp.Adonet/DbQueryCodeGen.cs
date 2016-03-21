@@ -30,6 +30,18 @@ namespace CKGen.Temp.Adonet
         public string ReturnString { get; set; }
     }
 
+    public class DbQueryForMultiListModel
+    {
+        public string SQL { get; set; }
+        public string ConnectionString { get; set; }
+        public List<Module> Modules { get; set; }
+
+        public DbQueryForMultiListModel()
+        {
+            this.Modules = new List<Module>();
+        }
+    }
+
     public class DbQueryCodeGen
     {
         private readonly ICodeGenService codeGen = ServiceLocator.Instance.GetService<ICodeGenService>();
@@ -39,6 +51,7 @@ namespace CKGen.Temp.Adonet
         private readonly string Temp_Query_GetOne = Comm.GetTemplete("Query.GetOne.cshtml");
         private readonly string Temp_Query_ExecuteNonQuery = Comm.GetTemplete("Query.ExecuteNonQuery.cshtml");
         private readonly string Temp_Query_ExecuteScalar = Comm.GetTemplete("Query.ExecuteScalar.cshtml");
+        private readonly string Temp_Query_GetMultiList = Comm.GetTemplete("Query.GetMultiList.cshtml");
 
         public string GenForQueryList(string query, Module module, string connstr)
         {
@@ -175,7 +188,24 @@ namespace CKGen.Temp.Adonet
 
         public string GenForMultiQuery(string query, List<Module> modules, string connstr)
         {
+            DbQueryForMultiListModel gModel = new DbQueryForMultiListModel();
+            gModel.SQL = query;
+            gModel.ConnectionString = connstr;
+            if (modules != null)
+            {
+                gModel.Modules = modules;
+            }
+
             StringBuilder sb = new StringBuilder();
+            foreach (var module in gModel.Modules)
+            {
+                string modelCode = GenModelCode(module);
+                sb.AppendLine(modelCode);
+            }
+
+            string queryCode = codeGen.Gen(this.Temp_Query_GetMultiList, gModel);
+            queryCode = queryCode.Replace("'conn_name'", "Program.TestConnection");
+            sb.AppendLine(queryCode);
 
             return sb.ToString();
         }
