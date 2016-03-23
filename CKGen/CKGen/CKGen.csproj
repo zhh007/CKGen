@@ -78,6 +78,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\ColumnSelectControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ColumnSelectControl.Designer.cs">
+      <DependentUpon>ColumnSelectControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\DetailTabPage.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -89,6 +95,12 @@
     </Compile>
     <Compile Include="Controls\FrmShowCode.Designer.cs">
       <DependentUpon>FrmShowCode.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\FrmSnippetGenCount.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controls\FrmSnippetGenCount.Designer.cs">
+      <DependentUpon>FrmSnippetGenCount.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\ModuleEditControl.cs">
       <SubType>UserControl</SubType>
@@ -194,8 +206,14 @@
     <Compile Include="Controls\SQLQueryView.Designer.cs">
       <DependentUpon>SQLQueryView.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Controls\ColumnSelectControl.resx">
+      <DependentUpon>ColumnSelectControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\FrmShowCode.resx">
       <DependentUpon>FrmShowCode.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\FrmSnippetGenCount.resx">
+      <DependentUpon>FrmSnippetGenCount.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\ModuleEditControl.resx">
       <DependentUpon>ModuleEditControl.cs</DependentUpon>

@@ -192,6 +192,12 @@ namespace CKGen.Controls
                 string code = gen.GenPagedCode(tbInfo);
                 ShowCode(string.Format("{0} - Paged", tbInfo.PascalName), code);
             });
+            this.TableMenu.Items.Add("生成 - Count", null, (s, e) =>
+            {
+                FrmSnippetGenCount frm = new FrmSnippetGenCount();
+                frm.Table = this.tvSchema.SelectedNode.Tag as ITableInfo;
+                frm.ShowDialog();
+            });
         }
 
         private void tvSchema_AfterSelect(object sender, TreeViewEventArgs e)

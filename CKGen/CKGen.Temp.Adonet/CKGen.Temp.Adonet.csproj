@@ -55,6 +55,8 @@
     <Compile Include="DbConsoleProject\UI\MainUI.Designer.cs">
       <DependentUpon>MainUI.cs</DependentUpon>
     </Compile>
+    <Compile Include="Snippet\CountModel.cs" />
+    <Compile Include="Snippet\DbSnippetGen.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="DbConsoleProject\Sln\ConsoleProj\AssemblyInfo.cshtml" />
@@ -129,6 +131,10 @@
   <ItemGroup>
     <EmbeddedResource Include="Template\Query\GetMultiList.cshtml" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Template\Snippet\Count.cshtml" />
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

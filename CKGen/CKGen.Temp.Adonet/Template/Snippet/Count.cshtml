@@ -1,0 +1,36 @@
+﻿@using RazorEngine.Templating
+@using CKGen.DBSchema;
+@using CKGen;
+@using CKGen.Temp.Adonet.Snippet;
+@inherits TemplateBase<CountModel>
+
+public int Count(@(Model.GetMethodParamString()))
+{
+    int count = 0;
+    string sql = @@"@(Model.GetSQL())";
+
+    using (SqlConnection conn = new SqlConnection('conn_name'))
+    {
+        try
+        {
+            SqlCommand cmd = new SqlCommand(sql, conn);
+@foreach(var column in Model.ParamColumns)
+{
+<text>
+            SqlParameter para_@(column.PascalName) = @(Util.GetSqlParameter(column));
+            para_@(column.PascalName).Value = @(column.CamelName);
+            cmd.Parameters.Add(para_@(column.PascalName));</text>
+}
+
+            conn.Open();
+            return (int)cmd.ExecuteScalar();
+        }
+        finally
+        {
+            if (conn.State != ConnectionState.Closed)
+                conn.Close();
+            if (conn != null)
+                conn.Dispose();
+        }
+    }
+}
