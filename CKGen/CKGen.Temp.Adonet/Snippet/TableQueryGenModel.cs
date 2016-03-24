@@ -155,5 +155,127 @@ SELECT @Total = COUNT(*) FROM [{1}] {2}
 
             return sbSql.ToString();
         }
+
+        public string GetSQLForGet()
+        {
+            StringBuilder sbSql = new StringBuilder();
+
+            sbSql.Append("\r\nSELECT ");// [");
+
+            int len = Table.Columns.Count;
+            for (int i = 0; i < len; i++)
+            {
+                IColumnInfo col = Table.Columns[i];
+
+                sbSql.AppendFormat("[{0}]", col.RawName);
+                if (i != len - 1)
+                {
+                    sbSql.Append("\r\n");
+                    sbSql.Append(' ', 6);
+                    sbSql.Append(",");
+                }
+            }
+            sbSql.Append("\r\n");
+            sbSql.Append(' ', 2);
+            sbSql.Append("FROM [");
+            sbSql.Append(Table.Schema);
+            sbSql.Append("].[");
+            sbSql.Append(Table.RawName);
+            sbSql.Append("]\r\n");
+
+            if (WhereColumns != null && WhereColumns.Count > 0)
+            {
+                sbSql.Append(" WHERE ");
+                len = WhereColumns.Count;
+                for (int i = 0; i < len; i++)
+                {
+                    IColumnInfo col = WhereColumns[i];
+                    sbSql.AppendFormat("[{0}] = @{1}", col.RawName, col.Name);
+                    if (i != len - 1)
+                    {
+                        sbSql.Append(" AND ");
+                    }
+                }
+                sbSql.Append("\r\n");
+            }
+
+            if (OrderBy != null && OrderBy.Count > 0)
+            {
+                string orderbyStr = "ORDER BY";
+                for (int i = 0; i < OrderBy.Count; i++)
+                {
+                    if (i > 0)
+                    {
+                        orderbyStr += ",";
+                    }
+                    orderbyStr += string.Format(" [{0}] {1}", OrderBy[i].ColumnName, OrderBy[i].Direction == OrderDirection.Asc ? "ASC" : "DESC");
+                }
+                sbSql.Append(' ', 1);
+                sbSql.Append(orderbyStr);
+            }
+
+            return sbSql.ToString();
+        }
+
+        public string GetSQLForTop()
+        {
+            StringBuilder sbSql = new StringBuilder();
+
+            sbSql.Append("\r\nSELECT Top @TopNum ");// [");
+
+            int len = Table.Columns.Count;
+            for (int i = 0; i < len; i++)
+            {
+                IColumnInfo col = Table.Columns[i];
+
+                sbSql.AppendFormat("[{0}]", col.RawName);
+                if (i != len - 1)
+                {
+                    sbSql.Append("\r\n");
+                    sbSql.Append(' ', 6);
+                    sbSql.Append(",");
+                }
+            }
+            sbSql.Append("\r\n");
+            sbSql.Append(' ', 2);
+            sbSql.Append("FROM [");
+            sbSql.Append(Table.Schema);
+            sbSql.Append("].[");
+            sbSql.Append(Table.RawName);
+            sbSql.Append("]\r\n");
+
+            if (WhereColumns != null && WhereColumns.Count > 0)
+            {
+                sbSql.Append(" WHERE ");
+                len = WhereColumns.Count;
+                for (int i = 0; i < len; i++)
+                {
+                    IColumnInfo col = WhereColumns[i];
+                    sbSql.AppendFormat("[{0}] = @{1}", col.RawName, col.Name);
+                    if (i != len - 1)
+                    {
+                        sbSql.Append(" AND ");
+                    }
+                }
+                sbSql.Append("\r\n");
+            }
+
+            if (OrderBy != null && OrderBy.Count > 0)
+            {
+                string orderbyStr = "ORDER BY";
+                for (int i = 0; i < OrderBy.Count; i++)
+                {
+                    if (i > 0)
+                    {
+                        orderbyStr += ",";
+                    }
+                    orderbyStr += string.Format(" [{0}] {1}", OrderBy[i].ColumnName, OrderBy[i].Direction == OrderDirection.Asc ? "ASC" : "DESC");
+                }
+                sbSql.Append(' ', 1);
+                sbSql.Append(orderbyStr);
+            }
+
+            return sbSql.ToString();
+        }
     }
 }

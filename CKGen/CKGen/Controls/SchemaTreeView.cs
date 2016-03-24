@@ -169,44 +169,6 @@ namespace CKGen.Controls
                 frm.Table = this.tvSchema.SelectedNode.Tag as ITableInfo;
                 frm.ShowDialog();
             });
-
-            //this.TableMenu.Items.Add("生成 - Top", null, (s, e) =>
-            //{
-            //    ITableInfo tbInfo = this.tvSchema.SelectedNode.Tag as ITableInfo;
-            //    string code = gen.GenTopCode(tbInfo);
-            //    ShowCode(string.Format("{0} - Top", tbInfo.PascalName), code);
-            //});
-
-            //this.TableMenu.Items.Add("生成 - Get", null, (s, e) =>
-            //{
-            //    ITableInfo tbInfo = this.tvSchema.SelectedNode.Tag as ITableInfo;
-            //    string code = gen.GenGetCode(tbInfo);
-            //    ShowCode(string.Format("{0} - Get", tbInfo.PascalName), code);
-            //});
-            //this.TableMenu.Items.Add("生成 - GetList", null, (s, e) =>
-            //{
-            //    ITableInfo tbInfo = this.tvSchema.SelectedNode.Tag as ITableInfo;
-            //    string code = gen.GenGetAllCode(tbInfo);
-            //    ShowCode(string.Format("{0} - GetAll", tbInfo.PascalName), code);
-            //});
-            //this.TableMenu.Items.Add("生成 - Paged", null, (s, e) =>
-            //{
-            //    FrmSnippetGenPaged frm = new FrmSnippetGenPaged();
-            //    frm.Table = this.tvSchema.SelectedNode.Tag as ITableInfo;
-            //    frm.ShowDialog();
-            //});
-            //this.TableMenu.Items.Add("生成 - Exist/Count", null, (s, e) =>
-            //{
-            //    ITableInfo tbInfo = this.tvSchema.SelectedNode.Tag as ITableInfo;
-            //    string code = gen.GenExistCode(tbInfo);
-            //    ShowCode(string.Format("{0} - Exist", tbInfo.PascalName), code);
-            //});
-            //this.TableMenu.Items.Add("生成 - Exist/Count", null, (s, e) =>
-            //{
-            //    FrmSnippetGenCount frm = new FrmSnippetGenCount();
-            //    frm.Table = this.tvSchema.SelectedNode.Tag as ITableInfo;
-            //    frm.ShowDialog();
-            //});
         }
 
         private void tvSchema_AfterSelect(object sender, TreeViewEventArgs e)

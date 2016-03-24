@@ -1,0 +1,49 @@
+﻿@using RazorEngine.Templating
+@using CKGen.DBSchema;
+@using CKGen;
+@using CKGen.Temp.Adonet.Snippet;
+@inherits TemplateBase<TableQueryGenModel>
+
+public List<@(Model.ResultItemClassName)> GetList(@(Model.GetMethodParam()))
+{
+    List<@(Model.ResultItemClassName)> list = new List<@(Model.ResultItemClassName)>();
+    string sql = @@"@(Model.GetSQLForGet())";
+
+    using (SqlConnection conn = new SqlConnection('conn_name'))
+    {
+        try
+        {
+            SqlCommand cmd = new SqlCommand(sql, conn);
+@foreach(var column in Model.WhereColumns)
+{
+<text>
+            SqlParameter para_@(column.PascalName) = @(Util.GetSqlParameter(column));
+            para_@(column.PascalName).Value = @(column.CamelName);
+            cmd.Parameters.Add(para_@(column.PascalName));</text>
+}
+
+            conn.Open();
+            using (SqlDataReader sdr = cmd.ExecuteReader())
+            {
+                while (sdr.Read())
+                {
+                    @(Model.ResultItemClassName) entity = new @(Model.ResultItemClassName)();
+                    @foreach (var column in Model.Table.Columns)
+                    {
+            <text>        @(Util.GetPropertySettingString("entity", "sdr", column))</text>
+                    }
+                    list.Add(entity);
+                }
+            }
+        }
+        finally
+        {
+            if (conn.State != ConnectionState.Closed)
+                conn.Close();
+            if (conn != null)
+                conn.Dispose();
+        }
+    }
+
+    return list;
+}

@@ -138,6 +138,18 @@
   <ItemGroup>
     <EmbeddedResource Include="Template\Snippet\Paged.cshtml" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Template\Snippet\Get.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Template\Snippet\GetList.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Template\Snippet\Top.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Template\Snippet\Exist.cshtml" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
