@@ -11,19 +11,22 @@ namespace CKGen.Controls
         public ITableInfo Table { get; set; }
         private List<IColumnInfo> SelectedColumns = new List<IColumnInfo>();
         private ColumnSelectControl ctrlColumnSelect = null;
+        private CodeView ctrlCodeView = null;
 
         public FrmSnippetGenCount()
         {
             InitializeComponent();
 
             ctrlColumnSelect = new ColumnSelectControl();
+            ctrlColumnSelect.Dock = DockStyle.Fill;
             ColumnSelectPage.Controls.Add(ctrlColumnSelect);
+
+            ctrlCodeView = new CodeView();
+            ctrlCodeView.Dock = DockStyle.Fill;
+            CodePage.Controls.Add(ctrlCodeView);
 
             ColumnSelectPage.Initialize += ColumnSelectPage_Initialize;
             ColumnSelectPage.Commit += ColumnSelectPage_Commit;
-
-            CodePage.Initialize += CodePage_Initialize;
-            CodePage.Commit += CodePage_Commit;
         }
 
         private void ColumnSelectPage_Initialize(object sender, AeroWizard.WizardPageInitEventArgs e)
@@ -36,27 +39,12 @@ namespace CKGen.Controls
             SelectedColumns = ctrlColumnSelect.GetSelectedColumns();
 
             DbSnippetGen gen = new DbSnippetGen();
-            CountModel model = new CountModel();
+            TableCountModel model = new TableCountModel();
             model.Table = this.Table;
             model.ParamColumns = this.SelectedColumns;
             string code = gen.GenCountCode(model);
 
-            CodeView codeView = new CodeView();
-            codeView.Dock = DockStyle.Fill;
-            CodePage.Controls.Add(codeView);
-            codeView.Show(code);
+            ctrlCodeView.Show(code);
         }
-
-        private void CodePage_Initialize(object sender, AeroWizard.WizardPageInitEventArgs e)
-        {
-            
-        }
-
-        private void CodePage_Commit(object sender, AeroWizard.WizardPageConfirmEventArgs e)
-        {
-            
-        }
-
-        
     }
 }

@@ -1,0 +1,70 @@
+﻿@using RazorEngine.Templating
+@using CKGen.DBSchema;
+@using CKGen;
+@using CKGen.Temp.Adonet.Snippet;
+@inherits TemplateBase<TablePagedModel>
+
+public List<@(Model.ResultItemClassName)> PagedList(@(Model.GetMethodParam())int pageIndex, int pageSize, out int pageCount, out int total)
+{
+    pageIndex = (pageIndex <= 0) ? 1 : pageIndex;
+    if(pageSize <= 0)
+    {
+        throw new ArgumentException("每页数据条数必须大于0。", "pageSize");
+    }
+    List<@(Model.ResultItemClassName)> list = new List<@(Model.ResultItemClassName)>();
+
+    string sql = @@"@(Model.GetPagedSQL())";
+
+    using (SqlConnection conn = new SqlConnection('conn_name'))
+    {
+        try
+        {
+            SqlCommand cmd = new SqlCommand(sql, conn);
+
+            SqlParameter para_Begin = new SqlParameter("Begin", SqlDbType.Int);
+            para_Begin.Value = (pageIndex - 1) * pageSize + 1;
+            cmd.Parameters.Add(para_Begin);
+
+            SqlParameter para_End = new SqlParameter("End", SqlDbType.Int);
+            para_End.Value = pageIndex * pageSize;
+            cmd.Parameters.Add(para_End);
+
+            SqlParameter para_Total = new SqlParameter("Total", SqlDbType.Int);
+            para_Total.Direction = ParameterDirection.Output;
+            cmd.Parameters.Add(para_Total);
+@foreach (var column in Model.ParamColumns)
+{
+<text>
+            SqlParameter para_@(column.PascalName) = @(Util.GetSqlParameter(column));
+            para_@(column.PascalName).Value = @(column.CamelName);
+            cmd.Parameters.Add(para_@(column.PascalName));</text>
+}
+
+            conn.Open();
+            using (SqlDataReader sdr = cmd.ExecuteReader())
+            {
+                while (sdr.Read())
+                {
+                    @(Model.ResultItemClassName) entity = new @(Model.ResultItemClassName)();
+                    @foreach (var column in Model.Table.Columns)
+                    {
+            <text>        @(Util.GetPropertySettingString("entity", "sdr", column))</text>
+                    }
+                    list.Add(entity);
+                }
+            }
+
+            total = Convert.ToInt32(para_Total.Value);
+            pageCount = (total + pageSize - 1) / pageSize;
+        }
+        finally
+        {
+            if (conn.State != ConnectionState.Closed)
+                conn.Close();
+            if (conn != null)
+                conn.Dispose();
+        }
+    }
+
+    return list;
+}

@@ -188,9 +188,9 @@ namespace CKGen.Controls
             });
             this.TableMenu.Items.Add("生成 - Paged", null, (s, e) =>
             {
-                ITableInfo tbInfo = this.tvSchema.SelectedNode.Tag as ITableInfo;
-                string code = gen.GenPagedCode(tbInfo);
-                ShowCode(string.Format("{0} - Paged", tbInfo.PascalName), code);
+                FrmSnippetGenPaged frm = new FrmSnippetGenPaged();
+                frm.Table = this.tvSchema.SelectedNode.Tag as ITableInfo;
+                frm.ShowDialog();
             });
             this.TableMenu.Items.Add("生成 - Count", null, (s, e) =>
             {

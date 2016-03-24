@@ -55,8 +55,9 @@
     <Compile Include="DbConsoleProject\UI\MainUI.Designer.cs">
       <DependentUpon>MainUI.cs</DependentUpon>
     </Compile>
-    <Compile Include="Snippet\CountModel.cs" />
+    <Compile Include="Snippet\TableCountModel.cs" />
     <Compile Include="Snippet\DbSnippetGen.cs" />
+    <Compile Include="Snippet\TablePagedModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="DbConsoleProject\Sln\ConsoleProj\AssemblyInfo.cshtml" />
@@ -134,7 +135,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Template\Snippet\Count.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Template\Snippet\Paged.cshtml" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

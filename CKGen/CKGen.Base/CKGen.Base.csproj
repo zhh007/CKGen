@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="CodeModel\ClassDefine.cs" />
     <Compile Include="CodeModel\MethodDefine.cs" />
+    <Compile Include="CodeModel\OrderByItem.cs" />
     <Compile Include="CodeModel\PropertyDefine.cs" />
     <Compile Include="CodeModel\SQLQuerySetting.cs" />
     <Compile Include="DatabaseLink.cs" />

@@ -23,22 +23,22 @@ public List<@(Model.PascalName)> PagedList(int pageIndex, int pageSize, out int 
 
     using (SqlConnection conn = new SqlConnection('conn_name'))
     {
-        SqlCommand cmd = new SqlCommand(sql, conn);
-
-        SqlParameter para_Begin = new SqlParameter("Begin", SqlDbType.Int);
-        para_Begin.Value = (pageIndex - 1) * pageSize + 1;
-        cmd.Parameters.Add(para_Begin);
-
-        SqlParameter para_End = new SqlParameter("End", SqlDbType.Int);
-        para_End.Value = pageIndex * pageSize;
-        cmd.Parameters.Add(para_End);
-
-        SqlParameter para_TotalCount = new SqlParameter("TotalCount", SqlDbType.Int);
-        para_TotalCount.Direction = ParameterDirection.Output;
-        cmd.Parameters.Add(para_TotalCount);
-
         try
         {
+            SqlCommand cmd = new SqlCommand(sql, conn);
+
+            SqlParameter para_Begin = new SqlParameter("Begin", SqlDbType.Int);
+            para_Begin.Value = (pageIndex - 1) * pageSize + 1;
+            cmd.Parameters.Add(para_Begin);
+
+            SqlParameter para_End = new SqlParameter("End", SqlDbType.Int);
+            para_End.Value = pageIndex * pageSize;
+            cmd.Parameters.Add(para_End);
+
+            SqlParameter para_TotalCount = new SqlParameter("TotalCount", SqlDbType.Int);
+            para_TotalCount.Direction = ParameterDirection.Output;
+            cmd.Parameters.Add(para_TotalCount);
+
             conn.Open();
             using (SqlDataReader sdr = cmd.ExecuteReader())
             {

@@ -6,12 +6,12 @@ using System.Text;
 
 namespace CKGen.Temp.Adonet.Snippet
 {
-    public class CountModel
+    public class TableCountModel
     {
         public ITableInfo Table { get; set; }
         public List<IColumnInfo> ParamColumns { get; set; }
 
-        public CountModel()
+        public TableCountModel()
         {
             ParamColumns = new List<IColumnInfo>();
         }
