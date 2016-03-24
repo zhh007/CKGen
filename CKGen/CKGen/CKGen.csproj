@@ -102,17 +102,11 @@
     <Compile Include="Controls\FrmShowCode.Designer.cs">
       <DependentUpon>FrmShowCode.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\FrmSnippetGenCount.cs">
+    <Compile Include="Controls\FrmSnippetGenQuery.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Controls\FrmSnippetGenCount.Designer.cs">
-      <DependentUpon>FrmSnippetGenCount.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\FrmSnippetGenPaged.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Controls\FrmSnippetGenPaged.Designer.cs">
-      <DependentUpon>FrmSnippetGenPaged.cs</DependentUpon>
+    <Compile Include="Controls\FrmSnippetGenQuery.Designer.cs">
+      <DependentUpon>FrmSnippetGenQuery.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\ModuleEditControl.cs">
       <SubType>UserControl</SubType>
@@ -227,11 +221,8 @@
     <EmbeddedResource Include="Controls\FrmShowCode.resx">
       <DependentUpon>FrmShowCode.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\FrmSnippetGenCount.resx">
-      <DependentUpon>FrmSnippetGenCount.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Controls\FrmSnippetGenPaged.resx">
-      <DependentUpon>FrmSnippetGenPaged.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\FrmSnippetGenQuery.resx">
+      <DependentUpon>FrmSnippetGenQuery.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\ModuleEditControl.resx">
       <DependentUpon>ModuleEditControl.cs</DependentUpon>

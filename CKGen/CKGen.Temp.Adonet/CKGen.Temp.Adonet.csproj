@@ -55,7 +55,6 @@
     <Compile Include="DbConsoleProject\UI\MainUI.Designer.cs">
       <DependentUpon>MainUI.cs</DependentUpon>
     </Compile>
-    <Compile Include="Snippet\TableCountModel.cs" />
     <Compile Include="Snippet\DbSnippetGen.cs" />
     <Compile Include="Snippet\TableQueryGenModel.cs" />
     <Compile Include="Snippet\TableQueryGenType.cs" />

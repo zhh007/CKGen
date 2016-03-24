@@ -1,6 +1,6 @@
 ﻿namespace CKGen.Controls
 {
-    partial class FrmSnippetGenPaged
+    partial class FrmSnippetGenQuery
     {
         /// <summary>
         /// Required designer variable.

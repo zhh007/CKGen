@@ -11,8 +11,12 @@ namespace CKGen.Temp.Adonet.Snippet
     {
         private readonly ICodeGenService codeGen = ServiceLocator.Instance.GetService<ICodeGenService>();
 
-        private readonly string Temp_Snippet_Count = Comm.GetTemplete("Snippet.Count.cshtml");
+        private readonly string Temp_Snippet_Get = Comm.GetTemplete("Snippet.Get.cshtml");
+        private readonly string Temp_Snippet_GetList = Comm.GetTemplete("Snippet.GetList.cshtml");
         private readonly string Temp_Snippet_Paged = Comm.GetTemplete("Snippet.Paged.cshtml");
+        private readonly string Temp_Snippet_Top = Comm.GetTemplete("Snippet.Top.cshtml");
+        private readonly string Temp_Snippet_Exist = Comm.GetTemplete("Snippet.Exist.cshtml");
+        private readonly string Temp_Snippet_Count = Comm.GetTemplete("Snippet.Count.cshtml");
 
         public string GenTableQueryCode(TableQueryGenModel model)
         {
@@ -20,15 +24,19 @@ namespace CKGen.Temp.Adonet.Snippet
             switch (model.GenType)
             {
                 case TableQueryGenType.Get:
+                    code = codeGen.Gen(this.Temp_Snippet_Get, model);
                     break;
                 case TableQueryGenType.GetList:
+                    code = codeGen.Gen(this.Temp_Snippet_GetList, model);
                     break;
                 case TableQueryGenType.Paged:
                     code = codeGen.Gen(this.Temp_Snippet_Paged, model);
                     break;
                 case TableQueryGenType.Top:
+                    code = codeGen.Gen(this.Temp_Snippet_Top, model);
                     break;
                 case TableQueryGenType.Exist:
+                    code = codeGen.Gen(this.Temp_Snippet_Exist, model);
                     break;
                 case TableQueryGenType.Count:
                     code = codeGen.Gen(this.Temp_Snippet_Count, model);
@@ -39,15 +47,5 @@ namespace CKGen.Temp.Adonet.Snippet
 
             return code;
         }
-
-        //public string GenCountCode(TableQueryGenModel model)
-        //{
-        //    return codeGen.Gen(this.Temp_Snippet_Count, model);
-        //}
-
-        //public string GenPagedCode(TableQueryGenModel model)
-        //{
-        //    return codeGen.Gen(this.Temp_Snippet_Paged, model);
-        //}
     }
 }

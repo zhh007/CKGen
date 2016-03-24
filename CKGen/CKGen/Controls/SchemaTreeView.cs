@@ -165,7 +165,7 @@ namespace CKGen.Controls
 
             this.TableMenu.Items.Add("生成 - Query", null, (s, e) =>
             {
-                FrmSnippetGenPaged frm = new FrmSnippetGenPaged();
+                FrmSnippetGenQuery frm = new FrmSnippetGenQuery();
                 frm.Table = this.tvSchema.SelectedNode.Tag as ITableInfo;
                 frm.ShowDialog();
             });
