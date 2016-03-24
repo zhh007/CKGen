@@ -126,13 +126,13 @@ namespace CKGen.Controls
             });
             ToolStripSeparator spliter = new ToolStripSeparator();
             this.TableMenu.Items.Add(spliter);
-            this.TableMenu.Items.Add("生成 - 实体类", null, (s, e) =>
+            this.TableMenu.Items.Add("生成 - Model", null, (s, e) =>
             {
                 ITableInfo tbInfo = this.tvSchema.SelectedNode.Tag as ITableInfo;
                 string code = gen.GenModelCode(tbInfo);
                 ShowCode(string.Format("{0}.cs", tbInfo.PascalName), code);
             });
-            this.TableMenu.Items.Add("生成 - 数据访问类", null, (s, e) =>
+            this.TableMenu.Items.Add("生成 - DAL", null, (s, e) =>
             {
                 ITableInfo tbInfo = this.tvSchema.SelectedNode.Tag as ITableInfo;
                 string code = gen.GenDataAccessCode("Test", tbInfo);
@@ -162,42 +162,51 @@ namespace CKGen.Controls
                 string code = gen.GenSaveCode(tbInfo);
                 ShowCode(string.Format("{0} - Save", tbInfo.PascalName), code);
             });
-            this.TableMenu.Items.Add("生成 - Exist", null, (s, e) =>
-            {
-                ITableInfo tbInfo = this.tvSchema.SelectedNode.Tag as ITableInfo;
-                string code = gen.GenExistCode(tbInfo);
-                ShowCode(string.Format("{0} - Exist", tbInfo.PascalName), code);
-            });
-            this.TableMenu.Items.Add("生成 - Get", null, (s, e) =>
-            {
-                ITableInfo tbInfo = this.tvSchema.SelectedNode.Tag as ITableInfo;
-                string code = gen.GenGetCode(tbInfo);
-                ShowCode(string.Format("{0} - Get", tbInfo.PascalName), code);
-            });
-            this.TableMenu.Items.Add("生成 - GetAll", null, (s, e) =>
-            {
-                ITableInfo tbInfo = this.tvSchema.SelectedNode.Tag as ITableInfo;
-                string code = gen.GenGetAllCode(tbInfo);
-                ShowCode(string.Format("{0} - GetAll", tbInfo.PascalName), code);
-            });
-            this.TableMenu.Items.Add("生成 - Top", null, (s, e) =>
-            {
-                ITableInfo tbInfo = this.tvSchema.SelectedNode.Tag as ITableInfo;
-                string code = gen.GenTopCode(tbInfo);
-                ShowCode(string.Format("{0} - Top", tbInfo.PascalName), code);
-            });
-            this.TableMenu.Items.Add("生成 - Paged", null, (s, e) =>
+
+            this.TableMenu.Items.Add("生成 - Query", null, (s, e) =>
             {
                 FrmSnippetGenPaged frm = new FrmSnippetGenPaged();
                 frm.Table = this.tvSchema.SelectedNode.Tag as ITableInfo;
                 frm.ShowDialog();
             });
-            this.TableMenu.Items.Add("生成 - Count", null, (s, e) =>
-            {
-                FrmSnippetGenCount frm = new FrmSnippetGenCount();
-                frm.Table = this.tvSchema.SelectedNode.Tag as ITableInfo;
-                frm.ShowDialog();
-            });
+
+            //this.TableMenu.Items.Add("生成 - Top", null, (s, e) =>
+            //{
+            //    ITableInfo tbInfo = this.tvSchema.SelectedNode.Tag as ITableInfo;
+            //    string code = gen.GenTopCode(tbInfo);
+            //    ShowCode(string.Format("{0} - Top", tbInfo.PascalName), code);
+            //});
+
+            //this.TableMenu.Items.Add("生成 - Get", null, (s, e) =>
+            //{
+            //    ITableInfo tbInfo = this.tvSchema.SelectedNode.Tag as ITableInfo;
+            //    string code = gen.GenGetCode(tbInfo);
+            //    ShowCode(string.Format("{0} - Get", tbInfo.PascalName), code);
+            //});
+            //this.TableMenu.Items.Add("生成 - GetList", null, (s, e) =>
+            //{
+            //    ITableInfo tbInfo = this.tvSchema.SelectedNode.Tag as ITableInfo;
+            //    string code = gen.GenGetAllCode(tbInfo);
+            //    ShowCode(string.Format("{0} - GetAll", tbInfo.PascalName), code);
+            //});
+            //this.TableMenu.Items.Add("生成 - Paged", null, (s, e) =>
+            //{
+            //    FrmSnippetGenPaged frm = new FrmSnippetGenPaged();
+            //    frm.Table = this.tvSchema.SelectedNode.Tag as ITableInfo;
+            //    frm.ShowDialog();
+            //});
+            //this.TableMenu.Items.Add("生成 - Exist/Count", null, (s, e) =>
+            //{
+            //    ITableInfo tbInfo = this.tvSchema.SelectedNode.Tag as ITableInfo;
+            //    string code = gen.GenExistCode(tbInfo);
+            //    ShowCode(string.Format("{0} - Exist", tbInfo.PascalName), code);
+            //});
+            //this.TableMenu.Items.Add("生成 - Exist/Count", null, (s, e) =>
+            //{
+            //    FrmSnippetGenCount frm = new FrmSnippetGenCount();
+            //    frm.Table = this.tvSchema.SelectedNode.Tag as ITableInfo;
+            //    frm.ShowDialog();
+            //});
         }
 
         private void tvSchema_AfterSelect(object sender, TreeViewEventArgs e)

@@ -2,9 +2,9 @@
 @using CKGen.DBSchema;
 @using CKGen;
 @using CKGen.Temp.Adonet.Snippet;
-@inherits TemplateBase<TablePagedModel>
+@inherits TemplateBase<TableQueryGenModel>
 
-public List<@(Model.ResultItemClassName)> PagedList(@(Model.GetMethodParam())int pageIndex, int pageSize, out int pageCount, out int total)
+public List<@(Model.ResultItemClassName)> PagedList(@(Model.GetMethodParamForPaged())int pageIndex, int pageSize, out int pageCount, out int total)
 {
     pageIndex = (pageIndex <= 0) ? 1 : pageIndex;
     if(pageSize <= 0)
@@ -32,7 +32,7 @@ public List<@(Model.ResultItemClassName)> PagedList(@(Model.GetMethodParam())int
             SqlParameter para_Total = new SqlParameter("Total", SqlDbType.Int);
             para_Total.Direction = ParameterDirection.Output;
             cmd.Parameters.Add(para_Total);
-@foreach (var column in Model.ParamColumns)
+@foreach (var column in Model.WhereColumns)
 {
 <text>
             SqlParameter para_@(column.PascalName) = @(Util.GetSqlParameter(column));

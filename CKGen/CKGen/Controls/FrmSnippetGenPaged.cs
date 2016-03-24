@@ -16,6 +16,7 @@ namespace CKGen.Controls
         private CodeView ctrlCodeView = null;
         private List<IColumnInfo> WhereColumns = new List<IColumnInfo>();
         private List<OrderByItem> OrderByItems = new List<OrderByItem>();
+        private TableQueryGenType GenType = TableQueryGenType.Get;
 
         public FrmSnippetGenPaged()
         {
@@ -33,11 +34,69 @@ namespace CKGen.Controls
             ctrlCodeView.Dock = DockStyle.Fill;
             ResultPage.Controls.Add(ctrlCodeView);
 
+            GenTypePage.Initialize += GenTypePage_Initialize;
+            GenTypePage.Commit += GenTypePage_Commit;
+
             WhereParamPage.Initialize += WhereParamPage_Initialize;
             WhereParamPage.Commit += WhereParamPage_Commit;
 
             OrderByPage.Initialize += OrderByPage_Initialize;
             OrderByPage.Commit += OrderByPage_Commit;
+        }
+
+        private void GenTypePage_Initialize(object sender, AeroWizard.WizardPageInitEventArgs e)
+        {
+            switch (GenType)
+            {
+                case TableQueryGenType.Get:
+                    rbGet.Checked = true;
+                    break;
+                case TableQueryGenType.GetList:
+                    rbGetList.Checked = true;
+                    break;
+                case TableQueryGenType.Paged:
+                    rbPaged.Checked = true;
+                    break;
+                case TableQueryGenType.Top:
+                    rbTop.Checked = true;
+                    break;
+                case TableQueryGenType.Exist:
+                    rbExist.Checked = true;
+                    break;
+                case TableQueryGenType.Count:
+                    rbCount.Checked = true;
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private void GenTypePage_Commit(object sender, AeroWizard.WizardPageConfirmEventArgs e)
+        {
+            if(rbGet.Checked)
+            {
+                GenType = TableQueryGenType.Get;
+            }
+            if(rbGetList.Checked)
+            {
+                GenType = TableQueryGenType.GetList;
+            }
+            if(rbPaged.Checked)
+            {
+                GenType = TableQueryGenType.Paged;
+            }
+            if(rbTop.Checked)
+            {
+                GenType = TableQueryGenType.Top;
+            }
+            if(rbExist.Checked)
+            {
+                GenType = TableQueryGenType.Exist;
+            }
+            if(rbCount.Checked)
+            {
+                GenType = TableQueryGenType.Count;
+            }
         }
 
         private void WhereParamPage_Initialize(object sender, AeroWizard.WizardPageInitEventArgs e)
@@ -60,12 +119,13 @@ namespace CKGen.Controls
             OrderByItems = ctrlOrderBy.GetOrderByItems();
 
             DbSnippetGen gen = new DbSnippetGen();
-            TablePagedModel model = new TablePagedModel();
+            TableQueryGenModel model = new TableQueryGenModel();
             model.Table = this.Table;
-            model.ParamColumns = this.WhereColumns;
+            model.GenType = this.GenType;
+            model.WhereColumns = this.WhereColumns;
             model.OrderBy = this.OrderByItems;
             model.ResultItemClassName = this.Table.PascalName;
-            string code = gen.GenPagedCode(model);
+            string code = gen.GenTableQueryCode(model);
 
             ctrlCodeView.Show(code);
         }

@@ -57,7 +57,8 @@
     </Compile>
     <Compile Include="Snippet\TableCountModel.cs" />
     <Compile Include="Snippet\DbSnippetGen.cs" />
-    <Compile Include="Snippet\TablePagedModel.cs" />
+    <Compile Include="Snippet\TableQueryGenModel.cs" />
+    <Compile Include="Snippet\TableQueryGenType.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="DbConsoleProject\Sln\ConsoleProj\AssemblyInfo.cshtml" />

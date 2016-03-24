@@ -2,19 +2,18 @@
 @using CKGen.DBSchema;
 @using CKGen;
 @using CKGen.Temp.Adonet.Snippet;
-@inherits TemplateBase<TableCountModel>
+@inherits TemplateBase<TableQueryGenModel>
 
-public int Count(@(Model.GetMethodParamString()))
+public int Count(@(Model.GetMethodParam()))
 {
-    int count = 0;
-    string sql = @@"@(Model.GetSQL())";
+    string sql = @@"@(Model.GetCountSQL())";
 
     using (SqlConnection conn = new SqlConnection('conn_name'))
     {
         try
         {
             SqlCommand cmd = new SqlCommand(sql, conn);
-@foreach(var column in Model.ParamColumns)
+@foreach(var column in Model.WhereColumns)
 {
 <text>
             SqlParameter para_@(column.PascalName) = @(Util.GetSqlParameter(column));

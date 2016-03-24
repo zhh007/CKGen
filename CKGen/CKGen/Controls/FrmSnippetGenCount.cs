@@ -42,7 +42,7 @@ namespace CKGen.Controls
             TableCountModel model = new TableCountModel();
             model.Table = this.Table;
             model.ParamColumns = this.SelectedColumns;
-            string code = gen.GenCountCode(model);
+            string code = "";// gen.GenCountCode(model);
 
             ctrlCodeView.Show(code);
         }

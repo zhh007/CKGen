@@ -27,7 +27,7 @@ namespace CKGen.Controls
                 OrderByItem orderbyitem = null;
                 if (orderbyItems != null)
                 {
-                    orderbyItems.Where(p => p.ColumnName == item.RawName).FirstOrDefault();
+                    orderbyitem = orderbyItems.Where(p => p.ColumnName == item.RawName).FirstOrDefault();
                 }
                 int rowIndex = dgvColumns.Rows.Add();
                 DataGridViewRow row = dgvColumns.Rows[rowIndex];
