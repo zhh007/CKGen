@@ -58,6 +58,8 @@
     <Compile Include="Snippet\DbSnippetGen.cs" />
     <Compile Include="Snippet\TableQueryGenModel.cs" />
     <Compile Include="Snippet\TableQueryGenType.cs" />
+    <Compile Include="Snippet\ViewQueryGenModel.cs" />
+    <Compile Include="Snippet\ViewQueryGenType.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="DbConsoleProject\Sln\ConsoleProj\AssemblyInfo.cshtml" />
@@ -133,22 +135,40 @@
     <EmbeddedResource Include="Template\Query\GetMultiList.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Template\Snippet\Count.cshtml" />
+    <EmbeddedResource Include="Template\TableSnippet\Count.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Template\Snippet\Paged.cshtml" />
+    <EmbeddedResource Include="Template\TableSnippet\Paged.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Template\Snippet\Get.cshtml" />
+    <EmbeddedResource Include="Template\TableSnippet\Get.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Template\Snippet\GetList.cshtml" />
+    <EmbeddedResource Include="Template\TableSnippet\GetList.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Template\Snippet\Top.cshtml" />
+    <EmbeddedResource Include="Template\TableSnippet\Top.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Template\Snippet\Exist.cshtml" />
+    <EmbeddedResource Include="Template\TableSnippet\Exist.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Template\ViewSnippet\Count.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Template\ViewSnippet\Exist.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Template\ViewSnippet\Get.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Template\ViewSnippet\GetList.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Template\ViewSnippet\Paged.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Template\ViewSnippet\Top.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

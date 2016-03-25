@@ -16,7 +16,9 @@ namespace CKGen.Controls
     {
         private IDatabaseInfo DB = null;
         private ContextMenuStrip TableMenu = null;
+        private ContextMenuStrip ViewMenu = null;
         private DbTableCodeGen gen = new DbTableCodeGen();
+        private DbViewCodeGen vewGen = new DbViewCodeGen();
         public SchemaTreeView()
         {
             InitializeComponent();
@@ -28,7 +30,8 @@ namespace CKGen.Controls
             InitTree();
 
             //菜单
-            CreateMenu();
+            CreateTableMenu();
+            CreateViewMenu();
 
             App.Instance.Subscribe<SaveDescToDbEvent>(p => SaveDescToDb());
         }
@@ -112,7 +115,7 @@ namespace CKGen.Controls
             this.tvSchema.Nodes.Add(procRoot);
         }
 
-        private void CreateMenu()
+        private void CreateTableMenu()
         {
             this.TableMenu = new ContextMenuStrip();
             this.TableMenu.Items.Add("查看前 100 行", null, (s, e) =>
@@ -165,8 +168,67 @@ namespace CKGen.Controls
 
             this.TableMenu.Items.Add("生成 - Query", null, (s, e) =>
             {
-                FrmSnippetGenQuery frm = new FrmSnippetGenQuery();
+                FrmTableSnippetGen frm = new FrmTableSnippetGen();
                 frm.Table = this.tvSchema.SelectedNode.Tag as ITableInfo;
+                frm.ShowDialog();
+            });
+        }
+
+        private void CreateViewMenu()
+        {
+            this.ViewMenu = new ContextMenuStrip();
+            this.ViewMenu.Items.Add("查看前 100 行", null, (s, e) =>
+            {
+                if (this.tvSchema.SelectedNode.Tag is IViewInfo)
+                {
+                    IViewInfo vwInfo = this.tvSchema.SelectedNode.Tag as IViewInfo;
+                    string sql = string.Format("select top 100 * from {0}", vwInfo.RawName);
+                    ShowSQLQuery(sql);
+                }
+            });
+            ToolStripSeparator spliter = new ToolStripSeparator();
+            this.ViewMenu.Items.Add(spliter);
+            this.ViewMenu.Items.Add("生成 - Model", null, (s, e) =>
+            {
+                IViewInfo vwInfo = this.tvSchema.SelectedNode.Tag as IViewInfo;
+                string code = vewGen.GenModelCode(vwInfo);
+                ShowCode(string.Format("{0}.cs", vwInfo.PascalName), code);
+            });
+            //this.ViewMenu.Items.Add("生成 - DAL", null, (s, e) =>
+            //{
+            //    ITableInfo tbInfo = this.tvSchema.SelectedNode.Tag as ITableInfo;
+            //    string code = gen.GenDataAccessCode("Test", tbInfo);
+            //    ShowCode(string.Format("{0}Access.cs", tbInfo.PascalName), code);
+            //});
+            //this.ViewMenu.Items.Add("生成 - Insert", null, (s, e) =>
+            //{
+            //    ITableInfo tbInfo = this.tvSchema.SelectedNode.Tag as ITableInfo;
+            //    string code = gen.GenInsertCode(tbInfo);
+            //    ShowCode(string.Format("{0} - Insert", tbInfo.PascalName), code);
+            //});
+            //this.ViewMenu.Items.Add("生成 - Update", null, (s, e) =>
+            //{
+            //    ITableInfo tbInfo = this.tvSchema.SelectedNode.Tag as ITableInfo;
+            //    string code = gen.GenUpdateCode(tbInfo);
+            //    ShowCode(string.Format("{0} - Update", tbInfo.PascalName), code);
+            //});
+            //this.ViewMenu.Items.Add("生成 - Delete", null, (s, e) =>
+            //{
+            //    ITableInfo tbInfo = this.tvSchema.SelectedNode.Tag as ITableInfo;
+            //    string code = gen.GenDeleteCode(tbInfo);
+            //    ShowCode(string.Format("{0} - Delete", tbInfo.PascalName), code);
+            //});
+            //this.ViewMenu.Items.Add("生成 - Save", null, (s, e) =>
+            //{
+            //    ITableInfo tbInfo = this.tvSchema.SelectedNode.Tag as ITableInfo;
+            //    string code = gen.GenSaveCode(tbInfo);
+            //    ShowCode(string.Format("{0} - Save", tbInfo.PascalName), code);
+            //});
+
+            this.ViewMenu.Items.Add("生成 - Query", null, (s, e) =>
+            {
+                FrmViewSnippetGen frm = new FrmViewSnippetGen();
+                frm.View = this.tvSchema.SelectedNode.Tag as IViewInfo;
                 frm.ShowDialog();
             });
         }
@@ -179,9 +241,16 @@ namespace CKGen.Controls
         private void tvSchema_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
         {
             this.tvSchema.SelectedNode = e.Node;
-            if (e.Button == MouseButtons.Right && e.Node.Tag is ITableInfo)
+            if (e.Button == MouseButtons.Right)
             {
-                this.TableMenu.Show(this.tvSchema, e.Location);
+                if (e.Node.Tag is ITableInfo)
+                {
+                    this.TableMenu.Show(this.tvSchema, e.Location);
+                }
+                else if(e.Node.Tag is IViewInfo)
+                {
+                    this.ViewMenu.Show(this.tvSchema, e.Location);
+                }
             }
         }
 

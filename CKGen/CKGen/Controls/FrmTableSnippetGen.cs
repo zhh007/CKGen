@@ -7,7 +7,7 @@ using System.Windows.Forms;
 
 namespace CKGen.Controls
 {
-    public partial class FrmSnippetGenQuery : Form
+    public partial class FrmTableSnippetGen : Form
     {
         public ITableInfo Table { get; set; }
         
@@ -18,7 +18,7 @@ namespace CKGen.Controls
         private List<OrderByItem> OrderByItems = new List<OrderByItem>();
         private TableQueryGenType GenType = TableQueryGenType.Get;
 
-        public FrmSnippetGenQuery()
+        public FrmTableSnippetGen()
         {
             InitializeComponent();
 
