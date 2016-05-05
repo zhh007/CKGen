@@ -85,7 +85,7 @@ namespace CKGen.Temp.AspnetMVC
             return sb.ToString();
         }
 
-        public string GetUpdateFilterString()
+        public string GetUpdateFilterString(string modelName)
         {
             StringBuilder sb = new StringBuilder();
             for (int i = 0; i < this.DBTable.Keys.Count; i++)
@@ -95,7 +95,7 @@ namespace CKGen.Temp.AspnetMVC
                     sb.Append(" && ");
                 }
                 var item = this.DBTable.Keys[i];
-                sb.AppendFormat("p.{0} == dto.{0}", item.PascalName);
+                sb.AppendFormat("p.{0} == {1}.{0}", item.PascalName, modelName);
             }
             return sb.ToString();
         }

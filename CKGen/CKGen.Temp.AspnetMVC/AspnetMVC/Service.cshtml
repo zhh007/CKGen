@@ -61,7 +61,7 @@ namespace @(Model.NameSpacePR).EFAdapter
         [LogException]
         public void Update(@(Model.DBTable.Name)DTO dto)
         {
-            var model = f@(Model.DBTable.Name)Repository.Get(p => @(Model.GetUpdateFilterString()));
+            var model = f@(Model.DBTable.Name)Repository.Get(p => @(Model.GetUpdateFilterString("dto")));
 
         @foreach (IColumnInfo column in Model.DBTable.Columns)
         {
@@ -74,7 +74,7 @@ namespace @(Model.NameSpacePR).EFAdapter
                 continue;
             }
             <text>model.@(column.PascalName) = dto.@(column.PascalName);</text>
-}
+        }
             
             fUnitofWork.Commit();
         }
