@@ -67,7 +67,7 @@ namespace CKGen.Temp.AspnetMVC
             _build("IService.cshtml", typeof(PageViewModel), pvModel, "I" + tInfo.PascalName + "Service.cs");
             _build("Service.cshtml", typeof(PageViewModel), pvModel, tInfo.PascalName + "Service.cs");
 
-            _build("Controller.cshtml", typeof(PageViewModel), pvModel, "Controller.cs");
+            _build("Controller.cshtml", typeof(PageViewModel), pvModel, tInfo.PascalName + "Controller.cs");
             _build("ViewModel.cshtml", typeof(PageViewModel), pvModel, tInfo.PascalName + "ViewModel.cs");
             _build("Index.cshtml", typeof(PageViewModel), pvModel, "Index.cshtml");
             _build("Create.cshtml", typeof(PageViewModel), pvModel, "Create.cshtml");

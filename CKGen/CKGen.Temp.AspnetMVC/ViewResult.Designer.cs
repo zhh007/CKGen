@@ -114,6 +114,7 @@
             this.txtCode.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             this.txtCode.Size = new System.Drawing.Size(810, 453);
             this.txtCode.TabIndex = 0;
+            this.txtCode.WordWrap = false;
             // 
             // ViewResult
             // 

@@ -30,11 +30,11 @@
         {
             this.SuspendLayout();
             // 
-            // UCCodeShow
+            // CodeView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Name = "UCCodeShow";
+            this.Name = "CodeView";
             this.Size = new System.Drawing.Size(876, 545);
             this.Load += new System.EventHandler(this.UCCodeShow_Load);
             this.ResumeLayout(false);

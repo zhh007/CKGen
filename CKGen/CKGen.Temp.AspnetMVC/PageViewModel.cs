@@ -95,7 +95,7 @@ namespace CKGen.Temp.AspnetMVC
                     sb.Append(" && ");
                 }
                 var item = this.DBTable.Keys[i];
-                sb.AppendFormat("p.{0} == model.{0}", item.PascalName);
+                sb.AppendFormat("p.{0} == dto.{0}", item.PascalName);
             }
             return sb.ToString();
         }

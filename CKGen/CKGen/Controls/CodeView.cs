@@ -22,6 +22,8 @@ namespace CKGen.Controls
             this.scintilla1.Dock = DockStyle.Fill;
             this.scintilla1.TabIndex = 1;
             this.scintilla1.Text = "scintilla1";
+            this.scintilla1.HScrollBar = true;
+            this.scintilla1.VScrollBar = true;
 
             scintilla1.Margins[0].Type = MarginType.Number;
             scintilla1.Margins[0].Width = 35;
