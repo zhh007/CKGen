@@ -12,6 +12,7 @@ using System.Linq;
 using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace CKGen.Services
 {
@@ -21,7 +22,8 @@ namespace CKGen.Services
         {
             string viewname = System.IO.Path.GetFileName(viewpath);
             string tmp = System.IO.File.ReadAllText(viewpath);
-            return RazorService.Instance.Gen(tmp, model);
+            string result = RazorService.Instance.Gen(tmp, model);
+            return ClearContent(result);
         }
 
         public void GenSave(string viewpath, object model, string filepath)
@@ -37,13 +39,47 @@ namespace CKGen.Services
             }
             using (var sw = new StreamWriter(File.Open(filepath, FileMode.CreateNew), System.Text.Encoding.UTF8))
             {
-                sw.Write(result);
+                sw.Write(ClearContent(result));
             }
         }
 
         public string Gen(string tmp, object model)
         {
-            return RazorService.Instance.Gen(tmp, model);
+            string result = RazorService.Instance.Gen(tmp, model);
+            return ClearContent(result);
+        }
+
+        /// <summary>
+        /// 删除多余空行
+        /// </summary>
+        private string ClearContent(string txt)
+        {
+            return Regex.Replace(txt, @"(\r?(\s)+\n){2,}", "\r\n\r\n");
+
+            //StringBuilder sb = new StringBuilder();
+            //int blankRowCount = 0;
+            //using (var stream = new MemoryStream(System.Text.Encoding.UTF8.GetBytes(txt ?? "")))
+            //using (StreamReader r = new StreamReader(stream))
+            //{
+            //    string line;
+            //    while ((line = r.ReadLine()) != null)
+            //    {
+            //        if (!string.IsNullOrEmpty(line.Trim()))
+            //        {
+            //            if (blankRowCount > 0)
+            //            {
+            //                sb.AppendLine("");
+            //            }
+            //            sb.AppendLine(line);
+            //            blankRowCount = 0;
+            //        }
+            //        else
+            //        {
+            //            blankRowCount++;
+            //        }
+            //    }
+            //}
+            //return sb.ToString();
         }
     }
 

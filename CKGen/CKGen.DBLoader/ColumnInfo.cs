@@ -179,11 +179,11 @@ namespace CKGen.DBLoader
         {
             get
             {
-                if (!this.Nullable && this.LanguageType == "string")
+                if (this.LanguageType == "string")
                 {
                     if (this.MaxLength.HasValue)
                     {
-                        if (this.MaxLength != 1073741823)
+                        if (this.MaxLength != 1073741823 && this.MaxLength != 2147483647)
                         {
                             return true;
                         }

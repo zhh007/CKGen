@@ -39,14 +39,14 @@ namespace CKGen.Temp.AspnetMVC
             {
                 hasvalue = true;
                 sb.Append("\r\n                ");
-                sb.Append("HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity)");
+                sb.Append(".HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity)");
             }
 
             if (column.Computed)
             {
                 hasvalue = true;
                 sb.Append("\r\n                ");
-                sb.Append("HasDatabaseGeneratedOption(DatabaseGeneratedOption.Computed)");
+                sb.Append(".HasDatabaseGeneratedOption(DatabaseGeneratedOption.Computed)");
             }
 
             if (column.IsPrimaryKey)
