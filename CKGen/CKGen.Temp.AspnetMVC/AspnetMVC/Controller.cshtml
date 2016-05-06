@@ -117,7 +117,7 @@ namespace @(Model.WebProjNameSpace).Controllers
                 if (ModelState.IsValid)
                 {
                     @(Model.DBTable.Name)Service.Delete(id);
-                    return Json(new { result = true, message = "" });
+                    return Json(new { success = true, message = "" });
                 }
                 return Json(new { success = false, message = this.GetErrors() });
             }
