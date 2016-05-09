@@ -73,7 +73,7 @@
     <None Include="AspnetMVC\Controller.cshtml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="AspnetMVC\Create.cshtml">
+    <None Include="AspnetMVC\Add.cshtml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="AspnetMVC\DTO.cshtml">

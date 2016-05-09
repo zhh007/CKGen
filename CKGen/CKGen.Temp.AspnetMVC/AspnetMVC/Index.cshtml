@@ -8,111 +8,143 @@
 @@{
     ViewBag.Title = "";
 }
-
-<div>
-    @@using (Html.BeginForm("Index", "@(Model.DBTable.Name)", new { id = 1 }, FormMethod.Get, new { id = "searchForm" }))
-    {
-        <div class="toolbar">
-            <div style="float:left">
-                <ul>
-                    <li class="search-title">关键字</li>
-                    <li class="search-input">
-                        <input name="searchText" value="@("@")Model.Text" type="text" style="width: 250px; height:26px;" maxlength="20" />
-                    </li>
-                    <li>
-                        <input type="submit" value="查询" class="button yellow fn-left" />
-                    </li>
-                </ul>
+<div class="row">
+    <div class="col-lg-12">
+        <h2 class="page-header">
+            开课地点
+        </h2>
+    </div>
+</div>
+<div class="row table-foolts">
+    <div class="col-sm-9">
+        @@using (Html.BeginForm("Index", "@(Model.DBTable.Name)", new { id = 1 }, FormMethod.Get, new { id = "searchForm", @@class = "form-inline" }))
+        {
+            <div class="form-group ie8-width-190">
+                <label class="control-label">
+                    招募活动
+                </label>
+                @@Html.DropDownListFor(p => p.EventID, Model.EventList, new { @@class = "form-control input-sm", @@style = "width: 150px" })
             </div>
-            <div class="search">
-                <input type="button" value="新增" class="button bured" onclick="location='@("@Href(\"~/" + Model.DBTable.Name + "/Create\")")';" />
+            <div class="input-group">
+                <input name="searchText" type="text" class="form-control input-sm" placeholder="请输入关键字" value="@("@")Model.Text">
+                <span class="input-group-btn">
+                    <button class="btn btn-sm btn-danger" type="submit">搜索</button>
+                </span>
+            </div>
+        }
+    </div>
+    <div class="col-sm-3">
+        <div class="btn-toolbar fn-right" role="toolbar">
+            <div class="btn-group" role="group">
+                <input type="button" value="新增" class="btn btn-danger btn-sm" onclick="location='@("@Href(\"~/" + Model.DBTable.Name + "/Create\")")';" />
             </div>
         </div>
-    }
-    <div class="clear">
     </div>
-    <div class="list">
-        <table width="100%" class="table table-hover clear">
-            <tr>
-                <th>
-                    类别名称
-                </th>
-                <th>
-                    上级
-                </th>
-                <th>
-                    修改者
-                </th>
-                <th>
-                    修改时间
-                </th>
-                <th>
-                    操作
-                </th>
-            </tr>
-            @@foreach (var p in Model.List)
-            {
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <table class="table table-bordered table-striped table-hover">
+            <thead>
                 <tr>
-                    <td>
-                        @@p.@(Model.DBTable.Name)Name
-                    </td>
-                    <td>
-                        @@if (p.Parent != null)
-                        {
-                            @@p.Parent.GoodsTypeName
-                        }
-                    </td>
-                    <td>
-                        @@if (p.ModifyUser != null)
-                        {
-                            @@p.ModifyUser.Name
-                        }
-                    </td>
-                    <td>
-                        @@string.Format("{0:yyyy-MM-dd}", p.ModifyTime)
-                    </td>
-                    <td>
-                        @@Html.ActionLink("修改", "Edit", new { id = p.ID }, new { @@class = "blue" })
-                        <a href="javascript:void(0);" url="~/@(Model.DBTable.Name)/Delete/@("@")p.ID" class="blue deleteflag">
-                            删除
-                        </a>
-                    </td>
+                    <th>
+                        招募活动
+                    </th>
+                    <th>
+                        机构
+                    </th>
+                    <th>
+                        招募人数
+                    </th>
+                    <th>
+                        状态
+                    </th>
+                    <th>
+                        修改时间
+                    </th>
+                    <th>
+                        操作
+                    </th>
                 </tr>
-            }
+            </thead>
+            <tbody>
+                @@foreach (var p in Model.List)
+                {
+                    <tr>
+                        <td>
+                            @@p.HuodongName
+                        </td>
+                        <td>
+                            @@p.AreaName
+                        </td>
+                        <td>
+                            @@string.Format("{0}~{1}", p.PersonMin, p.PersonMax)
+                        </td>
+                        <td>
+                            @@switch (p.Status)
+                            {
+                                case 0:
+                                    <text>允许招募</text>
+                                    break;
+                                case 1:
+                                    <text>结束招募</text>
+                                    break;
+                            }
+                        </td>
+                        <td>
+                            @@string.Format("{0:yyyy-MM-dd}", p.ModifyTime)
+                        </td>
+                        <td>
+                            @@Html.ActionLink("修改", "Edit", new { id = p.ID }, new { @@class = "blue" })
+                            <a href="javascript:void(0);" url="~/@(Model.DBTable.Name)/Delete/@("@")p.ID" class="blue deleteflag">
+                                删除
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
         </table>
     </div>
-    <div class="pages">
-        <ul>
-           @@Html.Pager(Model.List, new PagerOptions
-           {
-               PageIndexParameterName = "id",
-               ShowFirstLast = true,
-               ContainerTagIsEmpty = true,
-               ShowPagerInfo = true,
-               CurrentPagerItemWrapperFormatString = "<li><span class='current'>{0}</span></li>",
-               PagerItemWrapperFormatString = "<li><span>{0}</span></li>",
-               SeparatorHtml = "",
-               ShowPageIndexBox = true,
-               PageIndexBoxWrapperFormatString = "跳转至{0}页",
-               GoToPageSectionWrapperFormatString = "{0}"
-           })
-        </ul>
+</div>
+<div class="row">
+    <div class="col-sm-7">
+        <div class="text-right paging">
+            <ul class="pagination">
+               @@Html.Pager(Model.List, new PagerOptions
+               {
+                   PageIndexParameterName = "id",
+                   ShowFirstLast = false,
+                   ContainerTagIsEmpty = true,
+                   ShowPagerInfo = false,
+                   CurrentPagerItemWrapperFormatString = "<li class='active'><a href='javascript:void(0)'>{0}</a></li>",
+                   PagerItemWrapperFormatString = "<li>{0}</li>",
+                   SeparatorHtml = "",
+                   ShowPageIndexBox = false,
+                   PageIndexBoxWrapperFormatString = "跳转至{0}页",
+                   GoToPageSectionWrapperFormatString = "{0}",
+                   PrevPageText = "<span aria-hidden='true'>&laquo;</span>",
+                   NextPageText = "<span aria-hidden='true'>&raquo;</span>",
+                   NumericPagerItemCount = 5
+               })
+            </ul>
+        </div>
+    </div>
+    <div class="col-sm-5">
+        <div class="pagin-number">
+            第@@(Model.List.CurrentPageIndex)/@@(Model.List.TotalPageCount)页，共@@(Model.List.TotalItemCount)条，每页@@(Model.List.PageSize)条&nbsp;&nbsp;&nbsp;&nbsp;
+        </div>
     </div>
 </div>
 <script type="text/javascript">
     $(function () {
-        $(".deleteflag").live("click", function () {
+        $(".deleteflag").on("click", function () {
             var url = $(this).attr("url");
-            $.fn.confirm({ message: "确定要删除吗？", callback: function () {
-                $.post(url, null, function (data, status) {
-                    if (data.result) {
-                        $.fn.notify({ message: "删除成功", callback: function () { window.location.reload(); } });
-                    }
-                    else {
-                        $.fn.notify({ message: "删除失败", title: data.message });
+            jsConfirm("您确定要删除吗?", function () {
+                $.post(url, null, function (data) {
+                    ajaxAlert(data);
+                    if (data.success) {
+                        location = '@@Href("~/@(Model.DBTable.Name)/")';
                     }
                 }, "json");
-            }
             });
         });
     });
