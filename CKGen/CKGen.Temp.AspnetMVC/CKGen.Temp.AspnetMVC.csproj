@@ -112,6 +112,9 @@
     <None Include="AspnetMVC\Service.cshtml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="AspnetMVC\SimpleChildUI\readme.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="AspnetMVC\SimpleChildUI\ChildModel.cshtml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
