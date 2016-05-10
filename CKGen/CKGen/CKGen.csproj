@@ -196,9 +196,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\ResService.cs" />
     <Compile Include="Setting\ConnectionSetting.cs" />
     <Compile Include="Setting\DatabaseSchemaSetting.cs" />
-    <Compile Include="SQLHelper.cs" />
     <Compile Include="App.cs" />
     <Compile Include="Controls\CodeView.cs">
       <SubType>UserControl</SubType>

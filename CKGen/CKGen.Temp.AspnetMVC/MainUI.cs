@@ -12,7 +12,7 @@ using CKGen.DBSchema;
 namespace CKGen.Temp.AspnetMVC
 {
     [Export("UserControl", typeof(UserControl))]
-    public partial class MainUI : UserControl
+    public partial class MainUI : UserControl, IGenUI
     {
         [Import("ModuleName")]
         public IDatabaseInfo Database { get; set; }

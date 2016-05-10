@@ -90,6 +90,7 @@ namespace CKGen.Controls
                     DataGridViewTextBoxCell col5 = new DataGridViewTextBoxCell();
 
                     DataGridViewRow row = new DataGridViewRow();
+                    row.Tag = item.IsPrimaryKey;
                     row.Cells.AddRange(new DataGridViewCell[] { col1, col2, col3, col4, col5 });
                     rlist.Add(row);
                 }

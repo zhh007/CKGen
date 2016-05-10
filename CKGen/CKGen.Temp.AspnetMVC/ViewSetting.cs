@@ -13,14 +13,14 @@ namespace CKGen.Temp.AspnetMVC
 {
     public partial class ViewSetting : UserControl
     {
-        private MainUI parent;
+        private IGenUI parent;
         private string folderPath;
         private string tableName;
         private string nsString;
         private string webNSString;
         private ITableInfo SelectedTable;
 
-        public ViewSetting(MainUI _parent)
+        public ViewSetting(IGenUI _parent)
         {
             parent = _parent;
             InitializeComponent();

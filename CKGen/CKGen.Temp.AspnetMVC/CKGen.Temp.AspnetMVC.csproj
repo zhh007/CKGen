@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AspnetMVCSetting.cs" />
+    <Compile Include="IGenUI.cs" />
     <Compile Include="MainUI.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -56,6 +57,12 @@
     <Compile Include="CodeBuilder.cs" />
     <Compile Include="PageViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SimpleChildUI.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="SimpleChildUI.Designer.cs">
+      <DependentUpon>SimpleChildUI.cs</DependentUpon>
+    </Compile>
     <Compile Include="ViewResult.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -113,6 +120,9 @@
   <ItemGroup>
     <EmbeddedResource Include="MainUI.resx">
       <DependentUpon>MainUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SimpleChildUI.resx">
+      <DependentUpon>SimpleChildUI.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ViewResult.resx">
       <DependentUpon>ViewResult.cs</DependentUpon>

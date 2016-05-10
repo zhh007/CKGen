@@ -22,7 +22,8 @@ namespace CKGen
             LanguageConvert.GetCSharpTypeFromMSSQL("datetime");
 
             ServiceLocator.Instance.AddService<ICodeGenService>(new CodeGenService());
-            
+            ServiceLocator.Instance.AddService<IResService>(new ResService());
+
             Application.Run(new FrmMain());
         }
     }

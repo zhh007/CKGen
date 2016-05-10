@@ -13,11 +13,11 @@ namespace CKGen.Temp.AspnetMVC
 {
     public partial class ViewResult : UserControl
     {
-        private MainUI parent;
+        private IGenUI parent;
         private string folderPath;
         private bool showCode = false;
 
-        public ViewResult(MainUI _parent)
+        public ViewResult(IGenUI _parent)
         {
             parent = _parent;
             InitializeComponent();
