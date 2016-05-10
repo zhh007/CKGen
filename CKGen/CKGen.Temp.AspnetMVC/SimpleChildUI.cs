@@ -22,6 +22,7 @@ namespace CKGen.Temp.AspnetMVC
         private ITableInfo SelectedChildTable;
         private ITableInfo SelectedParentTable;
         private SimpleChildGenModel GenModel = new SimpleChildGenModel();
+        private string folderPath = "";
         public SimpleChildUI()
         {
             InitializeComponent();
@@ -41,6 +42,13 @@ namespace CKGen.Temp.AspnetMVC
                     cbTablesForChild.Items.Add(table.Name);
                     cbTablesForParent.Items.Add(table.Name);
                 }
+            }
+
+            AspnetMVCSetting setting = SettingStore.Instance.Get<AspnetMVCSetting>(this.Database.Name + "_aspnetmvc.xml");
+            if (setting != null)
+            {
+                txtNamespace.Text = setting.Namespace;
+                txtWebProjNameSpace.Text = setting.WebProjNameSpace;
             }
         }
 
@@ -117,9 +125,49 @@ namespace CKGen.Temp.AspnetMVC
             GenModel.ChildModel = this.SelectedChildTable;
             GenModel.ParentModel = this.SelectedParentTable;
 
+            foreach (DataGridViewRow item in gvFields.Rows)
+            {
+                InputItem inp = new InputItem();
+                string rawName = item.Cells[0].Value.ToString();
+                inp.Title = item.Cells[3].Value.ToString();
+                inp.PascalName = StringHelper.SetPascalCase(rawName);
+                inp.CamelName = StringHelper.SetCamelCase(rawName);
+                inp.InputType = item.Cells[4].Value.ToString();
+                GenModel.Items.Add(inp);
+            }
 
+            AspnetMVCSetting setting = new AspnetMVCSetting();
+            setting.Namespace = GenModel.NameSpacePR;
+            setting.WebProjNameSpace = GenModel.WebProjNameSpace;
+            SettingStore.Instance.Save<AspnetMVCSetting>(setting, this.Database.Name + "_aspnetmvc.xml");
 
-            ShowResultView();
+            BackgroundWorker _bgWorker = new BackgroundWorker();
+            _bgWorker.WorkerSupportsCancellation = false;
+            _bgWorker.WorkerReportsProgress = false;
+            _bgWorker.DoWork += _bgWorker_DoWork;
+            _bgWorker.RunWorkerCompleted += _bgWorker_RunWorkerCompleted;
+            _bgWorker.RunWorkerAsync();
+        }
+
+        private void _bgWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            txtChildName.Enabled = true;
+            txtNamespace.Enabled = true;
+            txtWebProjNameSpace.Enabled = true;
+            cbTablesForChild.Enabled = true;
+            cbTablesForParent.Enabled = true;
+            gvFields.Enabled = true;
+            btnGen.Enabled = true;
+            btnGen.Text = "生成";
+            btnView.Show();
+
+            GoResult(folderPath);
+        }
+
+        private void _bgWorker_DoWork(object sender, DoWorkEventArgs e)
+        {
+            CodeBuilder mvcBuilder = new CodeBuilder();
+            folderPath = mvcBuilder.BuildSimpleChildEdit(this.GenModel);
         }
 
         private void btnView_Click(object sender, EventArgs e)

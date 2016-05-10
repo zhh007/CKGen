@@ -82,5 +82,12 @@ namespace CKGen.Temp.AspnetMVC
             string filePath = Path.Combine(_targetFolder, targetFileName);
             codeGen.GenSave(viewPath, viewmodel, filePath);
         }
+
+        public string BuildSimpleChildEdit(SimpleChildGenModel model)
+        {
+            _build("SimpleChildUI\\_ChildEdit.cshtml", typeof(SimpleChildGenModel), model, "_" + model.ChildModel.PascalName + "Edit.cs");
+
+            return this._targetFolder;
+        }
     }
 }
