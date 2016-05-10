@@ -1,0 +1,94 @@
+﻿@using RazorEngine.Templating
+@using CKGen.Temp.AspnetMVC
+@using CKGen.DBSchema;
+@inherits TemplateBase<PageViewModel>
+
+@@model @(Model.WebProjNameSpace).Models.@(Model.DBTable.Name)ViewModel
+@@{
+    ViewBag.Title = "新增";
+}
+<div class="row">
+    <div class="col-lg-12">
+        <div class="page-header fn-clear">
+            <h2 class="col-md-10">
+                开课地点-新增
+            </h2>
+            <div class="col-md-2 text-right">
+                <a onclick="location='@("@Href(\"~/" + Model.DBTable.Name + "/\")" )'" class="btn btn-danger" style="margin-top: 25px;">
+                    返回
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="form-wrapper">
+    <div class="row">
+        <div class="col-lg-8 col-md-9 col-sm-11">
+            @@using (Html.BeginForm("Add", "@(Model.DBTable.Name)", FormMethod.Post, new { @@id = "form1", @@class = "form-horizontal" }))
+            {
+                @@Html.AntiForgeryToken()
+                @@Html.HiddenFor(p => p.ID)
+                <input type="hidden" name="WeekDayList" />
+                <div class="form-group">
+                    <label class="col-sm-2 control-label" for="formGroupInputSmall">
+                        招募活动<span style="color: #F00">*</span>
+                    </label>
+                    <div class="col-sm-10">
+                        @@Html.DropDownListFor(p => p.EventID, Model.Events, new { @@class = "form-control", @@style = "width:350px" })
+                        @@Html.ValidationMessageFor(p => p.EventID)
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label" for="formGroupInputSmall">
+                        招募人数最少<span style="color: #F00">*</span>
+                    </label>
+                    <div class="col-sm-10">
+                        @@Html.TextBoxFor(p => p.PersonMin, new { @@class = "form-control", @@style = "width:150px" })
+                        @@Html.ValidationMessageFor(p => p.PersonMin)
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="button" class="btn btn-primary" id="frm-submit">
+                            保存
+                        </button>
+                        <button type="button" class="btn btn-default" onclick="location='@("@Href(\"~/" + Model.DBTable.Name + "/\")" )'">
+                            取消
+                        </button>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(function () {
+        $("#frm-submit").click(function (evt) {
+            var frmObj = $("#form1");
+            $.validator.unobtrusive.parse(frmObj);
+            var fvalid = check();
+            var fvalid2 = frmObj.valid();
+            if (fvalid && fvalid2) {
+                $.post('@@Href("~/@(Model.DBTable.Name)/Add")'
+                    , frmObj.serialize()
+                    , function (data) {
+                        ajaxAlert(data);
+                        if (data.success) {
+                            location = '@@Href("~/@(Model.DBTable.Name)/")';
+                        }
+                    }
+                    , "json"
+                );
+            }
+            evt.preventDefault();
+        });
+    });
+
+    function check() {
+        var success = true;
+
+        //addError("FixedMode", "请输入上课规律。");
+
+        return success;
+    }
+</script>

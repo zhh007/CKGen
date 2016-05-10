@@ -47,6 +47,14 @@ namespace CKGen.Temp.AspnetMVC
         /// </summary>
         private void btnGen_Click(object sender, EventArgs e)
         {
+            if(string.IsNullOrEmpty(txtNamespace.Text) || string.IsNullOrWhiteSpace(txtNamespace.Text))
+            {
+                return;
+            }
+            if (string.IsNullOrEmpty(txtWebProjNameSpace.Text) || string.IsNullOrWhiteSpace(txtWebProjNameSpace.Text))
+            {
+                return;
+            }
             string tbName = cbTables.Text.Trim();
             if (string.IsNullOrEmpty(tbName))
             {

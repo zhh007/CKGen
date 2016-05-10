@@ -21,6 +21,7 @@ namespace CKGen.Temp.AspnetMVC
         private ViewResult vResult = null;
         private ITableInfo SelectedChildTable;
         private ITableInfo SelectedParentTable;
+        private SimpleChildGenModel GenModel = new SimpleChildGenModel();
         public SimpleChildUI()
         {
             InitializeComponent();
@@ -45,6 +46,14 @@ namespace CKGen.Temp.AspnetMVC
 
         private void btnGen_Click(object sender, EventArgs e)
         {
+            if (string.IsNullOrEmpty(txtNamespace.Text) || string.IsNullOrWhiteSpace(txtNamespace.Text))
+            {
+                return;
+            }
+            if (string.IsNullOrEmpty(txtWebProjNameSpace.Text) || string.IsNullOrWhiteSpace(txtWebProjNameSpace.Text))
+            {
+                return;
+            }
             bool hasChildTable = false;
             string tbChildName = cbTablesForChild.Text.Trim();
             if (string.IsNullOrEmpty(tbChildName))
@@ -90,6 +99,25 @@ namespace CKGen.Temp.AspnetMVC
             {
                 return;
             }
+
+            txtChildName.Enabled = false;
+            txtNamespace.Enabled = false;
+            txtWebProjNameSpace.Enabled = false;
+            cbTablesForChild.Enabled = false;
+            cbTablesForParent.Enabled = false;
+            gvFields.Enabled = false;
+            btnGen.Enabled = false;
+            btnGen.Text = "正在生成...";
+            btnView.Hide();
+
+            //设置SimpleChildGenModel
+            GenModel.NameSpacePR = txtNamespace.Text.Trim();
+            GenModel.WebProjNameSpace = txtWebProjNameSpace.Text.Trim();
+            GenModel.ChildCollectionName = childCollectionName;
+            GenModel.ChildModel = this.SelectedChildTable;
+            GenModel.ParentModel = this.SelectedParentTable;
+
+
 
             ShowResultView();
         }
@@ -151,33 +179,47 @@ namespace CKGen.Temp.AspnetMVC
                 if(this.SelectedChildTable != selTable)
                 {
                     this.gvFields.Rows.Clear();
-
-                    //
                     List<DataGridViewRow> rlist = new List<DataGridViewRow>();
                     foreach (var item in selTable.Columns)
                     {
-                        DataGridViewTextBoxCell col1 = new DataGridViewTextBoxCell();
-                        col1.Value = item.RawName;
+                        int rowIndex = gvFields.Rows.Add();
+                        DataGridViewRow row = gvFields.Rows[rowIndex];
+                        row.Cells[0].Value = item.RawName;
+                        row.Cells[1].Value = SQLHelper.GetFullSqlType(item);
+                        row.Cells[2].Value = item.Nullable ? true : false;
+                        row.Cells[3].Value = item["local_desc"] ?? "";
+                        row.Cells[4].Value = (item.IsPrimaryKey) ? "hidden" : "text";
 
-                        DataGridViewTextBoxCell col2 = new DataGridViewTextBoxCell();
-                        col2.Value = SQLHelper.GetFullSqlType(item);
+                        //DataGridViewTextBoxCell col1 = new DataGridViewTextBoxCell();
+                        //col1.Value = item.RawName;
 
-                        DataGridViewCheckBoxCell col3 = new DataGridViewCheckBoxCell();
-                        col3.Value = item.Nullable ? true : false;
+                        //DataGridViewTextBoxCell col2 = new DataGridViewTextBoxCell();
+                        //col2.Value = SQLHelper.GetFullSqlType(item);
 
-                        DataGridViewTextBoxCell col4 = new DataGridViewTextBoxCell();
-                        col4.Value = item["local_desc"] ?? "";
+                        //DataGridViewCheckBoxCell col3 = new DataGridViewCheckBoxCell();
+                        //col3.Value = item.Nullable ? true : false;
 
-                        DataGridViewTextBoxCell col5 = new DataGridViewTextBoxCell();
+                        //DataGridViewTextBoxCell col4 = new DataGridViewTextBoxCell();
+                        //col4.Value = item["local_desc"] ?? "";
 
-                        DataGridViewRow row = new DataGridViewRow();
-                        row.Tag = item.IsPrimaryKey;
-                        row.Cells.AddRange(new DataGridViewCell[] { col1, col2, col3, col4, col5 });
+                        //DataGridViewComboBoxCell col5 = new DataGridViewComboBoxCell();
+                        //col5.Items.Add("text");
+                        //col5.Items.Add("hidden");
+                        //col5.Items.Add("select");
+                        //col5.Items.Add("radio");
+                        //col5.Items.Add("checkbox");
+                        //col5.Items.Add("textarea");
+                        //col5.Value = (item.IsPrimaryKey) ? "hidden" : "text";
+
+                        //DataGridViewTextBoxCell col6 = new DataGridViewTextBoxCell();
+
+                        ////DataGridViewRow row = new DataGridViewRow();
+                        //row.Tag = item.IsPrimaryKey;
+                        //row.Cells.AddRange(new DataGridViewCell[] { col1, col2, col3, col4, col5, col6 });
                         rlist.Add(row);
                     }
 
-                    this.gvFields.Rows.AddRange(rlist.ToArray());
-
+                    //this.gvFields.Rows.AddRange(rlist.ToArray());
                     this.SelectedChildTable = selTable;
                 }
             }

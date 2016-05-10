@@ -20,7 +20,6 @@ namespace CKGen.Controls
 
         public void SetOrderByItems(List<IColumnInfo> allColumns, List<OrderByItem> orderbyItems)
         {
-            List<DataGridViewRow> rlist = new List<DataGridViewRow>();
             dgvColumns.Rows.Clear();
             foreach (var item in allColumns)
             {
@@ -53,7 +52,6 @@ namespace CKGen.Controls
                 row.Cells[5].Value = item.Description;
                 row.Tag = item;
             }
-            dgvColumns.Rows.AddRange(rlist.ToArray());
         }
 
         public List<OrderByItem> GetOrderByItems()

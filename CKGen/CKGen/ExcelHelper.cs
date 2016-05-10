@@ -72,7 +72,7 @@ namespace CKGen
                     hssfworkbook.Write(fs);//保存文件
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 //LogHelper
             }

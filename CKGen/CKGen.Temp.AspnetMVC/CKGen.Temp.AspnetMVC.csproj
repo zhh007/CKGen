@@ -57,6 +57,7 @@
     <Compile Include="CodeBuilder.cs" />
     <Compile Include="PageViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SimpleChildGenModel.cs" />
     <Compile Include="SimpleChildUI.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -105,6 +106,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="AspnetMVC\Service.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="AspnetMVC\SimpleChildUI\_ChildEdit.cshtml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="AspnetMVC\ViewModel.cshtml">

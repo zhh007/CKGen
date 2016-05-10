@@ -33,19 +33,24 @@
             this.btnView = new System.Windows.Forms.Button();
             this.btnGen = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.txtWebProjNameSpace = new System.Windows.Forms.TextBox();
+            this.txtNamespace = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
             this.txtChildName = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.cbTablesForParent = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.gvFields = new System.Windows.Forms.DataGridView();
+            this.cbTablesForChild = new System.Windows.Forms.ComboBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.colName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColDBType = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColNull = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.colDescNew = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColInputType = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.ColBlank = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cbTablesForChild = new System.Windows.Forms.ComboBox();
-            this.label1 = new System.Windows.Forms.Label();
             this.MainPanel.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -66,7 +71,7 @@
             // 
             // btnView
             // 
-            this.btnView.Location = new System.Drawing.Point(169, 416);
+            this.btnView.Location = new System.Drawing.Point(152, 419);
             this.btnView.Name = "btnView";
             this.btnView.Size = new System.Drawing.Size(75, 23);
             this.btnView.TabIndex = 15;
@@ -76,7 +81,7 @@
             // 
             // btnGen
             // 
-            this.btnGen.Location = new System.Drawing.Point(28, 416);
+            this.btnGen.Location = new System.Drawing.Point(11, 419);
             this.btnGen.Name = "btnGen";
             this.btnGen.Size = new System.Drawing.Size(123, 23);
             this.btnGen.TabIndex = 14;
@@ -88,20 +93,56 @@
             // 
             this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox2.Controls.Add(this.txtWebProjNameSpace);
+            this.groupBox2.Controls.Add(this.txtNamespace);
+            this.groupBox2.Controls.Add(this.label5);
+            this.groupBox2.Controls.Add(this.label4);
             this.groupBox2.Controls.Add(this.txtChildName);
             this.groupBox2.Controls.Add(this.label3);
             this.groupBox2.Controls.Add(this.cbTablesForParent);
             this.groupBox2.Controls.Add(this.label2);
             this.groupBox2.Location = new System.Drawing.Point(4, 309);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(829, 91);
+            this.groupBox2.Size = new System.Drawing.Size(829, 94);
             this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "父对象设置";
             // 
+            // txtWebProjNameSpace
+            // 
+            this.txtWebProjNameSpace.Location = new System.Drawing.Point(480, 51);
+            this.txtWebProjNameSpace.Name = "txtWebProjNameSpace";
+            this.txtWebProjNameSpace.Size = new System.Drawing.Size(243, 21);
+            this.txtWebProjNameSpace.TabIndex = 17;
+            // 
+            // txtNamespace
+            // 
+            this.txtNamespace.Location = new System.Drawing.Point(84, 51);
+            this.txtNamespace.Name = "txtNamespace";
+            this.txtNamespace.Size = new System.Drawing.Size(243, 21);
+            this.txtNamespace.TabIndex = 16;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(343, 54);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(89, 12);
+            this.label5.TabIndex = 19;
+            this.label5.Text = "Web NameSpace:";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(6, 54);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(65, 12);
+            this.label4.TabIndex = 18;
+            this.label4.Text = "NameSpace:";
+            // 
             // txtChildName
             // 
-            this.txtChildName.Location = new System.Drawing.Point(84, 50);
+            this.txtChildName.Location = new System.Drawing.Point(480, 20);
             this.txtChildName.Name = "txtChildName";
             this.txtChildName.Size = new System.Drawing.Size(243, 21);
             this.txtChildName.TabIndex = 19;
@@ -109,11 +150,11 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(7, 53);
+            this.label3.Location = new System.Drawing.Point(343, 23);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(71, 12);
+            this.label3.Size = new System.Drawing.Size(131, 12);
             this.label3.TabIndex = 18;
-            this.label3.Text = "ChildName：";
+            this.label3.Text = "ChildCollectionName：";
             // 
             // cbTablesForParent
             // 
@@ -162,10 +203,12 @@
             this.ColDBType,
             this.ColNull,
             this.colDescNew,
+            this.ColInputType,
             this.ColBlank});
             this.gvFields.Location = new System.Drawing.Point(8, 49);
             this.gvFields.MultiSelect = false;
             this.gvFields.Name = "gvFields";
+            this.gvFields.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
             this.gvFields.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
             this.gvFields.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
             this.gvFields.RowTemplate.Height = 23;
@@ -173,6 +216,24 @@
             this.gvFields.Size = new System.Drawing.Size(816, 244);
             this.gvFields.TabIndex = 7;
             this.gvFields.RowPostPaint += new System.Windows.Forms.DataGridViewRowPostPaintEventHandler(this.gvFields_RowPostPaint);
+            // 
+            // cbTablesForChild
+            // 
+            this.cbTablesForChild.FormattingEnabled = true;
+            this.cbTablesForChild.Location = new System.Drawing.Point(59, 23);
+            this.cbTablesForChild.Name = "cbTablesForChild";
+            this.cbTablesForChild.Size = new System.Drawing.Size(243, 20);
+            this.cbTablesForChild.TabIndex = 15;
+            this.cbTablesForChild.SelectedIndexChanged += new System.EventHandler(this.cbTablesForChild_SelectedIndexChanged);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(6, 26);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(47, 12);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "Table：";
             // 
             // colName
             // 
@@ -211,6 +272,23 @@
             this.colDescNew.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.colDescNew.Width = 300;
             // 
+            // ColInputType
+            // 
+            this.ColInputType.DisplayStyle = System.Windows.Forms.DataGridViewComboBoxDisplayStyle.DropDownButton;
+            this.ColInputType.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.ColInputType.HeaderText = "input类型";
+            this.ColInputType.Items.AddRange(new object[] {
+            "text",
+            "hidden",
+            "select",
+            "radio",
+            "checkbox",
+            "textarea"});
+            this.ColInputType.MinimumWidth = 90;
+            this.ColInputType.Name = "ColInputType";
+            this.ColInputType.Width = 90;
+            this.ColInputType.FillWeight = 90F;
+            // 
             // ColBlank
             // 
             this.ColBlank.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
@@ -222,24 +300,6 @@
             this.ColBlank.ReadOnly = true;
             this.ColBlank.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.ColBlank.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // cbTablesForChild
-            // 
-            this.cbTablesForChild.FormattingEnabled = true;
-            this.cbTablesForChild.Location = new System.Drawing.Point(59, 23);
-            this.cbTablesForChild.Name = "cbTablesForChild";
-            this.cbTablesForChild.Size = new System.Drawing.Size(243, 20);
-            this.cbTablesForChild.TabIndex = 15;
-            this.cbTablesForChild.SelectedIndexChanged += new System.EventHandler(this.cbTablesForChild_SelectedIndexChanged);
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 26);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(47, 12);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Table：";
             // 
             // SimpleChildUI
             // 
@@ -273,10 +333,15 @@
         private System.Windows.Forms.DataGridView gvFields;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox txtChildName;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ColBlank;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colDescNew;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn ColNull;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ColDBType;
+        private System.Windows.Forms.TextBox txtWebProjNameSpace;
+        private System.Windows.Forms.TextBox txtNamespace;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label4;
         private System.Windows.Forms.DataGridViewTextBoxColumn colName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColDBType;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn ColNull;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colDescNew;
+        private System.Windows.Forms.DataGridViewComboBoxColumn ColInputType;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColBlank;
     }
 }
