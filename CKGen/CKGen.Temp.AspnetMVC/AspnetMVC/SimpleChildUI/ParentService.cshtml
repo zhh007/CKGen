@@ -1,0 +1,98 @@
+﻿@using RazorEngine.Templating
+@using CKGen.Temp.AspnetMVC
+@using CKGen.DBSchema;
+@inherits TemplateBase<SimpleChildGenModel>
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using AutoMapper;
+using Enterprises.Yibiyi.Data.Infrastructure;
+using Enterprises.Yibiyi.Infrastructure;
+using Enterprises.Yibiyi.Infrastructure.Validate;
+using Enterprises.Yibiyi.Infrastructure.UnityExtentions;
+using @(Model.NameSpacePR).Data.Models;
+using @(Model.NameSpacePR).Data.Repositories;
+using @(Model.NameSpacePR).DTO;
+using @(Model.NameSpacePR).ServiceInterface;
+
+namespace @(Model.NameSpacePR).EFAdapter
+{
+    public class @(Model.ParentModel.Name)Service : I@(Model.ParentModel.Name)Service
+    {
+        private IDatabaseFactory fDatabaseFactory;
+        private IUnitOfWork fUnitofWork;
+        private I@(Model.ParentModel.Name)Repository f@(Model.ParentModel.Name)Repository;
+        private I@(Model.ChildModel.Name)Repository f@(Model.ChildModel.Name)Repository;
+
+        public @(Model.ParentModel.Name)Service()
+        {
+            fDatabaseFactory = ServiceLocator.Instance.GetService<IDatabaseFactory>();
+            fUnitofWork = new UnitOfWork(fDatabaseFactory);
+            f@(Model.ParentModel.Name)Repository = ServiceLocator.Instance.GetService@("<I" + Model.ParentModel.Name)Repository>();
+            f@(Model.ChildModel.Name)Repository = ServiceLocator.Instance.GetService@("<I" + Model.ChildModel.Name)Repository>();
+        }
+
+        [LogException]
+        public void Add(@(Model.ParentModel.Name)DTO dto)
+        {
+            var model = Mapper.Map@("<" + Model.ParentModel.Name)DTO, @(Model.ParentModel.Name)>(dto);
+            f@(Model.ParentModel.Name)Repository.Add(model);
+            fUnitofWork.Commit();
+        }
+
+        [LogException]
+        public void Update(@(Model.ParentModel.Name)DTO dto)
+        {
+            var model = f@(Model.ParentModel.Name)Repository.Get(p => @(Model.GetUpdateFilterString(Model.ParentModel, "dto")));
+
+        @foreach (IColumnInfo column in Model.ParentModel.Columns)
+        {
+            if (column.IsPrimaryKey)
+            {
+                continue;
+            }
+            if (column.LowerName.Contains("create"))
+            {
+                continue;
+            }
+            <text>model.@(column.PascalName) = dto.@(column.PascalName);</text>
+        }
+
+            //update @(Model.ChildCollectionName)
+            var add@(Model.ChildCollectionName) = dto.@(Model.ChildCollectionName).Where(p => !model.@(Model.ChildCollectionName).Any(p2 => @(Model.GetByIdString(Model.ChildModel, "p", "p2")))).ToList();
+            foreach (var item in add@(Model.ChildCollectionName))
+            {
+                var t = Mapper.Map@("<" + Model.ChildModel.Name)DTO, @(Model.ChildModel.Name)>(item);
+                model.@(Model.ChildCollectionName).Add(t);
+            }
+            for(int i = model.@(Model.ChildCollectionName).Count - 1; i>=0; i--)
+            {
+                var item = model.@(Model.ChildCollectionName)[i];
+                var ditem = dto.@(Model.ChildCollectionName).Where(p => @(Model.GetByIdString(Model.ChildModel, "p", "item"))).FirstOrDefault();
+                if (ditem == null)
+                {//delete
+                    model.@(Model.ChildCollectionName).Remove(item);
+                    f@(Model.ChildModel.Name)Repository.Delete(item);
+                }
+                else
+                {//update
+                @foreach (IColumnInfo column in Model.ChildModel.Columns)
+                {
+                    if (column.IsPrimaryKey)
+                    {
+                        continue;
+                    }
+                    if (column.LowerName.Contains("create"))
+                    {
+                        continue;
+                    }
+                    <text>item.@(column.PascalName) = ditem.@(column.PascalName);</text>
+                }
+                }
+            }
+
+            fUnitofWork.Commit();
+        }
+    }
+}

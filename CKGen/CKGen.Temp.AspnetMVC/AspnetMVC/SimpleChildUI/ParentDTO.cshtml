@@ -1,0 +1,23 @@
+﻿@using RazorEngine.Templating
+@using CKGen.Temp.AspnetMVC
+@using CKGen.DBSchema;
+@inherits TemplateBase<SimpleChildGenModel>
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+namespace @(Model.NameSpacePR).DTO
+{
+    public class @(Model.ParentModel.Name)DTO
+    {
+        public List@("<" + Model.ChildModel.Name)DTO> @(Model.ChildCollectionName) { get; set; }
+
+        public @(Model.ParentModel.Name)DTO()
+        {
+            this.@(Model.ChildCollectionName) = new List@("<" + Model.ChildModel.Name)DTO>();
+        }
+    }
+}
+

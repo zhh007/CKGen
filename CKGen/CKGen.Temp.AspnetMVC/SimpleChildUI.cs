@@ -54,6 +54,10 @@ namespace CKGen.Temp.AspnetMVC
 
         private void btnGen_Click(object sender, EventArgs e)
         {
+            if (string.IsNullOrEmpty(txtParentObjectName.Text) || string.IsNullOrWhiteSpace(txtParentObjectName.Text))
+            {
+                return;
+            }
             if (string.IsNullOrEmpty(txtNamespace.Text) || string.IsNullOrWhiteSpace(txtNamespace.Text))
             {
                 return;
@@ -62,6 +66,25 @@ namespace CKGen.Temp.AspnetMVC
             {
                 return;
             }
+
+            bool hasForeignKey = false;
+            string foreignKey = cbForeignKey.Text.Trim();
+            if(string.IsNullOrEmpty(foreignKey))
+            {
+                return;
+            }
+            foreach (var item in SelectedChildTable.Columns)
+            {
+                if(item.PascalName == foreignKey)
+                {
+                    hasForeignKey = true;
+                }
+            }
+            if (!hasForeignKey)
+            {
+                return;
+            }
+
             bool hasChildTable = false;
             string tbChildName = cbTablesForChild.Text.Trim();
             if (string.IsNullOrEmpty(tbChildName))
@@ -119,6 +142,8 @@ namespace CKGen.Temp.AspnetMVC
             btnView.Hide();
 
             //设置SimpleChildGenModel
+            GenModel.ParentObjectName = txtParentObjectName.Text.Trim();
+            GenModel.ForeignKey = foreignKey;
             GenModel.NameSpacePR = txtNamespace.Text.Trim();
             GenModel.WebProjNameSpace = txtWebProjNameSpace.Text.Trim();
             GenModel.ChildCollectionName = childCollectionName;

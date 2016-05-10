@@ -112,6 +112,18 @@
     <None Include="AspnetMVC\Service.cshtml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="AspnetMVC\SimpleChildUI\ParentDTO.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="AspnetMVC\SimpleChildUI\ParentModel.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="AspnetMVC\SimpleChildUI\ParentService.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="AspnetMVC\SimpleChildUI\ParentViewModel.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="AspnetMVC\SimpleChildUI\_ChildEdit.cshtml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

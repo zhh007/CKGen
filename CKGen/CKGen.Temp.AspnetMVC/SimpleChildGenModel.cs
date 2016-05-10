@@ -12,6 +12,8 @@ namespace CKGen.Temp.AspnetMVC
         public ITableInfo ChildModel { get; set; }
         public ITableInfo ParentModel { get; set; }
         public string ChildCollectionName { get; set; }
+        public string ForeignKey { get; set; }
+        public string ParentObjectName { get; set; }
         public List<InputItem> Items { get; set; }
         public string NameSpacePR { get; set; }
         public string WebProjNameSpace { get; set; }
@@ -109,6 +111,41 @@ namespace CKGen.Temp.AspnetMVC
                 default:
                     break;
             }
+            return sb.ToString();
+        }
+
+        public string GetUpdateFilterString(ITableInfo tinfo, string modelName)
+        {
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < tinfo.Keys.Count; i++)
+            {
+                if (i > 0)
+                {
+                    sb.Append(" && ");
+                }
+                var item = tinfo.Keys[i];
+                sb.AppendFormat("p.{0} == {1}.{0}", item.PascalName, modelName);
+            }
+            return sb.ToString();
+        }
+
+        public string GetByIdString(ITableInfo tinfo, string p1, string p2)
+        {
+            StringBuilder sb = new StringBuilder();
+
+            foreach (var col in tinfo.Columns)
+            {
+                if(!col.IsPrimaryKey)
+                {
+                    continue;
+                }
+                if(sb.Length > 0)
+                {
+                    sb.Append(" && ");
+                }
+                sb.AppendFormat("{0}.{2} == {1}.{2}", p1, p2, col.PascalName);
+            }
+
             return sb.ToString();
         }
     }
