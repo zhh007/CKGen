@@ -1,0 +1,39 @@
+﻿@using RazorEngine.Templating
+@using CKGen.Temp.AspnetMVC
+@using CKGen.DBSchema;
+@inherits TemplateBase<SimpleChildGenModel>
+using System.ComponentModel.DataAnnotations;
+using System.Data.Entity.ModelConfiguration;
+
+namespace @(Model.NameSpacePR).Data.Models.Mapping
+{
+    public class @(Model.ChildModel.Name)Map : EntityTypeConfiguration@("<" + Model.ChildModel.Name + ">")
+    {
+        public @(Model.ChildModel.Name)Map()
+        {
+            // Primary Key
+        @foreach (var column in Model.ChildModel.Keys)
+        {
+            <text>this.HasKey(t => t.@(column.PascalName));</text>
+        }
+
+            // Properties
+        @foreach (var column in Model.ChildModel.Columns)
+        {
+            <text>@(Model.BuildPropertieStr(column))</text>
+        }
+
+            // Table & Column Mappings
+            this.ToTable("@(Model.ChildModel.Name)");
+        @foreach (var column in Model.ChildModel.Columns)
+        {
+            <text>this.Property(t => t.@(column.PascalName)).HasColumnName("@(column.RawName)");</text>
+        }
+
+            // Relationships
+            this.HasOptional(t => t.@(Model.ParentObjectName))
+                .WithMany(t => t.@(Model.ChildCollectionName))
+                .HasForeignKey(d => d.@(Model.ForeignKey));
+        }
+    }
+}

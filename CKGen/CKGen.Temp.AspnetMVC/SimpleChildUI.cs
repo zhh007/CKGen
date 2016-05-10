@@ -251,10 +251,14 @@ namespace CKGen.Temp.AspnetMVC
             {
                 if(this.SelectedChildTable != selTable)
                 {
+                    this.cbForeignKey.Text = "";
+                    this.cbForeignKey.Items.Clear();
                     this.gvFields.Rows.Clear();
                     List<DataGridViewRow> rlist = new List<DataGridViewRow>();
                     foreach (var item in selTable.Columns)
                     {
+                        cbForeignKey.Items.Add(item.Name);
+
                         int rowIndex = gvFields.Rows.Add();
                         DataGridViewRow row = gvFields.Rows[rowIndex];
                         row.Cells[0].Value = item.RawName;

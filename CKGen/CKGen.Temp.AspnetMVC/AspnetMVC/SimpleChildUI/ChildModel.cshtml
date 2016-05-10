@@ -1,0 +1,25 @@
+﻿@using RazorEngine.Templating
+@using CKGen.Temp.AspnetMVC
+@using CKGen.DBSchema;
+@inherits TemplateBase<SimpleChildGenModel>
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+namespace @(Model.NameSpacePR).Data.Models
+{
+    public partial class @(Model.ChildModel.Name)
+    {
+        @foreach (var column in Model.ChildModel.Columns)
+        {
+        <text>/// @("<summary>")</text>
+        <text>/// @(column.Description)</text>
+        <text>/// @("</summary>")</text>
+        <text>public @(column.LanguageType) @(column.PascalName) { get; set; }</text>
+        @("\r\n")
+        }
+        public virtual @(Model.ParentModel.Name) @(Model.ParentObjectName) { get; set; }
+    }
+}

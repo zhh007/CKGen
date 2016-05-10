@@ -91,6 +91,9 @@ namespace CKGen.Temp.AspnetMVC
             _build("SimpleChildUI\\ParentDTO.cshtml", typeof(SimpleChildGenModel), model, model.ParentModel.PascalName + "DTO.cs");
             _build("SimpleChildUI\\ParentModel.cshtml", typeof(SimpleChildGenModel), model, model.ParentModel.PascalName + ".cs");
 
+            _build("SimpleChildUI\\ChildModel.cshtml", typeof(SimpleChildGenModel), model, model.ChildModel.PascalName + ".cs");
+            _build("SimpleChildUI\\ChildMap.cshtml", typeof(PageViewModel), model, model.ChildModel.PascalName + "Map.cs");
+
             return this._targetFolder;
         }
     }
