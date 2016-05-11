@@ -29,6 +29,14 @@ namespace CKGen.Controls
             //
             InitTree();
 
+            //选择第一个表
+            var tbNode = tvSchema.Nodes[0];
+            tbNode.Expand();
+            if (tbNode.Nodes.Count > 0)
+            {
+                this.tvSchema.SelectedNode = tbNode.Nodes[0];
+            }
+
             //菜单
             CreateTableMenu();
             CreateViewMenu();
@@ -63,11 +71,6 @@ namespace CKGen.Controls
                 tbNode.Nodes.Add(node);
             }
             this.tvSchema.Nodes.Add(tbNode);
-            tbNode.Expand();
-            if (tbNode.Nodes.Count > 0)
-            {
-                this.tvSchema.SelectedNode = tbNode.Nodes[0];
-            }
 
             //视图
             TreeNode vwRoot = new TreeNode("视图");
@@ -250,7 +253,7 @@ namespace CKGen.Controls
                 {
                     this.TableMenu.Show(this.tvSchema, e.Location);
                 }
-                else if(e.Node.Tag is IViewInfo)
+                else if (e.Node.Tag is IViewInfo)
                 {
                     this.ViewMenu.Show(this.tvSchema, e.Location);
                 }
@@ -301,9 +304,53 @@ namespace CKGen.Controls
 
         public void Reload()
         {
-            App.Instance.SelectedNode = null;
+            bool node0Expand = tvSchema.Nodes[0].IsExpanded;
+            bool node1Expand = tvSchema.Nodes[1].IsExpanded;
+            bool node2Expand = tvSchema.Nodes[2].IsExpanded;
             this.DB = App.Instance.Database;
             InitTree();
+
+            if(node0Expand)
+            {
+                tvSchema.Nodes[0].Expand();
+            }
+            if (node1Expand)
+            {
+                tvSchema.Nodes[1].Expand();
+            }
+            if (node2Expand)
+            {
+                tvSchema.Nodes[2].Expand();
+            }
+
+            if (App.Instance.SelectedNode != null)
+            {
+                var txt = App.Instance.SelectedNode.Text;
+                TreeNode node = null;
+                if(App.Instance.SelectedNode.Tag is ITableInfo)
+                {
+                    node = tvSchema.Nodes[0];
+                }
+                else if(App.Instance.SelectedNode.Tag is IViewInfo)
+                {
+                    node = tvSchema.Nodes[1];
+                }
+                else if(App.Instance.SelectedNode.Tag is IProcedureInfo)
+                {
+                    node = tvSchema.Nodes[2];
+                }
+                if(!string.IsNullOrEmpty(txt) && node != null)
+                {
+                    foreach (TreeNode item in node.Nodes)
+                    {
+                        if(item.Text == txt)
+                        {
+                            this.tvSchema.SelectedNode = item;
+                            break;
+                        }
+                    }
+                }
+            }
         }
     }
 }
