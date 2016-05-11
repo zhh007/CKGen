@@ -30,8 +30,8 @@
         {
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.txtHTML = new System.Windows.Forms.TextBox();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.txtJS = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -70,6 +70,18 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "HTML";
             // 
+            // txtHTML
+            // 
+            this.txtHTML.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtHTML.Location = new System.Drawing.Point(3, 17);
+            this.txtHTML.Multiline = true;
+            this.txtHTML.Name = "txtHTML";
+            this.txtHTML.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.txtHTML.Size = new System.Drawing.Size(827, 257);
+            this.txtHTML.TabIndex = 0;
+            this.txtHTML.TextChanged += new System.EventHandler(this.txtHTML_TextChanged);
+            this.txtHTML.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TextBox_KeyDown);
+            // 
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.txtJS);
@@ -81,17 +93,6 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "JS代码";
             // 
-            // txtHTML
-            // 
-            this.txtHTML.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtHTML.Location = new System.Drawing.Point(3, 17);
-            this.txtHTML.Multiline = true;
-            this.txtHTML.Name = "txtHTML";
-            this.txtHTML.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.txtHTML.Size = new System.Drawing.Size(827, 257);
-            this.txtHTML.TabIndex = 0;
-            this.txtHTML.TextChanged += new System.EventHandler(this.txtHTML_TextChanged);
-            // 
             // txtJS
             // 
             this.txtJS.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -101,6 +102,7 @@
             this.txtJS.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             this.txtJS.Size = new System.Drawing.Size(827, 245);
             this.txtJS.TabIndex = 0;
+            this.txtJS.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TextBox_KeyDown);
             // 
             // CtrlHtmlToJSString
             // 

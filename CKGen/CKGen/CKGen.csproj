@@ -236,6 +236,9 @@
     <EmbeddedResource Include="Controls\ModuleEditControl.resx">
       <DependentUpon>ModuleEditControl.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ProcedureDetail.resx">
+      <DependentUpon>ProcedureDetail.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\SchemaTreeView.resx">
       <DependentUpon>SchemaTreeView.cs</DependentUpon>
     </EmbeddedResource>

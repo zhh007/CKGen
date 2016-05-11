@@ -80,12 +80,13 @@
             this.txtCode.Location = new System.Drawing.Point(0, 25);
             this.txtCode.Multiline = true;
             this.txtCode.Name = "txtCode";
-            this.txtCode.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.txtCode.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             this.txtCode.Size = new System.Drawing.Size(808, 152);
             this.txtCode.TabIndex = 1;
             this.txtCode.DragDrop += new System.Windows.Forms.DragEventHandler(this.txtCode_DragDrop);
             this.txtCode.DragEnter += new System.Windows.Forms.DragEventHandler(this.txtCode_DragEnter);
             this.txtCode.DragOver += new System.Windows.Forms.DragEventHandler(this.txtCode_DragOver);
+            this.txtCode.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtCode_KeyDown);
             // 
             // toolStrip1
             // 

@@ -115,6 +115,7 @@
             this.txtCode.Size = new System.Drawing.Size(810, 453);
             this.txtCode.TabIndex = 0;
             this.txtCode.WordWrap = false;
+            this.txtCode.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtCode_KeyDown);
             // 
             // ViewResult
             // 

@@ -196,5 +196,14 @@ namespace CKGen.Controls
                 this.node.ForeColor = Color.Black;
             }
         }
+
+        private void txtTableNewDesc_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Control && e.KeyCode == Keys.A)
+            {
+                if (sender != null)
+                    ((TextBox)sender).SelectAll();
+            }
+        }
     }
 }

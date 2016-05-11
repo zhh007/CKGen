@@ -33,23 +33,14 @@
             this.txtTableNewDesc = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.dgvSchema = new System.Windows.Forms.DataGridView();
-            this.label2 = new System.Windows.Forms.Label();
             this.colName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColDBType = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColNull = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.colDescNew = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColBlank = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.label2 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSchema)).BeginInit();
             this.SuspendLayout();
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(3, 9);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(35, 12);
-            this.label4.TabIndex = 8;
-            this.label4.Text = "表名:";
             // 
             // lblTableName
             // 
@@ -60,15 +51,6 @@
             this.lblTableName.TabIndex = 11;
             this.lblTableName.Text = "[表名]";
             // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(3, 34);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(35, 12);
-            this.label2.TabIndex = 14;
-            this.label2.Text = "说明:";
-            // 
             // txtTableNewDesc
             // 
             this.txtTableNewDesc.Location = new System.Drawing.Point(44, 27);
@@ -77,6 +59,16 @@
             this.txtTableNewDesc.Size = new System.Drawing.Size(632, 51);
             this.txtTableNewDesc.TabIndex = 9;
             this.txtTableNewDesc.TextChanged += new System.EventHandler(this.txtTableNewDesc_TextChanged);
+            this.txtTableNewDesc.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtTableNewDesc_KeyDown);
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(3, 9);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(35, 12);
+            this.label4.TabIndex = 8;
+            this.label4.Text = "表名:";
             // 
             // dgvSchema
             // 
@@ -155,6 +147,15 @@
             this.ColBlank.ReadOnly = true;
             this.ColBlank.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.ColBlank.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(3, 34);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(35, 12);
+            this.label2.TabIndex = 14;
+            this.label2.Text = "说明:";
             // 
             // ViewDetail
             // 
