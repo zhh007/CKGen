@@ -159,6 +159,7 @@ namespace CKGen
         {
             loadForm.Close();
             this.DB = App.Instance.Database;
+            //更新界面
             App.Instance.Publish<DatabaseRefreshEvent>(new DatabaseRefreshEvent());
         }
 
@@ -166,18 +167,7 @@ namespace CKGen
         {
             //保存说明
             //重新加载数据结构
-            //更新界面
-            //for (int i = 0; i < 10; i++)
-            //{
-            //    Debug.WriteLine(i);
-            //    Thread.Sleep(1000);
-            //}
-
-            var srvInfo = new DBLoader.ServerInfo(App.Instance.DBLink);
-            srvInfo.Connect();
-            App.Instance.SrvInfo = srvInfo;
-            App.Instance.Database = srvInfo.GetDatabase(App.Instance.DBName);
-            App.Instance.LoadDatabaseSchema(true);
+            App.Instance.RefreshDbSchema();
         }
 
         private void tbTemp_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)

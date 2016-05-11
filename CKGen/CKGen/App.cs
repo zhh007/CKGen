@@ -33,11 +33,11 @@ namespace CKGen
             }
         }
 
-        public DatabaseLink DBLink { get; set; }
-        public ServerInfo SrvInfo { get; set; }
-        public string DBName { get; set; }
+        public DatabaseLink DBLink { get; private set; }
+        public ServerInfo SrvInfo { get; private set; }
+        public string DBName { get; private set; }
         [Export("Database")]
-        public IDatabaseInfo Database { get; set; }
+        public IDatabaseInfo Database { get; private set; }
 
         public TreeNode SelectedNode
         {
@@ -73,7 +73,27 @@ namespace CKGen
             Events.GetEvent<T>().Publish(parameter);
         }
 
-        public void LoadDatabaseSchema(bool force)
+        public void LoadDatabaseSchema(DatabaseLink dbLink, ServerInfo srvInfo)
+        {
+            this.DBLink = dbLink;
+            this.SrvInfo = srvInfo;
+            this.DBName = dbLink.DatabaseName;
+            this.Database = srvInfo.GetDatabase(this.DBName);
+
+            LoadDbSchema(false);
+        }
+
+        public void RefreshDbSchema()
+        {
+            var srvInfo = new DBLoader.ServerInfo(this.DBLink);
+            srvInfo.Connect();
+            this.SrvInfo = srvInfo;
+            this.Database = srvInfo.GetDatabase(this.DBName);
+
+            LoadDbSchema(true);
+        }
+
+        private void LoadDbSchema(bool force)
         {
             Stopwatch _stopWatch = new Stopwatch();
             _stopWatch.Start();
