@@ -108,7 +108,7 @@ namespace CKGen.DBLoader
         {
             get
             {
-                LoadColumns();
+                LoadColumns(false);
                 return _columns;
             }
             set { _columns = value; }
@@ -130,9 +130,9 @@ namespace CKGen.DBLoader
             this.loader = database.Loader;
         }
 
-        public void LoadColumns()
+        public void LoadColumns(bool force)
         {
-            if (_columnsLoaded)
+            if (!force && _columnsLoaded)
                 return;
 
             loader.Connect();

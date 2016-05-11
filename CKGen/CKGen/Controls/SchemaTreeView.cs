@@ -34,10 +34,13 @@ namespace CKGen.Controls
             CreateViewMenu();
 
             App.Instance.Subscribe<SaveDescToDbEvent>(p => SaveDescToDb());
+            App.Instance.Subscribe<DatabaseRefreshEvent>(p => Reload());
         }
 
         private void InitTree()
         {
+            this.tvSchema.Nodes.Clear();
+
             TreeNode tbNode = new TreeNode("表");
             tbNode.ImageIndex = 1;
             tbNode.SelectedImageIndex = 1;
@@ -294,6 +297,13 @@ namespace CKGen.Controls
         private void tvSchema_ItemDrag(object sender, ItemDragEventArgs e)
         {
             DoDragDrop(e.Item, DragDropEffects.Copy);
+        }
+
+        public void Reload()
+        {
+            App.Instance.SelectedNode = null;
+            this.DB = App.Instance.Database;
+            InitTree();
         }
     }
 }

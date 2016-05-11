@@ -18,7 +18,7 @@ namespace CKGen.DBSchema
         /// </summary>
         List<ISqlParameter> Parameters { get; set; }
 
-        void LoadParameters();
+        void LoadParameters(bool force);
 
         string this[string key] { get; set; }
     }

@@ -41,7 +41,7 @@ namespace CKGen.DBLoader
         {
             get
             {
-                LoadParameters();
+                LoadParameters(false);
                 return _parameters;
             }
             set { _parameters = value; }
@@ -63,9 +63,9 @@ namespace CKGen.DBLoader
             this.loader = database.Loader;
         }
 
-        public void LoadParameters()
+        public void LoadParameters(bool force)
         {
-            if (_paraLoaded)
+            if (!force && _paraLoaded)
                 return;
 
             loader.Connect();

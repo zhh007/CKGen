@@ -25,6 +25,8 @@ namespace CKGen.Controls
             if(App.Instance.SelectedNode == null)
             {
                 this.Controls.Clear();
+                innerControl = null;
+                this.Text = "详细信息";
                 return;
             }
 
@@ -70,6 +72,8 @@ namespace CKGen.Controls
             else
             {
                 this.Controls.Clear();
+                innerControl = null;
+                this.Text = "详细信息";
             }
         }
     }

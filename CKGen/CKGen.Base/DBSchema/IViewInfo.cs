@@ -49,7 +49,7 @@ namespace CKGen.DBSchema
 
         IDatabaseInfo Database { get; }
 
-        void LoadColumns();
+        void LoadColumns(bool force);
 
         string this[string key] { get; set; }
     }
