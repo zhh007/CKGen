@@ -113,7 +113,7 @@ namespace CKGen
             tmpNode.Expand();
 
             //工具
-            TreeNode toolNode = new TreeNode("Tools");
+            TreeNode toolNode = new TreeNode("工具");
             i = 0;
             foreach (var item in ToolUIs)
             {

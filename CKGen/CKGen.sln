@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CKGen", "CKGen\CKGen.csproj", "{82E6990C-4AA3-40E4-9F0D-41A929D9B357}"
 EndProject
@@ -22,6 +22,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CKGen.Base", "CKGen.Base\CKGen.Base.csproj", "{727D5837-1DC0-40ED-9AA3-D37C40D3FDB6}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CKGen.Temp.Adonet", "CKGen.Temp.Adonet\CKGen.Temp.Adonet.csproj", "{876B3437-A905-488A-8B67-B8B222E691BC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CKGen.Tools", "CKGen.Tools\CKGen.Tools.csproj", "{D70A38B2-4914-4A9C-9B17-FC849ACBCB53}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -95,6 +97,14 @@ Global
 		{876B3437-A905-488A-8B67-B8B222E691BC}.Release|Any CPU.Build.0 = Release|Any CPU
 		{876B3437-A905-488A-8B67-B8B222E691BC}.Release|x86.ActiveCfg = Release|Any CPU
 		{876B3437-A905-488A-8B67-B8B222E691BC}.Release|x86.Build.0 = Release|Any CPU
+		{D70A38B2-4914-4A9C-9B17-FC849ACBCB53}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D70A38B2-4914-4A9C-9B17-FC849ACBCB53}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D70A38B2-4914-4A9C-9B17-FC849ACBCB53}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D70A38B2-4914-4A9C-9B17-FC849ACBCB53}.Debug|x86.Build.0 = Debug|Any CPU
+		{D70A38B2-4914-4A9C-9B17-FC849ACBCB53}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D70A38B2-4914-4A9C-9B17-FC849ACBCB53}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D70A38B2-4914-4A9C-9B17-FC849ACBCB53}.Release|x86.ActiveCfg = Release|Any CPU
+		{D70A38B2-4914-4A9C-9B17-FC849ACBCB53}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
