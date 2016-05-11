@@ -45,6 +45,7 @@
             // splitContainer1
             // 
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer1.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
             this.splitContainer1.Location = new System.Drawing.Point(0, 0);
             this.splitContainer1.Name = "splitContainer1";
             // 
@@ -52,12 +53,13 @@
             // 
             this.splitContainer1.Panel1.Controls.Add(this.toolStrip1);
             this.splitContainer1.Panel1.Controls.Add(this.tvRoot);
+            this.splitContainer1.Panel1MinSize = 220;
             // 
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.txtCode);
             this.splitContainer1.Size = new System.Drawing.Size(996, 453);
-            this.splitContainer1.SplitterDistance = 182;
+            this.splitContainer1.SplitterDistance = 220;
             this.splitContainer1.TabIndex = 1;
             // 
             // toolStrip1
@@ -68,7 +70,7 @@
             this.stBtnOpen});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(182, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(220, 25);
             this.toolStrip1.TabIndex = 3;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -101,7 +103,7 @@
             this.tvRoot.HideSelection = false;
             this.tvRoot.Location = new System.Drawing.Point(0, 28);
             this.tvRoot.Name = "tvRoot";
-            this.tvRoot.Size = new System.Drawing.Size(182, 425);
+            this.tvRoot.Size = new System.Drawing.Size(220, 425);
             this.tvRoot.TabIndex = 0;
             this.tvRoot.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.tvRoot_AfterSelect);
             // 
@@ -112,7 +114,7 @@
             this.txtCode.Multiline = true;
             this.txtCode.Name = "txtCode";
             this.txtCode.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.txtCode.Size = new System.Drawing.Size(810, 453);
+            this.txtCode.Size = new System.Drawing.Size(772, 453);
             this.txtCode.TabIndex = 0;
             this.txtCode.WordWrap = false;
             this.txtCode.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtCode_KeyDown);

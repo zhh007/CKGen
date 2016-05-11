@@ -50,7 +50,7 @@ namespace CKGen.Temp.AspnetMVC
 
         private TreeNode BuildDirForTreeview(DirectoryInfo dir)
         {
-            TreeNode tn = new TreeNode(dir.Name);
+            TreeNode tn = new TreeNode("目录");
 
             foreach (var item in dir.GetDirectories())
             {
