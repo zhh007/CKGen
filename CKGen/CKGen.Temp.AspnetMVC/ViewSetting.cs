@@ -118,9 +118,7 @@ namespace CKGen.Temp.AspnetMVC
 
         private void _bgWorker_DoWork(object sender, DoWorkEventArgs e)
         {
-            //IDatabaseInfo database = parent.Database;
             CodeBuilder mvcBuilder = new CodeBuilder();
-            //folderPath = mvcBuilder.Build(database, tableName, nsString, webNSString);
             folderPath = mvcBuilder.Build(SelectedTable, nsString, webNSString);
         }
 
