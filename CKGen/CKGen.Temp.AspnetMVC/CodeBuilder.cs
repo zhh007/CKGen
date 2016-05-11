@@ -85,7 +85,7 @@ namespace CKGen.Temp.AspnetMVC
 
         public string BuildSimpleChildEdit(SimpleChildGenModel model)
         {
-            _build("SimpleChildUI\\_ChildEdit.cshtml", typeof(SimpleChildGenModel), model, "_" + model.ChildModel.PascalName + "Edit.cs");
+            _build("SimpleChildUI\\_ChildEdit.cshtml", typeof(SimpleChildGenModel), model, "_" + model.ChildModel.PascalName + "Edit.cshtml");
             _build("SimpleChildUI\\ParentService.cshtml", typeof(SimpleChildGenModel), model, model.ParentModel.PascalName + "Service.cs");
             _build("SimpleChildUI\\ParentViewModel.cshtml", typeof(SimpleChildGenModel), model, model.ParentModel.PascalName + "ViewModel.cs");
             _build("SimpleChildUI\\ParentDTO.cshtml", typeof(SimpleChildGenModel), model, model.ParentModel.PascalName + "DTO.cs");

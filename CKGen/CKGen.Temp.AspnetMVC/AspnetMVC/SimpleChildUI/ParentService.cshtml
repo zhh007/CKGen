@@ -83,7 +83,7 @@ namespace @(Model.NameSpacePR).EFAdapter
                     {
                         continue;
                     }
-                    if (column.LowerName.Contains("create"))
+                    if (column.LowerName.Contains("create") || column.LowerName == Model.ForeignKey.ToLower())
                     {
                         continue;
                     }

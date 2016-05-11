@@ -6,12 +6,12 @@
 //加入Add.cshtml或Edit.cshtml
 <div class="form-group">
     <label class="col-sm-2 control-label">
-        体验课时间<span style="color: #F00; visibility:hidden">*</span>
+        标题<span style="color: #F00; visibility:hidden">*</span>
     </label>
     <div class="col-sm-10">
         <div class="row">
             <div class="col-sm-12">
-                <span class="control-label text-info plantip fn-left">提示：添加体验课可以创造更好的用户体验。&nbsp;</span>
+                <span class="control-label text-info plantip fn-left">提示：内容内容内容内容内容内容。&nbsp;</span>
                 <button type="button" onclick="addRow()" class="btn btn-danger btn-sm fn-left">添加</button>
             </div>
         </div>
@@ -22,3 +22,17 @@
         </div>
     </div>
 </div>
+
+//加入EFMapCreator
+Mapper.CreateMap<@(Model.ChildModel.PascalName), @(Model.ChildModel.PascalName)DTO>();
+Mapper.CreateMap<@(Model.ChildModel.PascalName)DTO, @(Model.ChildModel.PascalName)>();
+
+//加入unity.config
+<register type="@(Model.NameSpacePR).Data.Repositories.I@(Model.ChildModel.PascalName)Repository, @(Model.NameSpacePR).Data" mapTo="@(Model.NameSpacePR).Data.Repositories.@(Model.ChildModel.PascalName)Repository, @(Model.NameSpacePR).Data" />
+<register type="@(Model.NameSpacePR).ServiceInterface.I@(Model.ChildModel.PascalName)Service, @(Model.NameSpacePR).ServiceInterface" mapTo="@(Model.NameSpacePR).EFAdapter.@(Model.ChildModel.PascalName)Service, @(Model.NameSpacePR).EFAdapter">
+    <interceptor type="InterfaceInterceptor" />
+    <interceptionBehavior type="PolicyInjectionBehavior" />
+</register>
+
+//加入DBContext
+modelBuilder.Configurations.Add(new @(Model.ChildModel.PascalName)Map());
