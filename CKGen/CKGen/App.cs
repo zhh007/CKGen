@@ -32,7 +32,7 @@ namespace CKGen
         public DatabaseLink DBLink { get; set; }
         public ServerInfo SrvInfo { get; set; }
         public string DBName { get; set; }
-        [Export("ModuleName")]
+        [Export("Database")]
         public IDatabaseInfo Database { get; set; }
 
         public TreeNode SelectedNode

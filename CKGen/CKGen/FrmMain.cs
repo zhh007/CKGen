@@ -29,8 +29,11 @@ namespace CKGen
             InitializeComponent();
         }
 
-        [ImportMany("UserControl")]
+        [ImportMany("GenTemplate")]
         IEnumerable<UserControl> UIs { get; set; }
+
+        [ImportMany("Tool")]
+        IEnumerable<UserControl> ToolUIs { get; set; }
 
         private void FrmMain_Load(object sender, EventArgs e)
         {
@@ -56,7 +59,7 @@ namespace CKGen
             catalog.Catalogs.Add(new AssemblyCatalog(System.Reflection.Assembly.GetExecutingAssembly()));
             catalog.Catalogs.Add(new DirectoryCatalog(Environment.CurrentDirectory));
             var container = new CompositionContainer(catalog);
-            container.ComposeExportedValue("ModuleName", App.Instance.Database);
+            container.ComposeExportedValue("Database", App.Instance.Database);
             container.ComposeParts(this);
 
             LoadTemplates();
@@ -95,18 +98,33 @@ namespace CKGen
 
         private void LoadTemplates()
         {
-            TreeNode tbNode = new TreeNode("模板");
+            //模板
+            TreeNode tmpNode = new TreeNode("模板");
             int i = 0;
             foreach (var item in UIs)
             {
                 item.Name = string.Format("TempUI_{0}", i);
                 TreeNode node = new TreeNode(item.ToString());
                 node.Tag = item;
-                tbNode.Nodes.Add(node);
+                tmpNode.Nodes.Add(node);
                 i++;
             }
-            this.tbTemp.Nodes.Add(tbNode);
-            tbNode.Expand();
+            this.tbTemp.Nodes.Add(tmpNode);
+            tmpNode.Expand();
+
+            //工具
+            TreeNode toolNode = new TreeNode("Tools");
+            i = 0;
+            foreach (var item in ToolUIs)
+            {
+                item.Name = string.Format("Tool_{0}", i);
+                TreeNode node = new TreeNode(item.ToString());
+                node.Tag = item;
+                toolNode.Nodes.Add(node);
+                i++;
+            }
+            this.tbTemp.Nodes.Add(toolNode);
+            toolNode.Expand();
         }
 
         /// <summary>

@@ -12,11 +12,11 @@ using CKGen.Base;
 
 namespace CKGen.Temp.AspnetMVC
 {
-    [Export("UserControl", typeof(UserControl))]
+    [Export("GenTemplate", typeof(UserControl))]
     public partial class SimpleChildUI : UserControl, IGenUI
     {
         private readonly IResService resService = ServiceLocator.Instance.GetService<IResService>();
-        [Import("ModuleName")]
+        [Import("Database")]
         public IDatabaseInfo Database { get; set; }
         private ViewResult vResult = null;
         private ITableInfo SelectedChildTable;

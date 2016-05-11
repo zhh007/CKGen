@@ -12,10 +12,10 @@ using System.Diagnostics;
 
 namespace CKGen.Temp.Adonet.DbConsoleProject.UI
 {
-    [Export("UserControl", typeof(UserControl))]
+    [Export("GenTemplate", typeof(UserControl))]
     public partial class MainUI : UserControl
     {
-        [Import("ModuleName")]
+        [Import("Database")]
         public IDatabaseInfo Database { get; set; }
 
         private int _tableCount = 0;

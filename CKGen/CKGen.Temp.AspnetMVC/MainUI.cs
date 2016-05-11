@@ -11,10 +11,10 @@ using CKGen.DBSchema;
 
 namespace CKGen.Temp.AspnetMVC
 {
-    [Export("UserControl", typeof(UserControl))]
+    [Export("GenTemplate", typeof(UserControl))]
     public partial class MainUI : UserControl, IGenUI
     {
-        [Import("ModuleName")]
+        [Import("Database")]
         public IDatabaseInfo Database { get; set; }
 
         private ViewSetting vSetting = null;
