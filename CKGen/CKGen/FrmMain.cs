@@ -21,7 +21,6 @@ namespace CKGen
 {
     public partial class FrmMain : Form
     {
-        private IDatabaseInfo DB = null;
         private DbTableCodeGen gen = new DbTableCodeGen();
 
         public FrmMain()
@@ -46,8 +45,6 @@ namespace CKGen
                     return;
                 }
             }
-
-            this.DB = App.Instance.Database;
 
             //详细信息
             this.tabControl1.TabPages.Add(new DetailTabPage());
@@ -158,7 +155,6 @@ namespace CKGen
         void worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             loadForm.Close();
-            this.DB = App.Instance.Database;
             //更新界面
             App.Instance.Publish<DatabaseRefreshEvent>(new DatabaseRefreshEvent());
         }
