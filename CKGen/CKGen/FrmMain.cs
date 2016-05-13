@@ -132,7 +132,7 @@ namespace CKGen
             if (DialogResult.OK == MessageBox.Show("是否将新的说明同时保存到本地和数据库？", "保存提示", MessageBoxButtons.OKCancel))
             {
                 DatabaseSchemaSetting.SaveDesc(App.Instance.Database);
-                App.Instance.Publish<SaveDescToDbEvent>(new SaveDescToDbEvent());
+                App.Instance.Publish(new SaveDescToDbEvent());
                 MessageBox.Show("保存成功。");
             }
         }
@@ -156,7 +156,7 @@ namespace CKGen
         {
             loadForm.Close();
             //更新界面
-            App.Instance.Publish<DatabaseRefreshEvent>(new DatabaseRefreshEvent());
+            App.Instance.Publish(new DatabaseRefreshEvent());
         }
 
         void worker_DoWork(object sender, DoWorkEventArgs e)
@@ -199,7 +199,7 @@ namespace CKGen
         private void tsBtnQuery_Click(object sender, EventArgs e)
         {
             ShowSQLQueryEvent evt = new ShowSQLQueryEvent();
-            App.Instance.Publish<ShowSQLQueryEvent>(evt);
+            App.Instance.Publish(evt);
         }
     }
 }

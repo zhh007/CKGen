@@ -265,14 +265,14 @@ namespace CKGen.Controls
             ShowCodeEvent evt = new ShowCodeEvent();
             evt.Title = title;
             evt.Code = code;
-            App.Instance.Publish<ShowCodeEvent>(evt);
+            App.Instance.Publish(evt);
         }
 
         private void ShowSQLQuery(string sql)
         {
             ShowSQLQueryEvent evt = new ShowSQLQueryEvent();
             evt.SQL = sql;
-            App.Instance.Publish<ShowSQLQueryEvent>(evt);
+            App.Instance.Publish(evt);
         }
 
         private void SaveDescToDb()
