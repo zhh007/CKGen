@@ -8,6 +8,8 @@ using System.Text;
 using System.Windows.Forms;
 using System.ComponentModel.Composition;
 using CKGen.DBSchema;
+using CKGen.Base;
+using CKGen.Base.Events;
 
 namespace CKGen.Temp.AspnetMVC
 {
@@ -23,6 +25,9 @@ namespace CKGen.Temp.AspnetMVC
         public MainUI()
         {
             InitializeComponent();
+            AppEvent.Subscribe<DatabaseRefreshEvent>(p => {
+                this.Database = p.Database;
+            });
         }
 
         private void BuildUI_Load(object sender, EventArgs e)

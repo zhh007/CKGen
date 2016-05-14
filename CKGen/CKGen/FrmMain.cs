@@ -16,6 +16,7 @@ using System.ComponentModel.Composition.Hosting;
 using CKGen.Temp.Adonet;
 using CKGen.Controls;
 using CKGen.Events;
+using CKGen.Base.Events;
 
 namespace CKGen
 {
@@ -36,16 +37,6 @@ namespace CKGen
 
         private void FrmMain_Load(object sender, EventArgs e)
         {
-            if (App.Instance.SrvInfo == null)
-            {
-                FrmLogin frmLogin = new FrmLogin();
-                if (frmLogin.ShowDialog() == DialogResult.Cancel)
-                {
-                    this.Close();
-                    return;
-                }
-            }
-
             //详细信息
             this.tabControl1.TabPages.Add(new DetailTabPage());
 
@@ -61,8 +52,8 @@ namespace CKGen
 
             LoadTemplates();
 
-            App.Instance.Subscribe<ShowCodeEvent>(p => this.ShowCode(p));
-            App.Instance.Subscribe<ShowSQLQueryEvent>(p => this.ShowSQLQuery(p));
+            AppEvent.Subscribe<ShowCodeEvent>(p => this.ShowCode(p));
+            AppEvent.Subscribe<ShowSQLQueryEvent>(p => this.ShowSQLQuery(p));
         }
 
         public void ShowCode(ShowCodeEvent e)
@@ -129,10 +120,14 @@ namespace CKGen
         /// </summary>
         private void tsbtnSaveSchema_Click(object sender, EventArgs e)
         {
+            if(App.Instance.DBLink == null)
+            {
+                return;
+            }
             if (DialogResult.OK == MessageBox.Show("是否将新的说明同时保存到本地和数据库？", "保存提示", MessageBoxButtons.OKCancel))
             {
                 DatabaseSchemaSetting.SaveDesc(App.Instance.Database);
-                App.Instance.Publish(new SaveDescToDbEvent());
+                AppEvent.Publish(new SaveDescToDbEvent());
                 MessageBox.Show("保存成功。");
             }
         }
@@ -143,6 +138,11 @@ namespace CKGen
         /// </summary>
         private void tsBtnReloadSchema_Click(object sender, EventArgs e)
         {
+            if(App.Instance.DBLink == null)
+            {
+                return;
+            }
+
             BackgroundWorker worker = new BackgroundWorker();
             worker.DoWork += new DoWorkEventHandler(worker_DoWork);
             worker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(worker_RunWorkerCompleted);
@@ -156,7 +156,7 @@ namespace CKGen
         {
             loadForm.Close();
             //更新界面
-            App.Instance.Publish(new DatabaseRefreshEvent());
+            AppEvent.Publish(new DatabaseRefreshEvent() { Database = App.Instance.Database });
         }
 
         void worker_DoWork(object sender, DoWorkEventArgs e)
@@ -198,8 +198,18 @@ namespace CKGen
 
         private void tsBtnQuery_Click(object sender, EventArgs e)
         {
+            if(App.Instance.DBLink == null)
+            {
+                return;
+            }
             ShowSQLQueryEvent evt = new ShowSQLQueryEvent();
-            App.Instance.Publish(evt);
+            AppEvent.Publish(evt);
+        }
+
+        private void tsBtnLinkDb_Click(object sender, EventArgs e)
+        {
+            FrmLogin frmLogin = new FrmLogin();
+            frmLogin.ShowDialog();
         }
     }
 }

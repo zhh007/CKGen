@@ -150,7 +150,6 @@
     <Compile Include="Controls\ViewDetail.Designer.cs">
       <DependentUpon>ViewDetail.cs</DependentUpon>
     </Compile>
-    <Compile Include="Events\DatabaseRefreshEvent.cs" />
     <Compile Include="Events\SaveDescToDbEvent.cs" />
     <Compile Include="Events\ShowCodeEvent.cs" />
     <Compile Include="Events\ShowSQLQueryEvent.cs" />

@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using CKGen.DBSchema;
 using CKGen.Temp.Adonet;
 using CKGen.Events;
+using CKGen.Base.Events;
 
 namespace CKGen.Controls
 {
@@ -24,30 +25,28 @@ namespace CKGen.Controls
             InitializeComponent();
             this.Dock = DockStyle.Fill;
 
-            this.DB = App.Instance.Database;
+            //this.DB = App.Instance.Database;
 
             //
-            InitTree();
+            //InitTree();
 
-            //选择第一个表
-            var tbNode = tvSchema.Nodes[0];
-            tbNode.Expand();
-            if (tbNode.Nodes.Count > 0)
-            {
-                this.tvSchema.SelectedNode = tbNode.Nodes[0];
-            }
+            //this.SelectFirstNode();
 
             //菜单
             CreateTableMenu();
             CreateViewMenu();
 
-            App.Instance.Subscribe<SaveDescToDbEvent>(p => SaveDescToDb());
-            App.Instance.Subscribe<DatabaseRefreshEvent>(p => Reload());
+            AppEvent.Subscribe<SaveDescToDbEvent>(p => SaveDescToDb());
+            AppEvent.Subscribe<DatabaseRefreshEvent>(p => Reload(p.Database));
         }
 
         private void InitTree()
         {
             this.tvSchema.Nodes.Clear();
+            if (this.DB == null)
+            {
+                return;
+            }
 
             TreeNode tbNode = new TreeNode("表");
             tbNode.ImageIndex = 1;
@@ -265,14 +264,14 @@ namespace CKGen.Controls
             ShowCodeEvent evt = new ShowCodeEvent();
             evt.Title = title;
             evt.Code = code;
-            App.Instance.Publish(evt);
+            AppEvent.Publish(evt);
         }
 
         private void ShowSQLQuery(string sql)
         {
             ShowSQLQueryEvent evt = new ShowSQLQueryEvent();
             evt.SQL = sql;
-            App.Instance.Publish(evt);
+            AppEvent.Publish(evt);
         }
 
         private void SaveDescToDb()
@@ -302,15 +301,29 @@ namespace CKGen.Controls
             DoDragDrop(e.Item, DragDropEffects.Copy);
         }
 
-        public void Reload()
+        public void Reload(IDatabaseInfo db)
         {
-            bool node0Expand = tvSchema.Nodes[0].IsExpanded;
-            bool node1Expand = tvSchema.Nodes[1].IsExpanded;
-            bool node2Expand = tvSchema.Nodes[2].IsExpanded;
-            this.DB = App.Instance.Database;
+            bool node0Expand = false;
+            bool node1Expand = false;
+            bool node2Expand = false;
+
+            if(tvSchema.Nodes.Count > 0)
+            {
+                node0Expand = tvSchema.Nodes[0].IsExpanded;
+            }
+            if (tvSchema.Nodes.Count > 1)
+            {
+                node1Expand = tvSchema.Nodes[1].IsExpanded;
+            }
+            if (tvSchema.Nodes.Count > 2)
+            {
+                node2Expand = tvSchema.Nodes[2].IsExpanded;
+            }
+
+            this.DB = db;
             InitTree();
 
-            if(node0Expand)
+            if (node0Expand)
             {
                 tvSchema.Nodes[0].Expand();
             }
@@ -327,28 +340,44 @@ namespace CKGen.Controls
             {
                 var txt = App.Instance.SelectedNode.Text;
                 TreeNode node = null;
-                if(App.Instance.SelectedNode.Tag is ITableInfo)
+                if (App.Instance.SelectedNode.Tag is ITableInfo)
                 {
                     node = tvSchema.Nodes[0];
                 }
-                else if(App.Instance.SelectedNode.Tag is IViewInfo)
+                else if (App.Instance.SelectedNode.Tag is IViewInfo)
                 {
                     node = tvSchema.Nodes[1];
                 }
-                else if(App.Instance.SelectedNode.Tag is IProcedureInfo)
+                else if (App.Instance.SelectedNode.Tag is IProcedureInfo)
                 {
                     node = tvSchema.Nodes[2];
                 }
-                if(!string.IsNullOrEmpty(txt) && node != null)
+                if (!string.IsNullOrEmpty(txt) && node != null)
                 {
                     foreach (TreeNode item in node.Nodes)
                     {
-                        if(item.Text == txt)
+                        if (item.Text == txt)
                         {
                             this.tvSchema.SelectedNode = item;
                             break;
                         }
                     }
+                }
+            }
+
+            this.SelectFirstNode();
+        }
+
+        private void SelectFirstNode()
+        {
+            //选择第一个表
+            if (tvSchema.Nodes != null && tvSchema.Nodes.Count > 0 && tvSchema.SelectedNode == null)
+            {
+                var tbNode = tvSchema.Nodes[0];
+                tbNode.Expand();
+                if (tbNode.Nodes.Count > 0)
+                {
+                    this.tvSchema.SelectedNode = tbNode.Nodes[0];
                 }
             }
         }

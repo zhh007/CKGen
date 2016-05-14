@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using CKGen.DBSchema;
 using CKGen.Base;
+using CKGen.Base.Events;
 
 namespace CKGen.Temp.AspnetMVC
 {
@@ -24,21 +25,32 @@ namespace CKGen.Temp.AspnetMVC
         {
             parent = _parent;
             InitializeComponent();
-
             btnView.Hide();
-            if(this.parent.Database != null)
+
+            BindUI(_parent.Database);
+
+            AppEvent.Subscribe<DatabaseRefreshEvent>(p => {
+                BindUI(p.Database);
+            });
+        }
+
+        private void BindUI(IDatabaseInfo db)
+        {
+            cbTables.Items.Clear();
+            cbTables.Text = "";
+            if (db != null)
             {
-                foreach (var table in this.parent.Database.Tables)
+                foreach (var table in db.Tables)
                 {
                     cbTables.Items.Add(table.Name);
                 }
-            }
 
-            AspnetMVCSetting setting = SettingStore.Instance.Get<AspnetMVCSetting>(this.parent.Database.Name + "_aspnetmvc.xml");
-            if(setting != null)
-            {
-                txtNamespace.Text = setting.Namespace;
-                txtWebProjNameSpace.Text = setting.WebProjNameSpace;
+                AspnetMVCSetting setting = SettingStore.Instance.Get<AspnetMVCSetting>(db.Name + "_aspnetmvc.xml");
+                if (setting != null)
+                {
+                    txtNamespace.Text = setting.Namespace;
+                    txtWebProjNameSpace.Text = setting.WebProjNameSpace;
+                }
             }
         }
 

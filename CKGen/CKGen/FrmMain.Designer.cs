@@ -31,9 +31,10 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmMain));
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.tsbtnSaveSchema = new System.Windows.Forms.ToolStripButton();
+            this.tsBtnLinkDb = new System.Windows.Forms.ToolStripButton();
             this.tsBtnReloadSchema = new System.Windows.Forms.ToolStripButton();
             this.tsBtnQuery = new System.Windows.Forms.ToolStripButton();
+            this.tsbtnSaveSchema = new System.Windows.Forms.ToolStripButton();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.tabControl2 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
@@ -53,42 +54,56 @@
             // toolStrip1
             // 
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsbtnSaveSchema,
+            this.tsBtnLinkDb,
             this.tsBtnReloadSchema,
-            this.tsBtnQuery});
+            this.tsBtnQuery,
+            this.tsbtnSaveSchema});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(1061, 25);
             this.toolStrip1.TabIndex = 0;
             this.toolStrip1.Text = "toolStrip1";
             // 
-            // tsbtnSaveSchema
+            // tsBtnLinkDb
             // 
-            this.tsbtnSaveSchema.Image = global::CKGen.Properties.Resources.saveHS;
-            this.tsbtnSaveSchema.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsbtnSaveSchema.Name = "tsbtnSaveSchema";
-            this.tsbtnSaveSchema.Size = new System.Drawing.Size(76, 22);
-            this.tsbtnSaveSchema.Text = "保存说明";
-            this.tsbtnSaveSchema.ToolTipText = "保存说明";
-            this.tsbtnSaveSchema.Click += new System.EventHandler(this.tsbtnSaveSchema_Click);
+            this.tsBtnLinkDb.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tsBtnLinkDb.Image = global::CKGen.Properties.Resources.link;
+            this.tsBtnLinkDb.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsBtnLinkDb.Name = "tsBtnLinkDb";
+            this.tsBtnLinkDb.Size = new System.Drawing.Size(23, 22);
+            this.tsBtnLinkDb.Text = "连接数据库";
+            this.tsBtnLinkDb.Click += new System.EventHandler(this.tsBtnLinkDb_Click);
             // 
             // tsBtnReloadSchema
             // 
+            this.tsBtnReloadSchema.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.tsBtnReloadSchema.Image = global::CKGen.Properties.Resources.fresh;
             this.tsBtnReloadSchema.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsBtnReloadSchema.Name = "tsBtnReloadSchema";
-            this.tsBtnReloadSchema.Size = new System.Drawing.Size(76, 22);
+            this.tsBtnReloadSchema.Size = new System.Drawing.Size(23, 22);
             this.tsBtnReloadSchema.Text = "重新加载";
             this.tsBtnReloadSchema.Click += new System.EventHandler(this.tsBtnReloadSchema_Click);
             // 
             // tsBtnQuery
             // 
+            this.tsBtnQuery.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.tsBtnQuery.Image = global::CKGen.Properties.Resources.Sqlfile;
             this.tsBtnQuery.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsBtnQuery.Name = "tsBtnQuery";
-            this.tsBtnQuery.Size = new System.Drawing.Size(76, 22);
+            this.tsBtnQuery.Size = new System.Drawing.Size(23, 22);
             this.tsBtnQuery.Text = "新建查询";
             this.tsBtnQuery.Click += new System.EventHandler(this.tsBtnQuery_Click);
+            // 
+            // tsbtnSaveSchema
+            // 
+            this.tsbtnSaveSchema.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tsbtnSaveSchema.Image = global::CKGen.Properties.Resources.saveHS;
+            this.tsbtnSaveSchema.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbtnSaveSchema.Name = "tsbtnSaveSchema";
+            this.tsbtnSaveSchema.Size = new System.Drawing.Size(23, 22);
+            this.tsbtnSaveSchema.Text = "保存说明";
+            this.tsbtnSaveSchema.ToolTipText = "保存说明";
+            this.tsbtnSaveSchema.Click += new System.EventHandler(this.tsbtnSaveSchema_Click);
             // 
             // splitContainer1
             // 
@@ -138,7 +153,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(195, 559);
+            this.tabPage2.Size = new System.Drawing.Size(212, 559);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "模板";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -148,7 +163,7 @@
             this.tbTemp.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tbTemp.Location = new System.Drawing.Point(3, 3);
             this.tbTemp.Name = "tbTemp";
-            this.tbTemp.Size = new System.Drawing.Size(189, 553);
+            this.tbTemp.Size = new System.Drawing.Size(206, 553);
             this.tbTemp.TabIndex = 0;
             this.tbTemp.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.tbTemp_NodeMouseDoubleClick);
             // 
@@ -210,5 +225,6 @@
         private System.Windows.Forms.ImageList imageList1;
         private System.Windows.Forms.TreeView tbTemp;
         private System.Windows.Forms.ToolStripButton tsBtnQuery;
+        private System.Windows.Forms.ToolStripButton tsBtnLinkDb;
     }
 }

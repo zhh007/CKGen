@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using System.ComponentModel.Composition;
 using CKGen.DBSchema;
 using CKGen.Base;
+using CKGen.Base.Events;
 
 namespace CKGen.Temp.AspnetMVC
 {
@@ -26,15 +27,25 @@ namespace CKGen.Temp.AspnetMVC
         public SimpleChildUI()
         {
             InitializeComponent();
+            AppEvent.Subscribe<DatabaseRefreshEvent>(p => {
+                this.Database = p.Database;
+                BindUI();
+            });
         }
 
-        private void SimpleChildUI_Load(object sender, EventArgs e)
+        private void BindUI()
         {
-            vResult = new ViewResult(this);
-            this.Controls.Add(vResult);
-            vResult.Hide();
+            this.SelectedChildTable = null;
+            this.SelectedParentTable = null;
+            this.cbForeignKey.Items.Clear();
+            this.cbForeignKey.Text = "";
+            this.gvFields.Rows.Clear();
 
-            btnView.Hide();
+            cbTablesForChild.Items.Clear();
+            cbTablesForParent.Items.Clear();
+            cbTablesForChild.Text = "";
+            cbTablesForParent.Text = "";
+            
             if (this.Database != null)
             {
                 foreach (var table in this.Database.Tables)
@@ -42,14 +53,24 @@ namespace CKGen.Temp.AspnetMVC
                     cbTablesForChild.Items.Add(table.Name);
                     cbTablesForParent.Items.Add(table.Name);
                 }
-            }
 
-            AspnetMVCSetting setting = SettingStore.Instance.Get<AspnetMVCSetting>(this.Database.Name + "_aspnetmvc.xml");
-            if (setting != null)
-            {
-                txtNamespace.Text = setting.Namespace;
-                txtWebProjNameSpace.Text = setting.WebProjNameSpace;
+                AspnetMVCSetting setting = SettingStore.Instance.Get<AspnetMVCSetting>(this.Database.Name + "_aspnetmvc.xml");
+                if (setting != null)
+                {
+                    txtNamespace.Text = setting.Namespace;
+                    txtWebProjNameSpace.Text = setting.WebProjNameSpace;
+                }
             }
+        }
+
+        private void SimpleChildUI_Load(object sender, EventArgs e)
+        {
+            vResult = new ViewResult(this);
+            this.Controls.Add(vResult);
+            vResult.Hide();
+            btnView.Hide();
+
+            BindUI();
         }
 
         private void btnGen_Click(object sender, EventArgs e)

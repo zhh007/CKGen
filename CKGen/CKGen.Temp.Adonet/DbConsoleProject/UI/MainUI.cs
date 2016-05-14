@@ -41,7 +41,10 @@ namespace CKGen.Temp.Adonet.DbConsoleProject.UI
             lvMain.HeaderStyle = ColumnHeaderStyle.Clickable;
             lvMain.Sorting = SortOrder.Ascending;
 
-            txtProjName.Text = string.Format("{0}_{1:yyyyMMddHHmmss}", this.Database.Name, DateTime.Now);
+            if (this.Database != null)
+            {
+                txtProjName.Text = string.Format("{0}_{1:yyyyMMddHHmmss}", this.Database.Name, DateTime.Now);
+            }
         }
 
         public override string ToString()

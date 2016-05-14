@@ -1,5 +1,7 @@
-﻿using CKGen.DBLoader;
+﻿using CKGen.Base.Events;
+using CKGen.DBLoader;
 using CKGen.DBSchema;
+using CKGen.Events;
 using System;
 using System.ComponentModel;
 using System.Drawing;
@@ -234,6 +236,7 @@ namespace CKGen
         {
             this.DialogResult = DialogResult.OK;
             this.Close();
+            AppEvent.Publish(new DatabaseRefreshEvent() { Database = App.Instance.Database });
         }
 
         void worker_DoWork2(object sender, DoWorkEventArgs e)

@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using CKGen.DBSchema;
 using CKGen.Events;
+using CKGen.Base.Events;
 
 namespace CKGen.Controls
 {
@@ -18,7 +19,7 @@ namespace CKGen.Controls
         public TableDetail()
         {
             InitializeComponent();
-            App.Instance.Subscribe<SaveDescToDbEvent>(p => SaveDescToDb());
+            AppEvent.Subscribe<SaveDescToDbEvent>(p => SaveDescToDb());
         }
 
         private void SaveDescToDb()

@@ -18,7 +18,6 @@ namespace CKGen
     public class App
     {
         private TreeNode _selectNode = null;
-        public IEventAggregator Events = new EventAggregator();
         private static App instance = new App();
 
         private App()
@@ -61,18 +60,6 @@ namespace CKGen
 
         #endregion
 
-        public void Subscribe<T>(Action<T> handler)
-            where T : CompositePresentationEvent<T>, new()
-        {
-            Events.GetEvent<T>().Subscribe(handler);
-        }
-
-        public void Publish<T>(T parameter)
-            where T : CompositePresentationEvent<T>, new()
-        {
-            Events.GetEvent<T>().Publish(parameter);
-        }
-
         public void LoadDatabaseSchema(DatabaseLink dbLink, ServerInfo srvInfo)
         {
             this.DBLink = dbLink;
@@ -85,6 +72,11 @@ namespace CKGen
 
         public void RefreshDbSchema()
         {
+            if(this.DBLink == null)
+            {
+                return;
+            }
+
             var srvInfo = new DBLoader.ServerInfo(this.DBLink);
             srvInfo.Connect();
             this.SrvInfo = srvInfo;
