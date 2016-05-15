@@ -1,7 +1,5 @@
 ﻿using CKGen.Base.Events;
 using CKGen.DBLoader;
-using CKGen.DBSchema;
-using CKGen.Events;
 using System;
 using System.ComponentModel;
 using System.Drawing;
@@ -205,10 +203,6 @@ namespace CKGen
             this.DBLink.SetDatabaseName(cbDatabases.Text);
             ConnectionSetting.Add(this.DBLink);
 
-            //App.Instance.DBLink = this.DBLink;
-            //App.Instance.SrvInfo = this.SrvInfo;
-            //App.Instance.DBName = cbDatabases.Text;
-
             cbServerType.Enabled = false;
             cbServerName.Enabled = false;
             rbWindows.Enabled = false;
@@ -222,9 +216,6 @@ namespace CKGen
             bar.Visible = true;
             bar.Location = new Point(0, (this.ClientSize.Height - bar.Height));
             bar.Width = this.Width;
-
-            //IDatabaseInfo dbi = App.Instance.SrvInfo.GetDatabase(App.Instance.DBName);
-            //App.Instance.Database = dbi;
 
             BackgroundWorker worker = new BackgroundWorker();
             worker.DoWork += new DoWorkEventHandler(worker_DoWork2);
@@ -285,8 +276,5 @@ namespace CKGen
         {
             DisabledOKBtn();
         }
-
-        
-
     }
 }

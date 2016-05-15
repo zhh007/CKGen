@@ -56,8 +56,8 @@
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsBtnLinkDb,
             this.tsBtnReloadSchema,
-            this.tsBtnQuery,
-            this.tsbtnSaveSchema});
+            this.tsbtnSaveSchema,
+            this.tsBtnQuery});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(1061, 25);

@@ -1,29 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Diagnostics;
-using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Windows.Forms;
-using CKGen.DBSchema;
-using System.Globalization;
-using System.Threading;
-using System.ComponentModel.Composition;
-using System.ComponentModel.Composition.Hosting;
-using CKGen.Temp.Adonet;
+﻿using CKGen.Base.Events;
 using CKGen.Controls;
 using CKGen.Events;
-using CKGen.Base.Events;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.ComponentModel.Composition;
+using System.ComponentModel.Composition.Hosting;
+using System.Windows.Forms;
 
 namespace CKGen
 {
     public partial class FrmMain : Form
     {
-        private DbTableCodeGen gen = new DbTableCodeGen();
-
         public FrmMain()
         {
             InitializeComponent();
@@ -68,16 +56,13 @@ namespace CKGen
 
         public void ShowCode(ShowCodeEvent e)
         {
-            if (!string.IsNullOrEmpty(e.Code))
-            {
-                CodeView codeShow = new CodeView();
-                codeShow.Dock = DockStyle.Fill;
-                TabPage tab1 = new TabPage(e.Title);
-                tab1.Controls.Add(codeShow);
-                this.tabControl1.TabPages.Add(tab1);
-                this.tabControl1.SelectTab(tab1);
-                codeShow.Show(e.Code);
-            }
+            CodeView codeShow = new CodeView();
+            codeShow.Dock = DockStyle.Fill;
+            TabPage tab1 = new TabPage(e.Title);
+            tab1.Controls.Add(codeShow);
+            this.tabControl1.TabPages.Add(tab1);
+            this.tabControl1.SelectTab(tab1);
+            codeShow.Show(e.Code);
         }
 
         public void ShowSQLQuery(ShowSQLQueryEvent e)
@@ -126,6 +111,45 @@ namespace CKGen
         }
 
         /// <summary>
+        /// 连接数据库
+        /// </summary>
+        private void tsBtnLinkDb_Click(object sender, EventArgs e)
+        {
+            FrmLogin frmLogin = new FrmLogin();
+            frmLogin.ShowDialog();
+        }
+
+        /// <summary>
+        /// 重新加载元数据
+        /// </summary>
+        private void tsBtnReloadSchema_Click(object sender, EventArgs e)
+        {
+            if (App.Instance.DBLink == null)
+            {
+                return;
+            }
+
+            FrmLoading loadForm = new FrmLoading();
+
+            BackgroundWorker worker = new BackgroundWorker();
+            worker.DoWork += delegate (object s1, DoWorkEventArgs e1)
+            {
+                //保存说明
+                //重新加载数据结构
+                App.Instance.RefreshDbSchema();
+            };
+            worker.RunWorkerCompleted += delegate (object s2, RunWorkerCompletedEventArgs e2)
+            {
+                loadForm.Close();
+                //更新界面
+                AppEvent.Publish(new DatabaseRefreshEvent() { Database = App.Instance.Database });
+            };
+            worker.RunWorkerAsync();
+
+            loadForm.ShowDialog();
+        }
+
+        /// <summary>
         /// 保存说明
         /// </summary>
         private void tsbtnSaveSchema_Click(object sender, EventArgs e)
@@ -142,38 +166,17 @@ namespace CKGen
             }
         }
 
-        FrmLoading loadForm;
         /// <summary>
-        /// 重新加载元数据
+        /// SQL查询
         /// </summary>
-        private void tsBtnReloadSchema_Click(object sender, EventArgs e)
+        private void tsBtnQuery_Click(object sender, EventArgs e)
         {
             if (App.Instance.DBLink == null)
             {
                 return;
             }
-
-            BackgroundWorker worker = new BackgroundWorker();
-            worker.DoWork += new DoWorkEventHandler(worker_DoWork);
-            worker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(worker_RunWorkerCompleted);
-            worker.RunWorkerAsync();
-
-            loadForm = new FrmLoading();
-            loadForm.ShowDialog();
-        }
-
-        void worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            loadForm.Close();
-            //更新界面
-            AppEvent.Publish(new DatabaseRefreshEvent() { Database = App.Instance.Database });
-        }
-
-        void worker_DoWork(object sender, DoWorkEventArgs e)
-        {
-            //保存说明
-            //重新加载数据结构
-            App.Instance.RefreshDbSchema();
+            ShowSQLQueryEvent evt = new ShowSQLQueryEvent();
+            AppEvent.Publish(evt);
         }
 
         private void tbTemp_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
@@ -204,28 +207,6 @@ namespace CKGen
                 }
             }
             return null;
-        }
-
-        /// <summary>
-        /// SQL查询
-        /// </summary>
-        private void tsBtnQuery_Click(object sender, EventArgs e)
-        {
-            if (App.Instance.DBLink == null)
-            {
-                return;
-            }
-            ShowSQLQueryEvent evt = new ShowSQLQueryEvent();
-            AppEvent.Publish(evt);
-        }
-
-        /// <summary>
-        /// 连接数据库
-        /// </summary>
-        private void tsBtnLinkDb_Click(object sender, EventArgs e)
-        {
-            FrmLogin frmLogin = new FrmLogin();
-            frmLogin.ShowDialog();
         }
     }
 }
