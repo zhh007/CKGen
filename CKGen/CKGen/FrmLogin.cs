@@ -44,6 +44,8 @@ namespace CKGen
 
                 ShowServer(connList[0].ServerName);
             }
+
+            this.AcceptButton = this.btnLogin;
         }
 
         private string curDatabaseName = "";
@@ -159,6 +161,8 @@ namespace CKGen
             {
                 this.btnOK.Enabled = true;
                 this.cbDatabases.Enabled = true;
+                this.AcceptButton = this.btnOK;
+                this.btnOK.Focus();
                 if (this.SrvInfo != null && this.SrvInfo.Databases != null && this.SrvInfo.Databases.Count > 0)
                 {
                     cbDatabases.DataSource = this.SrvInfo.Databases;
