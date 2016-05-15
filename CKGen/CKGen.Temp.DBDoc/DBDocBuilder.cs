@@ -23,16 +23,20 @@ namespace CKGen.Temp.DBDoc
     {
         private IDatabaseInfo _database;
         private string _targetFolder;
+        public string TargetFolder
+        {
+            get { return _targetFolder; }
+        }
 
-        public DBDocBuilder(IDatabaseInfo database, string targetFoler)
+        public DBDocBuilder(IDatabaseInfo database)
         {
             if (database == null)
                 throw new Exception("数据库不能为空。");
-            if (string.IsNullOrEmpty(targetFoler))
-                throw new Exception("目标文件夹不能为空。");
 
             this._database = database;
-            this._targetFolder = Path.Combine(targetFoler, "");
+            Guid folderID = Guid.NewGuid();
+            this._targetFolder = Path.Combine(Path.GetTempPath(), folderID.ToString("P"));
+            Directory.CreateDirectory(_targetFolder);
 
             try
             {
@@ -52,7 +56,7 @@ namespace CKGen.Temp.DBDoc
             }
         }
 
-        public List<string> Build()
+        public void Build()
         {
             List<string> filePaths = new List<string>();
             foreach (ITableInfo table in _database.Tables)
@@ -184,7 +188,7 @@ namespace CKGen.Temp.DBDoc
             //helpCompileProcess.Close(); 
             #endregion
 
-            return filePaths;
+            //return filePaths;
         }
 
     }

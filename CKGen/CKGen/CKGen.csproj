@@ -319,6 +319,10 @@
       <Project>{1f3c9cc8-a0f4-4de3-b257-b7d4cb7fc2fb}</Project>
       <Name>CKGen.Temp.AspnetMVC</Name>
     </ProjectReference>
+    <ProjectReference Include="..\CKGen.Temp.DBDoc\CKGen.Temp.DBDoc.csproj">
+      <Project>{dc89b60f-c05a-4f7c-b332-c2804ad161c5}</Project>
+      <Name>CKGen.Temp.DBDoc</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CKGen.Tools\CKGen.Tools.csproj">
       <Project>{d70a38b2-4914-4a9c-9b17-fc849acbcb53}</Project>
       <Name>CKGen.Tools</Name>

@@ -67,7 +67,7 @@ namespace ConsoleApp
             ServerInfo serverInfo = new ServerInfo(link);
             IDatabaseInfo database = serverInfo.GetDatabase(dbname);
 
-            DBDocBuilder builder = new DBDocBuilder(database, dbname);
+            DBDocBuilder builder = new DBDocBuilder(database);
             builder.Build();
         }
 

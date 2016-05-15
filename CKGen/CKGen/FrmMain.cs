@@ -1,11 +1,13 @@
 ﻿using CKGen.Base.Events;
 using CKGen.Controls;
 using CKGen.Events;
+using CKGen.Temp.DBDoc;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
+using System.Diagnostics;
 using System.Windows.Forms;
 
 namespace CKGen
@@ -43,6 +45,7 @@ namespace CKGen
             tsBtnQuery.Enabled = false;
             tsBtnReloadSchema.Enabled = false;
             tsbtnSaveSchema.Enabled = false;
+            tsBtnGenDbChm.Enabled = false;
 
             AppEvent.Subscribe<ShowCodeEvent>(p => this.ShowCode(p));
             AppEvent.Subscribe<ShowSQLQueryEvent>(p => this.ShowSQLQuery(p));
@@ -51,6 +54,7 @@ namespace CKGen
                 tsBtnQuery.Enabled = true;
                 tsBtnReloadSchema.Enabled = true;
                 tsbtnSaveSchema.Enabled = true;
+                tsBtnGenDbChm.Enabled = true;
             });
         }
 
@@ -184,7 +188,27 @@ namespace CKGen
         /// </summary>
         private void tsBtnGenDbChm_Click(object sender, EventArgs e)
         {
+            if (App.Instance.DBLink == null)
+            {
+                return;
+            }
 
+            DBDocBuilder builder = new DBDocBuilder(App.Instance.Database);
+            FrmLoading loadForm = new FrmLoading();
+
+            BackgroundWorker worker = new BackgroundWorker();
+            worker.DoWork += delegate (object s1, DoWorkEventArgs e1)
+            {
+                builder.Build();
+            };
+            worker.RunWorkerCompleted += delegate (object s2, RunWorkerCompletedEventArgs e2)
+            {
+                loadForm.Close();
+                Process.Start(builder.TargetFolder);
+            };
+            worker.RunWorkerAsync();
+
+            loadForm.ShowDialog();
         }
 
         private void tbTemp_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
