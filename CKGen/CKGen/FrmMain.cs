@@ -52,8 +52,18 @@ namespace CKGen
 
             LoadTemplates();
 
+            tsBtnQuery.Enabled = false;
+            tsBtnReloadSchema.Enabled = false;
+            tsbtnSaveSchema.Enabled = false;
+
             AppEvent.Subscribe<ShowCodeEvent>(p => this.ShowCode(p));
             AppEvent.Subscribe<ShowSQLQueryEvent>(p => this.ShowSQLQuery(p));
+            AppEvent.Subscribe<DatabaseRefreshEvent>(p =>
+            {
+                tsBtnQuery.Enabled = true;
+                tsBtnReloadSchema.Enabled = true;
+                tsbtnSaveSchema.Enabled = true;
+            });
         }
 
         public void ShowCode(ShowCodeEvent e)
@@ -120,7 +130,7 @@ namespace CKGen
         /// </summary>
         private void tsbtnSaveSchema_Click(object sender, EventArgs e)
         {
-            if(App.Instance.DBLink == null)
+            if (App.Instance.DBLink == null)
             {
                 return;
             }
@@ -138,7 +148,7 @@ namespace CKGen
         /// </summary>
         private void tsBtnReloadSchema_Click(object sender, EventArgs e)
         {
-            if(App.Instance.DBLink == null)
+            if (App.Instance.DBLink == null)
             {
                 return;
             }
@@ -196,9 +206,12 @@ namespace CKGen
             return null;
         }
 
+        /// <summary>
+        /// SQL查询
+        /// </summary>
         private void tsBtnQuery_Click(object sender, EventArgs e)
         {
-            if(App.Instance.DBLink == null)
+            if (App.Instance.DBLink == null)
             {
                 return;
             }
@@ -206,6 +219,9 @@ namespace CKGen
             AppEvent.Publish(evt);
         }
 
+        /// <summary>
+        /// 连接数据库
+        /// </summary>
         private void tsBtnLinkDb_Click(object sender, EventArgs e)
         {
             FrmLogin frmLogin = new FrmLogin();
