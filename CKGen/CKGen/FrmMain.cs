@@ -142,7 +142,7 @@ namespace CKGen
             dc2.Text = "工具";
             tbTemp.Dock = DockStyle.Fill;
             dc2.Controls.Add(tbTemp);
-            dc2.Show(this.dockPanel, DockState.DockLeftAutoHide);
+            dc2.Show(this.dockPanel, DockState.DockLeft);
         }
 
         /// <summary>

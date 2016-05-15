@@ -26,22 +26,29 @@ namespace CKGen.Tools
 
         private void txtHTML_TextChanged(object sender, EventArgs e)
         {
-            StringBuilder sb = new StringBuilder();
-            sb.AppendLine("var h = '';");
-            using (var stream = new MemoryStream(System.Text.Encoding.UTF8.GetBytes(txtHTML.Text)))
-            using (StreamReader r = new StreamReader(stream))
+            if (!string.IsNullOrEmpty(txtHTML.Text) && !string.IsNullOrWhiteSpace(txtHTML.Text))
             {
-                string line;
-                while ((line = r.ReadLine()) != null)
+                StringBuilder sb = new StringBuilder();
+                sb.AppendLine("var h = '';");
+                using (var stream = new MemoryStream(System.Text.Encoding.UTF8.GetBytes(txtHTML.Text)))
+                using (StreamReader r = new StreamReader(stream))
                 {
-                    if (!string.IsNullOrEmpty(line.Trim()))
+                    string line;
+                    while ((line = r.ReadLine()) != null)
                     {
-                        sb.AppendLine("h += " + ToJsString(line) + ";");
+                        if (!string.IsNullOrEmpty(line.Trim()))
+                        {
+                            sb.AppendLine("h += " + ToJsString(line) + ";");
+                        }
                     }
                 }
-            }
 
-            txtJS.Text = sb.ToString();
+                txtJS.Text = sb.ToString();
+            }
+            else
+            {
+                txtJS.Text = "";
+            }
         }
 
         public static string ToJsString(string s)
