@@ -34,22 +34,11 @@
             this.tsBtnLinkDb = new System.Windows.Forms.ToolStripButton();
             this.tsBtnReloadSchema = new System.Windows.Forms.ToolStripButton();
             this.tsbtnSaveSchema = new System.Windows.Forms.ToolStripButton();
-            this.tsBtnQuery = new System.Windows.Forms.ToolStripButton();
-            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.tabControl2 = new System.Windows.Forms.TabControl();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.tbTemp = new System.Windows.Forms.TreeView();
-            this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.tsBtnGenDbChm = new System.Windows.Forms.ToolStripButton();
+            this.tsBtnQuery = new System.Windows.Forms.ToolStripButton();
+            this.imageList1 = new System.Windows.Forms.ImageList(this.components);
+            this.dockPanel = new WeifenLuo.WinFormsUI.Docking.DockPanel();
             this.toolStrip1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
-            this.splitContainer1.Panel1.SuspendLayout();
-            this.splitContainer1.Panel2.SuspendLayout();
-            this.splitContainer1.SuspendLayout();
-            this.tabControl2.SuspendLayout();
-            this.tabPage2.SuspendLayout();
             this.SuspendLayout();
             // 
             // toolStrip1
@@ -97,6 +86,16 @@
             this.tsbtnSaveSchema.ToolTipText = "保存说明";
             this.tsbtnSaveSchema.Click += new System.EventHandler(this.tsbtnSaveSchema_Click);
             // 
+            // tsBtnGenDbChm
+            // 
+            this.tsBtnGenDbChm.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tsBtnGenDbChm.Image = global::CKGen.Properties.Resources.NewChm;
+            this.tsBtnGenDbChm.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsBtnGenDbChm.Name = "tsBtnGenDbChm";
+            this.tsBtnGenDbChm.Size = new System.Drawing.Size(23, 22);
+            this.tsBtnGenDbChm.Text = "生成数据库文档";
+            this.tsBtnGenDbChm.Click += new System.EventHandler(this.tsBtnGenDbChm_Click);
+            // 
             // tsBtnQuery
             // 
             this.tsBtnQuery.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -106,78 +105,6 @@
             this.tsBtnQuery.Size = new System.Drawing.Size(23, 22);
             this.tsBtnQuery.Text = "新建查询";
             this.tsBtnQuery.Click += new System.EventHandler(this.tsBtnQuery_Click);
-            // 
-            // splitContainer1
-            // 
-            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer1.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
-            this.splitContainer1.Location = new System.Drawing.Point(0, 25);
-            this.splitContainer1.Name = "splitContainer1";
-            // 
-            // splitContainer1.Panel1
-            // 
-            this.splitContainer1.Panel1.Controls.Add(this.tabControl2);
-            this.splitContainer1.Panel1MinSize = 220;
-            // 
-            // splitContainer1.Panel2
-            // 
-            this.splitContainer1.Panel2.Controls.Add(this.tabControl1);
-            this.splitContainer1.Panel2MinSize = 500;
-            this.splitContainer1.Size = new System.Drawing.Size(1061, 585);
-            this.splitContainer1.SplitterDistance = 220;
-            this.splitContainer1.SplitterWidth = 2;
-            this.splitContainer1.TabIndex = 1;
-            // 
-            // tabControl2
-            // 
-            this.tabControl2.Controls.Add(this.tabPage1);
-            this.tabControl2.Controls.Add(this.tabPage2);
-            this.tabControl2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabControl2.Location = new System.Drawing.Point(0, 0);
-            this.tabControl2.Name = "tabControl2";
-            this.tabControl2.SelectedIndex = 0;
-            this.tabControl2.Size = new System.Drawing.Size(220, 585);
-            this.tabControl2.TabIndex = 1;
-            // 
-            // tabPage1
-            // 
-            this.tabPage1.Location = new System.Drawing.Point(4, 22);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(212, 559);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "数据";
-            this.tabPage1.UseVisualStyleBackColor = true;
-            // 
-            // tabPage2
-            // 
-            this.tabPage2.Controls.Add(this.tbTemp);
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(212, 559);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "模板";
-            this.tabPage2.UseVisualStyleBackColor = true;
-            // 
-            // tbTemp
-            // 
-            this.tbTemp.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbTemp.Location = new System.Drawing.Point(3, 3);
-            this.tbTemp.Name = "tbTemp";
-            this.tbTemp.Size = new System.Drawing.Size(206, 553);
-            this.tbTemp.TabIndex = 0;
-            this.tbTemp.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.tbTemp_NodeMouseDoubleClick);
-            // 
-            // tabControl1
-            // 
-            this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabControl1.Location = new System.Drawing.Point(0, 0);
-            this.tabControl1.Margin = new System.Windows.Forms.Padding(0);
-            this.tabControl1.Name = "tabControl1";
-            this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(839, 585);
-            this.tabControl1.TabIndex = 0;
             // 
             // imageList1
             // 
@@ -189,22 +116,20 @@
             this.imageList1.Images.SetKeyName(3, "table.png");
             this.imageList1.Images.SetKeyName(4, "view.png");
             // 
-            // tsBtnGenDbChm
+            // dockPanel
             // 
-            this.tsBtnGenDbChm.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tsBtnGenDbChm.Image = global::CKGen.Properties.Resources.NewChm;
-            this.tsBtnGenDbChm.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsBtnGenDbChm.Name = "tsBtnGenDbChm";
-            this.tsBtnGenDbChm.Size = new System.Drawing.Size(23, 22);
-            this.tsBtnGenDbChm.Text = "生成数据库文档";
-            this.tsBtnGenDbChm.Click += new System.EventHandler(this.tsBtnGenDbChm_Click);
+            this.dockPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dockPanel.Location = new System.Drawing.Point(0, 25);
+            this.dockPanel.Name = "dockPanel";
+            this.dockPanel.Size = new System.Drawing.Size(1061, 585);
+            this.dockPanel.TabIndex = 1;
             // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1061, 610);
-            this.Controls.Add(this.splitContainer1);
+            this.Controls.Add(this.dockPanel);
             this.Controls.Add(this.toolStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FrmMain";
@@ -213,12 +138,6 @@
             this.Load += new System.EventHandler(this.FrmMain_Load);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
-            this.splitContainer1.Panel1.ResumeLayout(false);
-            this.splitContainer1.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
-            this.splitContainer1.ResumeLayout(false);
-            this.tabControl2.ResumeLayout(false);
-            this.tabPage2.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -227,17 +146,12 @@
         #endregion
 
         private System.Windows.Forms.ToolStrip toolStrip1;
-        private System.Windows.Forms.SplitContainer splitContainer1;
-        private System.Windows.Forms.ToolStripButton tsbtnSaveSchema;
-        private System.Windows.Forms.TabControl tabControl1;
-        private System.Windows.Forms.ToolStripButton tsBtnReloadSchema;
-        private System.Windows.Forms.TabControl tabControl2;
-        private System.Windows.Forms.TabPage tabPage1;
-        private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.ImageList imageList1;
-        private System.Windows.Forms.TreeView tbTemp;
         private System.Windows.Forms.ToolStripButton tsBtnQuery;
         private System.Windows.Forms.ToolStripButton tsBtnLinkDb;
         private System.Windows.Forms.ToolStripButton tsBtnGenDbChm;
+        private System.Windows.Forms.ToolStripButton tsbtnSaveSchema;
+        private System.Windows.Forms.ToolStripButton tsBtnReloadSchema;
+        private WeifenLuo.WinFormsUI.Docking.DockPanel dockPanel;
     }
 }

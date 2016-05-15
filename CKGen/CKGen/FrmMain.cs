@@ -9,6 +9,7 @@ using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
 using System.Diagnostics;
 using System.Windows.Forms;
+using WeifenLuo.WinFormsUI.Docking;
 
 namespace CKGen
 {
@@ -17,6 +18,27 @@ namespace CKGen
         public FrmMain()
         {
             InitializeComponent();
+
+            this.IsMdiContainer = true;
+            this.dockPanel.DocumentStyle = DocumentStyle.DockingMdi;
+
+            //详细信息
+            DockContent dc = new DockContent();
+            dc.CloseButtonVisible = false;
+            dc.Text = "详细信息";
+            DetailTabPage dtpage = new DetailTabPage();
+            dtpage.Dock = DockStyle.Fill;
+            dc.Controls.Add(dtpage);
+            dc.Show(this.dockPanel, DockState.Document);
+
+            //数据
+            DockContent dc2 = new DockContent();
+            dc2.CloseButtonVisible = false;
+            dc2.Text = "数据";
+            SchemaTreeView stpage = new SchemaTreeView();
+            stpage.Dock = DockStyle.Fill;
+            dc2.Controls.Add(stpage);
+            dc2.Show(this.dockPanel, DockState.DockLeft);
         }
 
         [ImportMany("GenTemplate")]
@@ -27,11 +49,6 @@ namespace CKGen
 
         private void FrmMain_Load(object sender, EventArgs e)
         {
-            //详细信息
-            this.tabControl1.TabPages.Add(new DetailTabPage());
-
-            this.tabPage1.Controls.Add(new SchemaTreeView());
-
             //组合部件
             var catalog = new AggregateCatalog();
             catalog.Catalogs.Add(new AssemblyCatalog(System.Reflection.Assembly.GetExecutingAssembly()));
@@ -62,10 +79,12 @@ namespace CKGen
         {
             CodeView codeShow = new CodeView();
             codeShow.Dock = DockStyle.Fill;
-            TabPage tab1 = new TabPage(e.Title);
-            tab1.Controls.Add(codeShow);
-            this.tabControl1.TabPages.Add(tab1);
-            this.tabControl1.SelectTab(tab1);
+
+            DockContent dc = new DockContent();
+            dc.Text = e.Title;
+            dc.Controls.Add(codeShow);
+            dc.Show(this.dockPanel, DockState.Document);
+
             codeShow.Show(e.Code);
         }
 
@@ -73,10 +92,12 @@ namespace CKGen
         {
             var query = new SQLQueryView();
             query.Dock = DockStyle.Fill;
-            TabPage tab1 = new TabPage("查询");
-            tab1.Controls.Add(query);
-            this.tabControl1.TabPages.Add(tab1);
-            this.tabControl1.SelectTab(tab1);
+
+            DockContent dc = new DockContent();
+            dc.Text = "查询";
+            dc.Controls.Add(query);
+            dc.Show(this.dockPanel, DockState.Document);
+
             if (!string.IsNullOrEmpty(e.SQL))
             {
                 query.Query(e.SQL);
@@ -85,6 +106,9 @@ namespace CKGen
 
         private void LoadTemplates()
         {
+            TreeView tbTemp = new TreeView();
+            tbTemp.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.tbTemp_NodeMouseDoubleClick);
+
             //模板
             TreeNode tmpNode = new TreeNode("模板");
             int i = 0;
@@ -96,7 +120,7 @@ namespace CKGen
                 tmpNode.Nodes.Add(node);
                 i++;
             }
-            this.tbTemp.Nodes.Add(tmpNode);
+            tbTemp.Nodes.Add(tmpNode);
             tmpNode.Expand();
 
             //工具
@@ -110,8 +134,15 @@ namespace CKGen
                 toolNode.Nodes.Add(node);
                 i++;
             }
-            this.tbTemp.Nodes.Add(toolNode);
+            tbTemp.Nodes.Add(toolNode);
             toolNode.Expand();
+
+            DockContent dc2 = new DockContent();
+            dc2.CloseButtonVisible = false;
+            dc2.Text = "工具";
+            tbTemp.Dock = DockStyle.Fill;
+            dc2.Controls.Add(tbTemp);
+            dc2.Show(this.dockPanel, DockState.DockLeftAutoHide);
         }
 
         /// <summary>
@@ -215,30 +246,15 @@ namespace CKGen
         {
             if (e.Node.Tag is UserControl)
             {
-                UserControl item = e.Node.Tag as UserControl;
-                TabPage tab = HasShowControl(item.Name);
-                if (tab == null)
-                {
-                    tab = new TabPage(item.ToString());
-                    item.Dock = DockStyle.Fill;
-                    tab.Controls.Add(item);
-                    this.tabControl1.TabPages.Add(tab);
-                }
-                this.tabControl1.SelectedTab = tab;
-            }
-        }
+                Type tp = e.Node.Tag.GetType();
+                var item = Activator.CreateInstance(tp) as UserControl;
 
-        private TabPage HasShowControl(string ctrlName)
-        {
-            foreach (TabPage tab in this.tabControl1.TabPages)
-            {
-                var all = tab.Controls.Find(ctrlName, false);
-                if (all != null && all.Length > 0)
-                {
-                    return tab;
-                }
+                DockContent dc = new DockContent();
+                dc.Text = item.ToString();
+                item.Dock = DockStyle.Fill;
+                dc.Controls.Add(item);
+                dc.Show(this.dockPanel, DockState.Document);
             }
-            return null;
         }
     }
 }

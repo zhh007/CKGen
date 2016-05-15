@@ -11,7 +11,7 @@ using CKGen.Events;
 
 namespace CKGen.Controls
 {
-    public class DetailTabPage : TabPage
+    public class DetailTabPage : UserControl
     {
         private DetailBase innerControl = null;
         public DetailTabPage()
