@@ -33,8 +33,8 @@
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.tsBtnLinkDb = new System.Windows.Forms.ToolStripButton();
             this.tsBtnReloadSchema = new System.Windows.Forms.ToolStripButton();
-            this.tsBtnQuery = new System.Windows.Forms.ToolStripButton();
             this.tsbtnSaveSchema = new System.Windows.Forms.ToolStripButton();
+            this.tsBtnQuery = new System.Windows.Forms.ToolStripButton();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.tabControl2 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
@@ -42,6 +42,7 @@
             this.tbTemp = new System.Windows.Forms.TreeView();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
+            this.tsBtnGenDbChm = new System.Windows.Forms.ToolStripButton();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -57,6 +58,7 @@
             this.tsBtnLinkDb,
             this.tsBtnReloadSchema,
             this.tsbtnSaveSchema,
+            this.tsBtnGenDbChm,
             this.tsBtnQuery});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
@@ -84,16 +86,6 @@
             this.tsBtnReloadSchema.Text = "重新加载";
             this.tsBtnReloadSchema.Click += new System.EventHandler(this.tsBtnReloadSchema_Click);
             // 
-            // tsBtnQuery
-            // 
-            this.tsBtnQuery.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tsBtnQuery.Image = global::CKGen.Properties.Resources.Sqlfile;
-            this.tsBtnQuery.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsBtnQuery.Name = "tsBtnQuery";
-            this.tsBtnQuery.Size = new System.Drawing.Size(23, 22);
-            this.tsBtnQuery.Text = "新建查询";
-            this.tsBtnQuery.Click += new System.EventHandler(this.tsBtnQuery_Click);
-            // 
             // tsbtnSaveSchema
             // 
             this.tsbtnSaveSchema.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -104,6 +96,16 @@
             this.tsbtnSaveSchema.Text = "保存说明";
             this.tsbtnSaveSchema.ToolTipText = "保存说明";
             this.tsbtnSaveSchema.Click += new System.EventHandler(this.tsbtnSaveSchema_Click);
+            // 
+            // tsBtnQuery
+            // 
+            this.tsBtnQuery.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tsBtnQuery.Image = global::CKGen.Properties.Resources.Sqlfile;
+            this.tsBtnQuery.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsBtnQuery.Name = "tsBtnQuery";
+            this.tsBtnQuery.Size = new System.Drawing.Size(23, 22);
+            this.tsBtnQuery.Text = "新建查询";
+            this.tsBtnQuery.Click += new System.EventHandler(this.tsBtnQuery_Click);
             // 
             // splitContainer1
             // 
@@ -187,6 +189,16 @@
             this.imageList1.Images.SetKeyName(3, "table.png");
             this.imageList1.Images.SetKeyName(4, "view.png");
             // 
+            // tsBtnGenDbChm
+            // 
+            this.tsBtnGenDbChm.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tsBtnGenDbChm.Image = global::CKGen.Properties.Resources.NewChm;
+            this.tsBtnGenDbChm.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsBtnGenDbChm.Name = "tsBtnGenDbChm";
+            this.tsBtnGenDbChm.Size = new System.Drawing.Size(23, 22);
+            this.tsBtnGenDbChm.Text = "生成数据库文档";
+            this.tsBtnGenDbChm.Click += new System.EventHandler(this.tsBtnGenDbChm_Click);
+            // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -226,5 +238,6 @@
         private System.Windows.Forms.TreeView tbTemp;
         private System.Windows.Forms.ToolStripButton tsBtnQuery;
         private System.Windows.Forms.ToolStripButton tsBtnLinkDb;
+        private System.Windows.Forms.ToolStripButton tsBtnGenDbChm;
     }
 }

@@ -19,12 +19,13 @@ namespace ConsoleApp
     {
         static void Main(string[] args)
         {
-            Console.WriteLine(typeof(Tuple<short[], string>).GetFriendlyName());
-            Console.ReadKey();
-            return;
+            BuildDBDoc();
+            //Console.WriteLine(typeof(Tuple<short[], string>).GetFriendlyName());
+            //Console.ReadKey();
+            //return;
 
-            ServiceLocator.Instance.AddService<ICodeGenService>(new CodeGenService());
-            Console.WriteLine("正在生成...");
+            //ServiceLocator.Instance.AddService<ICodeGenService>(new CodeGenService());
+            //Console.WriteLine("正在生成...");
 
             //string dbConnStr = @"Provider=SQLOLEDB.1;Persist Security Info=False;User ID=sa;Password=pass@word1;Initial Catalog=DBTest;Data Source=.\SQL2008R2";
             //string dbname = "DBTest";
@@ -43,7 +44,7 @@ namespace ConsoleApp
             //BuildModel("SampleInt");
             //BuildModel("df_TestUser");
 
-            BuildProj();
+            //BuildProj();
 
             //BuildDBAccess();
 

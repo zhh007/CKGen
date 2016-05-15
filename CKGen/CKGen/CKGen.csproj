@@ -339,6 +339,7 @@
     <None Include="Resources\Minus.png" />
     <None Include="Resources\Collapse_large.bmp" />
     <None Include="Resources\Expand_large.bmp" />
+    <None Include="Resources\NewChm.png" />
     <Content Include="Resources\server_link_ico.ico" />
     <None Include="Resources\fresh.png" />
     <None Include="Resources\folder.png" />

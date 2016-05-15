@@ -179,6 +179,14 @@ namespace CKGen
             AppEvent.Publish(evt);
         }
 
+        /// <summary>
+        /// 生成数据库文档
+        /// </summary>
+        private void tsBtnGenDbChm_Click(object sender, EventArgs e)
+        {
+
+        }
+
         private void tbTemp_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
         {
             if (e.Node.Tag is UserControl)
