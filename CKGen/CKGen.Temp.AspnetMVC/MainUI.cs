@@ -1,15 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Windows.Forms;
-using System.ComponentModel.Composition;
+﻿using CKGen.Base.Events;
 using CKGen.DBSchema;
-using CKGen.Base;
-using CKGen.Base.Events;
+using System;
+using System.ComponentModel.Composition;
+using System.Windows.Forms;
 
 namespace CKGen.Temp.AspnetMVC
 {
@@ -25,6 +18,7 @@ namespace CKGen.Temp.AspnetMVC
         public MainUI()
         {
             InitializeComponent();
+
             AppEvent.Subscribe<DatabaseRefreshEvent>(p => {
                 this.Database = p.Database;
             });

@@ -1,21 +1,19 @@
-﻿using System;
+﻿using CKGen.Base;
+using CKGen.Base.Events;
+using CKGen.DBSchema;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Windows.Forms;
 using System.ComponentModel.Composition;
-using CKGen.DBSchema;
-using CKGen.Base;
-using CKGen.Base.Events;
+using System.Drawing;
+using System.Windows.Forms;
 
 namespace CKGen.Temp.AspnetMVC
 {
     [Export("GenTemplate", typeof(UserControl))]
     public partial class SimpleChildUI : UserControl, IGenUI
     {
+        private readonly object token = new object();
         private readonly IResService resService = ServiceLocator.Instance.GetService<IResService>();
         [Import("Database")]
         public IDatabaseInfo Database { get; set; }
@@ -27,7 +25,19 @@ namespace CKGen.Temp.AspnetMVC
         public SimpleChildUI()
         {
             InitializeComponent();
-            AppEvent.Subscribe<DatabaseRefreshEvent>(p => {
+
+            AppEvent.Subscribe<GetDbInstanceResponseEvent>(p =>
+            {
+                if (p.Token == token)
+                {
+                    this.Database = p.Database;
+                    BindUI();
+                }
+            });
+            AppEvent.Publish(new GetDbInstanceRequestEvent() { Token = token });
+
+            AppEvent.Subscribe<DatabaseRefreshEvent>(p =>
+            {
                 this.Database = p.Database;
                 BindUI();
             });
@@ -45,7 +55,7 @@ namespace CKGen.Temp.AspnetMVC
             cbTablesForParent.Items.Clear();
             cbTablesForChild.Text = "";
             cbTablesForParent.Text = "";
-            
+
             if (this.Database != null)
             {
                 foreach (var table in this.Database.Tables)
@@ -90,13 +100,13 @@ namespace CKGen.Temp.AspnetMVC
 
             bool hasForeignKey = false;
             string foreignKey = cbForeignKey.Text.Trim();
-            if(string.IsNullOrEmpty(foreignKey))
+            if (string.IsNullOrEmpty(foreignKey))
             {
                 return;
             }
             foreach (var item in SelectedChildTable.Columns)
             {
-                if(item.PascalName == foreignKey)
+                if (item.PascalName == foreignKey)
                 {
                     hasForeignKey = true;
                 }
@@ -262,7 +272,7 @@ namespace CKGen.Temp.AspnetMVC
                 }
             }
 
-            if(selTable == null)
+            if (selTable == null)
             {
                 this.SelectedChildTable = null;
                 this.gvFields.Rows.Clear();
@@ -270,7 +280,7 @@ namespace CKGen.Temp.AspnetMVC
             }
             else
             {
-                if(this.SelectedChildTable != selTable)
+                if (this.SelectedChildTable != selTable)
                 {
                     this.cbForeignKey.Text = "";
                     this.cbForeignKey.Items.Clear();

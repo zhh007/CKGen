@@ -14,6 +14,8 @@ namespace CKGen.Temp.AspnetMVC
 {
     public partial class ViewSetting : UserControl
     {
+        public IDatabaseInfo Database { get; set; }
+        private readonly object token = new object();
         private IGenUI parent;
         private string folderPath;
         private string tableName;
@@ -27,15 +29,24 @@ namespace CKGen.Temp.AspnetMVC
             InitializeComponent();
             btnView.Hide();
 
-            BindUI(_parent.Database);
+            AppEvent.Subscribe<GetDbInstanceResponseEvent>(p =>
+            {
+                if (p.Token == token)
+                {
+                    BindUI(p.Database);
+                }
+            });
+            AppEvent.Publish(new GetDbInstanceRequestEvent() { Token = token });
 
-            AppEvent.Subscribe<DatabaseRefreshEvent>(p => {
+            AppEvent.Subscribe<DatabaseRefreshEvent>(p =>
+            {
                 BindUI(p.Database);
             });
         }
 
         private void BindUI(IDatabaseInfo db)
         {
+            this.Database = db;
             cbTables.Items.Clear();
             cbTables.Text = "";
             if (db != null)
@@ -59,7 +70,7 @@ namespace CKGen.Temp.AspnetMVC
         /// </summary>
         private void btnGen_Click(object sender, EventArgs e)
         {
-            if(string.IsNullOrEmpty(txtNamespace.Text) || string.IsNullOrWhiteSpace(txtNamespace.Text))
+            if (string.IsNullOrEmpty(txtNamespace.Text) || string.IsNullOrWhiteSpace(txtNamespace.Text))
             {
                 return;
             }
@@ -74,16 +85,16 @@ namespace CKGen.Temp.AspnetMVC
             }
 
             bool hasTable = false;
-            foreach (var item in parent.Database.Tables)
+            foreach (var item in this.Database.Tables)
             {
-                if(item.Name == tbName)
+                if (item.Name == tbName)
                 {
                     SelectedTable = item;
                     hasTable = true;
                     break;
                 }
             }
-            if(!hasTable)
+            if (!hasTable)
             {
                 return;
             }
@@ -104,7 +115,7 @@ namespace CKGen.Temp.AspnetMVC
             AspnetMVCSetting setting = new AspnetMVCSetting();
             setting.Namespace = nsString;
             setting.WebProjNameSpace = webNSString;
-            SettingStore.Instance.Save<AspnetMVCSetting>(setting, this.parent.Database.Name + "_aspnetmvc.xml");
+            SettingStore.Instance.Save<AspnetMVCSetting>(setting, this.Database.Name + "_aspnetmvc.xml");
 
             BackgroundWorker _bgWorker = new BackgroundWorker();
             _bgWorker.WorkerSupportsCancellation = false;

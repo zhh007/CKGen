@@ -63,6 +63,8 @@
     <Compile Include="Events\DataBaseRefreshEvent.cs" />
     <Compile Include="Events\EventAggregator.cs" />
     <Compile Include="Events\EventBase.cs" />
+    <Compile Include="Events\GetDbInstanceRequestEvent.cs" />
+    <Compile Include="Events\GetDbInstanceResponseEvent.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="Form\CollectionField.cs" />
     <Compile Include="Form\Module.cs" />
