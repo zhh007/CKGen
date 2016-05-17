@@ -46,12 +46,12 @@ namespace CKGen.Temp.Adonet
     {
         private readonly ICodeGenService codeGen = ServiceLocator.Instance.GetService<ICodeGenService>();
 
-        private readonly string Temp_Query_Model = Comm.GetTemplete("Query.Model.cshtml");
-        private readonly string Temp_Query_GetList = Comm.GetTemplete("Query.GetList.cshtml");
-        private readonly string Temp_Query_GetOne = Comm.GetTemplete("Query.GetOne.cshtml");
-        private readonly string Temp_Query_ExecuteNonQuery = Comm.GetTemplete("Query.ExecuteNonQuery.cshtml");
-        private readonly string Temp_Query_ExecuteScalar = Comm.GetTemplete("Query.ExecuteScalar.cshtml");
-        private readonly string Temp_Query_GetMultiList = Comm.GetTemplete("Query.GetMultiList.cshtml");
+        //private readonly string Temp_Query_Model = Comm.GetTemplete("Query.Model.cshtml");
+        //private readonly string Temp_Query_GetList = Comm.GetTemplete("Query.GetList.cshtml");
+        //private readonly string Temp_Query_GetOne = Comm.GetTemplete("Query.GetOne.cshtml");
+        //private readonly string Temp_Query_ExecuteNonQuery = Comm.GetTemplete("Query.ExecuteNonQuery.cshtml");
+        //private readonly string Temp_Query_ExecuteScalar = Comm.GetTemplete("Query.ExecuteScalar.cshtml");
+        //private readonly string Temp_Query_GetMultiList = Comm.GetTemplete("Query.GetMultiList.cshtml");
 
         public string GenForQueryList(string query, Module module, string connstr)
         {
@@ -86,7 +86,7 @@ namespace CKGen.Temp.Adonet
             StringBuilder sb = new StringBuilder();
             sb.AppendLine(modelCode);
 
-            string queryCode = codeGen.Gen(this.Temp_Query_GetList, gModel);
+            string queryCode = codeGen.Gen(Comm.GetTemplete("Query.GetList.cshtml"), gModel);
             queryCode = queryCode.Replace("'conn_name'", "Program.TestConnection");
             sb.AppendLine(queryCode);
 
@@ -126,7 +126,7 @@ namespace CKGen.Temp.Adonet
             StringBuilder sb = new StringBuilder();
             sb.AppendLine(modelCode);
 
-            string queryCode = codeGen.Gen(this.Temp_Query_GetOne, gModel);
+            string queryCode = codeGen.Gen(Comm.GetTemplete("Query.GetOne.cshtml"), gModel);
             queryCode = queryCode.Replace("'conn_name'", "Program.TestConnection");
             sb.AppendLine(queryCode);
 
@@ -141,7 +141,7 @@ namespace CKGen.Temp.Adonet
 
             StringBuilder sb = new StringBuilder();
 
-            string queryCode = codeGen.Gen(this.Temp_Query_ExecuteNonQuery, gModel);
+            string queryCode = codeGen.Gen(Comm.GetTemplete("Query.ExecuteNonQuery.cshtml"), gModel);
             queryCode = queryCode.Replace("'conn_name'", "Program.TestConnection");
             sb.AppendLine(queryCode);
 
@@ -174,7 +174,7 @@ namespace CKGen.Temp.Adonet
 
             StringBuilder sb = new StringBuilder();
 
-            string queryCode = codeGen.Gen(this.Temp_Query_ExecuteScalar, gModel);
+            string queryCode = codeGen.Gen(Comm.GetTemplete("Query.ExecuteScalar.cshtml"), gModel);
             queryCode = queryCode.Replace("'conn_name'", "Program.TestConnection");
             sb.AppendLine(queryCode);
 
@@ -183,7 +183,7 @@ namespace CKGen.Temp.Adonet
 
         private string GenModelCode(Module module)
         {
-            return codeGen.Gen(this.Temp_Query_Model, module);
+            return codeGen.Gen(Comm.GetTemplete("Query.Model.cshtml"), module);
         }
 
         public string GenForMultiQuery(string query, List<Module> modules, string connstr)
@@ -203,7 +203,7 @@ namespace CKGen.Temp.Adonet
                 sb.AppendLine(modelCode);
             }
 
-            string queryCode = codeGen.Gen(this.Temp_Query_GetMultiList, gModel);
+            string queryCode = codeGen.Gen(Comm.GetTemplete("Query.GetMultiList.cshtml"), gModel);
             queryCode = queryCode.Replace("'conn_name'", "Program.TestConnection");
             sb.AppendLine(queryCode);
 

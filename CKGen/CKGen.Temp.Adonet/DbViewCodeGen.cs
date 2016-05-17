@@ -12,14 +12,14 @@ namespace CKGen.Temp.Adonet
     {
         private readonly ICodeGenService codeGen = ServiceLocator.Instance.GetService<ICodeGenService>();
 
-        private readonly string Temp_View_Model = Comm.GetTemplete("View.Model.cshtml");
-        private readonly string Temp_View_Exist = Comm.GetTemplete("View.Exist.cshtml");
-        private readonly string Temp_View_Get = Comm.GetTemplete("View.Get.cshtml");
-        private readonly string Temp_View_GetAll = Comm.GetTemplete("View.GetAll.cshtml");
-        private readonly string Temp_View_Top = Comm.GetTemplete("View.Top.cshtml");
-        private readonly string Temp_View_Paged = Comm.GetTemplete("View.Paged.cshtml");
-        private readonly string Temp_View_GetBytes = Comm.GetTemplete("_GetBytes.cshtml");
-        private readonly string Temp_View_GetMany = Comm.GetTemplete("View._GetMany.cshtml");
+        //private readonly string Temp_View_Model = Comm.GetTemplete("View.Model.cshtml");
+        //private readonly string Temp_View_Exist = Comm.GetTemplete("View.Exist.cshtml");
+        //private readonly string Temp_View_Get = Comm.GetTemplete("View.Get.cshtml");
+        //private readonly string Temp_View_GetAll = Comm.GetTemplete("View.GetAll.cshtml");
+        //private readonly string Temp_View_Top = Comm.GetTemplete("View.Top.cshtml");
+        //private readonly string Temp_View_Paged = Comm.GetTemplete("View.Paged.cshtml");
+        //private readonly string Temp_View_GetBytes = Comm.GetTemplete("_GetBytes.cshtml");
+        //private readonly string Temp_View_GetMany = Comm.GetTemplete("View._GetMany.cshtml");
 
         public string GenDataAccessCode(string nameSpace, IViewInfo vwInfo)
         {
@@ -38,21 +38,21 @@ namespace CKGen.Temp.Adonet
             sb.AppendFormat("    public class {0}Access{1}", vwInfo.PascalName, Environment.NewLine);
             sb.AppendLine("    {");
 
-            //Gen(sb, this.Temp_View_Exist, vwInfo);
-            //Gen(sb, this.Temp_View_Get, vwInfo);
-            //Gen(sb, this.Temp_View_Top, vwInfo);
-            Gen(sb, this.Temp_View_GetAll, vwInfo);
-            Gen(sb, this.Temp_View_Paged, vwInfo);
+            //Gen(sb, Comm.GetTemplete("View.Exist.cshtml"), vwInfo);
+            //Gen(sb, Comm.GetTemplete("View.Get.cshtml"), vwInfo);
+            //Gen(sb, Comm.GetTemplete("View.Top.cshtml"), vwInfo);
+            Gen(sb, Comm.GetTemplete("View.GetAll.cshtml"), vwInfo);
+            Gen(sb, Comm.GetTemplete("View.Paged.cshtml"), vwInfo);
 
             if ((from col in vwInfo.Columns
                  where col.DbTargetType == "SqlDbType.Image" || col.DbTargetType == "SqlDbType.Binary"
                  || col.DbTargetType == "SqlDbType.VarBinary" || col.DbTargetType == "SqlDbType.Timestamp"
                  select col).Count() > 0)
             {
-                Gen(sb, this.Temp_View_GetBytes, vwInfo);
+                Gen(sb, Comm.GetTemplete("_GetBytes.cshtml"), vwInfo);
             }
 
-            Gen(sb, this.Temp_View_GetMany, vwInfo);
+            Gen(sb, Comm.GetTemplete("View._GetMany.cshtml"), vwInfo);
 
             sb.AppendLine("    }");
             sb.AppendLine("}");
@@ -98,32 +98,32 @@ namespace CKGen.Temp.Adonet
 
         public string GenModelCode(IViewInfo vwInfo)
         {
-            return codeGen.Gen(this.Temp_View_Model, vwInfo);
+            return codeGen.Gen(Comm.GetTemplete("View.Model.cshtml"), vwInfo);
         }
 
         public string GenExistCode(IViewInfo vwInfo)
         {
-            return codeGen.Gen(this.Temp_View_Exist, vwInfo);
+            return codeGen.Gen(Comm.GetTemplete("View.Exist.cshtml"), vwInfo);
         }
 
         public string GenGetCode(IViewInfo vwInfo)
         {
-            return codeGen.Gen(this.Temp_View_Get, vwInfo);
+            return codeGen.Gen(Comm.GetTemplete("View.Get.cshtml"), vwInfo);
         }
 
         public string GenGetAllCode(IViewInfo vwInfo)
         {
-            return codeGen.Gen(this.Temp_View_GetAll, vwInfo);
+            return codeGen.Gen(Comm.GetTemplete("View.GetAll.cshtml"), vwInfo);
         }
 
         public string GenTopCode(IViewInfo vwInfo)
         {
-            return codeGen.Gen(this.Temp_View_Top, vwInfo);
+            return codeGen.Gen(Comm.GetTemplete("View.Top.cshtml"), vwInfo);
         }
 
         public string GenPagedCode(IViewInfo vwInfo)
         {
-            return codeGen.Gen(this.Temp_View_Paged, vwInfo);
+            return codeGen.Gen(Comm.GetTemplete("View.Paged.cshtml"), vwInfo);
         }
     }
 }
