@@ -195,6 +195,10 @@ namespace CKGen.DBLoader
                 cInfo.Scale = item.NumericScale;
                 cInfo.Identity = item.IsAutoKey;
                 cInfo.Computed = item.IsComputed;
+                if(cInfo.DBType == "datetime2" || cInfo.DBType == "datetimeoffset" || cInfo.DBType == "time")
+                {
+                    cInfo.Precision = item.DateTimePrecision;
+                }
 
                 this._columns.Add(cInfo);
             }

@@ -55,11 +55,11 @@ namespace CKGen
                         dbName = dbName ?? "master";
                         if (!this.IsWindowsLogin)
                         {
-                            str = string.Format(@"Data Source={0};Initial Catalog={1};User ID={2};Password={3};Provider=SQLOLEDB.1;Persist Security Info=False;", this.ServerName, dbName, this.LoginName, this.LoginPassword);
+                            str = string.Format(@"Data Source={0};Initial Catalog={1};User ID={2};Password={3};Provider=SQLNCLI10;Persist Security Info=False;", this.ServerName, dbName, this.LoginName, this.LoginPassword);
                         }
                         else
                         {
-                            str = string.Format(@"Data Source={0};Initial Catalog={1};Integrated Security=SSPI;Provider=SQLOLEDB.1;Persist Security Info=False;", this.ServerName, dbName, this.LoginName, this.LoginPassword);
+                            str = string.Format(@"Data Source={0};Initial Catalog={1};Integrated Security=SSPI;Provider=SQLNCLI10;Persist Security Info=False;", this.ServerName, dbName, this.LoginName, this.LoginPassword);
                         }
                         break;
                     default:

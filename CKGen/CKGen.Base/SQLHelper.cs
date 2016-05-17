@@ -108,10 +108,10 @@ EXECUTE sp_updateextendedproperty N'MS_Description', @Desc, N'SCHEMA', @Schema, 
                     result = string.Format("{0}", col.DBType);
                     break;
                 case "datetime2"://datetime2(7)
-                    result = string.Format("{0}({1})", col.DBType, col.Scale);
+                    result = string.Format("{0}({1})", col.DBType, col.Precision);
                     break;
                 case "datetimeoffset"://datetimeoffset(7)
-                    result = string.Format("{0}({1})", col.DBType, col.Scale);
+                    result = string.Format("{0}({1})", col.DBType, col.Precision);
                     break;
                 case "decimal"://decimal(18, 0)
                     result = string.Format("{0}({1}, {2})", col.DBType, col.Precision, col.Scale);
@@ -147,7 +147,7 @@ EXECUTE sp_updateextendedproperty N'MS_Description', @Desc, N'SCHEMA', @Schema, 
                     result = string.Format("{0}({1}, {2})", col.DBType, col.Precision, col.Scale);
                     break;
                 case "nvarchar"://nvarchar(50)
-                    if (col.MaxLength == NMax)
+                    if (col.MaxLength == NMax || col.MaxLength == 0)
                     {
                         result = string.Format("{0}(MAX)", col.DBType);
                     }
@@ -177,7 +177,7 @@ EXECUTE sp_updateextendedproperty N'MS_Description', @Desc, N'SCHEMA', @Schema, 
                     result = string.Format("{0}", col.DBType);
                     break;
                 case "time"://time(7)
-                    result = string.Format("{0}({1})", col.DBType, col.Scale);
+                    result = string.Format("{0}({1})", col.DBType, col.Precision);
                     break;
                 case "timestamp":
                     result = string.Format("{0}", col.DBType);
@@ -189,7 +189,7 @@ EXECUTE sp_updateextendedproperty N'MS_Description', @Desc, N'SCHEMA', @Schema, 
                     result = string.Format("{0}", col.DBType);
                     break;
                 case "varbinary"://varbinary(50)
-                    if (col.MaxLength == VMax)
+                    if (col.MaxLength == VMax || col.MaxLength == 0)
                     {
                         result = string.Format("{0}(MAX)", col.DBType);
                     }
@@ -201,7 +201,7 @@ EXECUTE sp_updateextendedproperty N'MS_Description', @Desc, N'SCHEMA', @Schema, 
                 //case "varbinary(MAX)":
                 //    break;
                 case "varchar"://varchar(50)
-                    if (col.MaxLength == VMax)
+                    if (col.MaxLength == VMax || col.MaxLength == 0)
                     {
                         result = string.Format("{0}(MAX)", col.DBType);
                     }
