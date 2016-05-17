@@ -116,8 +116,8 @@
         <div class="section">        
             <table>
 				<colgroup>
+                    <col width="150px" />
                     <col width="140px" />
-                    <col width="100px" />
                     <col width="100px" />
                     <col width="80px" />
                     <col width="120px" />
@@ -132,10 +132,10 @@
                             数据类型
                         </th>
                         <th>
-                            长度
+                            是否主键
                         </th>
                         <th>
-                            是否为空
+                            是否可空
                         </th>
                         <th>
                             默认值
@@ -153,18 +153,16 @@
                             <#= column.RawName #>
                         </td>
                         <td>
-                            <#= column.DBType #>
+                            <#= column.DBFullType #>
                         </td>
                         <td>
-                            <# if(column.MaxLength.HasValue) {
-								this.Write(column.MaxLength.Value.ToString()); 							
+                            <# if(column.IsPrimaryKey) {
+								this.Write("&#8730;"); 							
 							}#>
                         </td>
                         <td>
 							<# if(column.Nullable) {
-								this.Write("是"); 							
-							}else{
-								this.Write("否"); 
+								this.Write("&#8730;"); 							
 							}#>
                         </td>
                         <td>

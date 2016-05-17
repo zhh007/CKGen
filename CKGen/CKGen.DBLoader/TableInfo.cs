@@ -199,6 +199,7 @@ namespace CKGen.DBLoader
                 {
                     cInfo.Precision = item.DateTimePrecision;
                 }
+                cInfo.DBFullType = SQLHelper.GetFullSqlType(cInfo);
 
                 this._columns.Add(cInfo);
             }

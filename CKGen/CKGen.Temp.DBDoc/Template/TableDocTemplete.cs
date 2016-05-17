@@ -77,8 +77,8 @@ namespace CKGen.Temp.DBDoc.Template
         <div class=""section"">        
             <table>
 				<colgroup>
+                    <col width=""150px"" />
                     <col width=""140px"" />
-                    <col width=""100px"" />
                     <col width=""100px"" />
                     <col width=""80px"" />
                     <col width=""120px"" />
@@ -93,10 +93,10 @@ namespace CKGen.Temp.DBDoc.Template
                             数据类型
                         </th>
                         <th>
-                            长度
+                            是否主键
                         </th>
                         <th>
-                            是否为空
+                            是否可空
                         </th>
                         <th>
                             默认值
@@ -127,7 +127,7 @@ namespace CKGen.Temp.DBDoc.Template
                     "          ");
             
             #line 156 "D:\zhhcode\CKGen\CKGen\CKGen.Temp.DBDoc\Template\TableDocTemplete.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(column.DBType));
+            this.Write(this.ToStringHelper.ToStringWithCulture(column.DBFullType));
             
             #line default
             #line hidden
@@ -135,8 +135,8 @@ namespace CKGen.Temp.DBDoc.Template
                     "          ");
             
             #line 159 "D:\zhhcode\CKGen\CKGen\CKGen.Temp.DBDoc\Template\TableDocTemplete.tt"
- if(column.MaxLength.HasValue) {
-								this.Write(column.MaxLength.Value.ToString()); 							
+ if(column.IsPrimaryKey) {
+								this.Write("&#8730;"); 							
 							}
             
             #line default
@@ -145,9 +145,7 @@ namespace CKGen.Temp.DBDoc.Template
             
             #line 164 "D:\zhhcode\CKGen\CKGen\CKGen.Temp.DBDoc\Template\TableDocTemplete.tt"
  if(column.Nullable) {
-								this.Write("是"); 							
-							}else{
-								this.Write("否"); 
+								this.Write("&#8730;"); 							
 							}
             
             #line default
@@ -156,14 +154,14 @@ namespace CKGen.Temp.DBDoc.Template
                     "        \r\n                        </td>\r\n                        <td>\r\n         " +
                     "                   ");
             
-            #line 174 "D:\zhhcode\CKGen\CKGen\CKGen.Temp.DBDoc\Template\TableDocTemplete.tt"
+            #line 172 "D:\zhhcode\CKGen\CKGen\CKGen.Temp.DBDoc\Template\TableDocTemplete.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(column.Description));
             
             #line default
             #line hidden
             this.Write("\r\n                        </td>\r\n                    </tr>\r\n");
             
-            #line 177 "D:\zhhcode\CKGen\CKGen\CKGen.Temp.DBDoc\Template\TableDocTemplete.tt"
+            #line 175 "D:\zhhcode\CKGen\CKGen\CKGen.Temp.DBDoc\Template\TableDocTemplete.tt"
  
 		}
 

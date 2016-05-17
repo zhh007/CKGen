@@ -24,6 +24,7 @@ namespace CKGen.DBLoader
         private string _pascalName;
         private string _lowerName;
         private string _dbType;
+        private string _dbFullType;
         private string _dbTargetType;
         private string _languagetype;
         private string _desc;
@@ -89,6 +90,15 @@ namespace CKGen.DBLoader
         {
             get { return _dbType; }
             set { _dbType = value; }
+        }
+
+        /// <summary>
+        /// 完整sql类型，如nvarchar(50)等
+        /// </summary>
+        public string DBFullType
+        {
+            get { return _dbFullType; }
+            set { _dbFullType = value; }
         }
 
         /// <summary>
@@ -183,7 +193,7 @@ namespace CKGen.DBLoader
                 {
                     if (this.MaxLength.HasValue)
                     {
-                        if (this.MaxLength != 1073741823 && this.MaxLength != 2147483647)
+                        if (this.MaxLength != 0 && this.MaxLength != 1073741823 && this.MaxLength != 2147483647)
                         {
                             return true;
                         }

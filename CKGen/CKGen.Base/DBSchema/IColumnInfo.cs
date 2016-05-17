@@ -38,6 +38,11 @@ namespace CKGen.DBSchema
         string DBType { get; set; }
 
         /// <summary>
+        /// 完整sql类型，如nvarchar(50)等
+        /// </summary>
+        string DBFullType { get; set; }
+
+        /// <summary>
         /// System.Data.SqlDbType类型
         /// </summary>
         string DbTargetType { get; set; }
