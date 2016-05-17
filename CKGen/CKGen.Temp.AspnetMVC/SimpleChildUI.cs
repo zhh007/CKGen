@@ -21,29 +21,39 @@ namespace CKGen.Temp.AspnetMVC
         private ITableInfo SelectedParentTable;
         private SimpleChildGenModel GenModel = new SimpleChildGenModel();
         private string folderPath = "";
+
+        private Action<GetDbInstanceResponseEvent> dbResponseEventHandler = null;
+        private Action<DatabaseRefreshEvent> dbRefreshEventHandler = null;
         public SimpleChildUI()
         {
             InitializeComponent();
 
-            AppEvent.Subscribe<GetDbInstanceResponseEvent>(p =>
+            dbResponseEventHandler = p =>
             {
                 if (p.Token == token)
                 {
-                    this.Database = p.Database;
-                    BindUI();
+                    BindUI(p.Database);
                 }
-            });
-            AppEvent.Publish(new GetDbInstanceRequestEvent() { Token = token });
-
-            AppEvent.Subscribe<DatabaseRefreshEvent>(p =>
+            };
+            dbRefreshEventHandler = p =>
             {
-                this.Database = p.Database;
-                BindUI();
-            });
+                BindUI(p.Database);
+            };
+            AppEvent.Subscribe(dbResponseEventHandler);
+            AppEvent.Subscribe(dbRefreshEventHandler);
+            AppEvent.Publish(new GetDbInstanceRequestEvent() { Token = token });
+            this.Disposed += SimpleChildUI_Disposed;
         }
 
-        private void BindUI()
+        private void SimpleChildUI_Disposed(object sender, EventArgs e)
         {
+            AppEvent.UnSubscribe(dbResponseEventHandler);
+            AppEvent.UnSubscribe(dbRefreshEventHandler);
+        }
+
+        private void BindUI(IDatabaseInfo db)
+        {
+            this.Database = db;
             this.SelectedChildTable = null;
             this.SelectedParentTable = null;
             this.cbForeignKey.Items.Clear();
@@ -55,15 +65,15 @@ namespace CKGen.Temp.AspnetMVC
             cbTablesForChild.Text = "";
             cbTablesForParent.Text = "";
 
-            if (this.Database != null)
+            if (db != null)
             {
-                foreach (var table in this.Database.Tables)
+                foreach (var table in db.Tables)
                 {
                     cbTablesForChild.Items.Add(table.Name);
                     cbTablesForParent.Items.Add(table.Name);
                 }
 
-                AspnetMVCSetting setting = SettingStore.Instance.Get<AspnetMVCSetting>(this.Database.Name + "_aspnetmvc.xml");
+                AspnetMVCSetting setting = SettingStore.Instance.Get<AspnetMVCSetting>(db.Name + "_aspnetmvc.xml");
                 if (setting != null)
                 {
                     txtNamespace.Text = setting.Namespace;
@@ -78,8 +88,6 @@ namespace CKGen.Temp.AspnetMVC
             this.Controls.Add(vResult);
             vResult.Hide();
             btnView.Hide();
-
-            BindUI();
         }
 
         private void btnGen_Click(object sender, EventArgs e)
@@ -296,37 +304,8 @@ namespace CKGen.Temp.AspnetMVC
                         row.Cells[2].Value = item.Nullable ? true : false;
                         row.Cells[3].Value = item["local_desc"] ?? "";
                         row.Cells[4].Value = (item.IsPrimaryKey) ? "hidden" : "text";
-
-                        //DataGridViewTextBoxCell col1 = new DataGridViewTextBoxCell();
-                        //col1.Value = item.RawName;
-
-                        //DataGridViewTextBoxCell col2 = new DataGridViewTextBoxCell();
-                        //col2.Value = SQLHelper.GetFullSqlType(item);
-
-                        //DataGridViewCheckBoxCell col3 = new DataGridViewCheckBoxCell();
-                        //col3.Value = item.Nullable ? true : false;
-
-                        //DataGridViewTextBoxCell col4 = new DataGridViewTextBoxCell();
-                        //col4.Value = item["local_desc"] ?? "";
-
-                        //DataGridViewComboBoxCell col5 = new DataGridViewComboBoxCell();
-                        //col5.Items.Add("text");
-                        //col5.Items.Add("hidden");
-                        //col5.Items.Add("select");
-                        //col5.Items.Add("radio");
-                        //col5.Items.Add("checkbox");
-                        //col5.Items.Add("textarea");
-                        //col5.Value = (item.IsPrimaryKey) ? "hidden" : "text";
-
-                        //DataGridViewTextBoxCell col6 = new DataGridViewTextBoxCell();
-
-                        ////DataGridViewRow row = new DataGridViewRow();
-                        //row.Tag = item.IsPrimaryKey;
-                        //row.Cells.AddRange(new DataGridViewCell[] { col1, col2, col3, col4, col5, col6 });
                         rlist.Add(row);
                     }
-
-                    //this.gvFields.Rows.AddRange(rlist.ToArray());
                     this.SelectedChildTable = selTable;
                 }
             }

@@ -15,6 +15,11 @@ namespace CKGen.Base
             handlers.Add(handler);
         }
 
+        public void UnSubscribe(Action<T> handler)
+        {
+            handlers.Remove(handler);
+        }
+
         public void Publish(T parameter)
         {
             handlers.ForEach(a => a(parameter));

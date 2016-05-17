@@ -15,6 +15,12 @@ namespace CKGen.Base.Events
             Events.GetEvent<T>().Subscribe(handler);
         }
 
+        public static void UnSubscribe<T>(Action<T> handler)
+            where T : CompositePresentationEvent<T>, new()
+        {
+            Events.GetEvent<T>().UnSubscribe(handler);
+        }
+
         public static void Publish<T>(T parameter)
             where T : CompositePresentationEvent<T>, new()
         {

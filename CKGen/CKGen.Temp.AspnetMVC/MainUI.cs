@@ -20,6 +20,8 @@ namespace CKGen.Temp.AspnetMVC
         private string webNSString;
         private ITableInfo SelectedTable;
 
+        private Action<GetDbInstanceResponseEvent> dbResponseEventHandler = null;
+        private Action<DatabaseRefreshEvent> dbRefreshEventHandler = null;
         public override string ToString()
         {
             return "ASP.NET MVC 模板";
@@ -29,19 +31,27 @@ namespace CKGen.Temp.AspnetMVC
         {
             InitializeComponent();
 
-            AppEvent.Subscribe<GetDbInstanceResponseEvent>(p =>
+            dbResponseEventHandler = p =>
             {
                 if (p.Token == token)
                 {
                     BindUI(p.Database);
                 }
-            });
-            AppEvent.Publish(new GetDbInstanceRequestEvent() { Token = token });
-
-            AppEvent.Subscribe<DatabaseRefreshEvent>(p =>
+            };
+            dbRefreshEventHandler = p =>
             {
                 BindUI(p.Database);
-            });
+            };
+            AppEvent.Subscribe(dbResponseEventHandler);
+            AppEvent.Subscribe(dbRefreshEventHandler);
+            AppEvent.Publish(new GetDbInstanceRequestEvent() { Token = token });
+            this.Disposed += SimpleChildUI_Disposed;
+        }
+
+        private void SimpleChildUI_Disposed(object sender, EventArgs e)
+        {
+            AppEvent.UnSubscribe(dbResponseEventHandler);
+            AppEvent.UnSubscribe(dbRefreshEventHandler);
         }
 
         private void BindUI(IDatabaseInfo db)
