@@ -74,12 +74,6 @@
     <Compile Include="ViewResult.Designer.cs">
       <DependentUpon>ViewResult.cs</DependentUpon>
     </Compile>
-    <Compile Include="ViewSetting.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="ViewSetting.Designer.cs">
-      <DependentUpon>ViewSetting.cs</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="AspnetMVC\Controller.cshtml">
@@ -156,9 +150,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ViewResult.resx">
       <DependentUpon>ViewResult.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ViewSetting.resx">
-      <DependentUpon>ViewSetting.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -15,8 +15,7 @@ namespace CKGen.Temp.AspnetMVC
     {
         private readonly object token = new object();
         private readonly IResService resService = ServiceLocator.Instance.GetService<IResService>();
-        [Import("Database")]
-        public IDatabaseInfo Database { get; set; }
+        private IDatabaseInfo Database { get; set; }
         private ViewResult vResult = null;
         private ITableInfo SelectedChildTable;
         private ITableInfo SelectedParentTable;
