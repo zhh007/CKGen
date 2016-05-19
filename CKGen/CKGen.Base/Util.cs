@@ -57,62 +57,6 @@ WHERE user_type_id =
             return dbtype;
         }
 
-        ///// <summary>
-        ///// 列描述
-        ///// </summary>
-        ///// <param name="c"></param>
-        ///// <returns></returns>
-        //public static string GetColumnDesc(Column c)
-        //{
-        //    string desc = "";
-        //    string sqlType = c.DataType.Name;
-        //    if (c.ExtendedProperties["MS_Description"] != null)
-        //        desc = c.ExtendedProperties["MS_Description"].ToString();
-        //    if (c.InPrimaryKey)
-        //    {
-        //        if (desc.Length > 0)
-        //            desc += "，主键";
-        //        else
-        //            desc = "主键";
-        //    }
-        //    int maxLen = c.DataType.MaximumLength;
-        //    int maxPrecision = c.DataType.NumericPrecision;
-        //    int numericScale = c.DataType.NumericScale;
-        //    if (desc.Length > 0)
-        //        desc += "，";
-
-        //    if (LanguageConvert.IsStringType(sqlType))
-        //    {
-        //        desc += sqlType + "，长度：" + maxLen;
-        //    }
-        //    else if (LanguageConvert.IsNumericType(sqlType))
-        //    {
-        //        desc += sqlType + "，长度：" + maxLen + "，精度：" + maxPrecision + "，小数位数：" + numericScale;
-        //    }
-
-        //    return desc;
-        //}
-
-        ///// <summary>
-        ///// 列描述
-        ///// </summary>
-        ///// <param name="c"></param>
-        ///// <param name="full"></param>
-        ///// <returns></returns>
-        //public static string GetColumnDesc(Column c, bool full)
-        //{
-        //    if (full)
-        //    {
-        //        return GetColumnDesc(c);
-        //    }
-
-        //    string desc = "";
-        //    string sqlType = c.DataType.Name;
-        //    if (c.ExtendedProperties["MS_Description"] != null)
-        //        desc = c.ExtendedProperties["MS_Description"].ToString();
-        //    return desc;
-        //}
-
         /// <summary>
         /// 生成insert语句,
         /// 计算列和自增列不插入
