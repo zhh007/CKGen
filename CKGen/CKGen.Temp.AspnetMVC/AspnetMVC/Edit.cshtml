@@ -24,13 +24,12 @@
 <div class="form-wrapper">
     <div class="row">
         <div class="col-lg-8 col-md-9 col-sm-11">
-            @@using (Html.BeginForm("Add", "@(Model.DBTable.Name)", FormMethod.Post, new { @@id = "form1", @@class = "form-horizontal" }))
+            @@using (Html.BeginForm("Edit", "@(Model.DBTable.Name)", FormMethod.Post, new { @@id = "form1", @@class = "form-horizontal" }))
             {
             @@Html.AntiForgeryToken()
             @@Html.HiddenFor(p => p.ID)
-            <input type="hidden" name="WeekDayList" />
             <div class="form-group">
-                <label class="col-sm-2 control-label" for="formGroupInputSmall">
+                <label class="col-sm-2 control-label">
                     招募活动<span style="color: #F00">*</span>
                 </label>
                 <div class="col-sm-10">
@@ -39,7 +38,7 @@
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-2 control-label" for="formGroupInputSmall">
+                <label class="col-sm-2 control-label">
                     招募人数最少<span style="color: #F00">*</span>
                 </label>
                 <div class="col-sm-10">
@@ -69,7 +68,7 @@
             var fvalid = check();
             var fvalid2 = frmObj.valid();
             if (fvalid && fvalid2) {
-                $.post('@@Href("~/@(Model.DBTable.Name)/Add")'
+                $.post('@@Href("~/@(Model.DBTable.Name)/Edit")'
                     , frmObj.serialize()
                     , function (data) {
                         ajaxAlert(data);

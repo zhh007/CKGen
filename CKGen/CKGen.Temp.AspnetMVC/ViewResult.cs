@@ -16,6 +16,7 @@ namespace CKGen.Temp.AspnetMVC
         private IGenUI parent;
         private string folderPath;
         private bool showCode = false;
+        private TreeNode initSelectedNode = null;
 
         public ViewResult(IGenUI _parent)
         {
@@ -37,24 +38,19 @@ namespace CKGen.Temp.AspnetMVC
             folderPath = folder;
 
             DirectoryInfo dir = new DirectoryInfo(folder);
-            TreeNode root = BuildDirForTreeview(dir);
+            TreeNode root = BuildDirForTreeview(dir, "目录");
             root.ExpandAll();
             tvRoot.Nodes.Add(root);
-            if(root.Nodes != null && root.Nodes.Count > 0)
-            {
-                tvRoot.SelectedNode = root.Nodes[0];
-                string txt = File.ReadAllText(root.Nodes[0].Tag as string);
-                txtCode.Text = txt;
-            }
+            tvRoot.SelectedNode = initSelectedNode;
         }
 
-        private TreeNode BuildDirForTreeview(DirectoryInfo dir)
+        private TreeNode BuildDirForTreeview(DirectoryInfo dir, string showname)
         {
-            TreeNode tn = new TreeNode("目录");
+            TreeNode tn = new TreeNode(showname);
 
             foreach (var item in dir.GetDirectories())
             {
-                tn.Nodes.Add(BuildDirForTreeview(item));
+                tn.Nodes.Add(BuildDirForTreeview(item, item.Name));
             }
 
             foreach (var file in dir.GetFiles())
@@ -63,7 +59,7 @@ namespace CKGen.Temp.AspnetMVC
                 fileNode.Tag = file.FullName;
                 if (!showCode)
                 {
-                    tvRoot.SelectedNode = fileNode;
+                    initSelectedNode = fileNode;
                     txtCode.Text = File.ReadAllText(file.FullName);
                     showCode = true;
                 }

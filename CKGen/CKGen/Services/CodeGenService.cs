@@ -32,7 +32,7 @@ namespace CKGen.Services
             string tmp = System.IO.File.ReadAllText(viewpath);
             string result = RazorService.Instance.Gen(tmp, model);
 
-            string dir = System.IO.Path.GetPathRoot(filepath);
+            string dir = System.IO.Path.GetDirectoryName(filepath);
             if (!Directory.Exists(dir))
             {
                 Directory.CreateDirectory(dir);

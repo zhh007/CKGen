@@ -69,9 +69,9 @@ namespace CKGen.Temp.AspnetMVC
 
             _build("Controller.cshtml", typeof(PageViewModel), pvModel, tInfo.PascalName + "Controller.cs");
             _build("ViewModel.cshtml", typeof(PageViewModel), pvModel, tInfo.PascalName + "ViewModel.cs");
-            _build("Index.cshtml", typeof(PageViewModel), pvModel, "Index.cshtml");
-            _build("Add.cshtml", typeof(PageViewModel), pvModel, "Add.cshtml");
-            _build("Edit.cshtml", typeof(PageViewModel), pvModel, "Edit.cshtml");
+            _build("Index.cshtml", typeof(PageViewModel), pvModel, tInfo.PascalName + "\\Index.cshtml");
+            _build("Add.cshtml", typeof(PageViewModel), pvModel, tInfo.PascalName + "\\Add.cshtml");
+            _build("Edit.cshtml", typeof(PageViewModel), pvModel, tInfo.PascalName + "\\Edit.cshtml");
 
             return this._targetFolder;
         }
