@@ -18,6 +18,7 @@ namespace CKGen.Temp.AspnetMVC
         private string tableName;
         private string nsString;
         private string webNSString;
+        private string modalName;
         private ITableInfo SelectedTable;
 
         private Action<GetDbInstanceResponseEvent> dbResponseEventHandler = null;
@@ -120,6 +121,10 @@ namespace CKGen.Temp.AspnetMVC
             {
                 return;
             }
+            if (string.IsNullOrEmpty(txtModalName.Text) || string.IsNullOrWhiteSpace(txtModalName.Text))
+            {
+                return;
+            }
 
             bool hasTable = false;
             foreach (var item in this.Database.Tables)
@@ -136,6 +141,7 @@ namespace CKGen.Temp.AspnetMVC
                 return;
             }
 
+            txtModalName.Enabled = false;
             txtNamespace.Enabled = false;
             txtWebProjNameSpace.Enabled = false;
             cbTables.Enabled = false;
@@ -148,6 +154,7 @@ namespace CKGen.Temp.AspnetMVC
             tableName = cbTables.Text.Trim();
             nsString = txtNamespace.Text.Trim();
             webNSString = txtWebProjNameSpace.Text.Trim();
+            modalName = txtModalName.Text.Trim();
 
             AspnetMVCSetting setting = new AspnetMVCSetting();
             setting.Namespace = nsString;
@@ -164,6 +171,7 @@ namespace CKGen.Temp.AspnetMVC
 
         private void _bgWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
+            txtModalName.Enabled = true;
             txtNamespace.Enabled = true;
             txtWebProjNameSpace.Enabled = true;
             cbTables.Enabled = true;
@@ -177,7 +185,7 @@ namespace CKGen.Temp.AspnetMVC
         private void _bgWorker_DoWork(object sender, DoWorkEventArgs e)
         {
             CodeBuilder mvcBuilder = new CodeBuilder();
-            folderPath = mvcBuilder.Build(SelectedTable, nsString, webNSString);
+            folderPath = mvcBuilder.Build(SelectedTable, nsString, webNSString, modalName);
         }
 
         /// <summary>

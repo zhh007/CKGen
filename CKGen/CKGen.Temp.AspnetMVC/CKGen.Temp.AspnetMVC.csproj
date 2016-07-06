@@ -88,6 +88,9 @@
     <None Include="AspnetMVC\Edit.cshtml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="AspnetMVC\readme.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="AspnetMVC\Index.cshtml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

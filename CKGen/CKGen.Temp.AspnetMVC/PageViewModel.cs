@@ -13,6 +13,8 @@ namespace CKGen.Temp.AspnetMVC
         public string NameSpacePR { get; set; }
 
         public string WebProjNameSpace { get; set; }
+        public string DatabaseName { get; set; }
+        public string ModalName { get; set; }
 
         public string GetKeyParamterString()
         {

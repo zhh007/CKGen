@@ -1,0 +1,35 @@
+﻿@using RazorEngine.Templating
+@using CKGen.Temp.AspnetMVC
+@using CKGen.DBSchema;
+@inherits TemplateBase<PageViewModel>
+
+以下内容请添加到相应文件中。
+
+/*
+** @(Model.NameSpacePR).Data.Models.@(Model.DatabaseName)Context.OnModelCreating()
+*/
+modelBuilder.Configurations.Add(new @(Model.DBTable.Name)Map());
+
+/*
+** @(Model.NameSpacePR).ServiceInterface.EFMapCreator.CreateMap()
+*/
+Mapper.CreateMap<@(Model.DBTable.Name), @(Model.DBTable.Name)DTO>();
+Mapper.CreateMap<@(Model.DBTable.Name)DTO, @(Model.DBTable.Name)>();
+Mapper.CreateMap<@(Model.DBTable.Name), @(Model.DBTable.Name)IncludeModifyUserDTO>();
+Mapper.CreateMap<@(Model.DBTable.Name)IncludeModifyUserDTO, @(Model.DBTable.Name)>();
+
+/*
+** @(Model.WebProjNameSpace).App_Start.AutoMapperCreator.CreateMap()
+*/
+Mapper.CreateMap<@(Model.DBTable.Name)ViewModel, @(Model.DBTable.Name)DTO>();
+Mapper.CreateMap<@(Model.DBTable.Name)DTO, @(Model.DBTable.Name)ViewModel>();
+
+/*
+** unity.config
+*/
+<register type="@(Model.NameSpacePR).Data.Repositories.I@(Model.DBTable.Name)Repository, @(Model.NameSpacePR).Data" mapTo="@(Model.NameSpacePR).Data.Repositories.@(Model.DBTable.Name)Repository, @(Model.NameSpacePR).Data" />
+<register type="@(Model.NameSpacePR).ServiceInterface.I@(Model.DBTable.Name)Service, @(Model.NameSpacePR).ServiceInterface" mapTo="@(Model.NameSpacePR).EFAdapter.@(Model.DBTable.Name)Service, @(Model.NameSpacePR).EFAdapter">
+    <interceptor type="InterfaceInterceptor" />
+    <interceptionBehavior type="PolicyInjectionBehavior" />
+</register>
+

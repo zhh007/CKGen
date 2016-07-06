@@ -19,32 +19,10 @@ namespace @(Model.NameSpacePR).Data.Repositories
         {
 
         }
-
-        public void UpdatePartial(@(Model.DBTable.Name) model)
-        {
-            DataContext.Set@("<" + Model.DBTable.Name + ">")().Update@("<" + Model.DBTable.Name +">")(
-                p => @(Model.GetUpdateFilterString("model")),
-                m => new @(Model.DBTable.Name)
-                {
-        @foreach (IColumnInfo column in Model.DBTable.Columns)
-        {
-            if (column.IsPrimaryKey)
-            {
-                continue;
-            }
-            if (column.LowerName.Contains("create"))
-            {
-                continue;
-            }
-                    <text>@(column.PascalName) = model.@(column.PascalName),</text>
-        }
-                }
-            );
-        }
     }
 
     public interface I@(Model.DBTable.Name)Repository : IRepository@("<" + Model.DBTable.Name + ">")
     {
-        void UpdatePartial(@(Model.DBTable.Name) model);
+
     }
 }

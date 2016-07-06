@@ -21,7 +21,7 @@ namespace CKGen.Temp.AspnetMVC
             Directory.CreateDirectory(_targetFolder);
         }
 
-        public string Build(IDatabaseInfo database, string tableName, string ns, string webns)
+        public string Build(IDatabaseInfo database, string tableName, string ns, string webns, string modalName)
         {
             try
             {
@@ -48,17 +48,19 @@ namespace CKGen.Temp.AspnetMVC
                     continue;
                 }
 
-                Build(tInfo, ns, webns);
+                Build(tInfo, ns, webns, modalName);
             }
             return _targetFolder;
         }
 
-        public string Build(ITableInfo tInfo, string ns, string webns)
+        public string Build(ITableInfo tInfo, string ns, string webns, string modalName)
         {
             PageViewModel pvModel = new PageViewModel();
             pvModel.NameSpacePR = ns;
             pvModel.WebProjNameSpace = webns;
             pvModel.DBTable = tInfo;
+            pvModel.DatabaseName = tInfo.Database.Name;
+            pvModel.ModalName = modalName;
 
             _build("Model.cshtml", typeof(PageViewModel), pvModel, tInfo.PascalName + ".cs");
             _build("Map.cshtml", typeof(PageViewModel), pvModel, tInfo.PascalName + "Map.cs");
@@ -72,6 +74,8 @@ namespace CKGen.Temp.AspnetMVC
             _build("Index.cshtml", typeof(PageViewModel), pvModel, tInfo.PascalName + "\\Index.cshtml");
             _build("Add.cshtml", typeof(PageViewModel), pvModel, tInfo.PascalName + "\\Add.cshtml");
             _build("Edit.cshtml", typeof(PageViewModel), pvModel, tInfo.PascalName + "\\Edit.cshtml");
+
+            _build("readme.cshtml", typeof(PageViewModel), pvModel, "readme.txt");
 
             return this._targetFolder;
         }
