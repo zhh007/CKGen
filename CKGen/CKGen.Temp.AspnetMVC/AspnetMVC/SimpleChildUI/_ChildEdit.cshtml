@@ -3,27 +3,6 @@
 @using CKGen.DBSchema;
 @inherits TemplateBase<SimpleChildGenModel>
 
-<!--
-//加入Add.cshtml或Edit.cshtml
-<div class="form-group">
-    <label class="col-sm-2 control-label">
-        体验课时间<span style="color: #F00; visibility:hidden">*</span>
-    </label>
-    <div class="col-sm-10">
-        <div class="row">
-            <div class="col-sm-12">
-                <span class="control-label text-info plantip fn-left">提示：添加体验课可以创造更好的用户体验。&nbsp;</span>
-                <button type="button" onclick="addRow()" class="btn btn-danger btn-sm fn-left">添加</button>
-            </div>
-        </div>
-        <div class="row" style="margin-top:5px">
-            <div class="col-sm-12">
-                @@Html.Partial("_@(Model.ChildModel.PascalName)Edit", Model)
-            </div>
-        </div>
-    </div>
-</div>
--->
 @@model @(Model.WebProjNameSpace).Models.@(Model.ParentModel.Name)ViewModel
 
 <table class="table table-bordered table-striped table-hover">
@@ -47,10 +26,10 @@
         @@for (int i = 0; i < @("Model." + Model.ChildCollectionName + ".Count"); i++)
         {
             <tr class="@(Model.ChildCollectionName.ToLower())row">
-                @for (int i = 0; i < Model.GetColumnCount(); i++)
+                @for (int j = 0; j < Model.GetColumnCount(); j++)
                 {
                 <td>
-                    @Model.GetRowHtmlString(i)
+                    @Model.GetRowHtmlString(j, "@(i)", "                    ")
                 </td>
                 }
                 <td style="vertical-align:middle">
@@ -60,24 +39,22 @@
         }
     </tbody>
 </table>
-<script type="text/javascript">
-    function addRow(sid, date, btime, etime) {
-        sid = sid || -1;
-        date = date || "";
-        btime = btime || "";
-        etime = etime || "";
-        var h = '';
-        h += '<tr class="trytimerow">';
-        @for (int i = 0; i < Model.GetColumnCount(); i++)
+<script id="@(Model.ChildCollectionName.ToLower())RowTemp" type="text/template">
+    <tr class="@(Model.ChildCollectionName.ToLower())row">
+        @for (int j = 0; j < Model.GetColumnCount(); j++)
         {
-        <text>h += '<td>';
-        @Model.GetRowForJS(i)
-        h += '</td>';</text>
+        <td>
+            @Model.GetRowHtmlString(j, "0", "            ")
+        </td>
         }
-        h += '<td style="vertical-align:middle">';
-        h += '<a href="javascript:void(0)" onclick="removeRow(this)">删除</a>';
-        h += '</td>';
-        h += '</tr>';
+        <td style="vertical-align:middle">
+            <a href="javascript:void(0)" onclick="removeRow(this)">删除</a>
+        </td>
+    </tr>
+</script>
+<script type="text/javascript">
+    function addRow() {
+        var h = $('#@(Model.ChildCollectionName.ToLower())RowTemp').html();
         $("#@(Model.ChildCollectionName.ToLower())box").append(h);
         updateRowId();
     }
@@ -89,7 +66,7 @@
         $(".@(Model.ChildCollectionName.ToLower())row").each(function (i, o) {
             @for (int i = 0; i < Model.GetColumnCount(); i++)
             {
-            <text>@Model.GetRowForJSUpdateId(i)</text>
+            <text>@Model.GetRowForJSUpdateId(i, "            ")</text>
             }
         });
     }

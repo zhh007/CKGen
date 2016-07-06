@@ -169,6 +169,11 @@ namespace CKGen.Temp.AspnetMVC
                 return;
             }
 
+            if(tbParentName == tbChildName)
+            {
+                return;
+            }
+
             txtChildName.Enabled = false;
             txtNamespace.Enabled = false;
             txtWebProjNameSpace.Enabled = false;
@@ -187,7 +192,7 @@ namespace CKGen.Temp.AspnetMVC
             GenModel.ChildCollectionName = childCollectionName;
             GenModel.ChildModel = this.SelectedChildTable;
             GenModel.ParentModel = this.SelectedParentTable;
-
+            GenModel.Items.Clear();
             foreach (DataGridViewRow item in gvFields.Rows)
             {
                 InputItem inp = new InputItem();

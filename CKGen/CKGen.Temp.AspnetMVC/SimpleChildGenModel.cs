@@ -27,38 +27,46 @@ namespace CKGen.Temp.AspnetMVC
             return Items.Count(p => p.InputType != "hidden");
         }
 
-        public string GetRowHtmlString(int index)
+        public string GetRowHtmlString(int index, string indexString, string rowspan)
         {
             StringBuilder sb = new StringBuilder();
             if (index == 0)
             {
                 var list = Items.Where(p => p.InputType == "hidden").ToList();
-                foreach (var item in list)
+                for (int i = 0; i < list.Count; i++)
                 {
-                    sb.Append(_getRowString(item));
+                    if (i > 0)
+                    {
+                        sb.Append(rowspan);
+                    }
+                    sb.Append(_getCtrlString(list[i], indexString));
                     sb.Append("\r\n");
                 }
             }
+            if (sb.Length > 0 && index == 0)
+            {
+                sb.Append(rowspan);
+            }
             InputItem inp = Items.Where(p => p.InputType != "hidden").ToList()[index];
-            sb.Append(_getRowString(inp));
+            sb.Append(_getCtrlString(inp, indexString));
             return sb.ToString();
         }
 
-        public string GetRowForJS(int index)
-        {
-            StringBuilder sb = new StringBuilder();
-            if (index == 0)
-            {
-                var list = Items.Where(p => p.InputType == "hidden").ToList();
-                foreach (var item in list)
-                {
-                    sb.AppendLine("h += '" + clearRowForJs(_getRowString(item)) + "';");
-                }
-            }
-            InputItem inp = Items.Where(p => p.InputType != "hidden").ToList()[index];
-            sb.Append("h += '" + clearRowForJs(_getRowString(inp)) + "';");
-            return sb.ToString();
-        }
+        //public string GetRowForJS(int index)
+        //{
+        //    StringBuilder sb = new StringBuilder();
+        //    if (index == 0)
+        //    {
+        //        var list = Items.Where(p => p.InputType == "hidden").ToList();
+        //        foreach (var item in list)
+        //        {
+        //            sb.AppendLine("h += '" + clearRowForJs(_getRowString(item)) + "';");
+        //        }
+        //    }
+        //    InputItem inp = Items.Where(p => p.InputType != "hidden").ToList()[index];
+        //    sb.Append("h += '" + clearRowForJs(_getRowString(inp)) + "';");
+        //    return sb.ToString();
+        //}
 
         private string clearRowForJs(string txt)
         {
@@ -66,47 +74,61 @@ namespace CKGen.Temp.AspnetMVC
             return str.Replace("@(i)", "0");
         }
 
-        public string GetRowForJSUpdateId(int index)
+        public string GetRowForJSUpdateId(int index, string rowspan)
         {
             StringBuilder sb = new StringBuilder();
             if (index == 0)
             {
                 var list = Items.Where(p => p.InputType == "hidden").ToList();
-                foreach (var item in list)
+                for (int i = 0; i < list.Count; i++)
                 {
-                    sb.AppendFormat("$(\".{2}row_{1}\", o).attr(\"id\", \"{1}_\" + i).attr(\"name\", \"{0}[\" + i + \"].{1}\");", this.ChildCollectionName, item.PascalName, this.ChildCollectionName.ToLower());
+                    if (i > 0)
+                    {
+                        sb.Append(rowspan);
+                    }
+                    sb.AppendFormat("$(\".{2}row_{1}\", o).attr(\"id\", \"{1}_\" + i).attr(\"name\", \"{0}[\" + i + \"].{1}\");", this.ChildCollectionName, list[i].PascalName, this.ChildCollectionName.ToLower());
                     sb.Append("\r\n");
                 }
+            }
+            if (sb.Length > 0 && index == 0)
+            {
+                sb.Append(rowspan);
             }
             InputItem inp = Items.Where(p => p.InputType != "hidden").ToList()[index];
             sb.AppendFormat("$(\".{2}row_{1}\", o).attr(\"id\", \"{1}_\" + i).attr(\"name\", \"{0}[\" + i + \"].{1}\");", this.ChildCollectionName, inp.PascalName, this.ChildCollectionName.ToLower());
             return sb.ToString();
         }
 
-        public string _getRowString(InputItem inp)
+        public string _getCtrlString(InputItem inp, string idx)
         {
             StringBuilder sb = new StringBuilder();
             switch (inp.InputType)
             {
                 case "text":
-                    sb.AppendFormat("<input name=\"{0}[@(i)].{1}\" id=\"{1}_@(i)\" type=\"text\" value=\"@Model.{0}[i].{1}\" class=\"form-control {2}row_{1}\" />", this.ChildCollectionName, inp.PascalName, this.ChildCollectionName.ToLower());
+                    sb.AppendFormat("<input name=\"{0}[{3}].{1}\" id=\"{1}_{3}\" type=\"text\" class=\"form-control {2}row_{1}\" />"
+                        , this.ChildCollectionName, inp.PascalName, this.ChildCollectionName.ToLower(), idx);
                     break;
                 case "hidden":
-                    sb.AppendFormat("<input name=\"{0}[@(i)].{1}\" id=\"{1}_@(i)\" type=\"hidden\" value=\"@Model.{0}[i].{1}\" class=\"{2}row_{1}\" />", this.ChildCollectionName, inp.PascalName, this.ChildCollectionName.ToLower());
+                    sb.AppendFormat("<input name=\"{0}[{3}].{1}\" id=\"{1}_{3}\" type=\"hidden\" class=\"{2}row_{1}\" />"
+                        , this.ChildCollectionName, inp.PascalName, this.ChildCollectionName.ToLower(), idx);
                     break;
                 case "select":
-                    sb.AppendFormat("<select name=\"{0}[@(i)].{1}\" id=\"{1}_@(i)\" class=\"form-control {2}row_{1}\">", this.ChildCollectionName, inp.PascalName, this.ChildCollectionName.ToLower());
+                    sb.AppendFormat("<select name=\"{0}[{3}].{1}\" id=\"{1}_{3}\" class=\"form-control {2}row_{1}\">"
+                        , this.ChildCollectionName, inp.PascalName, this.ChildCollectionName.ToLower(), idx);
                     sb.Append("<option value=\"\">全部</option>");
                     sb.Append("</select>");
                     break;
                 case "radio":
-                    sb.AppendFormat("<input name=\"{0}[@(i)].{1}\" id=\"{1}_@(i)\" type=\"radio\" class=\"form-control {2}row_{1}\" />", this.ChildCollectionName, inp.PascalName, this.ChildCollectionName.ToLower());
+                    sb.AppendFormat("<input name=\"{0}[{3}].{1}\" id=\"{1}_{3}\" type=\"radio\" class=\"form-control {2}row_{1}\" />"
+                        , this.ChildCollectionName, inp.PascalName, this.ChildCollectionName.ToLower(), idx);
                     break;
                 case "checkbox":
-                    sb.AppendFormat("<input name=\"{0}[@(i)].{1}\" id=\"{1}_@(i)\" type=\"checkbox\" class=\"form-control {2}row_{1}\" />", this.ChildCollectionName, inp.PascalName, this.ChildCollectionName.ToLower());
+                    sb.AppendFormat("<input name=\"{0}[{3}].{1}\" id=\"{1}_{3}\" type=\"checkbox\" class=\"form-control {2}row_{1}\" />"
+                        , this.ChildCollectionName, inp.PascalName, this.ChildCollectionName.ToLower(), idx);
                     break;
                 case "textarea":
-                    sb.AppendFormat("<textarea name=\"{0}[@(i)].{1}\" id=\"{1}_@(i)\" class=\"form-control {2}row_{1}\" ></textarea>", this.ChildCollectionName, inp.PascalName, this.ChildCollectionName.ToLower());
+                    sb.AppendFormat("<textarea name=\"{0}[{3}].{1}\" id=\"{1}_{3}\" class=\"form-control {2}row_{1}\" ></textarea>"
+                        , this.ChildCollectionName, inp.PascalName, this.ChildCollectionName.ToLower(), idx);
                     break;
                 default:
                     break;
@@ -135,11 +157,11 @@ namespace CKGen.Temp.AspnetMVC
 
             foreach (var col in tinfo.Columns)
             {
-                if(!col.IsPrimaryKey)
+                if (!col.IsPrimaryKey)
                 {
                     continue;
                 }
-                if(sb.Length > 0)
+                if (sb.Length > 0)
                 {
                     sb.Append(" && ");
                 }
