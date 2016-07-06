@@ -4,19 +4,13 @@
 @inherits TemplateBase<PageViewModel>
 
 @@model @(Model.WebProjNameSpace).Models.@(Model.DBTable.Name)ViewModel
-@@{
-    ViewBag.Title = "新增";
-}
+
 <div class="row">
     <div class="col-lg-12">
         <div class="page-header fn-clear">
-            <h2 class="col-md-10">
-                开课地点-新增
-            </h2>
+            <h2 class="col-md-10">开课地点-新增</h2>
             <div class="col-md-2 text-right">
-                <a onclick="location='@("@Href(\"~/" + Model.DBTable.Name + "/\")" )'" class="btn btn-danger" style="margin-top: 25px;">
-                    返回
-                </a>
+                <a onclick="goback()" class="btn btn-danger" style="margin-top: 25px;">返回</a>
             </div>
         </div>
     </div>
@@ -48,12 +42,8 @@
                 </div>
                 <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10">
-                        <button type="button" class="btn btn-primary" id="frm-submit">
-                            保存
-                        </button>
-                        <button type="button" class="btn btn-default" onclick="location='@("@Href(\"~/" + Model.DBTable.Name + "/\")" )'">
-                            取消
-                        </button>
+                        <button type="button" class="btn btn-primary" id="frm-submit">保存</button>
+                        <button type="button" class="btn btn-default" onclick="goback()">取消</button>
                     </div>
                 </div>
             }
@@ -73,7 +63,7 @@
                     , function (data) {
                         ajaxAlert(data);
                         if (data.success) {
-                            location = '@@Href("~/@(Model.DBTable.Name)/")';
+                            goback();
                         }
                     }
                     , "json"
@@ -89,5 +79,9 @@
         //addError("FixedMode", "请输入上课规律。");
 
         return success;
+    }
+
+    function goback() {
+        location = '@("@Href(\"~/" + Model.DBTable.Name + "/\")" )';
     }
 </script>
