@@ -86,7 +86,14 @@ namespace CKGen.Controls
                     col3.Value = item.Nullable ? true : false;
 
                     DataGridViewTextBoxCell col4 = new DataGridViewTextBoxCell();
-                    col4.Value = item["local_desc"] ?? "";
+                    if (!string.IsNullOrEmpty(item["new_desc"]))
+                    {
+                        col4.Value = item["new_desc"] ?? "";
+                    }
+                    else
+                    {
+                        col4.Value = item["local_desc"] ?? "";
+                    }
 
                     DataGridViewTextBoxCell col5 = new DataGridViewTextBoxCell();
 
