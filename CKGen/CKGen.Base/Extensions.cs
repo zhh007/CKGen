@@ -84,5 +84,33 @@ namespace CKGen
 
             return friendlyName;
         }
+
+        public static string ToHexString(this byte[] source)
+        {
+            if (source == null) return null;
+            if (source.Length == 0) return string.Empty;
+
+            return "0x" + BitConverter.ToString(source).Replace("-", "");
+        }
+
+        public static byte[] ToHexBytes(this string source)
+        {
+            if (source == null) return null;
+            if (source.Length == 0) return new byte[0];
+
+            if(source.StartsWith("0x"))
+            {
+                source = source.Substring(2);
+            }
+
+            int l = source.Length / 2;
+            var b = new byte[l];
+            for (int i = 0; i < l; ++i)
+            {
+                b[i] = Convert.ToByte(source.Substring(i * 2, 2), 16);
+            }
+            return b;
+        }
+
     }
 }

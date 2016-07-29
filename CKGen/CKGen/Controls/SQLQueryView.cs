@@ -12,6 +12,7 @@ using System.IO;
 using System.Diagnostics;
 using System.Threading;
 using CKGen.DBSchema;
+using CKGen.Base.Log;
 
 namespace CKGen.Controls
 {
@@ -38,11 +39,11 @@ namespace CKGen.Controls
                 Query(this.txtCode.Text);
                 return true;
             }
-            else if(keyData == Keys.Escape)
+            else if (keyData == Keys.Escape)
             {
                 CancelQuery();
             }
-            else if(keyData == (Keys.Control | Keys.R))
+            else if (keyData == (Keys.Control | Keys.R))
             {
                 splitContainer1.Panel2Collapsed = !splitContainer1.Panel2Collapsed;
             }
@@ -178,30 +179,7 @@ namespace CKGen.Controls
                     {
                         if (ds != null && ds.Tables != null && ds.Tables.Count > 0)
                         {
-                            resultPanel.Controls.Clear();
-                            for (int i = 0; i < ds.Tables.Count; i++)
-                            {
-                                var dgv = new DataGridView();
-                                dgv.BorderStyle = BorderStyle.None;
-                                dgv.AllowUserToAddRows = false;
-                                dgv.AllowUserToDeleteRows = false;
-                                dgv.MultiSelect = false;
-                                dgv.AutoGenerateColumns = true;
-                                dgv.DataSource = ds.Tables[i].DefaultView;
-                                if (ds.Tables.Count == 1)
-                                {
-                                    dgv.Dock = DockStyle.Fill;
-                                }
-                                else
-                                {
-                                    dgv.Width = pBox.Width;
-                                    dgv.Height = 200;
-                                    dgv.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-                                    dgv.Top = 205 * i;
-                                }
-                                resultPanel.Controls.Add(dgv);
-                            }
-                            pBox.Controls.Add(resultPanel);
+                            showDataView(ds);
 
                             txtMsg.ForeColor = System.Drawing.SystemColors.WindowText;
                             txtMsg.Text = string.Format("返回{0}条记录。", count);
@@ -234,6 +212,80 @@ namespace CKGen.Controls
                     Tool2.Items.AddRange(titems.ToArray());
                 }));
             }
+        }
+
+        private void showDataView(DataSet ds)
+        {
+            if (resultPanel.Controls.Count > 0)
+            {
+                foreach (var ctrl in resultPanel.Controls)
+                {
+                    if (ctrl is DataGridView)
+                    {
+                        var dgv = resultPanel.Controls[0] as DataGridView;
+                        if (dgv != null)
+                        {
+                            dgv.CellFormatting -= Dgv_CellFormatting;
+                            dgv.DataError -= Dgv_DataError;
+                        }
+                    }
+                }
+                resultPanel.Controls.Clear();
+            }
+
+            for (int i = 0; i < ds.Tables.Count; i++)
+            {
+                DataGridView dgv = new DataGridView();
+                dgv.CellFormatting += Dgv_CellFormatting;
+                dgv.DataError += Dgv_DataError;
+                dgv.BorderStyle = BorderStyle.None;
+                dgv.AllowUserToAddRows = false;
+                dgv.AllowUserToDeleteRows = false;
+                dgv.MultiSelect = false;
+                dgv.AutoGenerateColumns = false;
+
+                foreach (DataColumn col in ds.Tables[i].Columns)
+                {
+                    var newcol = new DataGridViewTextBoxColumn();
+                    newcol.DataPropertyName = col.ColumnName;
+                    newcol.HeaderText = col.ColumnName;
+                    newcol.ValueType = typeof(string);
+                    dgv.Columns.Add(newcol);
+                }
+                dgv.DataSource = ds.Tables[i].DefaultView;
+
+                if (ds.Tables.Count == 1)
+                {
+                    dgv.Dock = DockStyle.Fill;
+                }
+                else
+                {
+                    dgv.Width = pBox.Width;
+                    dgv.Height = 200;
+                    dgv.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+                    dgv.Top = 205 * i;
+                }
+                resultPanel.Controls.Add(dgv);
+            }
+            pBox.Controls.Add(resultPanel);
+        }
+
+        private void Dgv_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            if (e.Value is byte[])
+            {
+                e.Value = ((byte[])e.Value).ToHexString();//"<二进制数据>";
+                e.FormattingApplied = true;
+            }
+        }
+
+        private void Dgv_DataError(object sender, DataGridViewDataErrorEventArgs e)
+        {
+            DataGridView view = (DataGridView)sender;
+            //view.Rows[e.RowIndex].ErrorText = "an error";
+            view.Rows[e.RowIndex].Cells[e.ColumnIndex].ErrorText = "解析失败";
+            LogHelper.Error(e.Exception);
+            e.ThrowException = false;
         }
 
         private void btnResult_Click(object sender, EventArgs e)
@@ -377,7 +429,7 @@ namespace CKGen.Controls
                 {
                     for (int i = 0; i < tInfo.Columns.Count; i++)
                     {
-                        if(i > 0)
+                        if (i > 0)
                         {
                             sb.Append(", ");
                         }

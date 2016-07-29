@@ -63,7 +63,16 @@ namespace CKGen
 
                             for (int i = 0; i < table.Columns.Count; i++)
                             {
-                                cellIndex = InsertCell(row, cellIndex, dr[i].ToString());
+                                string val = "";
+                                if(dr[i] is byte[])
+                                {
+                                    val = (dr[i] as byte[]).ToHexString();
+                                }
+                                else
+                                {
+                                    val = dr[i].ToString();
+                                }
+                                cellIndex = InsertCell(row, cellIndex, val);
                             }
 
                             rowIndex++;
