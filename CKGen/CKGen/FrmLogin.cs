@@ -1,4 +1,5 @@
 ﻿using CKGen.Base.Events;
+using CKGen.Base.Log;
 using CKGen.DBLoader;
 using System;
 using System.ComponentModel;
@@ -205,6 +206,7 @@ namespace CKGen
             }
             catch (Exception ex)
             {
+                LogHelper.Error(ex);
                 MessageBox.Show(ex.Message, "异常", MessageBoxButtons.OK);
             }
         }

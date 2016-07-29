@@ -1,9 +1,11 @@
 ﻿using CKGen.Base;
 using CKGen.Base.Events;
+using CKGen.Base.Log;
 using CKGen.DBSchema;
 using CKGen.Services;
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace CKGen
@@ -16,6 +18,8 @@ namespace CKGen
         [STAThread]
         static void Main()
         {
+            Application.ThreadException += new ThreadExceptionEventHandler(Application_ThreadException);
+            AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
             Bootstrap.Start();
 
             Application.EnableVisualStyles();
@@ -39,5 +43,19 @@ namespace CKGen
 
             Application.Run(new FrmMain());
         }
+
+        private static void Application_ThreadException(object sender, ThreadExceptionEventArgs e)
+        {
+            LogHelper.Error(e.Exception, "未处理异常");
+        }
+
+        private static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
+        {
+            if (e.ExceptionObject != null && e.ExceptionObject is Exception)
+            {
+                LogHelper.Error(e.ExceptionObject as Exception, "未处理异常");
+            }
+        }
+
     }
 }
