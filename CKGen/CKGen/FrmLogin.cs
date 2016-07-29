@@ -191,7 +191,14 @@ namespace CKGen
                 connected = this.SrvInfo.Connect();
                 if (!connected)
                 {
-                    MessageBox.Show("数据库连接失败。", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    if (this.SrvInfo.LastConnectionException != null)
+                    {
+                        MessageBox.Show(this.SrvInfo.LastConnectionException.Message, "异常", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    else
+                    {
+                        MessageBox.Show("数据库连接失败。", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
                     return;
                 }
                 this.SrvInfo.LoadDatabases();

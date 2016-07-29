@@ -16,6 +16,8 @@ namespace CKGen
         [STAThread]
         static void Main()
         {
+            Bootstrap.Start();
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 

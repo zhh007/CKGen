@@ -13,6 +13,7 @@ namespace CKGen.DBLoader
     using System.IO;
     using System.Reflection;
     using DBSchema;
+    using Base.Log;
 
     /// <summary>
     /// TODO: Update summary.
@@ -40,6 +41,8 @@ namespace CKGen.DBLoader
                 return _root;
             }
         }
+
+        public Exception LastConnectionException { get; private set; }
 
         public SchemaLoader(MyMeta.dbDriver dbDriver, string dbTarget, string language, string connectionString)
         {
@@ -103,6 +106,22 @@ namespace CKGen.DBLoader
             if (_connected)
                 return true;
             _connected = _root.Connect(this._dbDriver, this._ConnectionString);
+
+            bool hasException = false;
+            if(!_connected)
+            {
+                if (_root.LastConnectionException != null)
+                {
+                    hasException = true;
+                    this.LastConnectionException = _root.LastConnectionException;
+                    LogHelper.Error(_root.LastConnectionException);
+                }
+            }
+
+            if(!hasException)
+            {
+                this.LastConnectionException = null;
+            }
 
             //_connected = true;
 

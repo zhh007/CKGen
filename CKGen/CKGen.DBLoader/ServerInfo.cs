@@ -63,6 +63,14 @@ namespace CKGen.DBLoader
             get { return this.loader; }
         }
 
+        public Exception LastConnectionException
+        {
+            get
+            {
+                return this.loader.LastConnectionException;
+            }
+        }
+
         //public ServerInfo(string conn, string name)
         //{
         //    this._connection = conn;

@@ -30,10 +30,15 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="log4net, Version=1.2.15.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.5\lib\net40-full\log4net.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -41,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Bootstrap.cs" />
     <Compile Include="CodeModel\ClassDefine.cs" />
     <Compile Include="CodeModel\MethodDefine.cs" />
     <Compile Include="CodeModel\OrderByItem.cs" />
@@ -72,6 +78,8 @@
     <Compile Include="Form\StringField.cs" />
     <Compile Include="Form\ModuleField.cs" />
     <Compile Include="CodeModel\MethodParamDefine.cs" />
+    <Compile Include="Log\Log4NetUserNameProvider.cs" />
+    <Compile Include="Log\LogHelper.cs" />
     <Compile Include="Services\ICodeGenService.cs" />
     <Compile Include="Events\IEventAggregator.cs" />
     <Compile Include="LanguageConvert.cs" />
@@ -88,6 +96,10 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Res\Languages.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Log\log4net.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
