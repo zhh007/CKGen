@@ -5,6 +5,7 @@ using CKGen.DBSchema;
 using CKGen.Services;
 using System;
 using System.Collections.Generic;
+using System.Text;
 using System.Threading;
 using System.Windows.Forms;
 
@@ -57,7 +58,20 @@ namespace CKGen
             }
             try
             {
-                LogHelper.Error(e, "未处理异常");
+                StringBuilder sb = new StringBuilder();
+                sb.AppendLine("未处理异常");
+                if(e is System.Reflection.ReflectionTypeLoadException)
+                {
+                    var ex = e as System.Reflection.ReflectionTypeLoadException;
+                    if(ex != null)
+                    {
+                        foreach (var item in ex.LoaderExceptions)
+                        {
+                            sb.AppendLine(item.Message);
+                        }
+                    }
+                }
+                LogHelper.Error(e, sb.ToString());
                 DialogResult result = ShowExceptionDialog(e);
 
                 if (result == DialogResult.Abort)
