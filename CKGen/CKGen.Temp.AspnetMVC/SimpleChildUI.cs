@@ -116,6 +116,7 @@ namespace CKGen.Temp.AspnetMVC
                 if (item.PascalName == foreignKey)
                 {
                     hasForeignKey = true;
+                    break;
                 }
             }
             if (!hasForeignKey)
@@ -171,6 +172,7 @@ namespace CKGen.Temp.AspnetMVC
 
             if(tbParentName == tbChildName)
             {
+                MessageBox.Show("父对象和子对象不能是同一个表", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
