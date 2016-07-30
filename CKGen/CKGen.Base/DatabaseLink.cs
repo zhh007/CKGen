@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -55,11 +56,11 @@ namespace CKGen
                         dbName = dbName ?? "master";
                         if (!this.IsWindowsLogin)
                         {
-                            str = string.Format(@"Data Source={0};Initial Catalog={1};User ID={2};Password={3};Provider=SQLNCLI10;Persist Security Info=False;", this.ServerName, dbName, this.LoginName, this.LoginPassword);
+                            str = string.Format(@"Data Source={0};Initial Catalog={1};User ID={2};Password={3};Provider={4};Persist Security Info=False;", this.ServerName, dbName, this.LoginName, this.LoginPassword, GetSqlDBLinkProvider());
                         }
                         else
                         {
-                            str = string.Format(@"Data Source={0};Initial Catalog={1};Integrated Security=SSPI;Provider=SQLNCLI10;Persist Security Info=False;", this.ServerName, dbName, this.LoginName, this.LoginPassword);
+                            str = string.Format(@"Data Source={0};Initial Catalog={1};Integrated Security=SSPI;Provider={2};Persist Security Info=False;", this.ServerName, dbName, GetSqlDBLinkProvider());
                         }
                         break;
                     default:
@@ -96,6 +97,19 @@ namespace CKGen
 
                 return str;
             }
+        }
+
+        private string GetSqlDBLinkProvider()
+        {
+            string result = "SQLNCLI10";
+            var sfkey = Registry.LocalMachine.OpenSubKey("SOFTWARE\\Microsoft\\Microsoft SQL Server Native Client 11.0");
+            if (sfkey != null)
+            {
+                sfkey.Close();
+                result = "SQLNCLI11";
+            }
+
+            return result;
         }
     }
 }
