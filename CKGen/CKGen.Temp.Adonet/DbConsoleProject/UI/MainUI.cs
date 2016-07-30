@@ -9,13 +9,15 @@ using System.Windows.Forms;
 using System.ComponentModel.Composition;
 using CKGen.DBSchema;
 using System.Diagnostics;
+using CKGen.Base.Events;
 
 namespace CKGen.Temp.Adonet.DbConsoleProject.UI
 {
     [Export("GenTemplate", typeof(UserControl))]
     public partial class MainUI : UserControl
     {
-        [Import("Database")]
+        private readonly object token = new object();
+        //[Import("Database")]
         public IDatabaseInfo Database { get; set; }
 
         private int _tableCount = 0;
@@ -26,13 +28,40 @@ namespace CKGen.Temp.Adonet.DbConsoleProject.UI
         private List<ITableInfo> selTables = new List<ITableInfo>();
         private List<IViewInfo> selViews = new List<IViewInfo>();
 
+        private Action<GetDbInstanceResponseEvent> dbResponseEventHandler = null;
+        private Action<DatabaseRefreshEvent> dbRefreshEventHandler = null;
+
         public MainUI()
         {
             InitializeComponent();
+
+            dbResponseEventHandler = p =>
+            {
+                if (p.Token == token)
+                {
+                    BindUI(p.Database);
+                }
+            };
+            dbRefreshEventHandler = p =>
+            {
+                BindUI(p.Database);
+            };
+            AppEvent.Subscribe(dbResponseEventHandler);
+            AppEvent.Subscribe(dbRefreshEventHandler);
+            AppEvent.Publish(new GetDbInstanceRequestEvent() { Token = token });
+            this.Disposed += MainUI_Disposed;
         }
 
-        private void MainUI_Load(object sender, EventArgs e)
+        private void MainUI_Disposed(object sender, EventArgs e)
         {
+            AppEvent.UnSubscribe(dbResponseEventHandler);
+            AppEvent.UnSubscribe(dbRefreshEventHandler);
+        }
+
+        private void BindUI(IDatabaseInfo db)
+        {
+            this.Database = db;
+            lvMain.Items.Clear();
             lvMain.Groups.Add("table", "表");
             lvMain.Groups.Add("view", "视图");
             lvMain.Groups.Add("proc", "存储过程");
@@ -45,6 +74,11 @@ namespace CKGen.Temp.Adonet.DbConsoleProject.UI
             {
                 txtProjName.Text = string.Format("{0}_{1:yyyyMMddHHmmss}", this.Database.Name, DateTime.Now);
             }
+        }
+
+        private void MainUI_Load(object sender, EventArgs e)
+        {
+            
         }
 
         public override string ToString()
@@ -157,7 +191,7 @@ namespace CKGen.Temp.Adonet.DbConsoleProject.UI
 
         private void btnBuild_Click(object sender, EventArgs e)
         {
-            if(!string.IsNullOrEmpty(txtProjName.Text))
+            if (!string.IsNullOrEmpty(txtProjName.Text))
             {
                 this._projName = txtProjName.Text.Trim();
             }
@@ -167,7 +201,7 @@ namespace CKGen.Temp.Adonet.DbConsoleProject.UI
                 return;
             }
 
-            if(!char.IsLetter(this._projName[0]))
+            if (!char.IsLetter(this._projName[0]))
             {
                 errorProvider1.SetError(txtProjName, "项目名称必须以字母开头。");
                 return;
@@ -181,13 +215,13 @@ namespace CKGen.Temp.Adonet.DbConsoleProject.UI
                 {
                     selTables.Add(item.Tag as ITableInfo);
                 }
-                else if(item.Tag is IViewInfo)
+                else if (item.Tag is IViewInfo)
                 {
                     selViews.Add(item.Tag as IViewInfo);
                 }
             }
 
-            if(selTables.Count == 0 && selViews.Count == 0)
+            if (selTables.Count == 0 && selViews.Count == 0)
             {
                 errorProvider1.SetError(groupBox1, "选择数据库对象不能为空。");
                 return;
