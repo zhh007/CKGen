@@ -159,15 +159,8 @@ namespace CKGen.Temp.DBDoc
                 throw new Exception("文件被打开！");
             }
 
-            try
-            {
-                CHMBuilder chmBuilder = new CHMBuilder();
-                chmBuilder.Compile(hhpFilePath);
-            }
-            finally
-            {
-
-            }
+            CHMBuilder chmBuilder = new CHMBuilder();
+            chmBuilder.Compile(hhpFilePath);
 
             #region old chm builder
             //string hhcFile = @"C:\Program Files (x86)\HTML Help Workshop\hhc.exe"; //hhc.exe文件位置，windows自带的，一般是这个路径
