@@ -9,6 +9,7 @@ using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
 using System.Diagnostics;
 using System.IO;
+using System.Reflection;
 using System.Windows.Forms;
 using WeifenLuo.WinFormsUI.Docking;
 
@@ -16,11 +17,28 @@ namespace CKGen
 {
     public partial class FrmMain : Form
     {
+        [ImportMany("GenTemplate")]
+        IEnumerable<UserControl> UIs { get; set; }
+
+        [ImportMany("Tool")]
+        IEnumerable<UserControl> ToolUIs { get; set; }
+        public string Version { get; private set; }
+        public bool CanUpdate { get; private set; }
+
         public FrmMain()
         {
             InitializeComponent();
 
-            //this.tsBtnUpdate.DisplayStyle = ToolStripItemDisplayStyle.None;
+            var v = Assembly.GetEntryAssembly().GetName().Version;
+            this.Version = string.Format("v{0}.{1}", v.Major, v.Minor);
+            string title = string.Format("编程辅助工具{0}", this.Version);
+            this.Text = title;
+
+            BackgroundWorker worker = new BackgroundWorker();
+            worker.DoWork += new DoWorkEventHandler(worker_DoWork);
+            worker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(worker_RunWorkerCompleted);
+            worker.RunWorkerAsync();
+
             this.IsMdiContainer = true;
             this.dockPanel.DocumentStyle = DocumentStyle.DockingMdi;
 
@@ -43,11 +61,35 @@ namespace CKGen
             dc2.Show(this.dockPanel, DockState.DockLeft);
         }
 
-        [ImportMany("GenTemplate")]
-        IEnumerable<UserControl> UIs { get; set; }
+        private void worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            if(this.CanUpdate)
+            {
+                System.Windows.Forms.ToolStripButton tsBtnUpdate = new System.Windows.Forms.ToolStripButton();
+                this.toolStrip1.Items.Add(tsBtnUpdate);
+                tsBtnUpdate.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+                tsBtnUpdate.Image = global::CKGen.Properties.Resources.update;
+                tsBtnUpdate.ImageTransparentColor = System.Drawing.Color.Magenta;
+                tsBtnUpdate.Size = new System.Drawing.Size(23, 22);
+                tsBtnUpdate.Text = "有新版本发布";
+                tsBtnUpdate.Click += new System.EventHandler(this.tsBtnUpdate_Click);
+            }
+        }
 
-        [ImportMany("Tool")]
-        IEnumerable<UserControl> ToolUIs { get; set; }
+        private void worker_DoWork(object sender, DoWorkEventArgs e)
+        {
+            var files = Directory.GetFiles(Environment.CurrentDirectory, "*.old", SearchOption.TopDirectoryOnly); ;
+            foreach (var oldfile in files)
+            {
+                if (File.Exists(oldfile))
+                {
+                    File.Delete(oldfile);
+                }
+            }
+
+            UpdateCheck check = new UpdateCheck();
+            this.CanUpdate = check.CanUpdate(this.Version);
+        }
 
         private void FrmMain_Load(object sender, EventArgs e)
         {

@@ -70,6 +70,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Design" />
     <Reference Include="System.Web.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -234,6 +235,7 @@
     <Compile Include="Controls\SQLQueryView.Designer.cs">
       <DependentUpon>SQLQueryView.cs</DependentUpon>
     </Compile>
+    <Compile Include="UpdateCheck.cs" />
     <EmbeddedResource Include="Controls\ColumnOrderByControl.resx">
       <DependentUpon>ColumnOrderByControl.cs</DependentUpon>
     </EmbeddedResource>

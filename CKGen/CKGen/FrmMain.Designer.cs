@@ -36,7 +36,6 @@
             this.tsbtnSaveSchema = new System.Windows.Forms.ToolStripButton();
             this.tsBtnGenDbChm = new System.Windows.Forms.ToolStripButton();
             this.tsBtnQuery = new System.Windows.Forms.ToolStripButton();
-            this.tsBtnUpdate = new System.Windows.Forms.ToolStripButton();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.dockPanel = new WeifenLuo.WinFormsUI.Docking.DockPanel();
             this.statusBar = new System.Windows.Forms.StatusStrip();
@@ -50,8 +49,7 @@
             this.tsBtnReloadSchema,
             this.tsbtnSaveSchema,
             this.tsBtnGenDbChm,
-            this.tsBtnQuery,
-            this.tsBtnUpdate});
+            this.tsBtnQuery});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(1061, 25);
@@ -108,16 +106,6 @@
             this.tsBtnQuery.Size = new System.Drawing.Size(23, 22);
             this.tsBtnQuery.Text = "新建查询";
             this.tsBtnQuery.Click += new System.EventHandler(this.tsBtnQuery_Click);
-            // 
-            // tsBtnUpdate
-            // 
-            this.tsBtnUpdate.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tsBtnUpdate.Image = global::CKGen.Properties.Resources.update;
-            this.tsBtnUpdate.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsBtnUpdate.Name = "tsBtnUpdate";
-            this.tsBtnUpdate.Size = new System.Drawing.Size(23, 22);
-            this.tsBtnUpdate.Text = "有新版本发布";
-            this.tsBtnUpdate.Click += new System.EventHandler(this.tsBtnUpdate_Click);
             // 
             // imageList1
             // 
@@ -176,6 +164,5 @@
         private System.Windows.Forms.ToolStripButton tsBtnReloadSchema;
         private WeifenLuo.WinFormsUI.Docking.DockPanel dockPanel;
         private System.Windows.Forms.StatusStrip statusBar;
-        private System.Windows.Forms.ToolStripButton tsBtnUpdate;
     }
 }
