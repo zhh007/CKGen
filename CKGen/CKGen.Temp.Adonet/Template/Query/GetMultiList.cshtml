@@ -27,9 +27,9 @@ public void GetList()
 <text>                while (sdr.Read())
                 {
                     @(module.CodeName) entity = new @(module.CodeName)();
-                    @foreach (var column in module.Fields)
+                    @foreach (var field in module.Fields)
                     {
-            <text>        @(Util.GetPropertySettingString("entity", "sdr", column))</text>
+            <text>        @(Util.GetPropertySettingString2("entity", "sdr", field))</text>
                     }
                     list.Add(entity);
                 }

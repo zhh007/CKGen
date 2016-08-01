@@ -30,7 +30,7 @@ public List<@(Model.ResultItemClassName)> GetList(@(Model.GetMethodParam()))
                     @(Model.ResultItemClassName) entity = new @(Model.ResultItemClassName)();
                     @foreach (var column in Model.Table.Columns)
                     {
-            <text>        @(Util.GetPropertySettingString("entity", "sdr", column))</text>
+            <text>        @(Util.GetPropertySettingString2("entity", "sdr", column))</text>
                     }
                     list.Add(entity);
                 }

@@ -20,9 +20,9 @@ public List<@(Model.Module.CodeName)> GetList()
                 while (sdr.Read())
                 {
                     @(Model.Module.CodeName) entity = new @(Model.Module.CodeName)();
-                    @foreach (var column in Model.Module.Fields)
+                    @foreach (var field in Model.Module.Fields)
                     {
-            <text>        @(Util.GetPropertySettingString("entity", "sdr", column))</text>
+            <text>        @(Util.GetPropertySettingString2("entity", "sdr", field))</text>
                     }
 
                     list.Add(entity);
