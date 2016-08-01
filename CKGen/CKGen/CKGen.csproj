@@ -345,6 +345,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="readme.txt" />
+    <None Include="Resources\update.png" />
     <None Include="Resources\sun.ico" />
     <None Include="Resources\Sqlfile.bmp" />
     <None Include="Resources\Codefile.bmp" />

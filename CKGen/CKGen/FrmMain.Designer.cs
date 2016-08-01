@@ -36,6 +36,7 @@
             this.tsbtnSaveSchema = new System.Windows.Forms.ToolStripButton();
             this.tsBtnGenDbChm = new System.Windows.Forms.ToolStripButton();
             this.tsBtnQuery = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.dockPanel = new WeifenLuo.WinFormsUI.Docking.DockPanel();
             this.statusBar = new System.Windows.Forms.StatusStrip();
@@ -49,7 +50,8 @@
             this.tsBtnReloadSchema,
             this.tsbtnSaveSchema,
             this.tsBtnGenDbChm,
-            this.tsBtnQuery});
+            this.tsBtnQuery,
+            this.toolStripButton1});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(1061, 25);
@@ -107,6 +109,15 @@
             this.tsBtnQuery.Text = "新建查询";
             this.tsBtnQuery.Click += new System.EventHandler(this.tsBtnQuery_Click);
             // 
+            // toolStripButton1
+            // 
+            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton1.Image = global::CKGen.Properties.Resources.update;
+            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton1.Name = "toolStripButton1";
+            this.toolStripButton1.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButton1.Text = "有新版本发布";
+            // 
             // imageList1
             // 
             this.imageList1.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList1.ImageStream")));
@@ -141,7 +152,7 @@
             this.Controls.Add(this.dockPanel);
             this.Controls.Add(this.statusBar);
             this.Controls.Add(this.toolStrip1);
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("sun")));
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FrmMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "编程辅助工具v1.4";
@@ -164,5 +175,6 @@
         private System.Windows.Forms.ToolStripButton tsBtnReloadSchema;
         private WeifenLuo.WinFormsUI.Docking.DockPanel dockPanel;
         private System.Windows.Forms.StatusStrip statusBar;
+        private System.Windows.Forms.ToolStripButton toolStripButton1;
     }
 }
