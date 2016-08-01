@@ -19,6 +19,7 @@ namespace CKGen
         {
             InitializeComponent();
 
+            this.tsBtnUpdate.DisplayStyle = ToolStripItemDisplayStyle.None;
             this.IsMdiContainer = true;
             this.dockPanel.DocumentStyle = DocumentStyle.DockingMdi;
 
