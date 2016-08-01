@@ -141,7 +141,7 @@
             this.Controls.Add(this.dockPanel);
             this.Controls.Add(this.statusBar);
             this.Controls.Add(this.toolStrip1);
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("sun")));
             this.Name = "FrmMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "编程辅助工具v1.4";

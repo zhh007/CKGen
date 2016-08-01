@@ -31,6 +31,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Resources\sun.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="AeroWizard, Version=2.1.4.0, Culture=neutral, PublicKeyToken=915e74f5d64b8f37, processorArchitecture=MSIL">
       <HintPath>..\packages\AeroWizard.2.1.4\lib\net40\AeroWizard.dll</HintPath>
@@ -342,6 +345,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="readme.txt" />
+    <None Include="Resources\sun.ico" />
     <None Include="Resources\Sqlfile.bmp" />
     <None Include="Resources\Codefile.bmp" />
     <None Include="Resources\New.ico" />
