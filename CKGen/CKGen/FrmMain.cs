@@ -8,6 +8,7 @@ using System.ComponentModel;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
 using System.Diagnostics;
+using System.IO;
 using System.Windows.Forms;
 using WeifenLuo.WinFormsUI.Docking;
 
@@ -19,7 +20,7 @@ namespace CKGen
         {
             InitializeComponent();
 
-            this.tsBtnUpdate.DisplayStyle = ToolStripItemDisplayStyle.None;
+            //this.tsBtnUpdate.DisplayStyle = ToolStripItemDisplayStyle.None;
             this.IsMdiContainer = true;
             this.dockPanel.DocumentStyle = DocumentStyle.DockingMdi;
 
@@ -256,6 +257,19 @@ namespace CKGen
                 dc.Controls.Add(item);
                 dc.Show(this.dockPanel, DockState.Document);
             }
+        }
+
+        /// <summary>
+        /// 软件更新
+        /// </summary>
+        private void tsBtnUpdate_Click(object sender, EventArgs e)
+        {
+            foreach (var process in Process.GetProcessesByName("CKGenUpdater"))
+            {
+                process.Kill();
+            }
+
+            Process.Start(Path.Combine(Environment.CurrentDirectory, "CKGenUpdater.exe"));
         }
     }
 }

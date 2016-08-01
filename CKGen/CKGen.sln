@@ -25,6 +25,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CKGen.Temp.Adonet", "CKGen.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CKGen.Tools", "CKGen.Tools\CKGen.Tools.csproj", "{D70A38B2-4914-4A9C-9B17-FC849ACBCB53}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CKGenUpdater", "CKGenUpdater\CKGenUpdater.csproj", "{11127A1A-B18B-4373-8184-051B81325B02}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -105,6 +107,14 @@ Global
 		{D70A38B2-4914-4A9C-9B17-FC849ACBCB53}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D70A38B2-4914-4A9C-9B17-FC849ACBCB53}.Release|x86.ActiveCfg = Release|Any CPU
 		{D70A38B2-4914-4A9C-9B17-FC849ACBCB53}.Release|x86.Build.0 = Release|Any CPU
+		{11127A1A-B18B-4373-8184-051B81325B02}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{11127A1A-B18B-4373-8184-051B81325B02}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{11127A1A-B18B-4373-8184-051B81325B02}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{11127A1A-B18B-4373-8184-051B81325B02}.Debug|x86.Build.0 = Debug|Any CPU
+		{11127A1A-B18B-4373-8184-051B81325B02}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{11127A1A-B18B-4373-8184-051B81325B02}.Release|Any CPU.Build.0 = Release|Any CPU
+		{11127A1A-B18B-4373-8184-051B81325B02}.Release|x86.ActiveCfg = Release|Any CPU
+		{11127A1A-B18B-4373-8184-051B81325B02}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

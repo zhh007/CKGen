@@ -117,6 +117,7 @@
             this.tsBtnUpdate.Name = "tsBtnUpdate";
             this.tsBtnUpdate.Size = new System.Drawing.Size(23, 22);
             this.tsBtnUpdate.Text = "有新版本发布";
+            this.tsBtnUpdate.Click += new System.EventHandler(this.tsBtnUpdate_Click);
             // 
             // imageList1
             // 
