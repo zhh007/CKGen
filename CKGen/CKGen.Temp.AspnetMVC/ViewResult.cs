@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.IO;
 using System.Diagnostics;
+using System.Collections.Specialized;
 
 namespace CKGen.Temp.AspnetMVC
 {
@@ -47,6 +48,7 @@ namespace CKGen.Temp.AspnetMVC
         private TreeNode BuildDirForTreeview(DirectoryInfo dir, string showname)
         {
             TreeNode tn = new TreeNode(showname);
+            tn.Tag = dir.FullName;
 
             foreach (var item in dir.GetDirectories())
             {
@@ -73,8 +75,12 @@ namespace CKGen.Temp.AspnetMVC
         {
             if (e.Node.Tag is string)
             {
-                string txt = File.ReadAllText(e.Node.Tag as string);
-                txtCode.Text = txt;
+                var str = e.Node.Tag as string;
+                if (File.Exists(str))
+                {
+                    string txt = File.ReadAllText(str);
+                    txtCode.Text = txt;
+                }
             }
         }
 
@@ -97,6 +103,29 @@ namespace CKGen.Temp.AspnetMVC
             {
                 if (sender != null)
                     ((TextBox)sender).SelectAll();
+            }
+        }
+
+        private void tvRoot_KeyUp(object sender, KeyEventArgs e)
+        {
+            if(e.Control && e.KeyCode == Keys.C)
+            {
+                if(tvRoot.SelectedNode != null && tvRoot.SelectedNode.Tag is string)
+                {
+                    string str = tvRoot.SelectedNode.Tag as string;
+                    if(File.Exists(str))
+                    {
+                        StringCollection paths = new StringCollection();
+                        paths.Add(str);
+                        Clipboard.SetFileDropList(paths);
+                    }
+                    else if(Directory.Exists(str))
+                    {
+                        StringCollection paths = new StringCollection();
+                        paths.Add(str);
+                        Clipboard.SetFileDropList(paths);
+                    }
+                }
             }
         }
     }

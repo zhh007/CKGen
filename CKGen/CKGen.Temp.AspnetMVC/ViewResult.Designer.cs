@@ -106,6 +106,7 @@
             this.tvRoot.Size = new System.Drawing.Size(220, 425);
             this.tvRoot.TabIndex = 0;
             this.tvRoot.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.tvRoot_AfterSelect);
+            this.tvRoot.KeyUp += new System.Windows.Forms.KeyEventHandler(this.tvRoot_KeyUp);
             // 
             // txtCode
             // 
