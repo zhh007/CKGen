@@ -16,7 +16,7 @@ namespace CKGen.Controls
     {
         public string SQL { get; set; }
         public MethodDefine MethodInfo = new MethodDefine();
-        public List<ClassDefine> ResultTypeList = new List<ClassDefine>();
+        //public List<ClassDefine> ResultTypeList = new List<ClassDefine>();
         public DataSet ds { get; set; }
         public List<SQLQueryResultControl> ResultList = new List<SQLQueryResultControl>();
         public SQLQueryCodeGenWizard()
@@ -67,6 +67,27 @@ namespace CKGen.Controls
             catch (Exception)
             {
             }
+
+            try
+            {
+                Regex regexObj = new Regex(@"=\s?@([a-z_0-9]+)\s?");
+                Match matchResults = regexObj.Match(sql);
+                while (matchResults.Success)
+                {
+                    MethodParamDefine pd = new MethodParamDefine();
+                    pd.ParamName = matchResults.Groups[1].Value;
+                    pd.ParamType = "";
+                    if (!list.Exists(p => p.ParamName == pd.ParamName))
+                    {
+                        list.Add(pd);
+                    }
+                    matchResults = matchResults.NextMatch();
+                }
+            }
+            catch (Exception)
+            {
+            }
+
             return list;
         }
         #endregion
