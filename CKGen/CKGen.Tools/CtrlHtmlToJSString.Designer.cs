@@ -31,14 +31,14 @@
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.txtHTML = new System.Windows.Forms.TextBox();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.txtJS = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.cbList = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             this.groupBox1.SuspendLayout();
-            this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // splitContainer1
@@ -54,7 +54,9 @@
             // 
             // splitContainer1.Panel2
             // 
-            this.splitContainer1.Panel2.Controls.Add(this.groupBox2);
+            this.splitContainer1.Panel2.Controls.Add(this.cbList);
+            this.splitContainer1.Panel2.Controls.Add(this.label1);
+            this.splitContainer1.Panel2.Controls.Add(this.txtJS);
             this.splitContainer1.Size = new System.Drawing.Size(833, 546);
             this.splitContainer1.SplitterDistance = 277;
             this.splitContainer1.TabIndex = 0;
@@ -79,30 +81,44 @@
             this.txtHTML.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             this.txtHTML.Size = new System.Drawing.Size(827, 257);
             this.txtHTML.TabIndex = 0;
+            this.txtHTML.Text = "<div style=\"color:red\">hello world!</div>";
             this.txtHTML.TextChanged += new System.EventHandler(this.txtHTML_TextChanged);
             this.txtHTML.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TextBox_KeyDown);
             // 
-            // groupBox2
-            // 
-            this.groupBox2.Controls.Add(this.txtJS);
-            this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox2.Location = new System.Drawing.Point(0, 0);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(833, 265);
-            this.groupBox2.TabIndex = 0;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "JS代码";
-            // 
             // txtJS
             // 
-            this.txtJS.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtJS.Location = new System.Drawing.Point(3, 17);
+            this.txtJS.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtJS.Location = new System.Drawing.Point(3, 33);
             this.txtJS.Multiline = true;
             this.txtJS.Name = "txtJS";
             this.txtJS.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.txtJS.Size = new System.Drawing.Size(827, 245);
+            this.txtJS.Size = new System.Drawing.Size(827, 229);
             this.txtJS.TabIndex = 0;
             this.txtJS.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TextBox_KeyDown);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(9, 7);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(41, 12);
+            this.label1.TabIndex = 1;
+            this.label1.Text = "输出：";
+            // 
+            // cbList
+            // 
+            this.cbList.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbList.FormattingEnabled = true;
+            this.cbList.Items.AddRange(new object[] {
+            "JS",
+            "C#"});
+            this.cbList.Location = new System.Drawing.Point(56, 4);
+            this.cbList.Name = "cbList";
+            this.cbList.Size = new System.Drawing.Size(121, 20);
+            this.cbList.TabIndex = 2;
+            this.cbList.SelectedIndexChanged += new System.EventHandler(this.cbList_SelectedIndexChanged);
             // 
             // CtrlHtmlToJSString
             // 
@@ -113,12 +129,11 @@
             this.Size = new System.Drawing.Size(833, 546);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
+            this.splitContainer1.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -128,7 +143,8 @@
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.TextBox txtHTML;
-        private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.TextBox txtJS;
+        private System.Windows.Forms.ComboBox cbList;
+        private System.Windows.Forms.Label label1;
     }
 }

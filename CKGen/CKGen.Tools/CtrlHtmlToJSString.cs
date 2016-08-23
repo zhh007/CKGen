@@ -17,38 +17,76 @@ namespace CKGen.Tools
         public CtrlHtmlToJSString()
         {
             InitializeComponent();
+
+            cbList.Text = "JS";
+            BuildOutput();
         }
 
         public override string ToString()
         {
-            return "HTML转JS代码";
+            return "HTML转代码";
         }
 
         private void txtHTML_TextChanged(object sender, EventArgs e)
         {
+            BuildOutput();
+        }
+
+        private void BuildOutput()
+        {
+            string output = "";
             if (!string.IsNullOrEmpty(txtHTML.Text) && !string.IsNullOrWhiteSpace(txtHTML.Text))
             {
-                StringBuilder sb = new StringBuilder();
-                sb.AppendLine("var h = '';");
-                using (var stream = new MemoryStream(System.Text.Encoding.UTF8.GetBytes(txtHTML.Text)))
-                using (StreamReader r = new StreamReader(stream))
+                if (cbList.Text == "JS")
                 {
-                    string line;
-                    while ((line = r.ReadLine()) != null)
+                    output = BuildJS();
+                }
+                else if (cbList.Text == "C#")
+                {
+                    output = BuildCSharp();
+                }
+            }
+            txtJS.Text = output;
+        }
+
+        private string BuildJS()
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine("var h = '';");
+            using (var stream = new MemoryStream(System.Text.Encoding.UTF8.GetBytes(txtHTML.Text)))
+            using (StreamReader r = new StreamReader(stream))
+            {
+                string line;
+                while ((line = r.ReadLine()) != null)
+                {
+                    if (!string.IsNullOrEmpty(line.Trim()))
                     {
-                        if (!string.IsNullOrEmpty(line.Trim()))
-                        {
-                            sb.AppendLine("h += " + ToJsString(line) + ";");
-                        }
+                        sb.AppendLine("h += " + ToJsString(line) + ";");
                     }
                 }
+            }
 
-                txtJS.Text = sb.ToString();
-            }
-            else
+            return sb.ToString();
+        }
+
+        private string BuildCSharp()
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine("StringBuilder sb = new StringBuilder();");
+            using (var stream = new MemoryStream(System.Text.Encoding.UTF8.GetBytes(txtHTML.Text)))
+            using (StreamReader r = new StreamReader(stream))
             {
-                txtJS.Text = "";
+                string line;
+                while ((line = r.ReadLine()) != null)
+                {
+                    if (!string.IsNullOrEmpty(line.Trim()))
+                    {
+                        sb.AppendLine("sb.AppendLine(" + ToCSharpString(line) + ");");
+                    }
+                }
             }
+
+            return sb.ToString();
         }
 
         public static string ToJsString(string s)
@@ -90,6 +128,45 @@ namespace CKGen.Tools
             return sb.ToString();
         }
 
+        public static string ToCSharpString(string s)
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append("\"");
+            foreach (char c in s)
+            {
+                switch (c)
+                {
+                    case '\"':
+                        sb.Append("\\\"");
+                        break;
+                    case '\\':
+                        sb.Append("\\\\");
+                        break;
+                    case '\b':
+                        sb.Append("\\b");
+                        break;
+                    case '\f':
+                        sb.Append("\\f");
+                        break;
+                    case '\n':
+                        sb.Append("\\n");
+                        break;
+                    case '\r':
+                        sb.Append("\\r");
+                        break;
+                    case '\t':
+                        sb.Append("\\t");
+                        break;
+                    default:
+                        sb.Append(c);
+                        break;
+                }
+            }
+            sb.Append("\"");
+
+            return sb.ToString();
+        }
+
         private void TextBox_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Control && e.KeyCode == Keys.A)
@@ -97,6 +174,11 @@ namespace CKGen.Tools
                 if (sender != null)
                     ((TextBox)sender).SelectAll();
             }
+        }
+
+        private void cbList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            BuildOutput();
         }
     }
 }
