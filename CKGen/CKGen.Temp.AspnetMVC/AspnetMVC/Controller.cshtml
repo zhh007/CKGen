@@ -21,16 +21,13 @@ namespace @(Model.WebProjNameSpace).Controllers
     {
         private I@(Model.DBTable.Name)Service @(Model.DBTable.Name)Service = ServiceLocator.Instance.GetService@("<I"+Model.DBTable.Name)Service>();
 
-        public ActionResult Index(int? id, string searchText)
+        public ActionResult Index(int? id, @(Model.DBTable.Name)ListViewModel model)
         {
-            @(Model.DBTable.Name)ListViewModel model = new @(Model.DBTable.Name)ListViewModel();
-            model.Text = searchText;
-
             int totalRecords = 0;
             int pagesize = 20;
-            var list = @(Model.DBTable.Name)Service.GetPagedList(searchText, id ?? 1, pagesize, out totalRecords);
+            var list = @(Model.DBTable.Name)Service.GetPagedList(model.Text, id ?? 1, pagesize, out totalRecords);
 
-            IPagedList@("<" + Model.DBTable.Name)IncludeModifyUserDTO> pagedList = new StaticPagedList@("<" + Model.DBTable.Name)IncludeModifyUserDTO>(list.ToArray@("<" + Model.DBTable.Name)IncludeModifyUserDTO>(), id ?? 1, pagesize, totalRecords);
+            IPagedList@("<" + Model.DBTable.Name)IncludeModifyUserDTO> pagedList = new StaticPagedList@("<" + Model.DBTable.Name)IncludeModifyUserDTO>(list.ToArray(), id ?? 1, pagesize, totalRecords);
             model.List = pagedList;
             return View(model);
         }

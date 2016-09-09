@@ -30,10 +30,18 @@ namespace CKGen.Base.Form
 
         public Module(ITableInfo tbInfo)
         {
+            this.CodeName = tbInfo.PascalName;
+
             var fields = new List<ModuleField>();
             foreach (var col in tbInfo.Columns)
             {
                 ModuleField field = new ModuleField(this, col.Description, col.RawName, col.PascalName);
+                field.LanguageType = col.LanguageType;
+                field.Nullable = col.Nullable;
+                if(col.MaxLength.HasValue && col.MaxLength > 0)
+                {
+                    field.StringLength = col.MaxLength.Value;
+                }
                 fields.Add(field);
             }
             this.Fields = fields;

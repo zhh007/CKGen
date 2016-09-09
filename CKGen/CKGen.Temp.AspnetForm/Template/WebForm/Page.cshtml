@@ -1,0 +1,19 @@
+﻿@using RazorEngine.Templating
+@using CKGen.DBSchema;
+@using CKGen;
+@using CKGen.Base.Form;
+@inherits TemplateBase<Module>
+
+public class @(Model.CodeName)
+{
+    @foreach (var column in Model.Fields)
+    {
+        if (!string.IsNullOrEmpty(column.Title))
+        {
+            <text>/// @("<summary>")</text>
+            <text>/// @(column.Title)</text>
+            <text>/// @("</summary>")</text>
+        }
+    <text>public @(column.LanguageType) @(column.CodeName) { get; set; }</text>
+    }
+}

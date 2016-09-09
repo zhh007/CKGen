@@ -35,6 +35,9 @@ namespace CKGen.DBLoader
         private int? _scale;
         private Dictionary<string, string> _attr = new Dictionary<string, string>();
 
+        private static int NMax = 1073741823;
+        private static int VMax = 2147483647;
+
         /// <summary>
         /// 原始名称
         /// </summary>
@@ -151,7 +154,14 @@ namespace CKGen.DBLoader
         /// </summary>
         public int? MaxLength
         {
-            get { return _maxLength; }
+            get
+            {
+                if(_maxLength == NMax || _maxLength ==VMax)
+                {
+                    return null;
+                }
+                return _maxLength;
+            }
             set { _maxLength = value; }
         }
 

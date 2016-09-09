@@ -1,0 +1,96 @@
+﻿@using RazorEngine.Templating
+@using CKGen.DBSchema;
+@using CKGen;
+@using CKGen.Base.Form;
+@using CKGen.Temp.AspnetForm
+@inherits TemplateBase<Module>
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+
+namespace XXX
+{
+    public partial class @(Model.CodeName) : System.Web.UI.Page
+    {
+        //URL参数定义
+        //protected int id;
+
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            //初始化URL参数
+            //this.id = Convert.ToInt32(Request.QueryString["id"]);
+
+            //执行AJAX请求
+            RunAJAXAction();
+
+            //初始化页面
+            if (!this.IsPostBack)
+            {
+            }
+        }
+
+        private void RunAJAXAction()
+        {
+            Response.Clear();
+            Response.ContentType = "application/json; charset=utf-8";
+            string action = Request.Form["action"];
+
+            switch (action)
+            {
+                case "Save":
+                    Save();
+                    break;
+                default:
+                    break;
+            }
+
+            Response.End();
+        }
+
+        private void ReturnJson(string message, bool success = false)
+        {
+            var ret = new
+            {
+                success = success,
+                message = message
+            };
+            var json = JsonHelper.SerializeObject(ret);
+            Response.Write(json);
+        }
+
+        private void Save()
+        {
+            @foreach (var column in Model.Fields)
+            {
+            <text>@(column.LanguageType) @(column.CodeName) = @(Comm.GetConvertStringFromRequest(column));</text>
+                if (column.IsRequired && !LanguageConvert.IsValueType(column.LanguageType))
+                {
+            <text>if (@(Comm.GetNullCheckString(column, column.CodeName)))</text>
+            <text>{</text>
+            <text>    ReturnJson("请输入“@(column.Title)”。");</text>
+            <text>    return;</text>
+            <text>}</text>
+                }
+                if (column.LanguageType == "string" && column.StringLength > 0)
+                {
+            <text>if (@(column.CodeName).Length > @(column.StringLength))</text>
+            <text>{</text>
+            <text>    ReturnJson("“@(column.Title)”最多@(column.StringLength)个字符。");</text>
+            <text>    return;</text>
+            <text>}</text>
+                }
+            }
+
+            //保存数据
+
+
+            ReturnJson("保存成功。", true);
+        }
+
+        
+    }
+}

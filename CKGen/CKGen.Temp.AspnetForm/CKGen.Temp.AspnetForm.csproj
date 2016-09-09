@@ -4,16 +4,16 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{80B838C1-8235-45BA-B33F-F096F011B922}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <ProjectGuid>{244040B7-238F-4FD0-8C97-A8F6578AA69F}</ProjectGuid>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ConsoleApp</RootNamespace>
-    <AssemblyName>ConsoleApp</AssemblyName>
+    <RootNamespace>CKGen.Temp.AspnetForm</RootNamespace>
+    <AssemblyName>CKGen.Temp.AspnetForm</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>x86</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -23,7 +23,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -32,11 +31,19 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ScintillaNET">
-      <HintPath>..\packages\jacobslusser.ScintillaNET.3.5.0\lib\net40\ScintillaNET.dll</HintPath>
+    <Reference Include="RazorEngine, Version=3.9.0.0, Culture=neutral, PublicKeyToken=9ee697374c7e744a, processorArchitecture=MSIL">
+      <HintPath>..\packages\RazorEngine.3.9.0\lib\net40\RazorEngine.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Razor.2.0.30506.0\lib\net40\System.Web.Razor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -44,48 +51,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Program.cs" />
+    <Compile Include="Comm.cs" />
+    <Compile Include="PageFormCodeGen.cs" />
+    <Compile Include="PageFormModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Template\WebForm\Page.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Template\WebForm\PageCode.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CKGen.Base\CKGen.Base.csproj">
       <Project>{727d5837-1dc0-40ed-9aa3-d37c40d3fdb6}</Project>
       <Name>CKGen.Base</Name>
     </ProjectReference>
-    <ProjectReference Include="..\CKGen.DBLoader\CKGen.DBLoader.csproj">
-      <Project>{838634ed-ca1d-4884-a026-15e9666eac3b}</Project>
-      <Name>CKGen.DBLoader</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\CKGen.Temp.Adonet\CKGen.Temp.Adonet.csproj">
-      <Project>{876b3437-a905-488a-8b67-b8b222e691bc}</Project>
-      <Name>CKGen.Temp.Adonet</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\CKGen.Temp.AspnetForm\CKGen.Temp.AspnetForm.csproj">
-      <Project>{244040b7-238f-4fd0-8c97-a8f6578aa69f}</Project>
-      <Name>CKGen.Temp.AspnetForm</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\CKGen.Temp.AspnetMVC\CKGen.Temp.AspnetMVC.csproj">
-      <Project>{1f3c9cc8-a0f4-4de3-b257-b7d4cb7fc2fb}</Project>
-      <Name>CKGen.Temp.AspnetMVC</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\CKGen.Temp.DataAccess\CKGen.Temp.DataAccess.csproj">
-      <Project>{6243c3a1-29c0-4901-a46b-cfe8be6d75f2}</Project>
-      <Name>CKGen.Temp.DataAccess</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\CKGen.Temp.DBDoc\CKGen.Temp.DBDoc.csproj">
-      <Project>{dc89b60f-c05a-4f7c-b332-c2804ad161c5}</Project>
-      <Name>CKGen.Temp.DBDoc</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\CKGen\CKGen.csproj">
-      <Project>{82e6990c-4aa3-40e4-9f0d-41a929d9b357}</Project>
-      <Name>CKGen</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="app.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="readme.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

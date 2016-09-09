@@ -5,6 +5,7 @@ using CKGen.DBSchema;
 using CKGen.Services;
 using CKGen.Temp.Adonet;
 using CKGen.Temp.Adonet.DbConsoleProject;
+using CKGen.Temp.AspnetForm;
 using CKGen.Temp.DataAccess;
 using CKGen.Temp.DBDoc;
 using System;
@@ -19,13 +20,16 @@ namespace ConsoleApp
     {
         static void Main(string[] args)
         {
-            BuildDBDoc();
+            ServiceLocator.Instance.AddService<ICodeGenService>(new CodeGenService());
+            Console.WriteLine("正在生成...");
+
+            TestAspnetForm("SampleInt");
             //Console.WriteLine(typeof(Tuple<short[], string>).GetFriendlyName());
             //Console.ReadKey();
             //return;
 
-            //ServiceLocator.Instance.AddService<ICodeGenService>(new CodeGenService());
-            //Console.WriteLine("正在生成...");
+            //
+            //
 
             //string dbConnStr = @"Provider=SQLOLEDB.1;Persist Security Info=False;User ID=sa;Password=pass@word1;Initial Catalog=DBTest;Data Source=.\SQL2008R2";
             //string dbname = "DBTest";
@@ -181,6 +185,33 @@ namespace ConsoleApp
             DbTableCodeGen builder = new DbTableCodeGen();
             string folder = builder.GenModelCode(tbInfo);
             //Process.Start(folder);
+        }
+
+        private static void TestAspnetForm(string tableName)
+        {
+            //string dbConnStr = @"Provider=SQLOLEDB.1;Persist Security Info=False;User ID=sa;Password=pass@word1;Initial Catalog=DBTest;Data Source=.\SQL2008R2";
+            string dbname = "DBTest";
+            //string tableName = "SampleInt";
+            //string connStr2 = @"Data Source=.\SQL2008R2;Initial Catalog=DBTest;User ID=sa;Password=pass@word1;Persist Security Info=False;";
+            DatabaseLink link = new DatabaseLink(DatabaseType.MSSQLServer, @".\SQL2008R2", dbname, "sa", "pass@word1");
+            ServerInfo serverInfo = new ServerInfo(link);
+            IDatabaseInfo database = serverInfo.GetDatabase(dbname);
+
+            ITableInfo tbInfo = null;
+
+            foreach (ITableInfo tInfo in database.Tables)
+            {
+                if (tInfo.LowerName == tableName.ToLower())
+                {
+                    tbInfo = tInfo;
+                    break;
+                }
+            }
+
+            PageFormCodeGen builder = new PageFormCodeGen();
+            PageFormModel model = new PageFormModel(tbInfo);
+            string folder = builder.Build(model);
+            Process.Start(folder);
         }
     }
 }

@@ -17,12 +17,12 @@
         {
             <div class="form-group ie8-width-190">
                 <label class="control-label">
-                    招募活动
+                    状态
                 </label>
                 @@Html.DropDownListFor(p => p.EventID, Model.EventList, new { @@class = "form-control input-sm", @@style = "width: 150px" })
             </div>
             <div class="input-group">
-                <input name="searchText" type="text" class="form-control input-sm" placeholder="请输入关键字" value="@("@")Model.Text">
+                @@Html.TextBoxFor(p => p.Text, new { @@class = "form-control input-sm", placeholder = "请输入关键字" })
                 <span class="input-group-btn">
                     <button class="btn btn-sm btn-danger" type="submit">搜索</button>
                 </span>

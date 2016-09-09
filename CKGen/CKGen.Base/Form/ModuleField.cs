@@ -8,6 +8,8 @@ namespace CKGen.Base.Form
     public class ModuleField
     {
         private string _codename = "";
+        private bool isrequired = false;
+        private bool nullable = true;
         public Guid Id { get; private set; }
         public Module Parent { get; private set; }
         /// <summary>
@@ -39,10 +41,27 @@ namespace CKGen.Base.Form
         /// <summary>
         /// 是否可空
         /// </summary>
-        public bool Nullable { get; set; }
+        public bool Nullable
+        {
+            get { return nullable; }
+            set
+            {
+                nullable = value;
+                isrequired = !value;
+            }
+        }
         public Type DataType { get; set; }
         public bool IsKey { get; set; }
-        public bool IsRequired { get; set; }
+        public bool IsRequired
+        {
+            get { return isrequired; }
+            set
+            {
+                isrequired = value;
+                nullable = !value;
+            }
+        }
+        public int StringLength { get; set; }
 
         public ModuleField(Module parent, string title, string name, string codename)
         {

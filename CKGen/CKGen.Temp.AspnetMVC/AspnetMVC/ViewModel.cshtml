@@ -36,6 +36,17 @@ if(column.HasStringLength) {
     {
         public string Text { get; set; }
         public IPagedList<@(Model.DBTable.Name)IncludeModifyUserDTO> List { get; set; }
+        public int? State { get; set; }
+        public IList<SelectListItem> StateList { get; set; }
+        public @(Model.DBTable.Name)ListViewModel()
+        {
+            this.State = 0;
+            this.StateList = new List<SelectListItem>() {
+                new SelectListItem { Text="全部", Value="" },
+                new SelectListItem { Text="有效", Value="0", Selected=true },
+                new SelectListItem { Text="失效", Value="1" }
+            };
+        }
     }
 }
 
