@@ -58,16 +58,12 @@
             var fvalid = check();
             var fvalid2 = frmObj.valid();
             if (fvalid && fvalid2) {
-                $.post('@@Href("~/@(Model.DBTable.Name)/Add")'
-                    , frmObj.serialize()
-                    , function (data) {
-                        ajaxAlert(data);
-                        if (data.success) {
-                            goback();
-                        }
+                $.post(frmObj.attr('action'), frmObj.serialize(), function (data) {
+                    ajaxAlert(data);
+                    if (data.success) {
+                        goback();
                     }
-                    , "json"
-                );
+                }, "json");
             }
             evt.preventDefault();
         });
@@ -82,6 +78,6 @@
     }
 
     function goback() {
-        location = '@("@Href(\"~/" + Model.DBTable.Name + "/\")" )';
+        location = '@@Url.Action("Index", "@(Model.DBTable.Name)")';
     }
 </script>

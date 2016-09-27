@@ -32,7 +32,7 @@
     <div class="col-sm-3">
         <div class="btn-toolbar fn-right" role="toolbar">
             <div class="btn-group" role="group">
-                <input type="button" value="新增" class="btn btn-danger btn-sm" onclick="location='@("@Href(\"~/" + Model.DBTable.Name + "/Add\")")';" />
+                @@Html.ActionLink("新增", "Add", null, new { @@class = "btn btn-danger btn-sm" })
             </div>
         </div>
     </div>
@@ -130,13 +130,13 @@
 </div>
 <script type="text/javascript">
     function del(id) {
-        var url = '@@Href("~/@(Model.DBTable.Name)/Delete")';
+        var url = '@@Url.Action("Delete", "@(Model.DBTable.Name)")';
         var data = {'id': id};
         jsConfirm("您确定要删除吗?", function () {
             $.post(url, data, function (result) {
                 ajaxAlert(result);
                 if (result.success) {
-                    location = '@@Href("~/@(Model.DBTable.Name)/")';
+                    location = '@@Url.Action("Index", "@(Model.DBTable.Name)")';
                 }
             }, "json");
         });
