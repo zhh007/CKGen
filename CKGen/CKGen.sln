@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.25123.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CKGen", "CKGen\CKGen.csproj", "{82E6990C-4AA3-40E4-9F0D-41A929D9B357}"
 EndProject
@@ -28,6 +28,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CKGenUpdater", "CKGenUpdater\CKGenUpdater.csproj", "{11127A1A-B18B-4373-8184-051B81325B02}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CKGen.Temp.AspnetForm", "CKGen.Temp.AspnetForm\CKGen.Temp.AspnetForm.csproj", "{244040B7-238F-4FD0-8C97-A8F6578AA69F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CKGen.Temp.WebApi2Ng", "CKGen.Temp.WebApi2Ng\CKGen.Temp.WebApi2Ng.csproj", "{036F1099-1532-4E64-80CE-31ADF5C041A9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -125,6 +127,14 @@ Global
 		{244040B7-238F-4FD0-8C97-A8F6578AA69F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{244040B7-238F-4FD0-8C97-A8F6578AA69F}.Release|x86.ActiveCfg = Release|Any CPU
 		{244040B7-238F-4FD0-8C97-A8F6578AA69F}.Release|x86.Build.0 = Release|Any CPU
+		{036F1099-1532-4E64-80CE-31ADF5C041A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{036F1099-1532-4E64-80CE-31ADF5C041A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{036F1099-1532-4E64-80CE-31ADF5C041A9}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{036F1099-1532-4E64-80CE-31ADF5C041A9}.Debug|x86.Build.0 = Debug|Any CPU
+		{036F1099-1532-4E64-80CE-31ADF5C041A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{036F1099-1532-4E64-80CE-31ADF5C041A9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{036F1099-1532-4E64-80CE-31ADF5C041A9}.Release|x86.ActiveCfg = Release|Any CPU
+		{036F1099-1532-4E64-80CE-31ADF5C041A9}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -137,5 +147,6 @@ Global
 		{727D5837-1DC0-40ED-9AA3-D37C40D3FDB6} = {BF3786C8-0CB5-4D8F-A760-82899C3BBF60}
 		{876B3437-A905-488A-8B67-B8B222E691BC} = {BBF7356A-00C1-4796-8307-4C2F94782A3D}
 		{244040B7-238F-4FD0-8C97-A8F6578AA69F} = {BBF7356A-00C1-4796-8307-4C2F94782A3D}
+		{036F1099-1532-4E64-80CE-31ADF5C041A9} = {BBF7356A-00C1-4796-8307-4C2F94782A3D}
 	EndGlobalSection
 EndGlobal

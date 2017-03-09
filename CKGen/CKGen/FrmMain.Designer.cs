@@ -122,12 +122,12 @@
             this.dockPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dockPanel.Location = new System.Drawing.Point(0, 25);
             this.dockPanel.Name = "dockPanel";
-            this.dockPanel.Size = new System.Drawing.Size(1061, 563);
+            this.dockPanel.Size = new System.Drawing.Size(1061, 638);
             this.dockPanel.TabIndex = 1;
             // 
             // statusBar
             // 
-            this.statusBar.Location = new System.Drawing.Point(0, 588);
+            this.statusBar.Location = new System.Drawing.Point(0, 663);
             this.statusBar.Name = "statusBar";
             this.statusBar.Size = new System.Drawing.Size(1061, 22);
             this.statusBar.TabIndex = 3;
@@ -137,7 +137,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1061, 610);
+            this.ClientSize = new System.Drawing.Size(1061, 685);
             this.Controls.Add(this.dockPanel);
             this.Controls.Add(this.statusBar);
             this.Controls.Add(this.toolStrip1);

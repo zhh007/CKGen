@@ -78,6 +78,7 @@
     <Compile Include="Form\StringField.cs" />
     <Compile Include="Form\ModuleField.cs" />
     <Compile Include="CodeModel\MethodParamDefine.cs" />
+    <Compile Include="HttpUtil.cs" />
     <Compile Include="Log\Log4NetUserNameProvider.cs" />
     <Compile Include="Log\LogHelper.cs" />
     <Compile Include="Services\ICodeGenService.cs" />

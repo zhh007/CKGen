@@ -341,6 +341,10 @@
       <Project>{dc89b60f-c05a-4f7c-b332-c2804ad161c5}</Project>
       <Name>CKGen.Temp.DBDoc</Name>
     </ProjectReference>
+    <ProjectReference Include="..\CKGen.Temp.WebApi2Ng\CKGen.Temp.WebApi2Ng.csproj">
+      <Project>{036f1099-1532-4e64-80ce-31adf5c041a9}</Project>
+      <Name>CKGen.Temp.WebApi2Ng</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CKGen.Tools\CKGen.Tools.csproj">
       <Project>{d70a38b2-4914-4a9c-9b17-fc849acbcb53}</Project>
       <Name>CKGen.Tools</Name>
