@@ -62,12 +62,12 @@ namespace CKGen.Temp.AspnetMVC2
             pvModel.TableName = entityName;
             pvModel.DBContextTypeName = dbContext;
 
-            _build("Model.cshtml", typeof(PageViewModel), pvModel, tInfo.PascalName + ".cs");
-            _build("Map.cshtml", typeof(PageViewModel), pvModel, tInfo.PascalName + "Map.cs");
-            _build("Repository.cshtml", typeof(PageViewModel), pvModel, tInfo.PascalName + "Repository.cs");
-            _build("DTO.cshtml", typeof(PageViewModel), pvModel, tInfo.PascalName + "DTO.cs");
-            _build("IService.cshtml", typeof(PageViewModel), pvModel, "I" + tInfo.PascalName + "Service.cs");
-            _build("Service.cshtml", typeof(PageViewModel), pvModel, tInfo.PascalName + "Service.cs");
+            _build("Model.cshtml", typeof(PageViewModel), pvModel, entityName + ".cs");
+            _build("Map.cshtml", typeof(PageViewModel), pvModel, entityName + "Map.cs");
+            _build("Repository.cshtml", typeof(PageViewModel), pvModel, entityName + "Repository.cs");
+            _build("DTO.cshtml", typeof(PageViewModel), pvModel, entityName + "DTO.cs");
+            _build("IService.cshtml", typeof(PageViewModel), pvModel, "I" + entityName + "Service.cs");
+            _build("Service.cshtml", typeof(PageViewModel), pvModel, entityName + "Service.cs");
 
             _build("readme.cshtml", typeof(PageViewModel), pvModel, "readme.txt");
 
