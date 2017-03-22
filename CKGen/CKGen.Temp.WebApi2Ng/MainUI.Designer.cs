@@ -43,8 +43,8 @@
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.tabControl2 = new System.Windows.Forms.TabControl();
             this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.tabPage4 = new System.Windows.Forms.TabPage();
             this.txtSrevice = new System.Windows.Forms.TextBox();
+            this.tabPage4 = new System.Windows.Forms.TabPage();
             this.txtEntity = new System.Windows.Forms.TextBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -71,7 +71,7 @@
             this.txtURL.Name = "txtURL";
             this.txtURL.Size = new System.Drawing.Size(475, 26);
             this.txtURL.TabIndex = 1;
-            this.txtURL.Text = "http://localhost:55970/swagger/docs/v1";
+            this.txtURL.Text = "http://localhost:31082/swagger/docs/v1";
             // 
             // btnGetSchema
             // 
@@ -223,17 +223,6 @@
             this.tabPage3.Text = "服务";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
-            // tabPage4
-            // 
-            this.tabPage4.Controls.Add(this.txtEntity);
-            this.tabPage4.Location = new System.Drawing.Point(26, 4);
-            this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(922, 632);
-            this.tabPage4.TabIndex = 1;
-            this.tabPage4.Text = "实体";
-            this.tabPage4.UseVisualStyleBackColor = true;
-            // 
             // txtSrevice
             // 
             this.txtSrevice.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -244,6 +233,17 @@
             this.txtSrevice.Size = new System.Drawing.Size(916, 626);
             this.txtSrevice.TabIndex = 0;
             this.txtSrevice.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtSrevice_KeyDown);
+            // 
+            // tabPage4
+            // 
+            this.tabPage4.Controls.Add(this.txtEntity);
+            this.tabPage4.Location = new System.Drawing.Point(26, 4);
+            this.tabPage4.Name = "tabPage4";
+            this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage4.Size = new System.Drawing.Size(922, 632);
+            this.tabPage4.TabIndex = 1;
+            this.tabPage4.Text = "实体";
+            this.tabPage4.UseVisualStyleBackColor = true;
             // 
             // txtEntity
             // 

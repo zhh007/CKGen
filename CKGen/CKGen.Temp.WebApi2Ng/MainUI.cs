@@ -36,6 +36,10 @@ namespace CKGen.Temp.WebApi2Ng
 
         private void btnGetSchema_Click(object sender, EventArgs e)
         {
+            lbWebAPI.Items.Clear();
+            lvEntity.Clear();
+            lvMethod.Clear();
+
             try
             {
                 var jsonstr = HttpUtil.Get(txtURL.Text);
@@ -72,23 +76,54 @@ namespace CKGen.Temp.WebApi2Ng
                         }
                     }
 
-                    var s2 = val2["responses"]["200"]["schema"]["$ref"].ToString().Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
-                    mdef.ResponseEntity = s2[2];
-
-                    if (val2["parameters"] != null)
+                    try
                     {
-                        var plist = val2["parameters"] as JArray;
-                        if (plist != null)
+                        if (val2["responses"]["200"] != null)
                         {
-                            foreach (JToken p in plist)
+                            if (val2["responses"]["200"]["schema"]["$ref"] != null)
                             {
-                                MethodParam mp = new MethodParam();
-                                mp.Name = p["name"].ToString();
-                                var s = p["schema"]["$ref"].ToString().Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
-                                mp.EntityName = s[2];
-                                mdef.Params.Add(mp);
+                                var s2 = val2["responses"]["200"]["schema"]["$ref"].ToString().Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
+                                mdef.ResponseEntity = s2[2];
+                            }
+                            else if (val2["responses"]["200"]["schema"]["type"] != null)
+                            {
+                                var s2 = val2["responses"]["200"]["schema"]["type"].ToString();
+                                if (s2 == "array")
+                                {
+                                    if (val2["responses"]["200"]["schema"]["items"]["type"] != null)
+                                    {
+                                        mdef.ResponseEntity = "List<" + val2["responses"]["200"]["schema"]["items"]["type"] + ">";
+                                    }
+                                }
                             }
                         }
+                    }
+                    catch (Exception)
+                    {
+
+                    }
+
+                    try
+                    {
+                        if (val2["parameters"] != null)
+                        {
+                            var plist = val2["parameters"] as JArray;
+                            if (plist != null)
+                            {
+                                foreach (JToken p in plist)
+                                {
+                                    MethodParam mp = new MethodParam();
+                                    mp.Name = p["name"].ToString();
+                                    var s = p["schema"]["$ref"].ToString().Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
+                                    mp.EntityName = s[2];
+                                    mdef.Params.Add(mp);
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception)
+                    {
+
                     }
 
                     this.Methods.Add(mdef);
@@ -109,7 +144,7 @@ namespace CKGen.Temp.WebApi2Ng
 
                             var first = ip.First();
 
-                            if(first["$ref"] != null)
+                            if (first["$ref"] != null)
                             {
                                 ep.IsObject = true;
                                 var ss = first["$ref"].ToString().Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
@@ -119,14 +154,14 @@ namespace CKGen.Temp.WebApi2Ng
                             if (first["type"] != null)
                             {
                                 ep.TypeString = first["type"].ToString();
-                                if(ep.TypeString == "integer")
+                                if (ep.TypeString == "integer")
                                 {
                                     ep.TypeString = "number";
                                 }
                                 ep.IsSample = true;
                             }
 
-                            if(ep.TypeString == "array")
+                            if (ep.TypeString == "array")
                             {
                                 ep.IsArray = true;
                                 var ss = first["items"]["$ref"].ToString().Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
@@ -176,11 +211,11 @@ namespace CKGen.Temp.WebApi2Ng
             Stack<string> stack = new Stack<string>();
             foreach (var item in this.Methods)
             {
-                if(item.Params != null && item.Params.Count  >0)
+                if (item.Params != null && item.Params.Count > 0)
                 {
                     foreach (var p in item.Params)
                     {
-                        if(!es.Contains(p.EntityName))
+                        if (!es.Contains(p.EntityName))
                         {
                             es.Add(p.EntityName);
                             stack.Push(p.EntityName);
@@ -188,7 +223,7 @@ namespace CKGen.Temp.WebApi2Ng
                     }
                 }
 
-                if(!es.Contains(item.ResponseEntity))
+                if (!es.Contains(item.ResponseEntity))
                 {
                     es.Add(item.ResponseEntity);
                     stack.Push(item.ResponseEntity);
@@ -200,7 +235,7 @@ namespace CKGen.Temp.WebApi2Ng
             {
                 var str = stack.Pop();
                 var entity = this.Entities.FirstOrDefault(p => p.Name == str);
-                if (entity.Properties == null || entity.Properties.Count == 0)
+                if (entity == null || entity.Properties == null || entity.Properties.Count == 0)
                 {
                     continue;
                 }
@@ -230,6 +265,10 @@ namespace CKGen.Temp.WebApi2Ng
             foreach (var item in es)
             {
                 var entity = this.Entities.FirstOrDefault(p => p.Name == item);
+                if(entity == null)
+                {
+                    continue;
+                }
                 string[] itemArr = { entity.Name };
                 var lvi = new ListViewItem(itemArr) { };
                 lvi.Tag = entity;
