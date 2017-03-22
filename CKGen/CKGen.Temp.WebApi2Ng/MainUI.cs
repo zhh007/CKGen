@@ -191,6 +191,10 @@ namespace CKGen.Temp.WebApi2Ng
 
         private void lbWebAPI_SelectedIndexChanged(object sender, EventArgs e)
         {
+            if(lbWebAPI.SelectedIndex < 0)
+            {
+                return;
+            }
             var name = lbWebAPI.SelectedItem.ToString();
             lvEntity.Clear();
             lvMethod.Clear();

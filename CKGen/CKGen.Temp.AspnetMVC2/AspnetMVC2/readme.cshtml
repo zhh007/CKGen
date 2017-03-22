@@ -1,0 +1,26 @@
+﻿@using RazorEngine.Templating
+@using CKGen.Temp.AspnetMVC2
+@using CKGen.DBSchema;
+@inherits TemplateBase<PageViewModel>
+
+以下内容请添加到相应文件中。
+
+/*
+** @(Model.NameSpacePR).Data.@(Model.DBContextTypeName).OnModelCreating()
+*/
+modelBuilder.Configurations.Add(new @(Model.TableName)Map());
+
+/*
+** @(Model.NameSpacePR).Data.SetupProfile.SetupProfile()
+*/
+Register<I@(Model.TableName)Repository, @(Model.TableName)Repository>();
+
+/*
+** @(Model.NameSpacePR).Service.SetupProfile.SetupProfile()
+*/
+Register<I@(Model.TableName)Service, @(Model.TableName)Service>();
+
+CreateMap<@(Model.TableName), @(Model.TableName)DTO>();
+CreateMap<@(Model.TableName)DTO, @(Model.TableName)>();
+
+

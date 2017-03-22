@@ -333,9 +333,9 @@
       <Project>{876b3437-a905-488a-8b67-b8b222e691bc}</Project>
       <Name>CKGen.Temp.Adonet</Name>
     </ProjectReference>
-    <ProjectReference Include="..\CKGen.Temp.AspnetMVC\CKGen.Temp.AspnetMVC.csproj">
-      <Project>{1f3c9cc8-a0f4-4de3-b257-b7d4cb7fc2fb}</Project>
-      <Name>CKGen.Temp.AspnetMVC</Name>
+    <ProjectReference Include="..\CKGen.Temp.AspnetMVC2\CKGen.Temp.AspnetMVC2.csproj">
+      <Project>{ca201aee-4b60-4d6d-9092-8e9bc20b48be}</Project>
+      <Name>CKGen.Temp.AspnetMVC2</Name>
     </ProjectReference>
     <ProjectReference Include="..\CKGen.Temp.DBDoc\CKGen.Temp.DBDoc.csproj">
       <Project>{dc89b60f-c05a-4f7c-b332-c2804ad161c5}</Project>

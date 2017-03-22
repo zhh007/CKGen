@@ -1,0 +1,23 @@
+﻿@using RazorEngine.Templating
+@using CKGen.Temp.AspnetMVC2
+@using CKGen.DBSchema;
+@inherits TemplateBase<PageViewModel>
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using @(Model.NameSpacePR).DTO;
+
+namespace @(Model.NameSpacePR).ServiceInterface
+{
+    public interface I@(Model.TableName)Service
+    {
+        IList<@(Model.TableName)DTO> GetAll();
+        @(Model.TableName)DTO GetByID(@(Model.GetKeyParamterString()));
+        IList<@(Model.TableName)DTO> GetPagedList(string text, int page, int pageSize, out int total);
+
+        void Add(@(Model.TableName)DTO dto);
+        void Update(@(Model.TableName)DTO dto);
+        void Delete(@(Model.GetKeyParamterString()));
+    }
+}

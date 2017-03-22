@@ -23,7 +23,7 @@ namespace CKGen.Base
         {
             string xmlStr = Serialize<T>(setting);
             string filePath = Path.Combine(Environment.CurrentDirectory, "Settings\\" + filename);
-            using (var sw = new StreamWriter(File.Open(filePath, FileMode.OpenOrCreate), System.Text.Encoding.UTF8))
+            using (var sw = new StreamWriter(File.Open(filePath, FileMode.Create), System.Text.Encoding.UTF8))
             {
                 sw.Write(xmlStr);
             }

@@ -1,0 +1,96 @@
+﻿@using RazorEngine.Templating
+@using CKGen.Temp.AspnetMVC2
+@using CKGen.DBSchema;
+@inherits TemplateBase<PageViewModel>
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using AutoMapper;
+using ZDWP.Infrastructure.Exceptions;
+using @(Model.NameSpacePR).Data;
+using @(Model.NameSpacePR).Data.Models;
+using @(Model.NameSpacePR).Data.Repositories;
+using @(Model.NameSpacePR).DTO;
+using @(Model.NameSpacePR).Interface;
+
+namespace @(Model.NameSpacePR).Service
+{
+    public class @(Model.TableName)Service : I@(Model.TableName)Service
+    {
+        private @(Model.DBContextTypeName) DBContext;
+        private I@(Model.TableName)Repository @(Model.TableName)Repository;
+
+        public @(Model.TableName)Service(@(Model.DBContextTypeName) dbContext, I@(Model.TableName)Repository @(Model.TableCamelName)Repository)
+        {
+            DBContext = dbContext;
+            @(Model.TableName)Repository = @(Model.TableCamelName)Repository;
+        }
+
+        public IList@("<" + Model.TableName)DTO> GetPagedList(string text, int page, int pageSize, out int total)
+        {
+            var lst = @(Model.TableName)Repository.GetAll();
+            if (!string.IsNullOrEmpty(text))
+            {
+                text = text.Trim();
+                lst = lst.Where(p => @(Model.GetSearchTextFilterString()));
+            }
+
+            lst = lst.OrderByDescending(p => @(Model.GetOrderByString()));
+
+            total = lst.Count();
+
+            var lstresult = lst.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+
+            return Mapper.Map@("<List<" + Model.TableName + ">"), @("List<" + Model.TableName + "DTO>>")(lstresult);
+        }
+
+        public void Add(@(Model.TableName)DTO dto)
+        {
+            var model = Mapper.Map@("<" + Model.TableName)DTO, @(Model.TableName)>(dto);
+            @(Model.TableName)Repository.Add(model);
+
+            DBContext.SaveChanges();
+        }
+
+        public void Update(@(Model.TableName)DTO dto)
+        {
+            var model = @(Model.TableName)Repository.Get(p => @(Model.GetUpdateFilterString("dto")));
+
+        @foreach (IColumnInfo column in Model.DBTable.Columns)
+        {
+            if (column.IsPrimaryKey)
+            {
+                continue;
+            }
+            if (column.LowerName.Contains("create"))
+            {
+                continue;
+            }
+            <text>model.@(column.PascalName) = dto.@(column.PascalName);</text>
+        }
+            
+            DBContext.SaveChanges();
+        }
+
+        public void Delete(@(Model.GetKeyParamterString()))
+        {
+            @(Model.TableName)Repository.Delete(p => @(Model.GetDeleteFilterString()));
+            
+            DBContext.SaveChanges();
+        }
+
+        public @(Model.TableName)DTO GetByID(@(Model.GetKeyParamterString()))
+        {
+            var model = @(Model.TableName)Repository.Get(p => @(Model.GetDeleteFilterString()));
+            return Mapper.Map<@(Model.TableName), @(Model.TableName)DTO>(model);
+        }
+
+        public IList<@(Model.TableName)DTO> GetAll()
+        {
+            var lst = @(Model.TableName)Repository.GetAll().ToList();
+            return Mapper.Map@("<List<" + Model.TableName + ">"), @("List<" + Model.TableName + "DTO>>")(lst);
+        }
+
+    }
+}

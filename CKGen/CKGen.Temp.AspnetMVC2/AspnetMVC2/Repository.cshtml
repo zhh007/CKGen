@@ -1,0 +1,27 @@
+﻿@using RazorEngine.Templating
+@using CKGen.Temp.AspnetMVC2
+@using CKGen.DBSchema;
+@inherits TemplateBase<PageViewModel>
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using ZDWP.Infrastructure.Data;
+using @(Model.NameSpacePR).Data.Models;
+
+namespace @(Model.NameSpacePR).Data.Repositories
+{
+    public class @(Model.TableName)Repository : RepositoryBase@("<" + Model.TableName + ">"), I@(Model.TableName)Repository
+    {
+        public @(Model.TableName)Repository(@(Model.DBContextTypeName) context)
+            : base(context)
+        {
+
+        }
+    }
+
+    public interface I@(Model.TableName)Repository : IRepository@("<" + Model.TableName + ">")
+    {
+
+    }
+}
