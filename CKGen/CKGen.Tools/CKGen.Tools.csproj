@@ -35,9 +35,14 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net40\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -54,9 +59,45 @@
     <Compile Include="CtrlHtmlToJSString.Designer.cs">
       <DependentUpon>CtrlHtmlToJSString.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmPostOAuthHelp.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmPostOAuthHelp.Designer.cs">
+      <DependentUpon>frmPostOAuthHelp.cs</DependentUpon>
+    </Compile>
+    <Compile Include="OAuthTest.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="OAuthTest.Designer.cs">
+      <DependentUpon>OAuthTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="OAuth_ClientCredentials.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="OAuth_ClientCredentials.Designer.cs">
+      <DependentUpon>OAuth_ClientCredentials.cs</DependentUpon>
+    </Compile>
+    <Compile Include="OAuth_Password.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="OAuth_Password.Designer.cs">
+      <DependentUpon>OAuth_Password.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="CtrlHtmlToJSString.resx">
       <DependentUpon>CtrlHtmlToJSString.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmPostOAuthHelp.resx">
+      <DependentUpon>frmPostOAuthHelp.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OAuthTest.resx">
+      <DependentUpon>OAuthTest.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OAuth_ClientCredentials.resx">
+      <DependentUpon>OAuth_ClientCredentials.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OAuth_Password.resx">
+      <DependentUpon>OAuth_Password.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -66,7 +107,9 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -82,6 +125,9 @@
       <Project>{727d5837-1dc0-40ed-9aa3-d37c40d3fdb6}</Project>
       <Name>CKGen.Base</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\postman_help.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
