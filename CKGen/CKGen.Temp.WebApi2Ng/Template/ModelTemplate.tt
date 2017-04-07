@@ -11,7 +11,7 @@ export class <#= this.Entity.Name #> {
 	{
 #><# if(ent.IsArray) {#>
     public <#= ent.Name #> : <#= ent.TypeString #>[];
-<# } else { #>    publish <#= ent.Name #> : <#= ent.TypeString #>;
+<# } else { #>    public <#= ent.Name #> : <#= ent.TypeString #>;
 <# } #>
 <#
         }

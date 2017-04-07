@@ -72,7 +72,7 @@ namespace CKGen.Temp.WebApi2Ng.Template
             
             #line default
             #line hidden
-            this.Write("    publish ");
+            this.Write("    public ");
             
             #line 14 "D:\SourceCode\GitHub\CKGen\CKGen\CKGen.Temp.WebApi2Ng\Template\ModelTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(ent.Name));
