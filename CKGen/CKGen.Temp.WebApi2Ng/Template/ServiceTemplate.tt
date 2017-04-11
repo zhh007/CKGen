@@ -31,7 +31,7 @@ export class PRService {
 	}
 #>
   <#= mt.Name #>(<#= paramStr #>): Observable<<#= mt.ResponseEntity #>> {
-    var url = this._baseURL + "List";
+    var url = this._baseURL + "<#= mt.Name #>";
 
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });

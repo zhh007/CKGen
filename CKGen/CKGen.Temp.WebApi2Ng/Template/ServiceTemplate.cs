@@ -92,9 +92,15 @@ namespace CKGen.Temp.WebApi2Ng.Template
             
             #line default
             #line hidden
-            this.Write("> {\r\n    var url = this._baseURL + \"List\";\r\n\r\n    let headers = new Headers({ \'Co" +
-                    "ntent-Type\': \'application/json\' });\r\n    let options = new RequestOptions({ head" +
-                    "ers: headers });\r\n\r\n");
+            this.Write("> {\r\n    var url = this._baseURL + \"");
+            
+            #line 34 "D:\SourceCode\GitHub\CKGen\CKGen\CKGen.Temp.WebApi2Ng\Template\ServiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(mt.Name));
+            
+            #line default
+            #line hidden
+            this.Write("\";\r\n\r\n    let headers = new Headers({ \'Content-Type\': \'application/json\' });\r\n   " +
+                    " let options = new RequestOptions({ headers: headers });\r\n\r\n");
             
             #line 39 "D:\SourceCode\GitHub\CKGen\CKGen\CKGen.Temp.WebApi2Ng\Template\ServiceTemplate.tt"
  if(paramStr == "") {
