@@ -213,7 +213,7 @@ namespace CKGen.Temp.WebApi2Ng
 
             List<string> es = new List<string>();
             Stack<string> stack = new Stack<string>();
-            foreach (var item in this.Methods)
+            foreach (var item in ms)
             {
                 if (item.Params != null && item.Params.Count > 0)
                 {
