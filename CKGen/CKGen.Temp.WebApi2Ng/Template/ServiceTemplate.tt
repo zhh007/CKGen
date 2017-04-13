@@ -40,7 +40,7 @@ export class <#= Api.Name #>Service {
 #>
   <#= mt.Name #>(<#= paramStr #>): Observable<<#= mt.ResponseEntity #>> {
     let url = this._baseURL + "<#= mt.Name #>";
-    let headers = = this.getHeaders();
+    let headers = this.getHeaders();
     let options = new RequestOptions({ headers: headers });
 <# if(paramStr == "") {#>
     let content = null;

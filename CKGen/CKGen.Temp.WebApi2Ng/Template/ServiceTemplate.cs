@@ -119,8 +119,8 @@ namespace CKGen.Temp.WebApi2Ng.Template
             
             #line default
             #line hidden
-            this.Write("\";\r\n    let headers = = this.getHeaders();\r\n    let options = new RequestOptions(" +
-                    "{ headers: headers });\r\n");
+            this.Write("\";\r\n    let headers = this.getHeaders();\r\n    let options = new RequestOptions({ " +
+                    "headers: headers });\r\n");
             
             #line 45 "C:\SourceCode\GitHub\CKGen\CKGen\CKGen.Temp.WebApi2Ng\Template\ServiceTemplate.tt"
  if(paramStr == "") {
