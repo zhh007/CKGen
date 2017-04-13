@@ -7,14 +7,22 @@ import { Injectable } from '@angular/core';
 import { Http, Headers, URLSearchParams, RequestOptions } from "@angular/http";
 import { Observer, Observable } from "rxjs/Rx";
 
-import { <#= ImportModels #> } from './<#= Api.Name.ToLower() #>.model'
+import { <#= ImportModels #> } from './<#= Api.Name.ToLower() #>.model';
 
 @Injectable()
 export class <#= Api.Name #>Service {
   private _baseURL: string = "<#= BaseUrl #>";
 
   constructor(private _http: Http) {
+  }
 
+  getHeaders() {
+    let user = JSON.parse(localStorage.getItem('currentUser'));
+    let token = user.token;
+    return new Headers({
+      'Content-Type': 'application/json',
+      'Authorization': 'bearer ' + token
+    });
   }
 
 <#
@@ -31,15 +39,13 @@ export class <#= Api.Name #>Service {
 	}
 #>
   <#= mt.Name #>(<#= paramStr #>): Observable<<#= mt.ResponseEntity #>> {
-    var url = this._baseURL + "<#= mt.Name #>";
-
-    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let url = this._baseURL + "<#= mt.Name #>";
+    let headers = = this.getHeaders();
     let options = new RequestOptions({ headers: headers });
-
 <# if(paramStr == "") {#>
-    var content = null;
+    let content = null;
 <# } else { #>
-    var content = JSON.stringify(<#= mt.Params[0].Name #>);
+    let content = JSON.stringify(<#= mt.Params[0].Name #>);
 <# } #>
 
     return this._http.post(url, content, options)
@@ -52,5 +58,4 @@ export class <#= Api.Name #>Service {
 <#
         }
 #>
-
 }
