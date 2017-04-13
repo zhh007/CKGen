@@ -7,10 +7,10 @@ import { Injectable } from '@angular/core';
 import { Http, Headers, URLSearchParams, RequestOptions } from "@angular/http";
 import { Observer, Observable } from "rxjs/Rx";
 
-import { <#= ImportModels #> } from './<#= Api.Name #>.model'
+import { <#= ImportModels #> } from './<#= Api.Name.ToLower() #>.model'
 
 @Injectable()
-export class PRService {
+export class <#= Api.Name #>Service {
   private _baseURL: string = "<#= BaseUrl #>";
 
   constructor(private _http: Http) {

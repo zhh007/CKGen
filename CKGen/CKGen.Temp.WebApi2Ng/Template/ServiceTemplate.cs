@@ -40,12 +40,18 @@ namespace CKGen.Temp.WebApi2Ng.Template
             this.Write(" } from \'./");
             
             #line 10 "D:\SourceCode\GitHub\CKGen\CKGen\CKGen.Temp.WebApi2Ng\Template\ServiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(Api.Name.ToLower()));
+            
+            #line default
+            #line hidden
+            this.Write(".model\'\r\n\r\n@Injectable()\r\nexport class ");
+            
+            #line 13 "D:\SourceCode\GitHub\CKGen\CKGen\CKGen.Temp.WebApi2Ng\Template\ServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Api.Name));
             
             #line default
             #line hidden
-            this.Write(".model\'\r\n\r\n@Injectable()\r\nexport class PRService {\r\n  private _baseURL: string = " +
-                    "\"");
+            this.Write("Service {\r\n  private _baseURL: string = \"");
             
             #line 14 "D:\SourceCode\GitHub\CKGen\CKGen\CKGen.Temp.WebApi2Ng\Template\ServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(BaseUrl));
