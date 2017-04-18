@@ -58,7 +58,7 @@ namespace CKGen.Temp.WebApi2Ng.Template
             
             #line default
             #line hidden
-            this.Write(" : ");
+            this.Write(": ");
             
             #line 12 "C:\SourceCode\GitHub\CKGen\CKGen\CKGen.Temp.WebApi2Ng\Template\ModelTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(ent.TypeString));

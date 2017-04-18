@@ -9,7 +9,7 @@ export class <#= this.Entity.Name #> {
 	foreach (var ent in this.Entity.Properties)
 	{
 #><# if(ent.IsArray) {#>
-  public <#= ent.Name #> : <#= ent.TypeString #>[];
+  public <#= ent.Name #>: <#= ent.TypeString #>[];
 <# } else { #>  public <#= ent.Name #>: <#= ent.TypeString #>;
 <# } #>
 <#

@@ -164,8 +164,20 @@ namespace CKGen.Temp.WebApi2Ng
                             if (ep.TypeString == "array")
                             {
                                 ep.IsArray = true;
-                                var ss = first["items"]["$ref"].ToString().Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
-                                ep.TypeString = ss[2];
+                                if (first["items"]["$ref"] != null)
+                                {
+                                    var str = first["items"]["$ref"].ToString();
+                                    var ss = str.Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
+                                    ep.TypeString = ss[2];
+                                }
+                                else if (first["items"]["type"] != null)
+                                {
+                                    var str = first["items"]["type"].ToString();
+                                    if (str == "integer")
+                                    {
+                                        ep.TypeString = "number";
+                                    }
+                                }
                             }
 
                             wpEntity.Properties.Add(ep);
@@ -191,7 +203,7 @@ namespace CKGen.Temp.WebApi2Ng
 
         private void lbWebAPI_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if(lbWebAPI.SelectedIndex < 0)
+            if (lbWebAPI.SelectedIndex < 0)
             {
                 return;
             }
@@ -269,7 +281,7 @@ namespace CKGen.Temp.WebApi2Ng
             foreach (var item in es)
             {
                 var entity = this.Entities.FirstOrDefault(p => p.Name == item);
-                if(entity == null)
+                if (entity == null)
                 {
                     continue;
                 }
