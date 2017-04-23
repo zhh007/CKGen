@@ -1,4 +1,5 @@
 ﻿using CKGen.Base.Log;
+using CKGen.DBSchema;
 using log4net;
 using log4net.Appender;
 using log4net.Core;
@@ -24,6 +25,8 @@ namespace CKGen.Base
                 InitLog4net();
                 //log4net.Config.XmlConfigurator.Configure();
 
+                DbTargetConvert.GetSqlDbType("int");
+                LanguageConvert.GetCSharpTypeFromMSSQL("datetime");
             }
         }
 

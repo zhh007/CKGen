@@ -7,6 +7,7 @@ using CKGen.DBSchema;
 using System.Data.SqlClient;
 using System.Data;
 using CKGen.Base.Form;
+using System.Security.Principal;
 
 namespace CKGen
 {
@@ -1214,6 +1215,32 @@ SELECT @TotalCount = COUNT(*) FROM [{1}] {2}
                 return string.Format("{3}.{0} = ({2}){4}[\"{1}\"];"
                     , field.PascalName, field.CamelName, field.LanguageType, entityName, readerName, Util.BuildSetFieldValue(field));
             }
+        }
+
+        /// <summary>
+        /// 确定当前主体是否属于具有指定 Administrator 的 Windows 用户组
+        /// </summary>
+        /// <returns>如果当前主体是指定的 Administrator 用户组的成员，则为 true；否则为 false。</returns>
+        public static bool IsAdministrator()
+        {
+            bool result;
+            try
+            {
+                WindowsIdentity identity = WindowsIdentity.GetCurrent();
+                WindowsPrincipal principal = new WindowsPrincipal(identity);
+                result = principal.IsInRole(WindowsBuiltInRole.Administrator);
+
+                //http://www.cnblogs.com/Interkey/p/RunAsAdmin.html
+                //AppDomain domain = Thread.GetDomain();
+                //domain.SetPrincipalPolicy(PrincipalPolicy.WindowsPrincipal);
+                //WindowsPrincipal windowsPrincipal = (WindowsPrincipal)Thread.CurrentPrincipal;
+                //result = windowsPrincipal.IsInRole(WindowsBuiltInRole.Administrator);
+            }
+            catch
+            {
+                result = false;
+            }
+            return result;
         }
     }
 }
