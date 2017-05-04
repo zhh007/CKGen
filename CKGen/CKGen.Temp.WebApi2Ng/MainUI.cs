@@ -36,6 +36,8 @@ namespace CKGen.Temp.WebApi2Ng
 
         private void btnGetSchema_Click(object sender, EventArgs e)
         {
+            this.Methods.Clear();
+            this.Entities.Clear();
             lbWebAPI.Items.Clear();
             lvEntity.Clear();
             lvMethod.Clear();
