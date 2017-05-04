@@ -48,6 +48,7 @@ namespace CKGen.Base
                 request = (HttpWebRequest)WebRequest.Create(url);
 
                 request.Method = "GET";
+                request.CachePolicy = new System.Net.Cache.RequestCachePolicy(System.Net.Cache.RequestCacheLevel.NoCacheNoStore);
 
                 //设置代理
                 //WebProxy proxy = new WebProxy();

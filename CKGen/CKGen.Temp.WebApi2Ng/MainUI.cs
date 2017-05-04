@@ -177,6 +177,10 @@ namespace CKGen.Temp.WebApi2Ng
                                     {
                                         ep.TypeString = "number";
                                     }
+                                    else if( str == "string")
+                                    {
+                                        ep.TypeString = "string";
+                                    }
                                 }
                             }
 
