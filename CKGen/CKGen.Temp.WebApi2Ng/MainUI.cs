@@ -97,10 +97,18 @@ namespace CKGen.Temp.WebApi2Ng
                                         mdef.ResponseEntity = "List<" + val2["responses"]["200"]["schema"]["items"]["type"] + ">";
                                     }
                                 }
+                                else if(s2 == "string")
+                                {
+                                    mdef.ResponseEntity = "string";
+                                }
+                                else
+                                {
+                                    mdef.ResponseEntity = "string";
+                                }
                             }
                         }
                     }
-                    catch (Exception)
+                    catch (Exception ex)
                     {
 
                     }
@@ -114,16 +122,29 @@ namespace CKGen.Temp.WebApi2Ng
                             {
                                 foreach (JToken p in plist)
                                 {
+                                    if(p["in"] != null && p["in"].ToString() == "query")
+                                    {
+                                        continue;
+                                    }
+
                                     MethodParam mp = new MethodParam();
                                     mp.Name = p["name"].ToString();
-                                    var s = p["schema"]["$ref"].ToString().Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
-                                    mp.EntityName = s[2];
+                                    try
+                                    {
+                                        var s = p["schema"]["$ref"].ToString().Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
+                                        mp.EntityName = s[2];
+                                    }
+                                    catch (Exception)
+                                    {
+                                        mp.IsSampleType = true;
+                                        mp.EntityName = "any";
+                                    }
                                     mdef.Params.Add(mp);
                                 }
                             }
                         }
                     }
-                    catch (Exception)
+                    catch (Exception ex)
                     {
 
                     }
@@ -307,7 +328,13 @@ namespace CKGen.Temp.WebApi2Ng
 
             foreach (ListViewItem item in lvMethod.Items)
             {
-                apidef.Methods.Add(item.Tag as MethodDef);
+                var m = item.Tag as MethodDef;
+                if(string.IsNullOrEmpty(m.ResponseEntity))
+                {
+                    MessageBox.Show("接口" + m.Name + "，没有返回值，无法生成。");
+                    return;
+                }
+                apidef.Methods.Add(m);
             }
 
             ServiceTemplate st = new Template.ServiceTemplate(apidef);

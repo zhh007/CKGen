@@ -7,11 +7,15 @@ import { Injectable } from '@angular/core';
 import { Http, Headers, URLSearchParams, RequestOptions } from "@angular/http";
 import { Observer, Observable } from "rxjs/Rx";
 
-import { <#= ImportModels #> } from './<#= Api.Name.ToLower() #>.model';
+<# if(!string.IsNullOrEmpty(ImportModels)) {#>
+import {
+  <#= ImportModels #> } from './<#= Api.Name.ToLower() #>.model';
+<# } #>
+import { environment } from 'environments/environment';
 
 @Injectable()
 export class <#= Api.Name #>Service {
-  private _baseURL: string = "<#= BaseUrl #>";
+  private _baseURL: string = environment.SysManageApiUrlPrefix + "<#= BaseUrl #>";
 
   constructor(private _http: Http) {
   }
@@ -29,23 +33,43 @@ export class <#= Api.Name #>Service {
 	foreach (var mt in this.Api.Methods)
 	{
 	string paramStr = "";
-	for(int i = 0; i < mt.Params.Count; i++)
+	string contentStr = null;
+	if(mt.Params != null)
 	{
-		paramStr += mt.Params[i].Name + ": " + mt.Params[i].EntityName;
-		if(i < mt.Params.Count - 1)
+		if(mt.Params.Count == 1)
 		{
-			paramStr +=", ";
+			if(mt.Params[0].IsSampleType)
+			{
+				paramStr += mt.Params[0].Name + ": " + mt.Params[0].EntityName;
+				contentStr = "{'" + mt.Params[0].Name + "': " + mt.Params[0].Name + "}";
+			}
+		}
+		else
+		{
+			contentStr += "{";
+			for(int i = 0; i < mt.Params.Count; i++)
+			{
+				paramStr += mt.Params[i].Name + ": " + mt.Params[i].EntityName;
+				contentStr = "'" + mt.Params[i].Name + "': " + mt.Params[i].Name;
+				if(i < mt.Params.Count - 1)
+				{
+					paramStr +=", ";
+					contentStr +=", ";
+				}
+			}
+			contentStr += "}";
 		}
 	}
+	
 #>
   <#= mt.Name #>(<#= paramStr #>): Observable<<#= mt.ResponseEntity #>> {
-    let url = this._baseURL + "<#= mt.Name #>";
+    let url = this._baseURL + "/<#= mt.Name #>";
     let headers = this.getHeaders();
     let options = new RequestOptions({ headers: headers });
 <# if(paramStr == "") {#>
     let content = null;
 <# } else { #>
-    let content = JSON.stringify(<#= mt.Params[0].Name #>);
+    let content = JSON.stringify(<#= contentStr #>);
 <# } #>
 
     return this._http.post(url, content, options)

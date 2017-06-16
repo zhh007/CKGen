@@ -25,7 +25,7 @@ namespace CKGen.Temp.AspnetMVC
         private Action<DatabaseRefreshEvent> dbRefreshEventHandler = null;
         public override string ToString()
         {
-            return "ASP.NET MVC 模板";
+            return "ASP.NET MVC 模板（UI）";
         }
 
         public MainUI()

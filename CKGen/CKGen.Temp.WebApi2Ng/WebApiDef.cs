@@ -40,6 +40,11 @@ namespace CKGen.Temp.WebApi2Ng
     {
         public string Name { get; set; }
         public string EntityName { get; set; }
+
+        /// <summary>
+        /// string, number
+        /// </summary>
+        public bool IsSampleType { get; set; }
     }
 
     public class WebApiEntity
