@@ -34,6 +34,11 @@ namespace CKGen
             string title = string.Format("编程辅助工具{0}", this.Version);
             this.Text = title;
 
+            if(Util.IsAdministrator())
+            {
+                this.Text += "(管理员)";
+            }
+
             BackgroundWorker worker = new BackgroundWorker();
             worker.DoWork += new DoWorkEventHandler(worker_DoWork);
             worker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(worker_RunWorkerCompleted);
