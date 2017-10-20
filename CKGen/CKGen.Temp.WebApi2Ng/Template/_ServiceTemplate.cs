@@ -1,5 +1,7 @@
-﻿using System;
+﻿using CKGen.Base.Log;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -18,14 +20,14 @@ namespace CKGen.Temp.WebApi2Ng.Template
             this.Api = api;
 
             List<string> list = new List<string>();
-            foreach (var item in api.Methods)
+            foreach (var mt in api.Methods)
             {
-                if(!list.Contains(item.ResponseEntity) && item.ResponseEntity != "string")
+                if(!list.Contains(mt.ResponseEntity) && mt.ResponseEntity != "string")
                 {
-                    list.Add(item.ResponseEntity);
+                    list.Add(mt.ResponseEntity);
                 }
 
-                foreach (var p in item.Params)
+                foreach (var p in mt.Params)
                 {
                     if(p.IsSampleType)
                     {

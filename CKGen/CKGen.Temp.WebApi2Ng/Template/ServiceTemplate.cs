@@ -91,6 +91,7 @@ namespace CKGen.Temp.WebApi2Ng.Template
             
             #line 32 "C:\SourceCode\GitHub\CKGen\CKGen\CKGen.Temp.WebApi2Ng\Template\ServiceTemplate.tt"
 
+	
 	foreach (var mt in this.Api.Methods)
 	{
 	string paramStr = "";
@@ -101,9 +102,14 @@ namespace CKGen.Temp.WebApi2Ng.Template
 		{
 			if(mt.Params[0].IsSampleType)
 			{
-				paramStr += mt.Params[0].Name + ": " + mt.Params[0].EntityName;
+				paramStr = mt.Params[0].Name + ": " + mt.Params[0].EntityName;
 				contentStr = "{'" + mt.Params[0].Name + "': " + mt.Params[0].Name + "}";
 			}
+			else
+            {
+                paramStr = mt.Params[0].Name + ": " + mt.Params[0].EntityName;
+                contentStr = mt.Params[0].Name;
+            }
 		}
 		else
 		{
@@ -111,7 +117,7 @@ namespace CKGen.Temp.WebApi2Ng.Template
 			for(int i = 0; i < mt.Params.Count; i++)
 			{
 				paramStr += mt.Params[i].Name + ": " + mt.Params[i].EntityName;
-				contentStr = "'" + mt.Params[i].Name + "': " + mt.Params[i].Name;
+				contentStr += "'" + mt.Params[i].Name + "': " + mt.Params[i].Name;
 				if(i < mt.Params.Count - 1)
 				{
 					paramStr +=", ";
@@ -128,28 +134,28 @@ namespace CKGen.Temp.WebApi2Ng.Template
             #line hidden
             this.Write("  ");
             
-            #line 65 "C:\SourceCode\GitHub\CKGen\CKGen\CKGen.Temp.WebApi2Ng\Template\ServiceTemplate.tt"
+            #line 71 "C:\SourceCode\GitHub\CKGen\CKGen\CKGen.Temp.WebApi2Ng\Template\ServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(mt.Name));
             
             #line default
             #line hidden
             this.Write("(");
             
-            #line 65 "C:\SourceCode\GitHub\CKGen\CKGen\CKGen.Temp.WebApi2Ng\Template\ServiceTemplate.tt"
+            #line 71 "C:\SourceCode\GitHub\CKGen\CKGen\CKGen.Temp.WebApi2Ng\Template\ServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(paramStr));
             
             #line default
             #line hidden
             this.Write("): Observable<");
             
-            #line 65 "C:\SourceCode\GitHub\CKGen\CKGen\CKGen.Temp.WebApi2Ng\Template\ServiceTemplate.tt"
+            #line 71 "C:\SourceCode\GitHub\CKGen\CKGen\CKGen.Temp.WebApi2Ng\Template\ServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(mt.ResponseEntity));
             
             #line default
             #line hidden
             this.Write("> {\r\n    let url = this._baseURL + \"/");
             
-            #line 66 "C:\SourceCode\GitHub\CKGen\CKGen\CKGen.Temp.WebApi2Ng\Template\ServiceTemplate.tt"
+            #line 72 "C:\SourceCode\GitHub\CKGen\CKGen\CKGen.Temp.WebApi2Ng\Template\ServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(mt.Name));
             
             #line default
@@ -157,28 +163,28 @@ namespace CKGen.Temp.WebApi2Ng.Template
             this.Write("\";\r\n    let headers = this.getHeaders();\r\n    let options = new RequestOptions({ " +
                     "headers: headers });\r\n");
             
-            #line 69 "C:\SourceCode\GitHub\CKGen\CKGen\CKGen.Temp.WebApi2Ng\Template\ServiceTemplate.tt"
+            #line 75 "C:\SourceCode\GitHub\CKGen\CKGen\CKGen.Temp.WebApi2Ng\Template\ServiceTemplate.tt"
  if(paramStr == "") {
             
             #line default
             #line hidden
             this.Write("    let content = null;\r\n");
             
-            #line 71 "C:\SourceCode\GitHub\CKGen\CKGen\CKGen.Temp.WebApi2Ng\Template\ServiceTemplate.tt"
+            #line 77 "C:\SourceCode\GitHub\CKGen\CKGen\CKGen.Temp.WebApi2Ng\Template\ServiceTemplate.tt"
  } else { 
             
             #line default
             #line hidden
             this.Write("    let content = JSON.stringify(");
             
-            #line 72 "C:\SourceCode\GitHub\CKGen\CKGen\CKGen.Temp.WebApi2Ng\Template\ServiceTemplate.tt"
+            #line 78 "C:\SourceCode\GitHub\CKGen\CKGen\CKGen.Temp.WebApi2Ng\Template\ServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(contentStr));
             
             #line default
             #line hidden
             this.Write(");\r\n");
             
-            #line 73 "C:\SourceCode\GitHub\CKGen\CKGen\CKGen.Temp.WebApi2Ng\Template\ServiceTemplate.tt"
+            #line 79 "C:\SourceCode\GitHub\CKGen\CKGen\CKGen.Temp.WebApi2Ng\Template\ServiceTemplate.tt"
  } 
             
             #line default
@@ -187,7 +193,7 @@ namespace CKGen.Temp.WebApi2Ng.Template
                     "  return resp.json();\r\n      })\r\n      ._catch((error: any) => Observable.throw(" +
                     "error || \'Server error\'));\r\n  }\r\n\r\n");
             
-            #line 82 "C:\SourceCode\GitHub\CKGen\CKGen\CKGen.Temp.WebApi2Ng\Template\ServiceTemplate.tt"
+            #line 88 "C:\SourceCode\GitHub\CKGen\CKGen\CKGen.Temp.WebApi2Ng\Template\ServiceTemplate.tt"
 
         }
 
