@@ -64,7 +64,13 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ServiceTemplate.tt</DependentUpon>
     </Compile>
+    <Compile Include="Template\ServiceTemplateV2.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ServiceTemplateV2.tt</DependentUpon>
+    </Compile>
     <Compile Include="Template\_ModelTemplate.cs" />
+    <Compile Include="Template\_ServiceTemplateV2.cs" />
     <Compile Include="Template\_ServiceTemplate.cs" />
     <Compile Include="WebApiDef.cs" />
     <Compile Include="MainUI.cs">
@@ -97,6 +103,10 @@
     <Content Include="Template\ServiceTemplate.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>ServiceTemplate.cs</LastGenOutput>
+    </Content>
+    <Content Include="Template\ServiceTemplateV2.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>ServiceTemplateV2.cs</LastGenOutput>
     </Content>
   </ItemGroup>
   <ItemGroup>

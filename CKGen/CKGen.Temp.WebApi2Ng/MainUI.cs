@@ -337,8 +337,19 @@ namespace CKGen.Temp.WebApi2Ng
                 apidef.Methods.Add(m);
             }
 
-            ServiceTemplate st = new Template.ServiceTemplate(apidef);
-            txtSrevice.Text = st.TransformText();
+            string srvString = "";
+            if(radV1.Checked)
+            {
+                ServiceTemplate st = new Template.ServiceTemplate(apidef);
+                srvString = st.TransformText();
+            }
+            else
+            {
+                ServiceTemplateV2 st = new Template.ServiceTemplateV2(apidef);
+                srvString = st.TransformText();
+            }
+
+            txtSrevice.Text = srvString;
 
             List<string> entityCodeList = new List<string>();
             txtEntity.Text = "";

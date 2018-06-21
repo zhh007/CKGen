@@ -46,6 +46,8 @@
             this.txtSrevice = new System.Windows.Forms.TextBox();
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.txtEntity = new System.Windows.Forms.TextBox();
+            this.radV1 = new System.Windows.Forms.RadioButton();
+            this.radV2 = new System.Windows.Forms.RadioButton();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -168,6 +170,8 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.radV2);
+            this.tabPage1.Controls.Add(this.radV1);
             this.tabPage1.Controls.Add(this.label1);
             this.tabPage1.Controls.Add(this.btnGen);
             this.tabPage1.Controls.Add(this.txtURL);
@@ -256,6 +260,28 @@
             this.txtEntity.TabIndex = 0;
             this.txtEntity.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtSrevice_KeyDown);
             // 
+            // radV1
+            // 
+            this.radV1.AutoSize = true;
+            this.radV1.Checked = true;
+            this.radV1.Location = new System.Drawing.Point(110, 519);
+            this.radV1.Name = "radV1";
+            this.radV1.Size = new System.Drawing.Size(107, 16);
+            this.radV1.TabIndex = 7;
+            this.radV1.TabStop = true;
+            this.radV1.Text = "使用HttpModule";
+            this.radV1.UseVisualStyleBackColor = true;
+            // 
+            // radV2
+            // 
+            this.radV2.AutoSize = true;
+            this.radV2.Location = new System.Drawing.Point(258, 519);
+            this.radV2.Name = "radV2";
+            this.radV2.Size = new System.Drawing.Size(227, 16);
+            this.radV2.TabIndex = 8;
+            this.radV2.Text = "使用HttpClientModule，angular5支持";
+            this.radV2.UseVisualStyleBackColor = true;
+            // 
             // MainUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -296,5 +322,7 @@
         private System.Windows.Forms.TextBox txtSrevice;
         private System.Windows.Forms.TabPage tabPage4;
         private System.Windows.Forms.TextBox txtEntity;
+        private System.Windows.Forms.RadioButton radV2;
+        private System.Windows.Forms.RadioButton radV1;
     }
 }

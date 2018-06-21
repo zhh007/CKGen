@@ -4,8 +4,8 @@
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Collections.Generic" #>
 import { Injectable } from '@angular/core';
-import { Http, Headers, URLSearchParams, RequestOptions } from '@angular/http';
-import { Observer, Observable } from 'rxjs/Rx';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs/Rx';
 
 <# if(!string.IsNullOrEmpty(ImportModels)) {#>
 import {
@@ -17,31 +17,30 @@ import { environment } from 'environments/environment';
 export class <#= Api.Name #>Service {
   private _baseURL: string = environment.SysManageApiUrlPrefix + '<#= BaseUrl #>';
 
-  constructor(private _http: Http) {
+  constructor(private _http: HttpClient) {
   }
 
-  getHeaders() {
-    const user = JSON.parse(localStorage.getItem('currentUser'));
-    const token = user.token;
-    return new Headers({
-      'Content-Type': 'application/json',
-      'Authorization': 'bearer ' + token
-    });
+  _api(api) {
+    return this._baseURL + api;
   }
 
 <#
-	foreach (var mt in this.Api.Methods)
-	{
+foreach (var mt in this.Api.Methods)
+{
 	string paramStr = "";
 	string contentStr = null;
+    bool oneArg = false;
+    bool isSampleType = false;
 	if(mt.Params != null)
 	{
 		if(mt.Params.Count == 1)
 		{
+            oneArg = true;
 			if(mt.Params[0].IsSampleType)
 			{
+                isSampleType = true;
 				paramStr += mt.Params[0].Name + ": " + mt.Params[0].EntityName;
-				contentStr = "{'" + mt.Params[0].Name + "': " + mt.Params[0].Name + "}";
+				contentStr = "{ '" + mt.Params[0].Name + "': " + mt.Params[0].Name + " }";
 			}
             else
             {
@@ -51,7 +50,7 @@ export class <#= Api.Name #>Service {
 		}
 		else
 		{
-			contentStr += "{";
+			contentStr += "{ ";
 			for(int i = 0; i < mt.Params.Count; i++)
 			{
 				paramStr += mt.Params[i].Name + ": " + mt.Params[i].EntityName;
@@ -62,29 +61,30 @@ export class <#= Api.Name #>Service {
 					contentStr +=", ";
 				}
 			}
-			contentStr += "}";
+			contentStr += " }";
 		}
 	}
 	
 #>
   <#= mt.Name #>(<#= paramStr #>): Observable<<#= mt.ResponseEntity #>> {
-    const url = this._baseURL + '/<#= mt.Name #>';
-    const headers = this.getHeaders();
-    const options = new RequestOptions({ headers: headers });
 <# if(paramStr == "") {#>
-    const content = null;
-<# } else { #>
+    return this._http.post<<#= mt.ResponseEntity #>>(this._api('/<#= mt.Name #>'), null);
+<# } else { 
+     if(oneArg) {
+        if(isSampleType) {#>
+    const content = <#= contentStr #>;
+    return this._http.post<<#= mt.ResponseEntity #>>(this._api('/<#= mt.Name #>'), content);
+<#} else {#>
+    return this._http.post<<#= mt.ResponseEntity #>>(this._api('/<#= mt.Name #>'), <#=contentStr#>);
+<#}
+     } else {#>
     const content = JSON.stringify(<#= contentStr #>);
-<# } #>
-
-    return this._http.post(url, content, options)
-      .map(resp => {
-        return resp.json();
-      })
-      ._catch((error: any) => Observable.throw(error || 'Server error'));
-  }
+    return this._http.post<<#= mt.ResponseEntity #>>(this._api('/<#= mt.Name #>'), content);
+<#}
+}
+#>  }
 
 <#
-        }
+} // end foreach
 #>
 }
