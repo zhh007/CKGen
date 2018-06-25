@@ -44,7 +44,13 @@ foreach (var mt in this.Api.Methods)
 			}
             else
             {
-                paramStr += mt.Params[0].Name + ": " + mt.Params[0].EntityName;
+                if(IsWorkflowApi && wfMethods.Contains(mt.Name)) {
+                    paramStr += mt.Params[0].Name + ": any";
+                }
+                else
+                {
+                    paramStr += mt.Params[0].Name + ": " + mt.Params[0].EntityName;
+                }
                 contentStr = mt.Params[0].Name;
             }
 		}
